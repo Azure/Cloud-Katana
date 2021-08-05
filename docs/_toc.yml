@@ -1,0 +1,43 @@
+format: jb-book
+root: intro
+parts:
+- caption: Getting Started
+  chapters:
+  - file: prepare
+  - file: deploy/azure/intro
+    sections:
+    - file: deploy/azure/manual
+    - file: deploy/azure/demos
+  - file: deploy/local/intro
+    sections:
+    - file: deploy/local/manual
+    - file: deploy/local/demos
+- caption: Internals
+  chapters:
+  - file: internals/design/intro
+- caption: Targeted Notebooks
+  chapters:
+  - file: notebooks/azure/intro
+    sections:
+    - file: notebooks/azure/collection/intro
+      sections:
+      - file: notebooks/azure/collection/getAllUsersMailboxMessages
+      - file: notebooks/azure/collection/getMyMailboxMessages
+      - file: notebooks/azure/collection/getUserMailboxMessages
+    - file: notebooks/azure/discovery/intro
+      sections:
+      - file: notebooks/azure/discovery/getAdApplication
+      - file: notebooks/azure/discovery/getAllAdApplications
+      - file: notebooks/azure/discovery/getAllUsers
+      - file: notebooks/azure/discovery/getServicePrincipal
+    - file: notebooks/azure/persistence/intro
+      sections:
+      - file: notebooks/azure/persistence/addOwnerToAdApp
+      - file: notebooks/azure/persistence/addOwnerToSp
+      - file: notebooks/azure/persistence/createAdApplication
+      - file: notebooks/azure/persistence/createNewDomain
+      - file: notebooks/azure/persistence/createServicePrincipal
+      - file: notebooks/azure/persistence/grantPermissionsConsent
+      - file: notebooks/azure/persistence/updateAdAppPassword
+      - file: notebooks/azure/persistence/updateAdAppRequiredPermissions
+      - file: notebooks/azure/persistence/updateSpPassword

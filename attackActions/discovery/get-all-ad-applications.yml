@@ -1,0 +1,30 @@
+title: getAllAdApplications
+id: 2cae3748-2fd4-41d6-b9ad-4798f8bb42b1
+creationDate: '2021-08-05'
+modificationDate: '2021-08-05'
+description: |
+  A threat actor might want to list all Azure AD Applications
+contributors:
+- Roberto Rodriguez @Cyb3rWard0g
+- MSTIC R&D
+ctiReferences:
+attackMappings:
+- technique: T1087.004
+  tactics:
+  - TA0007
+platform: Azure
+resource:
+  url: https://graph.microsoft.com/
+  version: v1.0
+  name: applications
+  authorization:
+    permissionsType: application
+    permissions:
+    - Application.Read.All
+parameters:
+  accessToken:
+    type: string
+    description: Access token with the right permissions to access and interact with the Azure resource.
+output:
+  response:
+    type: array

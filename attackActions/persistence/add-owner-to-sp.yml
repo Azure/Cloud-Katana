@@ -1,0 +1,43 @@
+title: addOwnerToSp
+id: f39fc113-adbf-4cb3-a489-cec1df4a4b68
+creationDate: '2021-08-05'
+modificationDate: '2021-08-05'
+description: |
+  A threat actor might want to add an owner to a service principal.
+contributors:
+- Roberto Rodriguez @Cyb3rWard0g
+- MSTIC R&D
+ctiReferences:
+attackMappings:
+- technique: T1098.001
+  tactics:
+  - TA0003
+platform: Azure
+resource:
+  url: https://graph.microsoft.com/
+  authorization:
+    permissionsType: application
+    permissions:
+    - Application.ReadWrite.All
+    - Directory.Read.All
+parameters:
+  svcPrincipalId:
+    type: string
+    description: The service principal id.
+  directoryObjectId:
+    type: string
+    description: Identifier of the directory object to be assigned as owner.
+  accessToken:
+    type: string
+    description: Access token with the right permissions to access and interact with the Azure resource.
+executor:
+  type: PowerShell
+  scriptContent: |
+    $body = @{ 
+      "@odata.id" = "https://graph.microsoft.com/v1.0/directoryObjects/$($directoryObjectId)"
+    }
+    $response = Invoke-MSGraph -HttpMethod "Post" -Resource "servicePrincipals/$spObjectId" -AccessToken $accessToken -Body $body
+    $response
+output:
+  response:
+    type: object

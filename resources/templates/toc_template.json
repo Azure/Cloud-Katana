@@ -1,0 +1,48 @@
+{
+    "format" : "jb-book",
+    "root" : "intro",
+    "parts" : [
+        {
+            "caption" : "Getting Started",
+            "chapters" : [
+                {
+                    "file" : "prepare"
+                },
+                {
+                    "file" : "deploy/azure/intro",
+                    "sections": [
+                        {
+                            "file" : "deploy/azure/manual"
+                        },
+                        {
+                            "file" : "deploy/azure/demos"
+                        }
+                    ]
+                },
+                {
+                    "file" : "deploy/local/intro",
+                    "sections" : [
+                        {
+                            "file": "deploy/local/manual"
+                        },
+                        {
+                            "file": "deploy/local/demos"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "caption": "Internals",
+            "chapters": [
+                {
+                    "file" : "internals/design/intro"
+                }
+            ]
+        },
+        {
+            "caption" : "Targeted Notebooks",
+            "chapters" : []
+        }
+    ]
+}

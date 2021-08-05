@@ -1,0 +1,36 @@
+title: getUserMailboxMessages
+id: 8148b643-7e4b-4a3a-b840-07cc28bb8c74
+creationDate: '2021-08-05'
+modificationDate: '2021-08-05'
+description: |
+  A threat actor might want to read messages from the mailbox of a specific user.
+contributors:
+- Roberto Rodriguez @Cyb3rWard0g
+- MSTIC R&D
+ctiReferences:
+attackMappings:
+- technique: T1114.002
+  tactics:
+  - TA0009
+platform: Azure
+resource:
+  url: https://graph.microsoft.com/
+  authorization:
+    permissionsType: application
+    permissions:
+    - Mail.Read
+parameters:
+  userPrincipalName:
+    type: string
+    description: user principal name to get messages from (i.e. wardog@yourdomain.onmicrosoft.com).
+  accessToken:
+    type: string
+    description: Access token with the right permissions to access and interact with the Azure resource.
+executor:
+  type: PowerShell
+  scriptContent: |
+    $response = Invoke-MSGraph -Resource "users/$userPrincipalName/mailFolders/Inbox/messages" -AccessToken $accessToken
+    $response
+output:
+  response:
+    type: array

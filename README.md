@@ -1,14 +1,30 @@
-# Project
+# Cloud Katana
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+[![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://cloud-katana.com)
 
-As the maintainer of this project, please make a few updates:
+<p align="center">
+  <a href="#about">About</a> •
+  <a href="#documentation">Documentation</a> •
+  <a href="#contributing">Contributing</a> •
+  <a href="#trademarks">Trademarks</a> •
+  <a href="#references">References</a>
+</p>
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+---
+
+Unlocking Serverless Computing to Assess Security Controls
+
+![](resources/images/Logo.png)
+
+## About
+
+Cloud Katana is a cloud native tool developed from the need to automate the execution of simulation steps in multi-cloud and hybrid cloud environments. This tool is an event-driven, serverless compute application built on the top of [Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-overview) that expedites the research process and assessment of security controls. We are currently covering use cases in Azure, but we are working on extending it to other cloud providers.
+
+## Documentation
+
+Our official documentation is built with [Jupyter Book](https://jupyterbook.org/intro.html)!
+
+## [https://cloud-katana.com](https://cloud-katana.com)
 
 ## Contributing
 
@@ -31,3 +47,13 @@ trademarks or logos is subject to and must follow
 [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
 Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
 Any use of third-party trademarks or logos are subject to those third-party's policies.
+
+## References:
+* https://github.com/AzureAD/microsoft-authentication-library-for-python
+* https://github.com/AzureAD/microsoft-authentication-library-for-python/wiki/Using-the-acquired-token-to-call-a-protected-Web-API
+* https://docs.microsoft.com/en-us/azure/app-service/scenario-secure-app-access-microsoft-graph-as-app?tabs=azure-cli%2Ccommand-line
+* https://docs.microsoft.com/en-us/azure/app-service/overview-managed-identity?tabs=powershell
+* https://devblogs.microsoft.com/scripting/generate-random-letters-with-powershell/
+* https://docs.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0
+* https://docs.microsoft.com/en-us/graph/permissions-reference
+* https://docs.microsoft.com/en-us/azure/active-directory-b2c/tokens-overview

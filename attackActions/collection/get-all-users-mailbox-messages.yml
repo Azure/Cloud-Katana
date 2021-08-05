@@ -1,0 +1,41 @@
+title: getAllUsersMailboxMessages
+id: 646fd502-67f7-4053-a1ca-7cd1d65774a7
+creationDate: '2021-08-05'
+modificationDate: '2021-08-05'
+description: |
+  A threat actor might want to read messages from all users mailbox.
+contributors:
+- Roberto Rodriguez @Cyb3rWard0g
+- MSTIC R&D
+ctiReferences:
+- https://msrc-blog.microsoft.com/2020/12/21/december-21st-2020-solorigate-resource-center/
+attackMappings:
+- technique: T1114.002
+  tactics:
+  - TA0009
+depends_on: 22a9bb30-630f-44ed-863e-9824c421e743
+platform: Azure
+resource:
+  url: https://graph.microsoft.com/
+  authorization:
+    permissionsType: application
+    permissions:
+    - Mail.Read
+parameters:
+  users:
+    type: array
+    description: List of users to read messages from their mailboxes.
+  accessToken:
+    type: string
+    description: Access token with the right permissions to access and interact with the Azure resource.
+executor:
+  type: PowerShell
+  scriptContent: |
+    $messages = @()
+    foreach ($user in $users){
+      $messages += Invoke-MSGraph -Resource "users/$($user.value.id)/mailFolders/Inbox/messages" -AccessToken $accessToken
+    }
+    $messages 
+output:
+  messages:
+    type: array

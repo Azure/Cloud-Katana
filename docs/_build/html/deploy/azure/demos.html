@@ -1,0 +1,641 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demos</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://cloud-katana.com/deploy/azure/demos.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Deploy Locally" href="../local/intro.html" />
+    <link rel="prev" title="Deploy Manually" href="manual.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+      <img src="../../_static/Logo.png" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <p class="caption">
+ <span class="caption-text">
+  Getting Started
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../prepare.html">
+   Prepare
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="intro.html">
+   Deploy to Azure
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="manual.html">
+     Deploy Manually
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Demos
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../local/intro.html">
+   Deploy Locally
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../local/manual.html">
+     Deploy Manually
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../local/demos.html">
+     Demos
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Internals
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../internals/design/intro.html">
+   Design Principles
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Targeted Notebooks
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../notebooks/azure/intro.html">
+   Azure
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../notebooks/azure/collection/intro.html">
+     collection
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/collection/getAllUsersMailboxMessages.html">
+       getAllUsersMailboxMessages
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/collection/getMyMailboxMessages.html">
+       getMyMailboxMessages
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/collection/getUserMailboxMessages.html">
+       getUserMailboxMessages
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../notebooks/azure/discovery/intro.html">
+     discovery
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/getAdApplication.html">
+       getAdApplication
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/getAllAdApplications.html">
+       getAllAdApplications
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/getAllUsers.html">
+       getAllUsers
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/getServicePrincipal.html">
+       getServicePrincipal
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../notebooks/azure/persistence/intro.html">
+     persistence
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/persistence/addOwnerToAdApp.html">
+       addOwnerToAdApp
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/persistence/addOwnerToSp.html">
+       addOwnerToSp
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/persistence/createAdApplication.html">
+       createAdApplication
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/persistence/createNewDomain.html">
+       createNewDomain
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/persistence/createServicePrincipal.html">
+       createServicePrincipal
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/persistence/grantPermissionsConsent.html">
+       grantPermissionsConsent
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/persistence/updateAdAppPassword.html">
+       updateAdAppPassword
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/persistence/updateAdAppRequiredPermissions.html">
+       updateAdAppRequiredPermissions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/persistence/updateSpPassword.html">
+       updateSpPassword
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/deploy/azure/demos.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/Azure/Cloud-Katana"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/Azure/Cloud-Katana/issues/new?title=Issue%20on%20page%20%2Fdeploy/azure/demos.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/Azure/Cloud-Katana/edit/main/docs/deploy/azure/demos.md"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#requirements">
+   Requirements
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#install-microsoft-authentication-libraries-msal">
+     Install Microsoft Authentication Libraries (MSAL)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#get-function-app-access-token">
+     Get Function App Access Token
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#set-variables">
+     Set Variables
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#set-authorization-header">
+     Set Authorization Header
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#examples">
+   Examples
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#get-all-azure-ad-users">
+     Get All Azure AD Users
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#get-all-azure-ad-applications">
+     Get All Azure AD Applications
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#update-application-credentials">
+     Update Application Credentials
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#get-users-mailbox">
+     Get User’s Mailbox
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="demos">
+<h1>Demos<a class="headerlink" href="#demos" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="install-microsoft-authentication-libraries-msal">
+<h3>Install Microsoft Authentication Libraries (MSAL)<a class="headerlink" href="#install-microsoft-authentication-libraries-msal" title="Permalink to this headline">¶</a></h3>
+<p>Locally, open PowerShell as Administrator and run the following commands to install and import the PowerShell <a class="reference external" href="http://MSAL.PS">MSAL.PS</a> moule:</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">Install-PackageProvider</span> <span class="n">NuGet</span> <span class="n">-Force</span>
+<span class="nb">Install-Module</span> <span class="n">PowerShellGet</span> <span class="n">-Force</span> <span class="n">-AllowClobber</span>
+
+<span class="nb">Install-Module</span> <span class="n">-name</span> <span class="n">MSAL</span><span class="p">.</span><span class="nb">PS </span><span class="n">-Force</span> <span class="n">-AcceptLicense</span>
+<span class="nb">Import-Module</span> <span class="n">MSAL</span><span class="p">.</span><span class="nb">PS</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-function-app-access-token">
+<h3>Get Function App Access Token<a class="headerlink" href="#get-function-app-access-token" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$azureFunctionUrl</span> <span class="p">=</span> <span class="s2">&quot;https://$functionAppName.azurewebsites.net&quot;</span>
+<span class="nv">$cloudkatanaClientAPPId</span> <span class="p">=</span> <span class="s1">&#39;xxxx&#39;</span>
+<span class="nv">$tenantId</span> <span class="p">=</span> <span class="s1">&#39;xxxx&#39;</span>
+
+<span class="nv">$results</span> <span class="p">=</span> <span class="nb">Get-FuncAppToken</span> <span class="n">-AppId</span> <span class="nv">$cloudkatanaClientAPPId</span> <span class="n">-FunctionAppUrl</span> <span class="nv">$azureFunctionUrl</span> <span class="n">-TenantId</span> <span class="nv">$tenantId</span> <span class="n">-verbose</span>
+<span class="nv">$accessToken</span> <span class="p">=</span> <span class="nv">$results</span><span class="p">.</span><span class="n">AccessToken</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-variables">
+<h3>Set Variables<a class="headerlink" href="#set-variables" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$functionAppName</span> <span class="p">=</span> <span class="s1">&#39;FUNCTION-APP-NAME&#39;</span>
+<span class="nv">$azureFunctionUrl</span> <span class="p">=</span> <span class="s2">&quot;https://$functionAppName.azurewebsites.net&quot;</span>
+<span class="nv">$OrchestratorUrl</span> <span class="p">=</span> <span class="s2">&quot;$azureFunctionUrl/api/orchestrators/Orchestrator&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-authorization-header">
+<h3>Set Authorization Header<a class="headerlink" href="#set-authorization-header" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$headers</span> <span class="p">=</span> <span class="p">@{</span>
+  <span class="n">Authorization</span> <span class="p">=</span> <span class="s2">&quot;Bearer $accessToken&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="get-all-azure-ad-users">
+<h3>Get All Azure AD Users<a class="headerlink" href="#get-all-azure-ad-users" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="c"># HTTP Body</span>
+<span class="nv">$body</span> <span class="p">=</span> <span class="p">@(</span>
+  <span class="p">@{</span>
+    <span class="n">Tactic</span> <span class="p">=</span> <span class="s1">&#39;discovery&#39;</span>
+    <span class="n">Procedure</span> <span class="p">=</span> <span class="s1">&#39;getAllUsers&#39;</span>
+  <span class="p">}</span>
+<span class="p">)</span> <span class="p">|</span> <span class="nb">ConvertTo-Json</span> <span class="n">-Depth</span> <span class="n">4</span>
+
+<span class="c"># Execute Simulation</span>
+<span class="nv">$simulationResults</span> <span class="p">=</span> <span class="nb">Invoke-RestMethod</span> <span class="n">-Method</span> <span class="n">Post</span> <span class="n">-Uri</span> <span class="nv">$OrchestratorUrl</span> <span class="n">-Body</span> <span class="nv">$body</span> <span class="n">-Headers</span> <span class="nv">$headers</span> <span class="n">-ContentType</span> <span class="s1">&#39;application/json&#39;</span>
+<span class="nv">$simulationResults</span>
+
+<span class="c"># Sleep</span>
+<span class="nb">Start-Sleep</span> <span class="n">-s</span> <span class="n">5</span>
+
+<span class="c"># Explore Results</span>
+<span class="nv">$outputResults</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Invoke-RestMethod</span> <span class="n">-Uri</span> <span class="nv">$simulationResults</span><span class="p">.</span><span class="n">statusQueryGetUri</span> <span class="n">-Headers</span> <span class="nv">$headers</span><span class="p">).</span><span class="n">output</span>
+<span class="nv">$outputResults</span> <span class="p">|</span> <span class="nb">Format-List</span>
+<span class="nv">$outputResults</span> <span class="p">|</span> <span class="nb">Where-Object</span> <span class="p">{</span><span class="nv">$_</span><span class="p">.</span><span class="n">userPrincipalName</span> <span class="o">-like</span> <span class="s1">&#39;*simulandlabs*&#39;</span><span class="p">}</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">userPrincipalName</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-all-azure-ad-applications">
+<h3>Get All Azure AD Applications<a class="headerlink" href="#get-all-azure-ad-applications" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="c"># HTTP Body</span>
+<span class="nv">$body</span> <span class="p">=</span> <span class="p">@(</span>
+  <span class="p">@{</span>
+    <span class="n">Tactic</span> <span class="p">=</span> <span class="s1">&#39;discovery&#39;</span>
+    <span class="n">Procedure</span> <span class="p">=</span> <span class="s1">&#39;getAllAdApplications&#39;</span>
+  <span class="p">}</span>
+<span class="p">)</span> <span class="p">|</span> <span class="nb">ConvertTo-Json</span> <span class="n">-Depth</span> <span class="n">4</span>
+
+<span class="c"># Execute Simulation</span>
+<span class="nv">$simulationResults</span> <span class="p">=</span> <span class="nb">Invoke-RestMethod</span> <span class="n">-Method</span> <span class="n">Post</span> <span class="n">-Uri</span> <span class="nv">$OrchestratorUrl</span> <span class="n">-Body</span> <span class="nv">$body</span> <span class="n">-Headers</span> <span class="nv">$headers</span> <span class="n">-ContentType</span> <span class="s1">&#39;application/json&#39;</span>
+<span class="nv">$simulationResults</span>
+
+<span class="c"># Sleep</span>
+<span class="nb">Start-Sleep</span> <span class="n">-s</span> <span class="n">5</span>
+
+<span class="c"># Process Results</span>
+<span class="nv">$outputResults</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Invoke-RestMethod</span> <span class="n">-Uri</span> <span class="nv">$simulationResults</span><span class="p">.</span><span class="n">statusQueryGetUri</span> <span class="n">-Headers</span> <span class="nv">$headers</span><span class="p">).</span><span class="n">output</span>
+<span class="nv">$outputResults</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">displayName</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="update-application-credentials">
+<h3>Update Application Credentials<a class="headerlink" href="#update-application-credentials" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="c"># HTTP Body</span>
+<span class="nv">$body</span> <span class="p">=</span> <span class="p">@(</span>
+  <span class="p">@{</span>
+    <span class="n">Tactic</span> <span class="p">=</span> <span class="s1">&#39;persistence&#39;</span>
+    <span class="n">Procedure</span> <span class="p">=</span> <span class="s1">&#39;updateAdAppPassword&#39;</span>
+    <span class="n">Parameters</span> <span class="p">=</span> <span class="p">@{</span>
+        <span class="n">appObjectId</span> <span class="p">=</span> <span class="s1">&#39;AZURE-AD-APP-OBJECT-ID&#39;</span>
+        <span class="n">pwdCredentialName</span> <span class="p">=</span> <span class="s1">&#39;BlackHatSecret&#39;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">)</span> <span class="p">|</span> <span class="nb">ConvertTo-Json</span> <span class="n">-Depth</span> <span class="n">4</span>
+
+<span class="c"># Execute Simulation</span>
+<span class="nv">$simulationResults</span> <span class="p">=</span> <span class="nb">Invoke-RestMethod</span> <span class="n">-Method</span> <span class="n">Post</span> <span class="n">-Uri</span> <span class="nv">$OrchestratorUrl</span> <span class="n">-Body</span> <span class="nv">$body</span> <span class="n">-Headers</span> <span class="nv">$headers</span> <span class="n">-ContentType</span> <span class="s1">&#39;application/json&#39;</span>
+<span class="nv">$simulationResults</span>
+
+<span class="c"># Sleep</span>
+<span class="nb">Start-Sleep</span> <span class="n">-s</span> <span class="n">5</span>
+
+<span class="c"># Process Results</span>
+<span class="nv">$outputResults</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Invoke-RestMethod</span> <span class="n">-Uri</span> <span class="nv">$simulationResults</span><span class="p">.</span><span class="n">statusQueryGetUri</span> <span class="n">-Headers</span> <span class="nv">$headers</span><span class="p">).</span><span class="n">output</span>
+<span class="nv">$outputResults</span> <span class="p">|</span> <span class="nb">Format-list</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-users-mailbox">
+<h3>Get User’s Mailbox<a class="headerlink" href="#get-users-mailbox" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="c"># HTTP Body</span>
+<span class="nv">$body</span> <span class="p">=</span> <span class="p">@(</span>
+  <span class="p">@{</span>
+    <span class="n">Tactic</span> <span class="p">=</span> <span class="s1">&#39;collection&#39;</span>
+    <span class="n">Procedure</span> <span class="p">=</span> <span class="s1">&#39;getUserMailboxMessages&#39;</span>
+    <span class="n">Parameters</span> <span class="p">=</span> <span class="p">@{</span>
+      <span class="n">userPrincipalName</span> <span class="p">=</span> <span class="s1">&#39;USER-NAME@DOMAIN.com&#39;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">)</span> <span class="p">|</span> <span class="nb">ConvertTo-Json</span> <span class="n">-Depth</span> <span class="n">10</span>
+
+<span class="c"># Execute Simulation</span>
+<span class="nv">$simulationResults</span> <span class="p">=</span> <span class="nb">Invoke-RestMethod</span> <span class="n">-Method</span> <span class="n">Post</span> <span class="n">-Uri</span> <span class="nv">$OrchestratorUrl</span> <span class="n">-Body</span> <span class="nv">$body</span> <span class="n">-Headers</span> <span class="nv">$headers</span> <span class="n">-ContentType</span> <span class="s1">&#39;application/json&#39;</span>
+<span class="nv">$simulationResults</span>
+
+<span class="c"># Sleep</span>
+<span class="nb">Start-Sleep</span> <span class="n">-s</span> <span class="n">5</span>
+
+<span class="c"># Process Results</span>
+<span class="nv">$outputResults</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Invoke-RestMethod</span> <span class="n">-Uri</span> <span class="nv">$simulationResults</span><span class="p">.</span><span class="n">statusQueryGetUri</span> <span class="n">-Headers</span> <span class="nv">$headers</span><span class="p">).</span><span class="n">output</span>
+<span class="nv">$outputResults</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">bodyPreview</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Azure/Cloud-Katana",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./deploy\azure"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="manual.html" title="previous page">Deploy Manually</a>
+    <a class='right-next' id="next-link" href="../local/intro.html" title="next page">Deploy Locally</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Roberto Rodriguez @Cyb3rWard0g<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

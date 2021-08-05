@@ -1,0 +1,307 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "functionAppName": {
+            "type": "string",
+            "metadata": {
+                "description": "Specifies the name of the Function App."
+            }
+        },
+        "identityName": {
+            "type": "string",
+            "metadata": {
+                "description": "Managed user-assigned identity for the Azure function app. Reference: https://docs.microsoft.com/en-us/azure/app-service/overview-managed-identity?tabs=powershell#add-a-user-assigned-identity"
+            }
+        },
+        "serverAppId": {      
+            "type": "string",
+            "metadata": {
+                "description": "Application to handle Azure AD Authentication"
+            }
+        },
+        "tenantId": {
+            "defaultValue": "[subscription().tenantId]",
+            "type": "string",
+            "metadata": {
+                "description": "Tenand Id"
+            }
+        },
+        "_packageLocation": {
+            "type": "securestring",
+            "metadata": {
+                "description": "The remote location of the Cloud Katana Azure Function app package. By default this points to the Cloud Katana public GitHub repository. You can update this and point to a private location. You can use a Shared Access Signature (SAS)."
+            },
+            "defaultValue": "https://github.com/Azure/Cloud-Katana/blob/main/CloudKatana.zip?raw=true"
+        }
+    },
+    "variables": {
+        "StorageAccountName":"[concat(substring(parameters('functionAppName'), 0, 20), 'sa')]",
+        "StorageSuffix":"[environment().suffixes.storage]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2020-08-01-preview",
+            "name": "[variables('StorageAccountName')]",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "StorageV2",
+            "properties": {
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": true,
+                "encryption": {
+                    "services": {
+                        "file": {
+                            "keyType": "Account",
+                            "enabled": true
+                        },
+                        "blob": {
+                            "keyType": "Account",
+                            "enabled": true
+                        }
+                    },
+                    "keySource": "Microsoft.Storage"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices",
+            "apiVersion": "2020-08-01-preview",
+            "name": "[concat(variables('StorageAccountName'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('StorageAccountName'))]"
+            ],
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "properties": {
+                "cors": {
+                    "corsRules": []
+                },
+                "deleteRetentionPolicy": {
+                    "enabled": false
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/fileServices",
+            "apiVersion": "2020-08-01-preview",
+            "name": "[concat(variables('StorageAccountName'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('StorageAccountName'))]"
+            ],
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "properties": {
+                "cors": {
+                    "corsRules": [
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/queueServices",
+            "apiVersion": "2020-08-01-preview",
+            "name": "[concat(variables('StorageAccountName'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('StorageAccountName'))]"
+            ],
+            "properties": {
+                "cors": {
+                    "corsRules": []
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/tableServices",
+            "apiVersion": "2020-08-01-preview",
+            "name": "[concat(variables('StorageAccountName'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('StorageAccountName'))]"
+            ],
+            "properties": {
+                "cors": {
+                    "corsRules": []
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+            "apiVersion": "2020-08-01-preview",
+            "name": "[concat(variables('StorageAccountName'), '/default/azure-webjobs-hosts')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', variables('StorageAccountName'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('StorageAccountName'))]"
+            ],
+            "properties": {
+                "defaultEncryptionScope": "$account-encryption-key",
+                "denyEncryptionScopeOverride": false,
+                "publicAccess": "None"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+            "apiVersion": "2020-08-01-preview",
+            "name": "[concat(variables('StorageAccountName'), '/default/azure-webjobs-secrets')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', variables('StorageAccountName'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('StorageAccountName'))]"
+            ],
+            "properties": {
+                "defaultEncryptionScope": "$account-encryption-key",
+                "denyEncryptionScopeOverride": false,
+                "publicAccess": "None"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
+            "apiVersion": "2020-08-01-preview",
+            "name": "[concat(variables('StorageAccountName'), '/default/', tolower(variables('StorageAccountName')))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/fileServices', variables('StorageAccountName'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('StorageAccountName'))]"
+            ],
+            "properties": {
+                "accessTier": "TransactionOptimized",
+                "shareQuota": 5120,
+                "enabledProtocols": "SMB"
+            }
+        },
+        {
+            "type": "Microsoft.Insights/components",
+            "apiVersion": "2020-02-02-preview",
+            "name": "[parameters('functionAppName')]",
+            "location": "[resourceGroup().location]",
+            "kind": "web",
+            "properties": {
+                "Application_Type": "web",
+                "IngestionMode": "ApplicationInsights",
+                "publicNetworkAccessForIngestion": "Enabled",
+                "publicNetworkAccessForQuery": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2018-02-01",
+            "name": "[parameters('functionAppName')]",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "Y1",
+                "tier": "Dynamic",
+                "size": "Y1",
+                "family": "Y",
+                "capacity": 0
+            },
+            "kind": "functionapp"
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2020-09-01",
+            "name": "[parameters('functionAppName')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('StorageAccountName'))]",
+                "[resourceId('Microsoft.Web/serverfarms', parameters('functionAppName'))]",
+                "[resourceId('Microsoft.Insights/components', parameters('functionAppName'))]"
+            ],
+            "kind": "functionapp",
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName'))]": {}
+                }
+            },
+            "properties": {
+                "name": "[parameters('functionAppName')]",
+                "enabled": true,
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('functionAppName'))]",
+                "httpsOnly": false,
+                "siteConfig": {
+                    "use32BitWorkerProcess": false
+                }
+            },
+            "resources": [
+                {
+                    "apiVersion": "2020-09-01",
+                    "type": "config",
+                    "name": "appsettings",
+                    "dependsOn": [
+                        "[concat('Microsoft.Web/sites/', parameters('functionAppName'))]"
+                    ],
+                    "properties": {
+                        "FUNCTIONS_EXTENSION_VERSION": "~3",
+                        "FUNCTIONS_WORKER_RUNTIME": "powershell",
+                        "FUNCTIONS_WORKER_RUNTIME_VERSION" : "~7",
+                        "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(resourceId('Microsoft.insights/components', parameters('functionAppName')), '2015-05-01').InstrumentationKey]",
+                        "APPLICATIONINSIGHTS_CONNECTION_STRING": "[reference(resourceId('microsoft.insights/components', parameters('functionAppName')), '2015-05-01').ConnectionString]",
+                        "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=', toLower(variables('StorageAccountName')),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('StorageAccountName')), '2019-06-01').keys[0].value, ';EndpointSuffix=',toLower(variables('StorageSuffix')))]",
+                        "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING": "[concat('DefaultEndpointsProtocol=https;AccountName=', toLower(variables('StorageAccountName')),';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('StorageAccountName')), '2019-06-01').keys[0].value, ';EndpointSuffix=',toLower(variables('StorageSuffix')))]",
+                        "WEBSITE_CONTENTSHARE": "[toLower(parameters('functionAppName'))]",
+                        "WEBSITE_RUN_FROM_PACKAGE": "[parameters('_packageLocation')]",
+                        "MUI_PRINCIPAL_ID": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName')), '2018-11-30').principalId]"
+                    }
+                },
+                {
+                    "apiVersion": "2020-09-01",
+                    "type": "config",
+                    "name": "authsettings",
+                    "dependsOn": [
+                        "[concat('Microsoft.Web/sites/', parameters('functionAppName'))]"
+                    ],
+                    "properties": {
+                        "ValidateIssuer": false,
+                        "ClientId": "[parameters('serverAppId')]",
+                        "Issuer": "[concat('https://login.microsoftonline.com/',parameters('tenantId'))]",
+                        "IsAadAutoProvisioned": false,
+                        "AllowedAudiences": [
+                            "[concat('https://',parameters('functionAppName'),'.azurewebsites.net')]"
+                        ],
+                        "additionalLoginParams": [],
+                        "AllowedExternalRedirectUrls": [],
+                        "UnauthenticatedClientAction": 0,
+                        "TokenStoreEnabled": true,
+                        "DefaultProvider": 0,
+                        "Enabled": true,
+                        "IsAuthFromFile": false,
+                        "FacebookAppId": null,
+                        "FacebookAppSecret": null,
+                        "FacebookOAuthScopes": [],
+                        "GoogleClientId": null,
+                        "GoogleClientSecret": null,
+                        "GoogleOAuthScopes": [],
+                        "MicrosoftAccountClientId": null,
+                        "MicrosoftAccountClientSecret": null,
+                        "MicrosoftAccountOAuthScopes": [],
+                        "TwitterConsumerKey": null,
+                        "TwitterConsumerSecret": null
+                    }
+                }
+            ]      
+        },
+        {
+            "type": "Microsoft.Web/sites/hostNameBindings",
+            "apiVersion": "2018-11-01",
+            "name": "[concat(parameters('functionAppName'), '/', parameters('functionAppName'), '.azurewebsites.net')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('functionAppName'))]"
+            ],
+            "properties": {
+                "siteName": "[parameters('functionAppName')]",
+                "hostNameType": "Verified"
+            }
+        }
+    ]
+}

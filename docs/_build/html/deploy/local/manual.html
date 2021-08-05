@@ -1,0 +1,565 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deploy Manually</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://cloud-katana.com/deploy/local/manual.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Demos" href="demos.html" />
+    <link rel="prev" title="Deploy Locally" href="intro.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+      <img src="../../_static/Logo.png" class="logo" alt="logo">
+      
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <p class="caption">
+ <span class="caption-text">
+  Getting Started
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../prepare.html">
+   Prepare
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../azure/intro.html">
+   Deploy to Azure
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../azure/manual.html">
+     Deploy Manually
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../azure/demos.html">
+     Demos
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="intro.html">
+   Deploy Locally
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Deploy Manually
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="demos.html">
+     Demos
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Internals
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../internals/design/intro.html">
+   Design Principles
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Targeted Notebooks
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../notebooks/azure/intro.html">
+   Azure
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../notebooks/azure/collection/intro.html">
+     collection
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/collection/getAllUsersMailboxMessages.html">
+       getAllUsersMailboxMessages
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/collection/getMyMailboxMessages.html">
+       getMyMailboxMessages
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/collection/getUserMailboxMessages.html">
+       getUserMailboxMessages
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../notebooks/azure/discovery/intro.html">
+     discovery
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/getAdApplication.html">
+       getAdApplication
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/getAllAdApplications.html">
+       getAllAdApplications
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/getAllUsers.html">
+       getAllUsers
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/getServicePrincipal.html">
+       getServicePrincipal
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../notebooks/azure/persistence/intro.html">
+     persistence
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/persistence/addOwnerToAdApp.html">
+       addOwnerToAdApp
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/persistence/addOwnerToSp.html">
+       addOwnerToSp
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/persistence/createAdApplication.html">
+       createAdApplication
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/persistence/createNewDomain.html">
+       createNewDomain
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/persistence/createServicePrincipal.html">
+       createServicePrincipal
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/persistence/grantPermissionsConsent.html">
+       grantPermissionsConsent
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/persistence/updateAdAppPassword.html">
+       updateAdAppPassword
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/persistence/updateAdAppRequiredPermissions.html">
+       updateAdAppRequiredPermissions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/persistence/updateSpPassword.html">
+       updateSpPassword
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/deploy/local/manual.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/Azure/Cloud-Katana"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/Azure/Cloud-Katana/issues/new?title=Issue%20on%20page%20%2Fdeploy/local/manual.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/Azure/Cloud-Katana/edit/main/docs/deploy/local/manual.md"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#create-azure-storage-account">
+   Create Azure Storage Account
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#get-azure-storage-account-connection-string">
+   Get Azure Storage Account Connection String
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#register-an-azure-ad-application">
+   Register an Azure AD application
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#grant-permissions-to-azure-ad-application">
+   Grant Permissions to Azure AD application
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#install-azure-function-core-tools">
+   Install Azure Function Core Tools
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#initialize-azure-durable-functions-locally">
+   Initialize Azure Durable Functions Locally
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="deploy-manually">
+<h1>Deploy Manually<a class="headerlink" href="#deploy-manually" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="create-azure-storage-account">
+<h2>Create Azure Storage Account<a class="headerlink" href="#create-azure-storage-account" title="Permalink to this headline">¶</a></h2>
+<p>Create an <a class="reference external" href="https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview">Azure storage account</a> in a specific resource group.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure you pick a unique name for your Azure storage account because It is of <code class="docutils literal notranslate"><span class="pre">Global</span></code> scope across all Azure resources.
+A storage account name must be between 3 and 24 characters in length and use numbers and lower-case letters only.</p>
+</div>
+<p>You can run the following PowerShell commands to get a random name with the prefix <code class="docutils literal notranslate"><span class="pre">ckstorage</span></code> and use it to create an Azure storage account.</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$storageAccountName</span> <span class="p">=</span> <span class="p">(</span><span class="n">-join</span> <span class="p">(</span><span class="s1">&#39;ckstorage&#39;</span><span class="p">,</span><span class="n">-join</span> <span class="p">((</span><span class="n">65</span><span class="p">..</span><span class="n">90</span><span class="p">)</span> <span class="p">+</span> <span class="p">(</span><span class="n">97</span><span class="p">..</span><span class="n">122</span><span class="p">)</span> <span class="p">|</span> <span class="nb">Get-Random</span> <span class="n">-Count</span> <span class="n">10</span> <span class="p">|</span> <span class="p">%</span> <span class="p">{</span><span class="no">[char]</span><span class="nv">$_</span><span class="p">}))).</span><span class="n">ToLower</span><span class="p">()</span>
+
+<span class="nv">$storageAccount</span> <span class="p">=</span> <span class="n">az</span> <span class="n">storage</span> <span class="n">account</span> <span class="n">create</span> <span class="p">-</span><span class="n">-name</span> <span class="nv">$storageAccountName</span> <span class="p">-</span><span class="n">-resource-group</span> <span class="s1">&#39;&lt;resource-group-name&gt;&#39;</span> <span class="p">|</span> <span class="nb">ConvertFrom-Json</span>
+<span class="nv">$storageAccount</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-azure-storage-account-connection-string">
+<h2>Get Azure Storage Account Connection String<a class="headerlink" href="#get-azure-storage-account-connection-string" title="Permalink to this headline">¶</a></h2>
+<p>Run the following commands to access the storage account access keys and craft a <code class="docutils literal notranslate"><span class="pre">Connection-String</span></code> value.</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$storageAccountAccessKeys</span> <span class="p">=</span>  <span class="n">az</span> <span class="n">storage</span> <span class="n">account</span> <span class="n">keys</span> <span class="n">list</span> <span class="p">-</span><span class="n">-resource-group</span> <span class="s1">&#39;&lt;resource-group-name&gt;&#39;</span> <span class="p">-</span><span class="n">-account-name</span> <span class="nv">$storageAccountName</span> <span class="p">|</span> <span class="nb">ConvertFrom-Json</span>
+<span class="nv">$connectionString</span> <span class="p">=</span> <span class="s2">&quot;DefaultEndpointsProtocol=https;AccountName=</span><span class="p">$(</span><span class="nv">$storageAccountName</span><span class="p">)</span><span class="s2">;AccountKey=</span><span class="p">$(</span><span class="nv">$storageAccountAccessKeys</span><span class="p">[</span><span class="n">0</span><span class="p">].</span><span class="n">value</span><span class="p">)</span><span class="s2">;EndpointSuffix=core.windows.net&quot;</span>
+<span class="nv">$connectionString</span>
+</pre></div>
+</div>
+<p>Add the connection string value to the variable <code class="docutils literal notranslate"><span class="pre">AzureWebJobsStorage</span></code> in the <code class="docutils literal notranslate"><span class="pre">local.settings.json</span></code> file which is inside of the folder <code class="docutils literal notranslate"><span class="pre">durableApp</span></code> at the root of the Cloud Katana project.</p>
+<p>It should look like the example below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;IsEncrypted&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+  <span class="s2">&quot;Values&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;AzureWebJobsStorage&quot;</span><span class="p">:</span> <span class="s2">&quot;DefaultEndpointsProtocol=https;AccountName=&lt;storage-account-name&gt;;AccountKey=&lt;Account-Key&gt;;EndpointSuffix=core.windows.net&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;FUNCTIONS_WORKER_RUNTIME_VERSION&quot;</span><span class="p">:</span> <span class="s2">&quot;~7&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;FUNCTIONS_WORKER_RUNTIME&quot;</span><span class="p">:</span> <span class="s2">&quot;powershell&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="register-an-azure-ad-application">
+<h2>Register an Azure AD application<a class="headerlink" href="#register-an-azure-ad-application" title="Permalink to this headline">¶</a></h2>
+<p>The Cloud Katana Azure Function application runs with a <a class="reference external" href="https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-manage-user-assigned-managed-identities?pivots=identity-mi-methods-azp">user-assigned managed identity</a>. However, when running the project locally, it is recommended to use an Azure AD application with the right permissions to execute every single simulation action.</p>
+<p>Use the following commands to register a new Azure AD application, create a service principal and add credentials to it.</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$AppName</span> <span class="p">=</span> <span class="s1">&#39;&lt;YOUR-APP-NAME&gt;&#39;</span>
+<span class="nb">New-AppRegistration</span> <span class="n">-Name</span> <span class="nv">$Appname</span> <span class="n">-NativeApp</span> <span class="n">-ReplyUrls</span> <span class="s1">&#39;http://localhost&#39;</span> <span class="n">-AddSecret</span> <span class="n">-verbose</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Save the <code class="docutils literal notranslate"><span class="pre">secret</span> <span class="pre">text</span></code> and information about your new application. The secret text ised used while authenticating to the Azure AD application to ru simulations as the application itself and not as the signed-in user.</p>
+</div>
+</div>
+<div class="section" id="grant-permissions-to-azure-ad-application">
+<h2>Grant Permissions to Azure AD application<a class="headerlink" href="#grant-permissions-to-azure-ad-application" title="Permalink to this headline">¶</a></h2>
+<p>The project comes with a <code class="docutils literal notranslate"><span class="pre">permissions.json</span></code> file which aggregates all the permissions needed to execute every single simulation via Azure Functions. The file is in the <code class="docutils literal notranslate"><span class="pre">attackActions</span></code> folder at the root of the Cloud Katana project. We can use that file and the following function to grant permissions to the Azure AD application we just registered/created.</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">Add-GraphPermissions</span> <span class="n">-AppSvcPrincipalName</span> <span class="n">CloudKatanaLocal</span> <span class="n">-PermissionsFile</span> <span class="p">.\</span><span class="n">attackActions</span><span class="p">\</span><span class="n">permissions</span><span class="p">.</span><span class="n">json</span> <span class="n">-Verbose</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-azure-function-core-tools">
+<h2>Install Azure Function Core Tools<a class="headerlink" href="#install-azure-function-core-tools" title="Permalink to this headline">¶</a></h2>
+<p>Since we are running the Cloud Katana application locally, we need to install <a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Ccsharp%2Cbash">Azure Function Core tools</a>.</p>
+<p>Open a PowerShell terminal as an Administrator and run the following function to install it either as a <a class="reference external" href="https://community.chocolatey.org/packages/azure-functions-core-tools-3">Choco package</a> or directly from the <a class="reference external" href="https://github.com/Azure/azure-functions-core-tools">GitHub repository</a>:</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">Add-AzureFunctionCoreTools</span> <span class="n">-Provider</span> <span class="s1">&#39;Choco&#39;</span> <span class="n">-Latest</span> <span class="n">-Arch</span> <span class="s1">&#39;x64&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="initialize-azure-durable-functions-locally">
+<h2>Initialize Azure Durable Functions Locally<a class="headerlink" href="#initialize-azure-durable-functions-locally" title="Permalink to this headline">¶</a></h2>
+<p>Open a new terminal at the root of the Cloud Katana project and run the following commands to initialize the Azure Function app:</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd </span><span class="p">.\</span><span class="n">durableApp</span><span class="p">\</span>
+<span class="n">func</span> <span class="nb">start</span>
+</pre></div>
+</div>
+<p>You should see something similar to the output below. You just initialized the Cloud Katana orchestrator and exposed the <code class="docutils literal notranslate"><span class="pre">collection</span></code>, <code class="docutils literal notranslate"><span class="pre">discovery</span></code> and <code class="docutils literal notranslate"><span class="pre">persistence</span></code> Azure Functions locally:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Azure</span> <span class="n">Functions</span> <span class="n">Core</span> <span class="n">Tools</span>
+<span class="n">Core</span> <span class="n">Tools</span> <span class="n">Version</span><span class="p">:</span>       <span class="mf">3.0.3568</span> <span class="n">Commit</span> <span class="nb">hash</span><span class="p">:</span> <span class="n">e30a0ede85fd498199c28ad699ab2548593f759b</span>  <span class="p">(</span><span class="mi">64</span><span class="o">-</span><span class="n">bit</span><span class="p">)</span>
+<span class="n">Function</span> <span class="n">Runtime</span> <span class="n">Version</span><span class="p">:</span> <span class="mf">3.0.15828.0</span>
+
+<span class="n">Functions</span><span class="p">:</span>
+
+        <span class="n">HttpStart</span><span class="p">:</span> <span class="p">[</span><span class="n">POST</span><span class="p">,</span><span class="n">GET</span><span class="p">]</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">7071</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">orchestrators</span><span class="o">/</span><span class="p">{</span><span class="n">FunctionName</span><span class="p">}</span>
+
+        <span class="n">collection</span><span class="p">:</span> <span class="n">activityTrigger</span>
+        <span class="n">discovery</span><span class="p">:</span> <span class="n">activityTrigger</span>
+        <span class="n">Orchestrator</span><span class="p">:</span> <span class="n">orchestrationTrigger</span>
+        <span class="n">persistence</span><span class="p">:</span> <span class="n">activityTrigger</span>
+
+<span class="n">For</span> <span class="n">detailed</span> <span class="n">output</span><span class="p">,</span> <span class="n">run</span> <span class="n">func</span> <span class="k">with</span> <span class="o">--</span><span class="n">verbose</span> <span class="n">flag</span><span class="o">.</span>
+<span class="p">[</span><span class="mi">2021</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">15</span><span class="n">T06</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mf">13.456</span><span class="n">Z</span><span class="p">]</span> <span class="n">Worker</span> <span class="n">process</span> <span class="n">started</span> <span class="ow">and</span> <span class="n">initialized</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>You are now ready to use the Azure Function application!</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "Azure/Cloud-Katana",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./deploy\local"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Deploy Locally</a>
+    <a class='right-next' id="next-link" href="demos.html" title="next page">Demos</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Roberto Rodriguez @Cyb3rWard0g<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

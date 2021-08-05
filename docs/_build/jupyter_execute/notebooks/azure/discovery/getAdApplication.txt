@@ -1,0 +1,28 @@
+from msal import PublicClientApplication
+import requests
+import time
+
+public_client_app_id = "KATANA_CLIENT_APP_ID"
+tenant_id = "TENANT_ID"
+function_app_url = "https://FUNCTION_APP_NAME.azurewebsites.net"
+scope = function_app_url + "/user_impersonation"
+
+app = PublicClientApplication(
+    public_client_app_id,
+    authority="https://login.microsoftonline.com/" + tenant_id
+)
+result = app.acquire_token_interactive(scopes=[scope])
+bearer_token = result['access_token']
+
+endpoint = function_app_url + "/api/orchestrators/Orchestrator"
+
+data = [{'Tactic': 'discovery', 'Procedure': 'getAdApplication', 'parameters': {'appObjectId': 'ENTER-VALUE'}}]
+
+http_headers = {'Authorization': 'Bearer ' + bearer_token, 'Accept': 'application/json','Content-Type': 'application/json'}
+results = requests.get(endpoint, json=data, headers=http_headers, stream=False).json()
+
+time.sleep(5)
+
+query_status = requests.get(results['statusQueryGetUri'], headers=http_headers, stream=False).json()
+query_results = query_status['output']
+query_results

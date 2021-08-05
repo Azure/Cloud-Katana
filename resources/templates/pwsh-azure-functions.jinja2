@@ -1,0 +1,28 @@
+param($simulation)
+
+Write-Host "PowerShell Durable Activity Triggered.."
+Import-Module CloudKatanaUtils
+{% for action in actions['actions'] %}
+function {{action['title']}}{% if 'parameters' in action -%}({% for k,v in action['parameters'].items() %}[{{v['type']}}]${{k}}{% if not loop.last %}, {% endif %}{% endfor %}){%- endif %} {
+  {% if 'executor' in action %}{{action['executor']['scriptContent'] | indent( width=2)}}{% else %}$response = Invoke-MSGraph -Version "{{action['resource']['version']}}" -Resource "{{action['resource']['name']}}" -AccessToken $accessToken
+  $response{% endif -%}
+}
+{% endfor %}
+# Execute Inner Function
+$action = $simulation.Procedure
+$parameters = $simulation.Parameters
+
+## Process Parameters
+if(!($parameters)){
+  $parameters=@{}
+}
+
+## Process Managed Identity
+if (!($parameters.ContainsKey('accessToken'))){
+    $accessToken = Get-MSIAccessToken -Resource "https://graph.microsoft.com/"
+    $parameters["accessToken"] = "$accessToken"
+}
+
+# Run Durable Function Activity
+$results = & $action @parameters
+$results
