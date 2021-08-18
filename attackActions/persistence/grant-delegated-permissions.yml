@@ -1,0 +1,77 @@
+title: grantDelegatedPermissions
+id: 0721f7ce-f04b-4bdd-9fd1-aefc566aa0fb
+creationDate: '2021-08-05'
+modificationDate: '2021-08-09'
+description: |
+  A threat actor might want to grant delegated permissions to an Azure AD application (Service Principal).
+contributors:
+- Roberto Rodriguez @Cyb3rWard0g
+- MSTIC R&D
+ctiReferences:
+- https://msrc-blog.microsoft.com/2020/12/21/december-21st-2020-solorigate-resource-center/
+attackMappings:
+- technique: T1098.002
+  tactics:
+  - TA0003
+platform: Azure
+resource:
+  url: https://graph.microsoft.com/
+  authorization:
+    permissionsType: application
+    permissions:
+    - Directory.ReadWrite.All
+parameters:
+  applicationId:
+    type: string
+    description: The ID (client_id) of the application we want to grant permissions to.
+  resourceSpName:
+    type: string
+    description: Display name of the service principal for the resource we want to grant permissions from (i.e. Microsoft Graph).
+  permissions:
+    type: array
+    description: An array of permissions to grant to the application.
+  accessToken:
+    type: string
+    description: Access token with the right permissions to access and interact with the Azure resource.
+executor:
+  type: PowerShell
+  scriptContent: |
+    # Get service principal of Azure AD application
+    $AppServicePrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=appId eq '$($applicationId)'" -AccessToken $accessToken
+    if ($AppServicePrincipal.value.Count -ne 1) {
+      Write-Error "Found $($AppServicePrincipal.value.Count) service principals with application id '$($applicationId)'"
+    }
+    $AppServicePrincipalId = $AppServicePrincipal.value[0].id
+
+    # Get the service principal of resource we want to grant permissions from (i.e. Microsoft Graph)
+    $ResourceServicePrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=displayName eq '$resourceSpName'" -AccessToken $accessToken
+    if ($ResourceServicePrincipal.value.Count -ne 1) {
+      Write-Error "Found $($ResourceServicePrincipal.value.Count) service principals with displayName '$($resourceSpName)'"
+    }
+    $ResourceServicePrincipalId = $ResourceServicePrincipal.value[0].id
+
+    # Check existing OAuth grants
+    $currentGrants = Invoke-MSGraph -Resource "oauth2PermissionGrants" -AccessToken $accessToken
+    $existingGrant = $currentGrants | Where-Object { $_.clientId -eq $AppServicePrincipalId }
+
+    if ($existingGrant) {
+      $permissionsArgument = $permissions -join ' '
+      $permissionsStrings = @($permissionsArgument, $existingGrant.scope) -join ' '
+      $permissions = $permissionsStrings.split(' ')
+    }
+
+    # Grant delegated permissions
+    $body = @{
+      clientId = $AppServicePrincipalId
+      consentType = "AllPrincipals"
+      principalId = $null
+      resourceId = $ResourceServicePrincipalId
+      scope = "$permissions"
+      startTime = "$((get-date).ToString("yyyy-MM-ddTHH:mm:ss:ffZ"))"
+      expiryTime = "$((get-date).AddYears(1).ToString("yyyy-MM-ddTHH:mm:ss:ffZ"))"
+    }
+    $response = Invoke-MSGraph -HttpMethod post -Resource "oauth2PermissionGrants" -AccessToken $accessToken -Body $body
+    $response
+output:
+  response:
+    type: object

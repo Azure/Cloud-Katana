@@ -9,12 +9,14 @@ function getAdApplication([string]$appObjectId, [string]$accessToken) {
 }
 
 function getAllAdApplications([string]$accessToken) {
-  $response = Invoke-MSGraph -Version "v1.0" -Resource "applications" -AccessToken $accessToken
-  $response}
+  $response = Invoke-MSGraph -Resource "applications" -AccessToken $accessToken
+  $response
+}
 
 function getAllUsers([string]$accessToken) {
-  $response = Invoke-MSGraph -Version "v1.0" -Resource "users" -AccessToken $accessToken
-  $response}
+  $response = Invoke-MSGraph -Resource "users" -AccessToken $accessToken
+  $response
+}
 
 function getServicePrincipal([string]$spObjectId, [string]$accessToken) {
   $response = Invoke-MSGraph -Resource "servicePrincipals/$spObjectId" -AccessToken $accessToken

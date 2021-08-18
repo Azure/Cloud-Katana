@@ -43,68 +43,76 @@ function createServicePrincipal([string]$appId, [string]$accessToken) {
   $response
 }
 
-function grantPermissionsConsent([string]$applicationId, [string]$resourceSpDisplayName, [string]$permissionType, [array]$permissions, [string]$accessToken) {
+function grantApplicationPermissions([string]$applicationId, [string]$resourceSpName, [array]$permissions, [string]$accessToken) {
   # Get service principal of Azure AD application
-  $ServicePrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=appId eq '$($applicationId)'" -AccessToken $accessToken -Body $body
-  if ($ServicePrincipal.value.Count -ne 1) {
-    Write-Error "Found $($ServicePrincipal.value.Count) service principals with application id '$($applicationId)'"
+  $AppServicePrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=appId eq '$($applicationId)'" -AccessToken $accessToken
+  if ($AppServicePrincipal.value.Count -ne 1) {
+    Write-Error "Found $($AppServicePrincipal.value.Count) service principals with application id '$($applicationId)'"
   }
-  $ServicePrincipalId = $ServicePrincipal.value[0].id
+  $AppServicePrincipalId = $AppServicePrincipal.value[0].id
 
-  # Get Service Principal to retrive permissions from
-  $ResourceSvcPrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=displayName eq '$resourceSpDisplayName'" -AccessToken $accessToken -Body $body
-  if ($ResourceSvcPrincipal.value.Count -ne 1) {
-    Write-Error "Found $($ResourceSvcPrincipal.value.Count) service principals with displayName '$($resourceSpDisplayName)'"
+  # Get the service principal of resource we want to grant permissions from (i.e. Microsoft Graph)
+  $ResourceServicePrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=displayName eq '$resourceSpName'" -AccessToken $accessToken
+  if ($ResourceServicePrincipal.value.Count -ne 1) {
+    Write-Error "Found $($ResourceServicePrincipal.value.Count) service principals with displayName '$($resourceSpName)'"
+  }
+  $ResourceServicePrincipalId = $ResourceServicePrincipal.value[0].id
+
+  # Retrieve Role Assignments and create 'Resource Access Items'
+  $ResourceAccessItems = @()
+  Foreach ($AppPermission in $permissions) {
+    $RoleAssignment = $ResourceServicePrincipal.value[0].appRoles | Where-Object { $_.Value -eq $AppPermission }
+    $ResourceAccessItem = [PSCustomObject]@{
+      "principalId" = $AppServicePrincipalId
+      "resourceId"  = $ResourceServicePrincipalId
+      "appRoleId"   = $RoleAssignment.id
+    }
+    $ResourceAccessItems += $ResourceAccessItem
+  }
+  $RoleResults = @()
+  foreach ($role in $ResourceAccessItems) {
+    $RoleResults += Invoke-MSGraph -HttpMethod post -Resource "servicePrincipals/$AppServicePrincipalId/appRoleAssignments" -AccessToken $accessToken -Body $role
+  }
+  $RoleResults
+}
+
+function grantDelegatedPermissions([string]$applicationId, [string]$resourceSpName, [array]$permissions, [string]$accessToken) {
+  # Get service principal of Azure AD application
+  $AppServicePrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=appId eq '$($applicationId)'" -AccessToken $accessToken
+  if ($AppServicePrincipal.value.Count -ne 1) {
+    Write-Error "Found $($AppServicePrincipal.value.Count) service principals with application id '$($applicationId)'"
+  }
+  $AppServicePrincipalId = $AppServicePrincipal.value[0].id
+
+  # Get the service principal of resource we want to grant permissions from (i.e. Microsoft Graph)
+  $ResourceServicePrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=displayName eq '$resourceSpName'" -AccessToken $accessToken
+  if ($ResourceServicePrincipal.value.Count -ne 1) {
+    Write-Error "Found $($ResourceServicePrincipal.value.Count) service principals with displayName '$($resourceSpName)'"
+  }
+  $ResourceServicePrincipalId = $ResourceServicePrincipal.value[0].id
+
+  # Check existing OAuth grants
+  $currentGrants = Invoke-MSGraph -Resource "oauth2PermissionGrants" -AccessToken $accessToken
+  $existingGrant = $currentGrants | Where-Object { $_.clientId -eq $AppServicePrincipalId }
+
+  if ($existingGrant) {
+    $permissionsArgument = $permissions -join ' '
+    $permissionsStrings = @($permissionsArgument, $existingGrant.scope) -join ' '
+    $permissions = $permissionsStrings.split(' ')
   }
 
-  # Define additional permission variables
-  $PropertyType = Switch ($permissionType) {
-    'Delegated' { 'oauth2PermissionScopes'}
-    'Application' { 'appRoles' }
+  # Grant delegated permissions
+  $body = @{
+    clientId = $AppServicePrincipalId
+    consentType = "AllPrincipals"
+    principalId = $null
+    resourceId = $ResourceServicePrincipalId
+    scope = "$permissions"
+    startTime = "$((get-date).ToString("yyyy-MM-ddTHH:mm:ss:ffZ"))"
+    expiryTime = "$((get-date).AddYears(1).ToString("yyyy-MM-ddTHH:mm:ss:ffZ"))"
   }
-  # Granting Permissions
-  if ($permissionType -eq 'Application') {
-    # Retrieve Role Assignments and create 'Resource Access Items'
-    $ResourceAccessItems = @()
-    Foreach ($AppPermission in $permissions) {
-      $RoleAssignment = $ResourceSvcPrincipal.value[0].$PropertyType | Where-Object { $_.Value -eq $AppPermission }
-      $ResourceAccessItem = [PSCustomObject]@{
-        "principalId" = $ServicePrincipalId
-        "resourceId"  = $ResourceSvcPrincipal.value[0].id
-        "appRoleId"   = $RoleAssignment.id
-      }
-      $ResourceAccessItems += $ResourceAccessItem
-    }
-    $RoleResults = @()
-    foreach ($role in $ResourceAccessItems) {
-      $params = @{
-        "Method"  = "Post"
-        "Uri"     = "https://graph.microsoft.com/v1.0/servicePrincipals/$($ServicePrincipalId)/appRoleAssignments"
-        "Body"    = $role | ConvertTo-Json -Compress
-        "Headers" = $headers
-      }
-      $RoleResults += $(Invoke-RestMethod @params)
-    }
-    return $RoleResults
-  }
-  elseif ($permissionType -eq 'Delegated') {
-    $body = @{
-      clientId = $ServicePrincipalId
-      consentType = "AllPrincipals"
-      principalId = $null
-      resourceId = $ResourceSvcPrincipal.value[0].id
-      scope = "$permissions"
-      startTime = "$((get-date).ToString("yyyy-MM-ddTHH:mm:ss:ffZ"))"
-      expiryTime = "$((get-date).AddYears(1).ToString("yyyy-MM-ddTHH:mm:ss:ffZ"))"
-    }
-    $params = @{
-      "Method"  = "Post"
-      "Uri"     = "https://graph.microsoft.com/v1.0/oauth2PermissionGrants"
-      "Body"    = $body | ConvertTo-Json -Compress
-      "Headers" = $headers
-    }
-    $(Invoke-RestMethod @params)
-  }
+  $response = Invoke-MSGraph -HttpMethod post -Resource "oauth2PermissionGrants" -AccessToken $accessToken -Body $body
+  $response
 }
 
 function updateAdAppPassword([string]$appObjectId, [string]$pwdCredentialName, [string]$accessToken) {
@@ -115,29 +123,21 @@ function updateAdAppPassword([string]$appObjectId, [string]$pwdCredentialName, [
   $response
 }
 
-function updateAdAppRequiredPermissions([string]$displayName, [string]$resourceSpDisplayName, [string]$permissionType, [array]$permissions, [string]$accessToken) {
+function updateAdAppRequiredResourceAccess([string]$displayName, [string]$resourceSpName, [string]$permissionType, [array]$permissions, [string]$accessToken) {
   # Get application to assign permissions to
-  $params = @{
-    "Method"  = "Get"
-    "Uri"     = "https://graph.microsoft.com/v1.0/applications?`$filter=displayName eq '$displayName'"
-    "Headers" = $headers
-  }
-  $AppResults = Invoke-RestMethod @params
-  $Application = $AppResults.value[0]
+  $AppResults = Invoke-MSGraph -Resource "applications" -QueryParameters "`$filter=displayName eq '$displayName'" -AccessToken $accessToken
   if ($AppResults.value.Count -ne 1) {
     Write-Error "Found $($AppResults.value.Count) applications with displayName '$($displayName)'"
   }
+  $Application = $AppResults.value[0]
+
   # Get Service Principal to retrive permissions from
-  $params = @{
-    "Method"  = "Get"
-    "Uri"     = "https://graph.microsoft.com/v1.0/servicePrincipals?`$filter=displayName eq '$resourceSpDisplayName'"
-    "Headers" = $headers
-  }
-  $ResourceResults = Invoke-RestMethod @params
-  $ResourceSvcPrincipal = $ResourceResults.value[0]
+  $ResourceResults = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=displayName eq '$resourceSpName'" -AccessToken $accessToken
   if ($ResourceResults.value.Count -ne 1) {
-    Write-Error "Found $($ResourceResults.value.Count) service principals with displayName '$($resourceSpDisplayName)'"
+    Write-Error "Found $($ResourceResults.value.Count) service principals with displayName '$($resourceSpName)'"
   }
+  $ResourceSvcPrincipal = $ResourceResults.value[0]
+
   # Define additional permission variables
   $PropertyType = Switch ($permissionType) {
     'Delegated' { 'oauth2PermissionScopes'}
@@ -176,16 +176,8 @@ function updateAdAppRequiredPermissions([string]$displayName, [string]$resourceS
     $Application.requiredResourceAccess += $RequiredResourceAccess
   }
   $AppBody = $Application | Select-Object -Property "id", "appId", "displayName", "identifierUris", "requiredResourceAccess"
-  $params = @{
-    "Method"  = "Patch"
-    "Uri"     = "https://graph.microsoft.com/v1.0/applications/$($AppBody.id)"
-    "Body"    = $AppBody | ConvertTo-Json -Compress -Depth 99
-    "Headers" = $headers
-  }
-  $updatedApplication = Invoke-WebRequest @params
-  if ($updatedApplication.StatusCode -eq 204) {
-    "Required permissions were assigned successfully to $($displayName)"
-  }
+  $response = Invoke-MSGraph -HttpMethod Patch -Resource "applications/$($AppBody.id)" -AccessToken $accessToken -Body $AppBody
+  $response
 }
 
 function updateSpPassword([string]$spObjectId, [string]$pwdCredentialName, [string]$accessToken) {
