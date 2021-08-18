@@ -46,22 +46,22 @@ function createServicePrincipal([string]$appId, [string]$accessToken) {
 function grantApplicationPermissions([string]$applicationId, [string]$resourceSpName, [array]$permissions, [string]$accessToken) {
   # Get service principal of Azure AD application
   $AppServicePrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=appId eq '$($applicationId)'" -AccessToken $accessToken
-  if ($AppServicePrincipal.value.Count -ne 1) {
-    Write-Error "Found $($AppServicePrincipal.value.Count) service principals with application id '$($applicationId)'"
+  if (!$AppServicePrincipal) {
+    Write-Error "No service principal was found with application id '$($applicationId)'"
   }
-  $AppServicePrincipalId = $AppServicePrincipal.value[0].id
+  $AppServicePrincipalId = $AppServicePrincipal.id
 
   # Get the service principal of resource we want to grant permissions from (i.e. Microsoft Graph)
   $ResourceServicePrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=displayName eq '$resourceSpName'" -AccessToken $accessToken
-  if ($ResourceServicePrincipal.value.Count -ne 1) {
-    Write-Error "Found $($ResourceServicePrincipal.value.Count) service principals with displayName '$($resourceSpName)'"
+  if (!$ResourceServicePrincipal) {
+    Write-Error "No service principal was found with displayName '$($resourceSpName)'"
   }
-  $ResourceServicePrincipalId = $ResourceServicePrincipal.value[0].id
+  $ResourceServicePrincipalId = $ResourceServicePrincipal.id
 
   # Retrieve Role Assignments and create 'Resource Access Items'
   $ResourceAccessItems = @()
   Foreach ($AppPermission in $permissions) {
-    $RoleAssignment = $ResourceServicePrincipal.value[0].appRoles | Where-Object { $_.Value -eq $AppPermission }
+    $RoleAssignment = $ResourceServicePrincipal.appRoles | Where-Object { $_.Value -eq $AppPermission }
     $ResourceAccessItem = [PSCustomObject]@{
       "principalId" = $AppServicePrincipalId
       "resourceId"  = $ResourceServicePrincipalId
@@ -79,17 +79,17 @@ function grantApplicationPermissions([string]$applicationId, [string]$resourceSp
 function grantDelegatedPermissions([string]$applicationId, [string]$resourceSpName, [array]$permissions, [string]$accessToken) {
   # Get service principal of Azure AD application
   $AppServicePrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=appId eq '$($applicationId)'" -AccessToken $accessToken
-  if ($AppServicePrincipal.value.Count -ne 1) {
-    Write-Error "Found $($AppServicePrincipal.value.Count) service principals with application id '$($applicationId)'"
+  if (!$AppServicePrincipal) {
+    Write-Error "No service principal was found with application id '$($applicationId)'"
   }
-  $AppServicePrincipalId = $AppServicePrincipal.value[0].id
+  $AppServicePrincipalId = $AppServicePrincipal.id
 
   # Get the service principal of resource we want to grant permissions from (i.e. Microsoft Graph)
   $ResourceServicePrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=displayName eq '$resourceSpName'" -AccessToken $accessToken
-  if ($ResourceServicePrincipal.value.Count -ne 1) {
-    Write-Error "Found $($ResourceServicePrincipal.value.Count) service principals with displayName '$($resourceSpName)'"
+  if (!$ResourceServicePrincipal {
+    Write-Error "No service principal was found with displayName '$($resourceSpName)'"
   }
-  $ResourceServicePrincipalId = $ResourceServicePrincipal.value[0].id
+  $ResourceServicePrincipalId = $ResourceServicePrincipal.id
 
   # Check existing OAuth grants
   $currentGrants = Invoke-MSGraph -Resource "oauth2PermissionGrants" -AccessToken $accessToken
@@ -125,18 +125,16 @@ function updateAdAppPassword([string]$appObjectId, [string]$pwdCredentialName, [
 
 function updateAdAppRequiredResourceAccess([string]$displayName, [string]$resourceSpName, [string]$permissionType, [array]$permissions, [string]$accessToken) {
   # Get application to assign permissions to
-  $AppResults = Invoke-MSGraph -Resource "applications" -QueryParameters "`$filter=displayName eq '$displayName'" -AccessToken $accessToken
-  if ($AppResults.value.Count -ne 1) {
-    Write-Error "Found $($AppResults.value.Count) applications with displayName '$($displayName)'"
+  $Application = Invoke-MSGraph -Resource "applications" -QueryParameters "`$filter=displayName eq '$displayName'" -AccessToken $accessToken
+  if (!$Application) {
+    Write-Error "No application found with displayName '$($displayName)'"
   }
-  $Application = $AppResults.value[0]
 
   # Get Service Principal to retrive permissions from
-  $ResourceResults = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=displayName eq '$resourceSpName'" -AccessToken $accessToken
-  if ($ResourceResults.value.Count -ne 1) {
-    Write-Error "Found $($ResourceResults.value.Count) service principals with displayName '$($resourceSpName)'"
+  $ResourceSvcPrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=displayName eq '$resourceSpName'" -AccessToken $accessToken
+  if (!$ResourceSvcPrincipal) {
+    Write-Error "No service principal found with displayName '$($resourceSpName)'"
   }
-  $ResourceSvcPrincipal = $ResourceResults.value[0]
 
   # Define additional permission variables
   $PropertyType = Switch ($permissionType) {
