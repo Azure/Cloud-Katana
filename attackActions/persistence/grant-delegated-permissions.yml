@@ -38,17 +38,17 @@ executor:
   scriptContent: |
     # Get service principal of Azure AD application
     $AppServicePrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=appId eq '$($applicationId)'" -AccessToken $accessToken
-    if ($AppServicePrincipal.value.Count -ne 1) {
-      Write-Error "Found $($AppServicePrincipal.value.Count) service principals with application id '$($applicationId)'"
+    if (!$AppServicePrincipal) {
+      Write-Error "No service principal was found with application id '$($applicationId)'"
     }
-    $AppServicePrincipalId = $AppServicePrincipal.value[0].id
+    $AppServicePrincipalId = $AppServicePrincipal.id
 
     # Get the service principal of resource we want to grant permissions from (i.e. Microsoft Graph)
     $ResourceServicePrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=displayName eq '$resourceSpName'" -AccessToken $accessToken
-    if ($ResourceServicePrincipal.value.Count -ne 1) {
-      Write-Error "Found $($ResourceServicePrincipal.value.Count) service principals with displayName '$($resourceSpName)'"
+    if (!$ResourceServicePrincipal {
+      Write-Error "No service principal was found with displayName '$($resourceSpName)'"
     }
-    $ResourceServicePrincipalId = $ResourceServicePrincipal.value[0].id
+    $ResourceServicePrincipalId = $ResourceServicePrincipal.id
 
     # Check existing OAuth grants
     $currentGrants = Invoke-MSGraph -Resource "oauth2PermissionGrants" -AccessToken $accessToken

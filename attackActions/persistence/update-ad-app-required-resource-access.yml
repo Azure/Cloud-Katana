@@ -42,18 +42,16 @@ executor:
   type: PowerShell
   scriptContent: |
     # Get application to assign permissions to
-    $AppResults = Invoke-MSGraph -Resource "applications" -QueryParameters "`$filter=displayName eq '$displayName'" -AccessToken $accessToken
-    if ($AppResults.value.Count -ne 1) {
-      Write-Error "Found $($AppResults.value.Count) applications with displayName '$($displayName)'"
+    $Application = Invoke-MSGraph -Resource "applications" -QueryParameters "`$filter=displayName eq '$displayName'" -AccessToken $accessToken
+    if (!$Application) {
+      Write-Error "No application found with displayName '$($displayName)'"
     }
-    $Application = $AppResults.value[0]
 
     # Get Service Principal to retrive permissions from
-    $ResourceResults = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=displayName eq '$resourceSpName'" -AccessToken $accessToken
-    if ($ResourceResults.value.Count -ne 1) {
-      Write-Error "Found $($ResourceResults.value.Count) service principals with displayName '$($resourceSpName)'"
+    $ResourceSvcPrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=displayName eq '$resourceSpName'" -AccessToken $accessToken
+    if (!$ResourceSvcPrincipal) {
+      Write-Error "No service principal found with displayName '$($resourceSpName)'"
     }
-    $ResourceSvcPrincipal = $ResourceResults.value[0]
 
     # Define additional permission variables
     $PropertyType = Switch ($permissionType) {
