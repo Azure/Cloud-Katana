@@ -1,9 +1,11 @@
-title: updateAdAppRequiredPermissions
+title: updateAdAppRequiredResourceAccess
 id: c0d902ba-e4a9-418e-93fe-c3b0c0df65db
 creationDate: '2021-08-05'
 modificationDate: '2021-08-05'
 description: |
-  A threat actor might want to update required permissions (delegated or applications) of an Azure AD application. This does not grant permissions consent.
+  A threat actor might want to update the required resource access property of an Azure AD application.
+  The requiredResourceAccess property of an application specifies resources that the application requires access to and the set of OAuth permission scopes (delegated) and application roles (application) that it needs under each of those resources.
+  This pre-configuration of required resource access drives the consent experience. This does not grant permissions consent.
 contributors:
 - Roberto Rodriguez @Cyb3rWard0g
 - MSTIC R&D
@@ -24,15 +26,15 @@ parameters:
   displayName:
     type: string
     description: The Azure AD application display name.
-  resourceSpDisplayName:
+  resourceSpName:
     type: string
-    description: Display name of the service principal to map/get permissions from (i.e. Microsoft Graph).
+    description: Name of the resource the application requires access to (i.e. Microsoft Graph).
   permissionType:
     type: string
-    description: Type of permissions assigned. It could of type Delegated or Application.
+    description: Type of permissions required. It could of type Delegated or Application.
   permissions:
     type: array
-    description: An array of required permissions to assign to the application.
+    description: An array of required permissions for the application.
   accessToken:
     type: string
     description: Access token with the right permissions to access and interact with the Azure resource.
@@ -40,27 +42,19 @@ executor:
   type: PowerShell
   scriptContent: |
     # Get application to assign permissions to
-    $params = @{
-      "Method"  = "Get"
-      "Uri"     = "https://graph.microsoft.com/v1.0/applications?`$filter=displayName eq '$displayName'"
-      "Headers" = $headers
-    }
-    $AppResults = Invoke-RestMethod @params
-    $Application = $AppResults.value[0]
+    $AppResults = Invoke-MSGraph -Resource "applications" -QueryParameters "`$filter=displayName eq '$displayName'" -AccessToken $accessToken
     if ($AppResults.value.Count -ne 1) {
       Write-Error "Found $($AppResults.value.Count) applications with displayName '$($displayName)'"
     }
+    $Application = $AppResults.value[0]
+
     # Get Service Principal to retrive permissions from
-    $params = @{
-      "Method"  = "Get"
-      "Uri"     = "https://graph.microsoft.com/v1.0/servicePrincipals?`$filter=displayName eq '$resourceSpDisplayName'"
-      "Headers" = $headers
-    }
-    $ResourceResults = Invoke-RestMethod @params
-    $ResourceSvcPrincipal = $ResourceResults.value[0]
+    $ResourceResults = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=displayName eq '$resourceSpName'" -AccessToken $accessToken
     if ($ResourceResults.value.Count -ne 1) {
-      Write-Error "Found $($ResourceResults.value.Count) service principals with displayName '$($resourceSpDisplayName)'"
+      Write-Error "Found $($ResourceResults.value.Count) service principals with displayName '$($resourceSpName)'"
     }
+    $ResourceSvcPrincipal = $ResourceResults.value[0]
+
     # Define additional permission variables
     $PropertyType = Switch ($permissionType) {
       'Delegated' { 'oauth2PermissionScopes'}
@@ -99,16 +93,8 @@ executor:
       $Application.requiredResourceAccess += $RequiredResourceAccess
     }
     $AppBody = $Application | Select-Object -Property "id", "appId", "displayName", "identifierUris", "requiredResourceAccess"
-    $params = @{
-      "Method"  = "Patch"
-      "Uri"     = "https://graph.microsoft.com/v1.0/applications/$($AppBody.id)"
-      "Body"    = $AppBody | ConvertTo-Json -Compress -Depth 99
-      "Headers" = $headers
-    }
-    $updatedApplication = Invoke-WebRequest @params
-    if ($updatedApplication.StatusCode -eq 204) {
-      "Required permissions were assigned successfully to $($displayName)"
-    }
+    $response = Invoke-MSGraph -HttpMethod Patch -Resource "applications/$($AppBody.id)" -AccessToken $accessToken -Body $AppBody
+    $response
 output:
   response:
     type: object

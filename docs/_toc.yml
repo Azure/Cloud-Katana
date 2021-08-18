@@ -37,7 +37,8 @@ parts:
       - file: notebooks/azure/persistence/createAdApplication
       - file: notebooks/azure/persistence/createNewDomain
       - file: notebooks/azure/persistence/createServicePrincipal
-      - file: notebooks/azure/persistence/grantPermissionsConsent
+      - file: notebooks/azure/persistence/grantApplicationPermissions
+      - file: notebooks/azure/persistence/grantDelegatedPermissions
       - file: notebooks/azure/persistence/updateAdAppPassword
-      - file: notebooks/azure/persistence/updateAdAppRequiredPermissions
+      - file: notebooks/azure/persistence/updateAdAppRequiredResourceAccess
       - file: notebooks/azure/persistence/updateSpPassword

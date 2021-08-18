@@ -15,8 +15,6 @@ attackMappings:
 platform: Azure
 resource:
   url: https://graph.microsoft.com/
-  version: v1.0
-  name: applications
   authorization:
     permissionsType: application
     permissions:
@@ -25,6 +23,11 @@ parameters:
   accessToken:
     type: string
     description: Access token with the right permissions to access and interact with the Azure resource.
+executor:
+  type: PowerShell
+  scriptContent: |
+    $response = Invoke-MSGraph -Resource "applications" -AccessToken $accessToken
+    $response
 output:
   response:
     type: array
