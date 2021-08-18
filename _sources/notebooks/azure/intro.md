@@ -8,6 +8,7 @@
 
 |Created|Action|Description|Author|
 | :---| :---| :---| :---|
+|2021-08-09 |[grantApplicationPermissions](https://cloud-katana.com/notebooks/azure/persistence/grantApplicationPermissions.html) |A threat actor might want to grant application permissions to an Azure AD application (Service Principal). |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-08-05 |[getAllUsersMailboxMessages](https://cloud-katana.com/notebooks/azure/collection/getAllUsersMailboxMessages.html) |A threat actor might want to read messages from all users mailbox. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-08-05 |[getMyMailboxMessages](https://cloud-katana.com/notebooks/azure/collection/getMyMailboxMessages.html) |A threat actor might want to read messages from the signed-in account. Usually during impersonation. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-08-05 |[getUserMailboxMessages](https://cloud-katana.com/notebooks/azure/collection/getUserMailboxMessages.html) |A threat actor might want to read messages from the mailbox of a specific user. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
@@ -20,7 +21,9 @@
 |2021-08-05 |[createAdApplication](https://cloud-katana.com/notebooks/azure/persistence/createAdApplication.html) |A threat actor might want to register a new Azure AD application for persistence purposes. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-08-05 |[createNewDomain](https://cloud-katana.com/notebooks/azure/persistence/createNewDomain.html) |A threat actor might want to add a new domain to the tenant. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-08-05 |[createServicePrincipal](https://cloud-katana.com/notebooks/azure/persistence/createServicePrincipal.html) |A threat actor might want to create a service principal for an existing Azure AD application. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
-|2021-08-05 |[grantPermissionsConsent](https://cloud-katana.com/notebooks/azure/persistence/grantPermissionsConsent.html) |A threat actor might want to grant permissions (delegated or application permissions type) to an Azure AD application (Service Principal). |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
+|2021-08-05 |[grantDelegatedPermissions](https://cloud-katana.com/notebooks/azure/persistence/grantDelegatedPermissions.html) |A threat actor might want to grant delegated permissions to an Azure AD application (Service Principal). |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-08-05 |[updateAdAppPassword](https://cloud-katana.com/notebooks/azure/persistence/updateAdAppPassword.html) |A threat actor might want to update or add a password to an Azure AD application for persistence purposes. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
-|2021-08-05 |[updateAdAppRequiredPermissions](https://cloud-katana.com/notebooks/azure/persistence/updateAdAppRequiredPermissions.html) |A threat actor might want to update required permissions (delegated or applications) of an Azure AD application. This does not grant permissions consent. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
+|2021-08-05 |[updateAdAppRequiredResourceAccess](https://cloud-katana.com/notebooks/azure/persistence/updateAdAppRequiredResourceAccess.html) |A threat actor might want to update the required resource access property of an Azure AD application.
+The requiredResourceAccess property of an application specifies resources that the application requires access to and the set of OAuth permission scopes (delegated) and application roles (application) that it needs under each of those resources.
+This pre-configuration of required resource access drives the consent experience. This does not grant permissions consent. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-08-05 |[updateSpPassword](https://cloud-katana.com/notebooks/azure/persistence/updateSpPassword.html) |A threat actor might want to update or add a password to a service principal for persistence purposes. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |

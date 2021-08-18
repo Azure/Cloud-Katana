@@ -261,8 +261,13 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="persistence/grantPermissionsConsent.html">
-       grantPermissionsConsent
+      <a class="reference internal" href="persistence/grantApplicationPermissions.html">
+       grantApplicationPermissions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="persistence/grantDelegatedPermissions.html">
+       grantDelegatedPermissions
       </a>
      </li>
      <li class="toctree-l3">
@@ -271,8 +276,8 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="persistence/updateAdAppRequiredPermissions.html">
-       updateAdAppRequiredPermissions
+      <a class="reference internal" href="persistence/updateAdAppRequiredResourceAccess.html">
+       updateAdAppRequiredResourceAccess
       </a>
      </li>
      <li class="toctree-l3">
@@ -411,88 +416,91 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-even"><td class="text-align:left"><p>2021-08-09</p></td>
+<td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/grantApplicationPermissions.html">grantApplicationPermissions</a></p></td>
+<td class="text-align:left"><p>A threat actor might want to grant application permissions to an Azure AD application (Service Principal).</p></td>
+<td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/collection/getAllUsersMailboxMessages.html">getAllUsersMailboxMessages</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to read messages from all users mailbox.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/collection/getMyMailboxMessages.html">getMyMailboxMessages</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to read messages from the signed-in account. Usually during impersonation.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/collection/getUserMailboxMessages.html">getUserMailboxMessages</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to read messages from the mailbox of a specific user.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/discovery/getAdApplication.html">getAdApplication</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to get metadata from a specific Azure AD Application.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/discovery/getAllAdApplications.html">getAllAdApplications</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to list all Azure AD Applications</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/discovery/getAllUsers.html">getAllUsers</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to list all users in Azure AD</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/discovery/getServicePrincipal.html">getServicePrincipal</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to get metadata from a specific service principal.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/addOwnerToAdApp.html">addOwnerToAdApp</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to add an owner to an Azure AD application.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/addOwnerToSp.html">addOwnerToSp</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to add an owner to a service principal.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/createAdApplication.html">createAdApplication</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to register a new Azure AD application for persistence purposes.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/createNewDomain.html">createNewDomain</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to add a new domain to the tenant.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/createServicePrincipal.html">createServicePrincipal</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to create a service principal for an existing Azure AD application.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
-<td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/grantPermissionsConsent.html">grantPermissionsConsent</a></p></td>
-<td class="text-align:left"><p>A threat actor might want to grant permissions (delegated or application permissions type) to an Azure AD application (Service Principal).</p></td>
+<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
+<td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/grantDelegatedPermissions.html">grantDelegatedPermissions</a></p></td>
+<td class="text-align:left"><p>A threat actor might want to grant delegated permissions to an Azure AD application (Service Principal).</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/updateAdAppPassword.html">updateAdAppPassword</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to update or add a password to an Azure AD application for persistence purposes.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
-<td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/updateAdAppRequiredPermissions.html">updateAdAppRequiredPermissions</a></p></td>
-<td class="text-align:left"><p>A threat actor might want to update required permissions (delegated or applications) of an Azure AD application. This does not grant permissions consent.</p></td>
-<td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
-</tr>
 <tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
-<td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/updateSpPassword.html">updateSpPassword</a></p></td>
-<td class="text-align:left"><p>A threat actor might want to update or add a password to a service principal for persistence purposes.</p></td>
-<td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
+<td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/updateAdAppRequiredResourceAccess.html">updateAdAppRequiredResourceAccess</a></p></td>
+<td class="text-align:left"><p>A threat actor might want to update the required resource access property of an Azure AD application.</p></td>
+<td class="text-align:left"><p></p></td>
 </tr>
 </tbody>
 </table>
+<p>The requiredResourceAccess property of an application specifies resources that the application requires access to and the set of OAuth permission scopes (delegated) and application roles (application) that it needs under each of those resources.
+This pre-configuration of required resource access drives the consent experience. This does not grant permissions consent. |Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D |
+|2021-08-05 |<a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/updateSpPassword.html">updateSpPassword</a> |A threat actor might want to update or add a password to a service principal for persistence purposes. |Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D |</p>
 </div>
 <div class="toctree-wrapper compound">
 </div>
