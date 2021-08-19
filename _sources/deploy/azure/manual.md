@@ -57,10 +57,10 @@ $identity = New-ManagedIdentity -Name $identityName -ResourceGroup $resourceGrou
 
 ## Grant Permissions to Managed Identity
 
-The project comes with a `permissions.json` file which aggregates all the permissions needed to execute every single simulation via Azure Functions. The file is in the `attackActions` folder at the root of the Cloud Katana project. We can use that file and the following function to grant permissions to the user-assigned managed identity.
+The project comes with a `permissions.json` file which aggregates all the permissions needed to execute every single simulation via Azure Functions. The file is in the `actions` folder at the root of the Cloud Katana project. We can use that file and the following function to grant permissions to the user-assigned managed identity.
 
 ```PowerShell
-Add-GraphPermissions -SvcPrincipalId $identity.principalId -PermissionsFile .\attackActions\permissions.json -verbose
+Add-GraphPermissions -SvcPrincipalId $identity.principalId -PermissionsFile .\actions\permissions.json -verbose
 ```
 
 ## Deploy ARM Template
