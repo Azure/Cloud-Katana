@@ -14,23 +14,22 @@ Install-Module -name MSAL.PS -Force -AcceptLicense
 Import-Module MSAL.PS
 ```
 
-### Get Function App Access Token
-
-```PowerShell
-$azureFunctionUrl = "https://$functionAppName.azurewebsites.net"
-$cloudkatanaClientAPPId = 'xxxx'
-$tenantId = 'xxxx'
-
-$results = Get-FuncAppToken -AppId $cloudkatanaClientAPPId -FunctionAppUrl $azureFunctionUrl -TenantId $tenantId -verbose
-$accessToken = $results.AccessToken
-```
-
 ### Set Variables
 
 ```PowerShell
 $functionAppName = 'FUNCTION-APP-NAME'
 $azureFunctionUrl = "https://$functionAppName.azurewebsites.net"
 $OrchestratorUrl = "$azureFunctionUrl/api/orchestrators/Orchestrator"
+```
+
+### Get Function App Access Token
+
+```PowerShell
+$cloudkatanaClientAPPId = 'xxxx'
+$tenantId = 'xxxx'
+
+$results = Get-FuncAppToken -AppId $cloudkatanaClientAPPId -FunctionAppUrl $azureFunctionUrl -TenantId $tenantId -verbose
+$accessToken = $results.AccessToken
 ```
 
 ### Set Authorization Header
