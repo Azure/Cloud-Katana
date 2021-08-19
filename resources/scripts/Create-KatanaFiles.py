@@ -10,7 +10,7 @@ from jinja2 import Template
 current_directory = os.path.dirname(__file__)
 app_directory = os.path.join(current_directory, "../..", "durableApp")
 templates_directory = os.path.join(current_directory, "../templates")
-actions_directory = os.path.join(current_directory, "../../attackActions")
+actions_directory = os.path.join(current_directory, "../../actions")
 docs_directory = os.path.join(current_directory, "../../docs")
 notebooks_directory = os.path.join(docs_directory, "notebooks")
 action_files = os.path.join(actions_directory, "**/", "*.yml")
