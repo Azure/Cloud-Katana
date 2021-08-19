@@ -2,7 +2,9 @@
 
 ## Create Azure Function Application Name
 
-The name of the Cloud Katana Azure function application needs to be unique because it is of `Global` scope across Azure resources. Therefore, you can use the following commands to get a random name with `cloudkatana` as a prefix:
+```{note}
+The name of the Cloud Katana Azure function application needs to be unique because it is of `Global` scope across Azure resources. Therefore, you can use the following commands to get a random name with `cloudkatana` as a prefix.
+```
 
 ```PowerShell
 $functionAppName = (-join ('cloudkatana',-join ((65..90) + (97..122) | Get-Random -Count 10 | % {[char]$_}))).ToLower()

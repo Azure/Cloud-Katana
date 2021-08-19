@@ -389,13 +389,13 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#get-function-app-access-token">
-     Get Function App Access Token
+    <a class="reference internal nav-link" href="#set-variables">
+     Set Variables
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#set-variables">
-     Set Variables
+    <a class="reference internal nav-link" href="#get-function-app-access-token">
+     Get Function App Access Token
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -458,22 +458,21 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="get-function-app-access-token">
-<h3>Get Function App Access Token<a class="headerlink" href="#get-function-app-access-token" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$azureFunctionUrl</span> <span class="p">=</span> <span class="s2">&quot;https://$functionAppName.azurewebsites.net&quot;</span>
-<span class="nv">$cloudkatanaClientAPPId</span> <span class="p">=</span> <span class="s1">&#39;xxxx&#39;</span>
-<span class="nv">$tenantId</span> <span class="p">=</span> <span class="s1">&#39;xxxx&#39;</span>
-
-<span class="nv">$results</span> <span class="p">=</span> <span class="nb">Get-FuncAppToken</span> <span class="n">-AppId</span> <span class="nv">$cloudkatanaClientAPPId</span> <span class="n">-FunctionAppUrl</span> <span class="nv">$azureFunctionUrl</span> <span class="n">-TenantId</span> <span class="nv">$tenantId</span> <span class="n">-verbose</span>
-<span class="nv">$accessToken</span> <span class="p">=</span> <span class="nv">$results</span><span class="p">.</span><span class="n">AccessToken</span>
-</pre></div>
-</div>
-</div>
 <div class="section" id="set-variables">
 <h3>Set Variables<a class="headerlink" href="#set-variables" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$functionAppName</span> <span class="p">=</span> <span class="s1">&#39;FUNCTION-APP-NAME&#39;</span>
 <span class="nv">$azureFunctionUrl</span> <span class="p">=</span> <span class="s2">&quot;https://$functionAppName.azurewebsites.net&quot;</span>
 <span class="nv">$OrchestratorUrl</span> <span class="p">=</span> <span class="s2">&quot;$azureFunctionUrl/api/orchestrators/Orchestrator&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-function-app-access-token">
+<h3>Get Function App Access Token<a class="headerlink" href="#get-function-app-access-token" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$cloudkatanaClientAPPId</span> <span class="p">=</span> <span class="s1">&#39;xxxx&#39;</span>
+<span class="nv">$tenantId</span> <span class="p">=</span> <span class="s1">&#39;xxxx&#39;</span>
+
+<span class="nv">$results</span> <span class="p">=</span> <span class="nb">Get-FuncAppToken</span> <span class="n">-AppId</span> <span class="nv">$cloudkatanaClientAPPId</span> <span class="n">-FunctionAppUrl</span> <span class="nv">$azureFunctionUrl</span> <span class="n">-TenantId</span> <span class="nv">$tenantId</span> <span class="n">-verbose</span>
+<span class="nv">$accessToken</span> <span class="p">=</span> <span class="nv">$results</span><span class="p">.</span><span class="n">AccessToken</span>
 </pre></div>
 </div>
 </div>

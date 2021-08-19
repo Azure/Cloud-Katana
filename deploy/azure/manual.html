@@ -423,7 +423,10 @@
 <h1>Deploy Manually<a class="headerlink" href="#deploy-manually" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="create-azure-function-application-name">
 <h2>Create Azure Function Application Name<a class="headerlink" href="#create-azure-function-application-name" title="Permalink to this headline">¶</a></h2>
-<p>The name of the Cloud Katana Azure function application needs to be unique because it is of <code class="docutils literal notranslate"><span class="pre">Global</span></code> scope across Azure resources. Therefore, you can use the following commands to get a random name with <code class="docutils literal notranslate"><span class="pre">cloudkatana</span></code> as a prefix:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The name of the Cloud Katana Azure function application needs to be unique because it is of <code class="docutils literal notranslate"><span class="pre">Global</span></code> scope across Azure resources. Therefore, you can use the following commands to get a random name with <code class="docutils literal notranslate"><span class="pre">cloudkatana</span></code> as a prefix.</p>
+</div>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$functionAppName</span> <span class="p">=</span> <span class="p">(</span><span class="n">-join</span> <span class="p">(</span><span class="s1">&#39;cloudkatana&#39;</span><span class="p">,</span><span class="n">-join</span> <span class="p">((</span><span class="n">65</span><span class="p">..</span><span class="n">90</span><span class="p">)</span> <span class="p">+</span> <span class="p">(</span><span class="n">97</span><span class="p">..</span><span class="n">122</span><span class="p">)</span> <span class="p">|</span> <span class="nb">Get-Random</span> <span class="n">-Count</span> <span class="n">10</span> <span class="p">|</span> <span class="p">%</span> <span class="p">{</span><span class="no">[char]</span><span class="nv">$_</span><span class="p">}))).</span><span class="n">ToLower</span><span class="p">()</span>
 </pre></div>
 </div>
