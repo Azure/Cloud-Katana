@@ -23,9 +23,9 @@ resource:
     permissions:
     - Application.ReadWrite.All
 parameters:
-  displayName:
+  applicationId:
     type: string
-    description: The Azure AD application display name.
+    description: The ID (client_id) of the application we want to update.
   resourceSpName:
     type: string
     description: Name of the resource the application requires access to (i.e. Microsoft Graph).
@@ -41,10 +41,10 @@ parameters:
 executor:
   type: PowerShell
   scriptContent: |
-    # Get application to assign permissions to
-    $Application = Invoke-MSGraph -Resource "applications" -QueryParameters "`$filter=displayName eq '$displayName'" -AccessToken $accessToken
+    # Get application to update
+    $Application = Invoke-MSGraph -Resource "applications" -QueryParameters "`$filter=appId eq '$applicationId'" -AccessToken $accessToken
     if (!$Application) {
-      Write-Error "No application found with displayName '$($displayName)'"
+      Write-Error "No application found with application id '$($applicationId)'"
     }
 
     # Get Service Principal to retrive permissions from
