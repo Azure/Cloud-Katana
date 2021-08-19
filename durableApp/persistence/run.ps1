@@ -96,22 +96,32 @@ function grantDelegatedPermissions([string]$applicationId, [string]$resourceSpNa
   $existingGrant = $currentGrants | Where-Object { $_.clientId -eq $AppServicePrincipalId }
 
   if ($existingGrant) {
+    $permissionsGrantId = $existingGrant.id
     $permissionsArgument = $permissions -join ' '
     $permissionsStrings = @($permissionsArgument, $existingGrant.scope) -join ' '
     $permissions = $permissionsStrings.split(' ')
-  }
 
-  # Grant delegated permissions
-  $body = @{
-    clientId = $AppServicePrincipalId
-    consentType = "AllPrincipals"
-    principalId = $null
-    resourceId = $ResourceServicePrincipalId
-    scope = "$permissions"
-    startTime = "$((get-date).ToString("yyyy-MM-ddTHH:mm:ss:ffZ"))"
-    expiryTime = "$((get-date).AddYears(1).ToString("yyyy-MM-ddTHH:mm:ss:ffZ"))"
+    $body = @{
+      scope = "$permissions"
+    }
+    $method = "Patch"
+    $resource = "oauth2PermissionGrants/$permissionsGrantId"
   }
-  $response = Invoke-MSGraph -HttpMethod post -Resource "oauth2PermissionGrants" -AccessToken $accessToken -Body $body
+  else {
+    $body = @{
+      clientId = $AppServicePrincipalId
+      consentType = "AllPrincipals"
+      principalId = $null
+      resourceId = $ResourceServicePrincipalId
+      scope = "$permissions"
+      startTime = "$((get-date).ToString("yyyy-MM-ddTHH:mm:ss:ffZ"))"
+      expiryTime = "$((get-date).AddYears(1).ToString("yyyy-MM-ddTHH:mm:ss:ffZ"))"
+    }
+    $method = "Post"
+    $resource = "oauth2PermissionGrants"
+  }
+  # Grant delegated permissions
+  $response = Invoke-MSGraph -HttpMethod $method -Resource $resource -AccessToken $accessToken -Body $body
   $response
 }
 
@@ -123,11 +133,11 @@ function updateAdAppPassword([string]$appObjectId, [string]$pwdCredentialName, [
   $response
 }
 
-function updateAdAppRequiredResourceAccess([string]$displayName, [string]$resourceSpName, [string]$permissionType, [array]$permissions, [string]$accessToken) {
-  # Get application to assign permissions to
-  $Application = Invoke-MSGraph -Resource "applications" -QueryParameters "`$filter=displayName eq '$displayName'" -AccessToken $accessToken
+function updateAdAppRequiredResourceAccess([string]$applicationId, [string]$resourceSpName, [string]$permissionType, [array]$permissions, [string]$accessToken) {
+  # Get application to update
+  $Application = Invoke-MSGraph -Resource "applications" -QueryParameters "`$filter=appId eq '$applicationId'" -AccessToken $accessToken
   if (!$Application) {
-    Write-Error "No application found with displayName '$($displayName)'"
+    Write-Error "No application found with application id '$($applicationId)'"
   }
 
   # Get Service Principal to retrive permissions from
