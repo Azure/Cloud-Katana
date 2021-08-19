@@ -86,7 +86,7 @@ function grantDelegatedPermissions([string]$applicationId, [string]$resourceSpNa
 
   # Get the service principal of resource we want to grant permissions from (i.e. Microsoft Graph)
   $ResourceServicePrincipal = Invoke-MSGraph -Resource "servicePrincipals" -QueryParameters "`$filter=displayName eq '$resourceSpName'" -AccessToken $accessToken
-  if (!$ResourceServicePrincipal {
+  if (!$ResourceServicePrincipal) {
     Write-Error "No service principal was found with displayName '$($resourceSpName)'"
   }
   $ResourceServicePrincipalId = $ResourceServicePrincipal.id
