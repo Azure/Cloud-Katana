@@ -28,6 +28,9 @@ parts:
       sections:
       - file: notebooks/azure/discovery/getAdApplication
       - file: notebooks/azure/discovery/getAllAdApplications
+      - file: notebooks/azure/discovery/getAllDirectoryRoles
+      - file: notebooks/azure/discovery/getAllGroups
+      - file: notebooks/azure/discovery/getAllServicePrincipal
       - file: notebooks/azure/discovery/getAllUsers
       - file: notebooks/azure/discovery/getServicePrincipal
     - file: notebooks/azure/persistence/intro

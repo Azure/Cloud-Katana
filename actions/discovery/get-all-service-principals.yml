@@ -1,9 +1,9 @@
-title: getServicePrincipal
-id: 32fbe3af-94c0-4bba-8e93-4e0aa0a102a6
-creationDate: '2021-08-05'
-modificationDate: '2021-08-05'
+title: getAllServicePrincipal
+id: 9373e945-1046-490a-8721-f7b61c500b9d
+creationDate: '2021-08-22'
+modificationDate: '2021-08-22'
 description: |
-  A threat actor might want to retrieve properties and relationships from a specific service principal.
+  A threat actor might want to retrieve a list of servicePrincipal objects.
 contributors:
 - Roberto Rodriguez @Cyb3rWard0g
 - MSTIC R&D
@@ -20,17 +20,14 @@ resource:
     permissions:
     - Directory.Read.All
 parameters:
-  spObjectId:
-    type: string
-    description: The service principal object id.
   accessToken:
     type: string
     description: Access token with the right permissions to access and interact with the Azure resource.
 executor:
   type: PowerShell
   scriptContent: |
-    $response = Invoke-MSGraph -Resource "servicePrincipals/$spObjectId" -AccessToken $accessToken
+    $response = Invoke-MSGraph -Resource "servicePrincipals" -AccessToken $accessToken
     $response
 output:
   response:
-    type: object
+    type: array

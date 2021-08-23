@@ -13,6 +13,21 @@ function getAllAdApplications([string]$accessToken) {
   $response
 }
 
+function getAllDirectoryRoles([string]$accessToken) {
+  $response = Invoke-MSGraph -Resource "directoryRoles" -AccessToken $accessToken
+  $response
+}
+
+function getAllGroups([string]$accessToken) {
+  $response = Invoke-MSGraph -Resource "groups" -AccessToken $accessToken
+  $response
+}
+
+function getAllServicePrincipal([string]$accessToken) {
+  $response = Invoke-MSGraph -Resource "servicePrincipals" -AccessToken $accessToken
+  $response
+}
+
 function getAllUsers([string]$accessToken) {
   $response = Invoke-MSGraph -Resource "users" -AccessToken $accessToken
   $response
