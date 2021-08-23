@@ -8,6 +8,9 @@
 
 |Created|Action|Description|Author|
 | :---| :---| :---| :---|
+|2021-08-22 |[getAllDirectoryRoles](https://cloud-katana.com/notebooks/azure/discovery/getAllDirectoryRoles.html) |A threat actor might want to list the directory roles that are activated in the tenant. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
+|2021-08-22 |[getAllGroups](https://cloud-katana.com/notebooks/azure/discovery/getAllGroups.html) |A threat actor might want to list all the groups in an organization, including but not limited to Microsoft 365 groups.. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
+|2021-08-22 |[getAllServicePrincipal](https://cloud-katana.com/notebooks/azure/discovery/getAllServicePrincipal.html) |A threat actor might want to retrieve a list of servicePrincipal objects. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-08-09 |[grantApplicationPermissions](https://cloud-katana.com/notebooks/azure/persistence/grantApplicationPermissions.html) |A threat actor might want to grant application permissions to an Azure AD application (Service Principal). |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-08-05 |[getAllUsersMailboxMessages](https://cloud-katana.com/notebooks/azure/collection/getAllUsersMailboxMessages.html) |A threat actor might want to read messages from all users mailbox. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-08-05 |[getMyMailboxMessages](https://cloud-katana.com/notebooks/azure/collection/getMyMailboxMessages.html) |A threat actor might want to read messages from the signed-in account. Usually during impersonation. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
@@ -15,7 +18,7 @@
 |2021-08-05 |[getAdApplication](https://cloud-katana.com/notebooks/azure/discovery/getAdApplication.html) |A threat actor might want to get metadata from a specific Azure AD Application. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-08-05 |[getAllAdApplications](https://cloud-katana.com/notebooks/azure/discovery/getAllAdApplications.html) |A threat actor might want to list all Azure AD Applications |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-08-05 |[getAllUsers](https://cloud-katana.com/notebooks/azure/discovery/getAllUsers.html) |A threat actor might want to list all users in Azure AD |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
-|2021-08-05 |[getServicePrincipal](https://cloud-katana.com/notebooks/azure/discovery/getServicePrincipal.html) |A threat actor might want to get metadata from a specific service principal. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
+|2021-08-05 |[getServicePrincipal](https://cloud-katana.com/notebooks/azure/discovery/getServicePrincipal.html) |A threat actor might want to retrieve properties and relationships from a specific service principal. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-08-05 |[addOwnerToAdApp](https://cloud-katana.com/notebooks/azure/persistence/addOwnerToAdApp.html) |A threat actor might want to add an owner to an Azure AD application. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-08-05 |[addOwnerToSp](https://cloud-katana.com/notebooks/azure/persistence/addOwnerToSp.html) |A threat actor might want to add an owner to a service principal. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-08-05 |[createAdApplication](https://cloud-katana.com/notebooks/azure/persistence/createAdApplication.html) |A threat actor might want to register a new Azure AD application for persistence purposes. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
