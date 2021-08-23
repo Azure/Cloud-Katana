@@ -2,9 +2,9 @@
     "application": [
         "Mail.Read",
         "Application.Read.All",
+        "Directory.Read.All",
         "User.Read.All",
         "Application.ReadWrite.All",
-        "Directory.Read.All",
         "Domain.ReadWrite.All",
         "AppRoleAssignment.ReadWrite.All",
         "Directory.ReadWrite.All"
