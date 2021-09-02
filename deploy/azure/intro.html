@@ -53,7 +53,7 @@
     <link rel="canonical" href="https://cloud-katana.com/deploy/azure/intro.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Deploy Manually" href="manual.html" />
+    <link rel="next" title="Azure Resource Manager Template" href="arm.html" />
     <link rel="prev" title="Prepare" href="../../prepare.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -104,8 +104,8 @@
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="manual.html">
-     Deploy Manually
+    <a class="reference internal" href="arm.html">
+     Azure Resource Manager Template
     </a>
    </li>
    <li class="toctree-l2">
@@ -125,11 +125,6 @@
    </i>
   </label>
   <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../local/manual.html">
-     Deploy Manually
-    </a>
-   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../local/demos.html">
      Demos
@@ -211,6 +206,21 @@
      <li class="toctree-l3">
       <a class="reference internal" href="../../notebooks/azure/discovery/getAllAdApplications.html">
        getAllAdApplications
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/getAllDirectoryRoles.html">
+       getAllDirectoryRoles
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/getAllGroups.html">
+       getAllGroups
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/getAllServicePrincipal.html">
+       getAllServicePrincipal
       </a>
      </li>
      <li class="toctree-l3">
@@ -384,7 +394,7 @@
   <div class="section" id="deploy-to-azure">
 <h1>Deploy to Azure<a class="headerlink" href="#deploy-to-azure" title="Permalink to this headline">¶</a></h1>
 <p>This section covers all the required steps to deploy Cloud Katana to Azure.
-This can be accomplished manually via a few PowerShell commands and an Azure Resource Manager (ARM) template or via an Azure DevOps CI/CD pipeline.</p>
+This can be accomplished via an Azure Resource Manager (ARM) template or an Azure DevOps CI/CD pipeline.</p>
 <div class="sphinx-bs container pb-4 full-width docutils">
 <div class="row docutils">
 <div class="d-flex col-lg-4 px-2 py-2 docutils">
@@ -393,9 +403,9 @@ This can be accomplished manually via a few PowerShell commands and an Azure Res
 <p class="card-text"><strong>Manually</strong></p>
 </div>
 <div class="card-body docutils">
-<p class="card-text"><strong><a class="reference internal" href="manual.html"><span class="doc std std-doc">Deploy Manually</span></a></strong></p>
+<p class="card-text"><strong><a class="reference internal" href="arm.html"><span class="doc std std-doc">Azure Resource Manager Template</span></a></strong></p>
 <ul class="simple">
-<li><p class="card-text">Register Azure AD applications</p></li>
+<li><p class="card-text">Create Azure Function name</p></li>
 <li><p class="card-text">Create managed identity</p></li>
 <li><p class="card-text">Assign permissions to managed identity</p></li>
 <li><p class="card-text">Deploy ARM template</p></li>
@@ -446,7 +456,7 @@ This can be accomplished manually via a few PowerShell commands and an Azure Res
         <div class='prev-next-bottom'>
             
     <a class='left-prev' id="prev-link" href="../../prepare.html" title="previous page">Prepare</a>
-    <a class='right-next' id="next-link" href="manual.html" title="next page">Deploy Manually</a>
+    <a class='right-next' id="next-link" href="arm.html" title="next page">Azure Resource Manager Template</a>
 
         </div>
         

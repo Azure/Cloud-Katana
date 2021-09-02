@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Deploy Locally</title>
+    <title>Azure Resource Manager Template</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -50,11 +50,11 @@
         const thebe_selector_output = ".output,.cell_output"
     </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <link rel="canonical" href="https://cloud-katana.com/deploy/local/intro.html" />
+    <link rel="canonical" href="https://cloud-katana.com/deploy/azure/arm.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Demos" href="demos.html" />
-    <link rel="prev" title="Demos" href="../azure/demos.html" />
+    <link rel="prev" title="Deploy to Azure" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -93,40 +93,40 @@
    Prepare
   </a>
  </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../azure/intro.html">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="intro.html">
    Deploy to Azure
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../azure/arm.html">
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
      Azure Resource Manager Template
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../azure/demos.html">
+    <a class="reference internal" href="demos.html">
      Demos
     </a>
    </li>
   </ul>
  </li>
- <li class="toctree-l1 current active has-children">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../local/intro.html">
    Deploy Locally
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
   <label for="toctree-checkbox-2">
    <i class="fas fa-chevron-down">
    </i>
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="demos.html">
+    <a class="reference internal" href="../local/demos.html">
      Demos
     </a>
    </li>
@@ -340,7 +340,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/deploy/local/intro.md"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/deploy/azure/arm.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -360,10 +360,10 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/Azure/Cloud-Katana/issues/new?title=Issue%20on%20page%20%2Fdeploy/local/intro.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/Azure/Cloud-Katana/issues/new?title=Issue%20on%20page%20%2Fdeploy/azure/arm.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/Azure/Cloud-Katana/edit/main/docs/deploy/local/intro.md"><button
+        <a class="edit-button" href="https://github.com/Azure/Cloud-Katana/edit/main/docs/deploy/azure/arm.md"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -389,33 +389,40 @@
             <nav id="bd-toc-nav">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#create-azure-storage-account">
-   Create Azure Storage Account
+  <a class="reference internal nav-link" href="#create-azure-function-application-name">
+   Create Azure Function Application Name
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#get-azure-storage-account-connection-string">
-   Get Azure Storage Account Connection String
+  <a class="reference internal nav-link" href="#create-a-user-assigned-managed-identity">
+   Create a User Assigned Managed Identity
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#register-an-azure-ad-application">
-   Register an Azure AD application
+  <a class="reference internal nav-link" href="#grant-permission-to-managed-identity">
+   Grant Permission to Managed Identity
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#grant-permissions-to-azure-ad-application">
-   Grant Permissions to Azure AD application
+  <a class="reference internal nav-link" href="#deploy-arm-template">
+   Deploy ARM Template
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#azure-cli">
+     Azure CLI
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#deploy-button">
+     Deploy Button
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#install-azure-function-core-tools">
-   Install Azure Function Core Tools
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#initialize-azure-durable-functions-locally">
-   Initialize Azure Durable Functions Locally
+  <a class="reference internal nav-link" href="#monitor-deployment">
+   Monitor Deployment
   </a>
  </li>
 </ul>
@@ -429,106 +436,70 @@
         
               <div>
                 
-  <div class="section" id="deploy-locally">
-<h1>Deploy Locally<a class="headerlink" href="#deploy-locally" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="create-azure-storage-account">
-<h2>Create Azure Storage Account<a class="headerlink" href="#create-azure-storage-account" title="Permalink to this headline">¶</a></h2>
-<p>Create an <a class="reference external" href="https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview">Azure storage account</a> in a specific resource group.</p>
+  <div class="section" id="azure-resource-manager-template">
+<h1>Azure Resource Manager Template<a class="headerlink" href="#azure-resource-manager-template" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="create-azure-function-application-name">
+<h2>Create Azure Function Application Name<a class="headerlink" href="#create-azure-function-application-name" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Make sure you pick a unique name for your Azure storage account because It is of <code class="docutils literal notranslate"><span class="pre">Global</span></code> scope across all Azure resources.
-A storage account name must be between 3 and 24 characters in length and use numbers and lower-case letters only.</p>
+<p>The name of the Cloud Katana Azure function application needs to be unique because it is of <code class="docutils literal notranslate"><span class="pre">Global</span></code> scope across Azure resources. Therefore, you can use the following commands to get a random name with <code class="docutils literal notranslate"><span class="pre">cloudkatana</span></code> as a prefix.</p>
 </div>
-<p>You can run the following PowerShell commands to get a random name with the prefix <code class="docutils literal notranslate"><span class="pre">ckstorage</span></code> and use it to create an Azure storage account.</p>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$storageAccountName</span> <span class="p">=</span> <span class="p">(</span><span class="n">-join</span> <span class="p">(</span><span class="s1">&#39;ckstorage&#39;</span><span class="p">,</span><span class="n">-join</span> <span class="p">((</span><span class="n">65</span><span class="p">..</span><span class="n">90</span><span class="p">)</span> <span class="p">+</span> <span class="p">(</span><span class="n">97</span><span class="p">..</span><span class="n">122</span><span class="p">)</span> <span class="p">|</span> <span class="nb">Get-Random</span> <span class="n">-Count</span> <span class="n">10</span> <span class="p">|</span> <span class="p">%</span> <span class="p">{</span><span class="no">[char]</span><span class="nv">$_</span><span class="p">}))).</span><span class="n">ToLower</span><span class="p">()</span>
-
-<span class="nv">$storageAccount</span> <span class="p">=</span> <span class="n">az</span> <span class="n">storage</span> <span class="n">account</span> <span class="n">create</span> <span class="p">-</span><span class="n">-name</span> <span class="nv">$storageAccountName</span> <span class="p">-</span><span class="n">-resource-group</span> <span class="s1">&#39;&lt;resource-group-name&gt;&#39;</span> <span class="p">|</span> <span class="nb">ConvertFrom-Json</span>
-<span class="nv">$storageAccount</span>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$functionAppName</span> <span class="p">=</span> <span class="p">(</span><span class="n">-join</span> <span class="p">(</span><span class="s1">&#39;cloudkatana&#39;</span><span class="p">,</span><span class="n">-join</span> <span class="p">((</span><span class="n">65</span><span class="p">..</span><span class="n">90</span><span class="p">)</span> <span class="p">+</span> <span class="p">(</span><span class="n">97</span><span class="p">..</span><span class="n">122</span><span class="p">)</span> <span class="p">|</span> <span class="nb">Get-Random</span> <span class="n">-Count</span> <span class="n">10</span> <span class="p">|</span> <span class="p">%</span> <span class="p">{</span><span class="no">[char]</span><span class="nv">$_</span><span class="p">}))).</span><span class="n">ToLower</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="get-azure-storage-account-connection-string">
-<h2>Get Azure Storage Account Connection String<a class="headerlink" href="#get-azure-storage-account-connection-string" title="Permalink to this headline">¶</a></h2>
-<p>Run the following commands to access the storage account access keys and craft a <code class="docutils literal notranslate"><span class="pre">Connection-String</span></code> value.</p>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$storageAccountAccessKeys</span> <span class="p">=</span>  <span class="n">az</span> <span class="n">storage</span> <span class="n">account</span> <span class="n">keys</span> <span class="n">list</span> <span class="p">-</span><span class="n">-resource-group</span> <span class="s1">&#39;&lt;resource-group-name&gt;&#39;</span> <span class="p">-</span><span class="n">-account-name</span> <span class="nv">$storageAccountName</span> <span class="p">|</span> <span class="nb">ConvertFrom-Json</span>
-<span class="nv">$connectionString</span> <span class="p">=</span> <span class="s2">&quot;DefaultEndpointsProtocol=https;AccountName=</span><span class="p">$(</span><span class="nv">$storageAccountName</span><span class="p">)</span><span class="s2">;AccountKey=</span><span class="p">$(</span><span class="nv">$storageAccountAccessKeys</span><span class="p">[</span><span class="n">0</span><span class="p">].</span><span class="n">value</span><span class="p">)</span><span class="s2">;EndpointSuffix=core.windows.net&quot;</span>
-<span class="nv">$connectionString</span>
-</pre></div>
+<div class="section" id="create-a-user-assigned-managed-identity">
+<h2>Create a User Assigned Managed Identity<a class="headerlink" href="#create-a-user-assigned-managed-identity" title="Permalink to this headline">¶</a></h2>
+<p>Cloud Katana leverages Azure AD applications to expose its API and protect it with Azure AD. Therefore, we need to create the respective applications via the ARM template. Rather than passing credentials to the template to create the applications, we can use a <a class="reference external" href="https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-manage-user-assigned-managed-identities?pivots=identity-mi-methods-azp">user-assigned managed identity</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To create a user-assigned managed identity, your account needs the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#managed-identity-contributor">Managed Identity Contributor role</a>.</p>
 </div>
-<p>Add the connection string value to the variable <code class="docutils literal notranslate"><span class="pre">AzureWebJobsStorage</span></code> in the <code class="docutils literal notranslate"><span class="pre">local.settings.json</span></code> file which is inside of the folder <code class="docutils literal notranslate"><span class="pre">durableApp</span></code> at the root of the Cloud Katana project.</p>
-<p>It should look like the example below:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="s2">&quot;IsEncrypted&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
-  <span class="s2">&quot;Values&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s2">&quot;AzureWebJobsStorage&quot;</span><span class="p">:</span> <span class="s2">&quot;DefaultEndpointsProtocol=https;AccountName=&lt;storage-account-name&gt;;AccountKey=&lt;Account-Key&gt;;EndpointSuffix=core.windows.net&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;FUNCTIONS_WORKER_RUNTIME_VERSION&quot;</span><span class="p">:</span> <span class="s2">&quot;~7&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;FUNCTIONS_WORKER_RUNTIME&quot;</span><span class="p">:</span> <span class="s2">&quot;powershell&quot;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="register-an-azure-ad-application">
-<h2>Register an Azure AD application<a class="headerlink" href="#register-an-azure-ad-application" title="Permalink to this headline">¶</a></h2>
-<p>The Cloud Katana Azure Function application runs with a <a class="reference external" href="https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-manage-user-assigned-managed-identities?pivots=identity-mi-methods-azp">user-assigned managed identity</a>. However, when running the project locally, it is recommended to use an Azure AD application with the right permissions to execute every single simulation action.</p>
-<p>You can use the Cloud Katana PowerShell module to create an Azure AD application.</p>
+<p>You can use the Cloud Katana PowerShell module to create a user-assigned managed identity.</p>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd </span><span class="n">Cloud-Katana</span>
 <span class="nb">Import-Module</span> <span class="p">.\</span><span class="n">CloudKatana</span><span class="p">.</span><span class="n">psm1</span> <span class="n">-verbose</span>
 </pre></div>
 </div>
-<p>Use the following commands to register a new Azure AD application, create a service principal and add credentials to it.</p>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$AppName</span> <span class="p">=</span> <span class="s1">&#39;&lt;YOUR-APP-NAME&gt;&#39;</span>
-<span class="nb">New-AppRegistration</span> <span class="n">-Name</span> <span class="nv">$Appname</span> <span class="n">-NativeApp</span> <span class="n">-ReplyUrls</span> <span class="s1">&#39;http://localhost&#39;</span> <span class="n">-AddSecret</span> <span class="n">-verbose</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Save the <code class="docutils literal notranslate"><span class="pre">secret</span> <span class="pre">text</span></code> and information about your new application. The secret text ised used while authenticating to the Azure AD application to ru simulations as the application itself and not as the signed-in user.</p>
-</div>
-</div>
-<div class="section" id="grant-permissions-to-azure-ad-application">
-<h2>Grant Permissions to Azure AD application<a class="headerlink" href="#grant-permissions-to-azure-ad-application" title="Permalink to this headline">¶</a></h2>
-<p>The project comes with a <code class="docutils literal notranslate"><span class="pre">permissions.json</span></code> file which aggregates all the permissions needed to execute every single simulation via Azure Functions. The file is in the <code class="docutils literal notranslate"><span class="pre">actions</span></code> folder at the root of the Cloud Katana project. We can use that file and the following function to grant permissions to the Azure AD application we just registered/created. You can use another function from the Cloud Katana PowerShell module to do so.</p>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">Add-GraphPermissions</span> <span class="n">-AppSvcPrincipalName</span> <span class="n">CloudKatanaLocal</span> <span class="n">-PermissionsFile</span> <span class="p">.\</span><span class="n">actions</span><span class="p">\</span><span class="n">permissions</span><span class="p">.</span><span class="n">json</span> <span class="n">-Verbose</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="install-azure-function-core-tools">
-<h2>Install Azure Function Core Tools<a class="headerlink" href="#install-azure-function-core-tools" title="Permalink to this headline">¶</a></h2>
-<p>Since we are running the Cloud Katana application locally, we need to install <a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Ccsharp%2Cbash">Azure Function Core tools</a>. You can use another function from the Cloud Katana PowerShell module to do so.</p>
-<p>Open a PowerShell terminal as an Administrator and run the following function to install it either as a <a class="reference external" href="https://community.chocolatey.org/packages/azure-functions-core-tools-3">Choco package</a> or directly from the <a class="reference external" href="https://github.com/Azure/azure-functions-core-tools">GitHub repository</a>:</p>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">Add-AzureFunctionCoreTools</span> <span class="n">-Provider</span> <span class="s1">&#39;Choco&#39;</span> <span class="n">-Latest</span> <span class="n">-Arch</span> <span class="s1">&#39;x64&#39;</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="initialize-azure-durable-functions-locally">
-<h2>Initialize Azure Durable Functions Locally<a class="headerlink" href="#initialize-azure-durable-functions-locally" title="Permalink to this headline">¶</a></h2>
-<p>Open a new terminal at the root of the Cloud Katana project and run the following commands to initialize the Azure Function app:</p>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd </span><span class="p">.\</span><span class="n">durableApp</span><span class="p">\</span>
-<span class="n">func</span> <span class="nb">start</span>
-</pre></div>
-</div>
-<p>You should see something similar to the output below. You just initialized the Cloud Katana orchestrator and exposed the <code class="docutils literal notranslate"><span class="pre">collection</span></code>, <code class="docutils literal notranslate"><span class="pre">discovery</span></code> and <code class="docutils literal notranslate"><span class="pre">persistence</span></code> Azure Functions locally:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Azure</span> <span class="n">Functions</span> <span class="n">Core</span> <span class="n">Tools</span>
-<span class="n">Core</span> <span class="n">Tools</span> <span class="n">Version</span><span class="p">:</span>       <span class="mf">3.0.3568</span> <span class="n">Commit</span> <span class="nb">hash</span><span class="p">:</span> <span class="n">e30a0ede85fd498199c28ad699ab2548593f759b</span>  <span class="p">(</span><span class="mi">64</span><span class="o">-</span><span class="n">bit</span><span class="p">)</span>
-<span class="n">Function</span> <span class="n">Runtime</span> <span class="n">Version</span><span class="p">:</span> <span class="mf">3.0.15828.0</span>
+<p>Run the following PowerShell commands to create one:</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$identityName</span> <span class="p">=</span> <span class="s1">&#39;DeploymentIdentity&#39;</span>
+<span class="nv">$resourceGroup</span> <span class="p">=</span> <span class="s1">&#39;&lt;RESOURCE-GROUP-NAME&gt;&#39;</span>
 
-<span class="n">Functions</span><span class="p">:</span>
-
-        <span class="n">HttpStart</span><span class="p">:</span> <span class="p">[</span><span class="n">POST</span><span class="p">,</span><span class="n">GET</span><span class="p">]</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">7071</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">orchestrators</span><span class="o">/</span><span class="p">{</span><span class="n">FunctionName</span><span class="p">}</span>
-
-        <span class="n">collection</span><span class="p">:</span> <span class="n">activityTrigger</span>
-        <span class="n">discovery</span><span class="p">:</span> <span class="n">activityTrigger</span>
-        <span class="n">Orchestrator</span><span class="p">:</span> <span class="n">orchestrationTrigger</span>
-        <span class="n">persistence</span><span class="p">:</span> <span class="n">activityTrigger</span>
-
-<span class="n">For</span> <span class="n">detailed</span> <span class="n">output</span><span class="p">,</span> <span class="n">run</span> <span class="n">func</span> <span class="k">with</span> <span class="o">--</span><span class="n">verbose</span> <span class="n">flag</span><span class="o">.</span>
-<span class="p">[</span><span class="mi">2021</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">15</span><span class="n">T06</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mf">13.456</span><span class="n">Z</span><span class="p">]</span> <span class="n">Worker</span> <span class="n">process</span> <span class="n">started</span> <span class="ow">and</span> <span class="n">initialized</span><span class="o">.</span>
+<span class="nv">$identity</span> <span class="p">=</span> <span class="nb">New-ManagedIdentity</span> <span class="n">-Name</span> <span class="nv">$identityName</span> <span class="n">-ResourceGroup</span> <span class="nv">$resourceGroup</span> <span class="n">-verbose</span>
 </pre></div>
 </div>
-<p>You are now ready to use the Azure Function application!</p>
 </div>
-<div class="toctree-wrapper compound">
+<div class="section" id="grant-permission-to-managed-identity">
+<h2>Grant Permission to Managed Identity<a class="headerlink" href="#grant-permission-to-managed-identity" title="Permalink to this headline">¶</a></h2>
+<p>Next, we need to add the <a class="reference external" href="https://docs.microsoft.com/en-us/graph/permissions-reference#application-permissions-4">Application.ReadWrite.OwnedBy</a> permission to the user-assigned managed identity. You can use another function from the Cloud Katana PowerShell module to do so.</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">Add-GraphPermissions</span> <span class="n">-SvcPrincipalId</span> <span class="nv">$identity</span><span class="p">.</span><span class="n">principalId</span> <span class="n">-PermissionsList</span> <span class="n">Application</span><span class="p">.</span><span class="n">ReadWrite</span><span class="p">.</span><span class="n">OwnedBy</span> <span class="n">-verbose</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="deploy-arm-template">
+<h2>Deploy ARM Template<a class="headerlink" href="#deploy-arm-template" title="Permalink to this headline">¶</a></h2>
+<p>Deploy the Cloud Katana Azure function application to Azure with the <code class="docutils literal notranslate"><span class="pre">azuredeploy.json</span></code> ARM template in the root of the project.</p>
+<div class="section" id="azure-cli">
+<h3>Azure CLI<a class="headerlink" href="#azure-cli" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$functionAppName</span> <span class="p">=</span> <span class="s1">&#39;FUNCTION-APP-NAME&#39;</span>
+<span class="nv">$identityId</span> <span class="p">=</span> <span class="nv">$identity</span><span class="p">.</span><span class="n">id</span>
+<span class="nv">$assignAppRoleToUser</span> <span class="p">=</span> <span class="s1">&#39;USER@DOMAIN.COM&#39;</span>
+
+<span class="n">az</span> <span class="n">deployment</span> <span class="nb">group </span><span class="n">create</span> <span class="p">-</span><span class="n">-template</span><span class="o">-file</span> <span class="n">azuredeploy</span><span class="p">.</span><span class="n">json</span> <span class="p">-</span><span class="n">-resource-group</span> <span class="nv">$resourceGroup</span> <span class="p">-</span><span class="n">-parameters</span> <span class="n">functionAppName</span><span class="p">=</span><span class="nv">$functionAppName</span> <span class="n">serverAppId</span><span class="p">=</span><span class="nv">$serverAppId</span> <span class="n">identityName</span><span class="p">=</span><span class="nv">$identityName</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="deploy-button">
+<h3>Deploy Button<a class="headerlink" href="#deploy-button" title="Permalink to this headline">¶</a></h3>
+<p>You can also click on the button below and provide the parameter values used in the previous section.</p>
+<p><a class="reference external" href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fAzure%2fCloud-Catana%2fmain%2fazuredeploy.json"><img alt="Deploy to Azure" src="https://aka.ms/deploytoazurebutton" /></a></p>
+</div>
+</div>
+<div class="section" id="monitor-deployment">
+<h2>Monitor Deployment<a class="headerlink" href="#monitor-deployment" title="Permalink to this headline">¶</a></h2>
+<p>Go to <a class="reference external" href="https://portal.azure.com/">https://portal.azure.com</a> &gt; <code class="docutils literal notranslate"><span class="pre">&lt;RESOURCE-GROUP-NAME&gt;</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Deployments</span></code> to monitor the deployment of the Cloud Katana function application:</p>
+<p><img alt="" src="../../_images/MonitorDeployment.png" /></p>
+<p>Once the deployment completes successfully, you will see the following resources in your resource group:</p>
+<p><img alt="" src="../../_images/ResourcesCreated.png" /></p>
 </div>
 </div>
 
@@ -545,7 +516,7 @@ A storage account name must be between 3 and 24 characters in length and use num
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./deploy\local"
+            path: "./deploy\azure"
         },
         predefinedOutput: true
     }
@@ -557,7 +528,7 @@ A storage account name must be between 3 and 24 characters in length and use num
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="../azure/demos.html" title="previous page">Demos</a>
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Deploy to Azure</a>
     <a class='right-next' id="next-link" href="demos.html" title="next page">Demos</a>
 
         </div>

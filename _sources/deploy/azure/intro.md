@@ -1,7 +1,7 @@
 # Deploy to Azure
 
 This section covers all the required steps to deploy Cloud Katana to Azure.
-This can be accomplished manually via a few PowerShell commands and an Azure Resource Manager (ARM) template or via an Azure DevOps CI/CD pipeline.
+This can be accomplished via an Azure Resource Manager (ARM) template or an Azure DevOps CI/CD pipeline.
 
 :::{panels}
 :container: +full-width
@@ -11,8 +11,8 @@ This can be accomplished manually via a few PowerShell commands and an Azure Res
 **Manually**
 ^^^
 
-**[](manual.md)**
-* Register Azure AD applications
+**[](arm.md)**
+* Create Azure Function name
 * Create managed identity
 * Assign permissions to managed identity
 * Deploy ARM template
