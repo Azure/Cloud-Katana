@@ -23,17 +23,26 @@ if [[ $PermissionsFile ]]; then
     appPermissions=$(echo $permissions|jq '.application')
     delegatedPermissions=$(echo $permissions|jq '.delegated')
 fi
+echo $permissions
+echo $appPermissions
+echo $delegatedPermissions
 
-
+echo "[+] Getting role assignments.."
 roleAssignments=$(az ad sp show --id $roleSvcAppId --query "appRoles"|jq ".[]|select([.value]|inside($appPermissions))|.id")
+echo $roleAssignments
 
+echo "[+] Granting application permissions.."
 for roleAssignment in $roleAssignments
 do
+    echo "  [>>] $roleAssignment"
     body=$(echo $roleAssignment|jq -c "{principalId:\"$SvcPrincipalId\", resourceId:\"$roleSvcAppId\", appRoleId:.}")
+    echo $body
     az rest --method post --uri "https://graph.microsoft.com/v1.0/servicePrincipals/$SvcPrincipalId/appRoleAssignments" --body "$body" --headers "Content-Type=application/json"
 done
+
+echo "[+] Granting delegated permissions.."
 token=$(az account get-access-token --resource-type ms-graph --query accessToken --output tsv)
 
-body="{\"clientId\":\"$SvcPrincipalId\",\"consentType\":\"AllPrincipals\",\"principalId\":null,\"resourceId\":\"$roleSvcAppId\",\"scope\":\"delegated\"}"
-
+body="{\"clientId\":\"$SvcPrincipalId\",\"consentType\":\"AllPrincipals\",\"principalId\":null,\"resourceId\":\"$roleSvcAppId\",\"scope\":\"$delegatedPermissions\"}"
+echo $body
 curl 'https://graph.microsoft.com/v1.0/oauth2PermissionGrants' -H "Authorization: Bearer $token" -H "Content-Type: application/json" -d $body
