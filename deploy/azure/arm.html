@@ -471,7 +471,7 @@
 <div class="section" id="grant-permission-to-managed-identity">
 <h2>Grant Permission to Managed Identity<a class="headerlink" href="#grant-permission-to-managed-identity" title="Permalink to this headline">¶</a></h2>
 <p>Next, we need to add the <a class="reference external" href="https://docs.microsoft.com/en-us/graph/permissions-reference#application-permissions-4">Application.ReadWrite.OwnedBy</a> permission to the user-assigned managed identity. You can use another function from the Cloud Katana PowerShell module to do so.</p>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">Add-GraphPermissions</span> <span class="n">-SvcPrincipalId</span> <span class="nv">$identity</span><span class="p">.</span><span class="n">principalId</span> <span class="n">-PermissionsList</span> <span class="n">Application</span><span class="p">.</span><span class="n">ReadWrite</span><span class="p">.</span><span class="n">OwnedBy</span> <span class="n">-verbose</span>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">Add-GraphPermissions</span> <span class="n">-SvcPrincipalId</span> <span class="nv">$identity</span><span class="p">.</span><span class="n">principalId</span> <span class="n">-PermissionsList</span> <span class="p">@(</span><span class="s1">&#39;Application.ReadWrite.OwnedBy&#39;</span><span class="p">)</span> <span class="n">-PermissionsType</span> <span class="n">application</span> <span class="n">-verbose</span>
 </pre></div>
 </div>
 </div>
@@ -480,11 +480,12 @@
 <p>Deploy the Cloud Katana Azure function application to Azure with the <code class="docutils literal notranslate"><span class="pre">azuredeploy.json</span></code> ARM template in the root of the project.</p>
 <div class="section" id="azure-cli">
 <h3>Azure CLI<a class="headerlink" href="#azure-cli" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$functionAppName</span> <span class="p">=</span> <span class="s1">&#39;FUNCTION-APP-NAME&#39;</span>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$resourceGroup</span> <span class="p">=</span> <span class="s1">&#39;&lt;RESOURCE-GROUP-NAME&gt;&#39;</span>
+<span class="nv">$functionAppName</span> <span class="p">=</span> <span class="s1">&#39;FUNCTION-APP-NAME&#39;</span>
 <span class="nv">$identityId</span> <span class="p">=</span> <span class="nv">$identity</span><span class="p">.</span><span class="n">id</span>
 <span class="nv">$assignAppRoleToUser</span> <span class="p">=</span> <span class="s1">&#39;USER@DOMAIN.COM&#39;</span>
 
-<span class="n">az</span> <span class="n">deployment</span> <span class="nb">group </span><span class="n">create</span> <span class="p">-</span><span class="n">-template</span><span class="o">-file</span> <span class="n">azuredeploy</span><span class="p">.</span><span class="n">json</span> <span class="p">-</span><span class="n">-resource-group</span> <span class="nv">$resourceGroup</span> <span class="p">-</span><span class="n">-parameters</span> <span class="n">functionAppName</span><span class="p">=</span><span class="nv">$functionAppName</span> <span class="n">serverAppId</span><span class="p">=</span><span class="nv">$serverAppId</span> <span class="n">identityName</span><span class="p">=</span><span class="nv">$identityName</span>
+<span class="n">az</span> <span class="n">deployment</span> <span class="nb">group </span><span class="n">create</span> <span class="p">-</span><span class="n">-template</span><span class="o">-file</span> <span class="n">azuredeploy</span><span class="p">.</span><span class="n">json</span> <span class="p">-</span><span class="n">-resource-group</span> <span class="nv">$resourceGroup</span> <span class="p">-</span><span class="n">-parameters</span> <span class="n">functionAppName</span><span class="p">=</span><span class="nv">$functionAppName</span> <span class="n">identityId</span><span class="p">=</span><span class="nv">$identityId</span> <span class="n">assignAppRoleToUser</span><span class="p">=</span><span class="nv">$assignAppRoleToUser</span>
 </pre></div>
 </div>
 </div>

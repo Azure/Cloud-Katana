@@ -39,7 +39,7 @@ $identity = New-ManagedIdentity -Name $identityName -ResourceGroup $resourceGrou
 Next, we need to add the [Application.ReadWrite.OwnedBy](https://docs.microsoft.com/en-us/graph/permissions-reference#application-permissions-4) permission to the user-assigned managed identity. You can use another function from the Cloud Katana PowerShell module to do so.
 
 ```PowerShell
-Add-GraphPermissions -SvcPrincipalId $identity.principalId -PermissionsList Application.ReadWrite.OwnedBy -verbose
+Add-GraphPermissions -SvcPrincipalId $identity.principalId -PermissionsList @('Application.ReadWrite.OwnedBy') -PermissionsType application -verbose
 ```
 
 ## Deploy ARM Template
@@ -49,11 +49,12 @@ Deploy the Cloud Katana Azure function application to Azure with the `azuredeplo
 ### Azure CLI
 
 ```PowerShell
+$resourceGroup = '<RESOURCE-GROUP-NAME>'
 $functionAppName = 'FUNCTION-APP-NAME'
 $identityId = $identity.id
 $assignAppRoleToUser = 'USER@DOMAIN.COM'
 
-az deployment group create --template-file azuredeploy.json --resource-group $resourceGroup --parameters functionAppName=$functionAppName serverAppId=$serverAppId identityName=$identityName
+az deployment group create --template-file azuredeploy.json --resource-group $resourceGroup --parameters functionAppName=$functionAppName identityId=$identityId assignAppRoleToUser=$assignAppRoleToUser
 ```
 
 ### Deploy Button
