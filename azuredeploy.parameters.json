@@ -2,17 +2,47 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "functionAppName": {
-            "value": "AZURE-FUNCTION-APP-NAME"
-        },
-        "serverAppId": {
-            "value": "<SERVER-APP-CLIENT-ID>"
-        },
-        "identityName": {
-            "value": "<CLOUD-KATANA-ITENDITY>"
-        },
-        "_packageLocation": {
-            "value": "<PROVIDE-LINK-TO-PACKAGE>"
+      "functionAppName": {
+          "value": "<UNIQUE_NAME_FUNCTION_APPLICATION>"
+      },
+      "identityId": {
+          "value": "<IDENTITY_USED_TO_CREATE_APPLICATIONS>"
+      },
+      "_resourceNames": {
+        "value": {},
+        "metadata": {
+          "description": "Predefined resource names. Should be set to default. The resourse names are generated using the prefix and the suffix. The value is passed when the template is integrated into a complex pipeline."
         }
+      },
+      "githubRepo": {
+        "value": "Azure/Cloud-Katana",
+        "metadata": {
+          "description": "GitHub repo name. The deployment takes the function app code from the repo and publishes it to the app service."
+        }
+      },
+      "githubBranch": {
+        "value": "main"
+      },
+      "githubUserName": {
+        "value": "",
+        "metadata": {
+          "description": "Used to access a private GitHub repo. Should be empty if the repo is public"
+        }
+      },
+      "githubPasswordOrPAT": {
+        "value": "",
+        "metadata": {
+          "description": "GitHub user password or Personal Access Token. Used to access a private GitHub repo. Should be empty if the repo is public"
+        }
+      },
+      "assignAppRoleToUser": {
+        "value": "<USER_NAME@DOMAIN.COM>"
+      },
+      "artifactsLocation": {
+        "value": "<GITHUB_REPO_OR_STORAGE_ACCOUNT>"
+      },
+      "_artifactsLocationSasToken": {
+        "value": ""
+      }
     }
 }

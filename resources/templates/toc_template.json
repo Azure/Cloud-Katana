@@ -12,7 +12,7 @@
                     "file" : "deploy/azure/intro",
                     "sections": [
                         {
-                            "file" : "deploy/azure/manual"
+                            "file" : "deploy/azure/arm"
                         },
                         {
                             "file" : "deploy/azure/demos"
@@ -22,9 +22,6 @@
                 {
                     "file" : "deploy/local/intro",
                     "sections" : [
-                        {
-                            "file": "deploy/local/manual"
-                        },
                         {
                             "file": "deploy/local/demos"
                         }
