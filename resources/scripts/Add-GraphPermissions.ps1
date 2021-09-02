@@ -44,6 +44,9 @@ function Add-GraphPermissions {
         [string[]] $PermissionsList,
 
         [parameter(Mandatory = $False)]
+        [string[]] $PermissionsType,
+
+        [parameter(Mandatory = $False)]
         [string] $PermissionsFile
     )
 
@@ -84,9 +87,9 @@ function Add-GraphPermissions {
     }
     else {
         $permissionsTable = @{
-            $permissionType = $PermissionsList
+            "$PermissionsType" = $PermissionsList
         }
-        $appResourceTypes = @($permissionType)
+        $appResourceTypes = @($PermissionsType)
     }
 
     foreach ($type in $appResourceTypes) {

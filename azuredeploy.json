@@ -47,7 +47,10 @@
             }
         },
         "assignAppRoleToUser": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Authorized user to access and use Cloud Katana"
+            }
         },
         "artifactsLocation": {
             "type": "string",
@@ -308,7 +311,7 @@
             "value": "[variables('resourceNames').ServerAppName]"
         },
         "clientAppName": {
-            "type": "array",
+            "type": "string",
             "value": "[variables('resourceNames').ClientAppName]"
         }
     }
