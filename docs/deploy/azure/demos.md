@@ -32,6 +32,10 @@ $results = Get-FuncAppToken -AppId $cloudkatanaClientAPPId -FunctionAppUrl $azur
 $accessToken = $results.AccessToken
 ```
 
+The first time you use Cloud Katana, you will have to accept the permissions requested to access the Azure AD application exposing Cloud Katana APIs and enabling authentication and authorization via Azure AD. Click `Accept` and you will get an access token back to use while interacting with Cloud Katana's serverless API:
+
+![](../../images/CloudKatanaClientRequest.png)
+
 ### Set Authorization Header
 
 ```PowerShell
