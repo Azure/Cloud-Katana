@@ -14,6 +14,12 @@
                 "description": "Id of the managed identity to create Azure AD applications used by cloud katana to expose its API and enable Azure AD authentication and authorization. Format: /subscriptions/SUBSCRIPTIONID/resourcegroups/GROUP/providers/Microsoft.ManagedIdentity/userAssignedIdentities/IDENTITYNAME"
             }
         },
+        "assignAppRoleToUser": {
+            "type": "string",
+            "metadata": {
+                "description": "First authorized user to access and use Cloud Katana"
+            }
+        },
         "_resourceNames": {
             "type": "object",
             "defaultValue": {},
@@ -46,16 +52,18 @@
                 "description": "GitHub user password or Personal Access Token. Used to access a private GitHub repo. Should be empty if the repo is public"
             }
         },
-        "assignAppRoleToUser": {
+        "utcValue": {
             "type": "string",
-            "metadata": {
-                "description": "Authorized user to access and use Cloud Katana"
-            }
+            "defaultValue": "[utcNow()]"
+        },
+        "roleGuid": {
+            "type": "string",
+            "defaultValue": "[newGuid()]"
         },
         "artifactsLocation": {
             "type": "string",
             "metadata": {
-                "description": "The location of Cloud Katana scripts to deploy the serverless application"
+                "description": "The location of Cloud Katana scripts and configs to deploy the serverless application"
             },
             "defaultValue": "https://raw.githubusercontent.com/Azure/Cloud-Katana/main"
         },
@@ -65,6 +73,13 @@
                 "description": "Auto-generated token to access _artifactsLocation (GITHUB_REPO_OR_STORAGE_ACCOUNT). Leave it blank unless you need to provide your own value."
             },
             "defaultValue": ""
+        },
+        "_packageLocation": {
+            "type": "securestring",
+            "metadata": {
+                "description": "The remote location of the Cloud Katana Azure Function app package. By default this points to the Cloud Katana public GitHub repository. You can update this and point to a private location. You can use a Shared Access Signature (SAS)."
+            },
+            "defaultValue": "https://github.com/Azure/Cloud-Katana/blob/main/CloudKatana.zip?raw=true"
         }
     },
     "variables": {
@@ -82,39 +97,21 @@
             "apiVersion": "2020-10-01",
             "name": "createServerApp",
             "location": "[resourceGroup().location]",
-            "kind": "AzureCLI",
             "identity": {
                 "type": "UserAssigned",
                 "userAssignedIdentities": {
                     "[parameters('identityId')]": {}
                 }
             },
+            "kind": "AzurePowerShell",
             "properties": {
-                "environmentVariables": [
-                    {
-                        "name": "IdentifierUris",
-                        "value": "[concat('https://', variables('resourceNames').AppName, '.azurewebsites.net')]"
-                    },
-                    {
-                        "name": "ReplyUrls",
-                        "value": "[concat('https://', variables('resourceNames').AppName, '.azurewebsites.net/.auth/login/aad/callback')]"
-                    },
-                    {
-                        "name": "RequireAssignedRole",
-                        "value": true
-                    },
-                    {
-                        "name": "assignAppRoleToUser",
-                        "value": "[parameters('assignAppRoleToUser')]"
-                    },
-                    {
-                        "name": "Name",
-                        "value": "[variables('resourceNames').ServerAppName]"
-                    }
-                ],
-                "AzCliVersion": "2.15.0",
+                "forceUpdateTag": "[parameters('utcValue')]",
+                "azPowerShellVersion": "6.2",
                 "timeout": "PT30M",
-                "primaryScriptUri": "[concat(parameters('artifactsLocation'), '/resources/scripts/New-AppRegistration.sh', parameters('_artifactsLocationSasToken'))]",
+                "scriptContent": "[format('. .\\New-AppRegistration.ps1; $results = New-AppRegistration -Name {0} -IdentifierUris {1} -ReplyUrls {2} -RequireAssignedRole -AssignAppRoleToUser {3} -ConnectAs ManagedIdentity; $DeploymentScriptOutputs[\"appId\"] = $results.appId', variables('resourceNames').ServerAppName, concat('https://', variables('resourceNames').AppName, '.azurewebsites.net'), concat('https://', variables('resourceNames').AppName, '.azurewebsites.net/.auth/login/aad/callback'), parameters('assignAppRoleToUser'))]",
+                "supportingScriptUris": [
+                    "[concat(parameters('artifactsLocation'), '/resources/scripts/New-AppRegistration.ps1', parameters('_artifactsLocationSasToken'))]"
+                ],
                 "cleanupPreference": "OnSuccess",
                 "retentionInterval": "PT1H"
             }
@@ -124,43 +121,21 @@
             "apiVersion": "2020-10-01",
             "name": "createClientApp",
             "location": "[resourceGroup().location]",
-            "kind": "AzureCLI",
             "identity": {
                 "type": "UserAssigned",
                 "userAssignedIdentities": {
                     "[parameters('identityId')]": {}
                 }
             },
+            "kind": "AzurePowerShell",
             "properties": {
-                "environmentVariables": [
-                    {
-                        "name": "NativeApp",
-                        "value": true
-                    },
-                    {
-                        "name": "ReplyUrls",
-                        "value": "http://localhost"
-                    },
-                    {
-                        "name": "RequireAssignedRole",
-                        "value": true
-                    },
-                    {
-                        "name": "DisableImplicitGrantFlowOAuth2",
-                        "value": true
-                    },
-                    {
-                        "name": "assignAppRoleToUser",
-                        "value": "[parameters('assignAppRoleToUser')]"
-                    },
-                    {
-                        "name": "Name",
-                        "value": "[variables('resourceNames').ClientAppName]"
-                    }
-                ],
-                "AzCliVersion": "2.15.0",
+                "forceUpdateTag": "[parameters('utcValue')]",
+                "azPowerShellVersion": "6.2",
                 "timeout": "PT30M",
-                "primaryScriptUri": "[concat(parameters('artifactsLocation'), '/resources/scripts/New-AppRegistration.sh', parameters('_artifactsLocationSasToken'))]",
+                "scriptContent": "[format('. .\\New-AppRegistration.ps1; $results = New-AppRegistration -Name {0} -NativeApp -RequireAssignedRole -AssignAppRoleToUser {1} -ConnectAs ManagedIdentity; $DeploymentScriptOutputs[\"appId\"] = $results.appId', variables('resourceNames').ClientAppName, parameters('assignAppRoleToUser'))]",
+                "supportingScriptUris": [
+                    "[concat(parameters('artifactsLocation'), '/resources/scripts/New-AppRegistration.ps1', parameters('_artifactsLocationSasToken'))]"
+                ],
                 "cleanupPreference": "OnSuccess",
                 "retentionInterval": "PT1H"
             }
@@ -172,10 +147,27 @@
             "location": "[resourceGroup().location]"
         },
         {
+            "type": "Microsoft.Resources/deploymentScripts",
+            "apiVersion": "2020-10-01",
+            "name": "sleep",
+            "dependsOn": [ "[variables('resourceNames').Identity]" ],
+            "location": "[resourceGroup().location]",
+            "kind": "AzurePowerShell",
+            "properties": {
+                "forceUpdateTag": "[parameters('utcValue')]",
+                "azPowerShellVersion": "6.2",
+                "timeout": "PT30M",
+                "scriptContent": "Start-Sleep -Seconds 10",
+                "supportingScriptUris": [],
+                "cleanupPreference": "OnSuccess",
+                "retentionInterval": "PT1H"
+            }
+        },
+        {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2019-04-01-preview",
-            "name": "[guid(resourceGroup().id, 'identityContributor')]",
-            "dependsOn": [ "[variables('resourceNames').Identity]" ],
+            "name": "[parameters('roleGuid')]",
+            "dependsOn": ["[concat('Microsoft.Resources/deploymentScripts/', 'sleep')]"],
             "properties": {
                 "roleDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
                 "principalId": "[reference(variables('resourceNames').Identity, '2018-11-30').principalId]",
@@ -187,29 +179,24 @@
             "type": "Microsoft.Resources/deploymentScripts",
             "apiVersion": "2020-10-01",
             "name": "addGraphPermissions",
-            "dependsOn": [ "[variables('resourceNames').Identity]" ],
+            "dependsOn": ["[concat('Microsoft.Authorization/roleAssignments/', parameters('roleGuid'))]"],
             "location": "[resourceGroup().location]",
-            "kind": "AzureCLI",
             "identity": {
                 "type": "UserAssigned",
                 "userAssignedIdentities": {
                     "[parameters('identityId')]": {}
                 }
             },
+            "kind": "AzurePowerShell",
             "properties": {
-                "environmentVariables": [
-                    {
-                        "name": "SvcPrincipalId",
-                        "value": "[reference(variables('resourceNames').Identity, '2018-11-30').principalId]"
-                    },
-                    {
-                        "name": "PermissionsFile",
-                        "value": "[concat(parameters('artifactsLocation'), '/actions/permissions.json', parameters('_artifactsLocationSasToken'))]"
-                    }
-                ],
-                "AzCliVersion": "2.15.0",
+                "forceUpdateTag": "[parameters('utcValue')]",
+                "azPowerShellVersion": "6.2",
                 "timeout": "PT30M",
-                "primaryScriptUri": "[concat(parameters('artifactsLocation'), '/resources/scripts/Add-GraphPermissions.sh', parameters('_artifactsLocationSasToken'))]",
+                "scriptContent": "[format('. .\\Add-GraphPermissions.ps1; Add-GraphPermissions -SvcPrincipalId {0} -PermissionsFile .\\permissions.json -ConnectAs ManagedIdentity', reference(variables('resourceNames').Identity, '2018-11-30').principalId)]",
+                "supportingScriptUris": [
+                    "[concat(parameters('artifactsLocation'), '/resources/scripts/Add-GraphPermissions.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/actions/permissions.json', parameters('_artifactsLocationSasToken'))]"
+                ],
                 "cleanupPreference": "OnSuccess",
                 "retentionInterval": "PT1H"
             }
@@ -217,8 +204,11 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2021-04-01",
-            "name": "DeployFunctionApp",
-            "dependsOn": [ "createServerApp" ],
+            "name": "deployFunctionApp",
+            "dependsOn": [ 
+                "createServerApp",
+                "addGraphPermissions"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -227,7 +217,7 @@
                 },
                 "parameters": {
                     "serverAppId": {
-                        "value": "[reference('createServerApp','2020-10-01').outputs.appId]"
+                        "value": "[reference('createServerApp').outputs.appId]"
                     },
                     "identityName": {
                         "value": "[variables('resourceNames').Identity]"
@@ -236,7 +226,7 @@
                         "value": "[variables('resourceNames').AppName]"
                     },
                     "_packageLocation": {
-                        "value": ""
+                        "value": "[parameters('_packageLocation')]"
                     }
                 }
             }
@@ -245,7 +235,10 @@
             "type": "Microsoft.Resources/deploymentScripts",
             "apiVersion": "2020-10-01",
             "name": "PublishFunctionApp",
-            "dependsOn": [ "DeployFunctionApp", "createClientApp", "[variables('resourceNames').Identity]" ],
+            "dependsOn": [
+                "deployFunctionApp",
+                "createClientApp"
+            ],
             "location": "[resourceGroup().location]",
             "kind": "AzureCLI",
             "identity": {
@@ -274,7 +267,7 @@
                     },
                     {
                         "name": "clientAppId",
-                        "value": "[reference('createClientApp','2020-10-01').outputs.appId]"
+                        "value": "[reference('createClientApp').outputs.appId]"
                     },
                     {
                         "name": "tenantId",
@@ -310,9 +303,17 @@
             "type": "string",
             "value": "[variables('resourceNames').ServerAppName]"
         },
+        "serverAppId": {
+            "type": "string",
+            "value": "[reference('createServerApp').outputs.appId]"
+        },
         "clientAppName": {
             "type": "string",
             "value": "[variables('resourceNames').ClientAppName]"
+        },
+        "clientAppId": {
+            "type": "string",
+            "value": "[reference('createClientApp').outputs.appId]"
         }
     }
 }

@@ -6,7 +6,10 @@
           "value": "<UNIQUE_NAME_FUNCTION_APPLICATION>"
       },
       "identityId": {
-          "value": "<IDENTITY_USED_TO_CREATE_APPLICATIONS>"
+        "value": "<IDENTITY_USED_TO_CREATE_APPLICATIONS>"
+      },
+      "assignAppRoleToUser": {
+        "value": "<USER_NAME@DOMAIN.COM>"
       },
       "_resourceNames": {
         "value": {},
@@ -34,9 +37,6 @@
         "metadata": {
           "description": "GitHub user password or Personal Access Token. Used to access a private GitHub repo. Should be empty if the repo is public"
         }
-      },
-      "assignAppRoleToUser": {
-        "value": "<USER_NAME@DOMAIN.COM>"
       },
       "artifactsLocation": {
         "value": "<GITHUB_REPO_OR_STORAGE_ACCOUNT>"
