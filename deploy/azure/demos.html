@@ -54,7 +54,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Deploy Locally" href="../local/intro.html" />
-    <link rel="prev" title="Deploy Manually" href="manual.html" />
+    <link rel="prev" title="Azure Resource Manager Template" href="arm.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -104,8 +104,8 @@
   </label>
   <ul class="current">
    <li class="toctree-l2">
-    <a class="reference internal" href="manual.html">
-     Deploy Manually
+    <a class="reference internal" href="arm.html">
+     Azure Resource Manager Template
     </a>
    </li>
    <li class="toctree-l2 current active">
@@ -125,11 +125,6 @@
    </i>
   </label>
   <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../local/manual.html">
-     Deploy Manually
-    </a>
-   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../local/demos.html">
      Demos
@@ -211,6 +206,21 @@
      <li class="toctree-l3">
       <a class="reference internal" href="../../notebooks/azure/discovery/getAllAdApplications.html">
        getAllAdApplications
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/getAllDirectoryRoles.html">
+       getAllDirectoryRoles
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/getAllGroups.html">
+       getAllGroups
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/getAllServicePrincipal.html">
+       getAllServicePrincipal
       </a>
      </li>
      <li class="toctree-l3">
@@ -475,6 +485,8 @@
 <span class="nv">$accessToken</span> <span class="p">=</span> <span class="nv">$results</span><span class="p">.</span><span class="n">AccessToken</span>
 </pre></div>
 </div>
+<p>The first time you use Cloud Katana, you will have to accept the permissions requested to access the Azure AD application exposing Cloud Katana APIs and enabling authentication and authorization via Azure AD. Click <code class="docutils literal notranslate"><span class="pre">Accept</span></code> and you will get an access token back to use while interacting with Cloud Katana’s serverless API:</p>
+<p><img alt="" src="../../_images/CloudKatanaClientRequest.png" /></p>
 </div>
 <div class="section" id="set-authorization-header">
 <h3>Set Authorization Header<a class="headerlink" href="#set-authorization-header" title="Permalink to this headline">¶</a></h3>
@@ -615,7 +627,7 @@
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="manual.html" title="previous page">Deploy Manually</a>
+    <a class='left-prev' id="prev-link" href="arm.html" title="previous page">Azure Resource Manager Template</a>
     <a class='right-next' id="next-link" href="../local/intro.html" title="next page">Deploy Locally</a>
 
         </div>
