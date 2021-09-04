@@ -471,7 +471,7 @@
 <div class="section" id="grant-permission-to-managed-identity">
 <h2>Grant Permission to Managed Identity<a class="headerlink" href="#grant-permission-to-managed-identity" title="Permalink to this headline">¶</a></h2>
 <p>Next, we need to add the <a class="reference external" href="https://docs.microsoft.com/en-us/graph/permissions-reference#application-permissions-4">Application.ReadWrite.OwnedBy</a> permission to the user-assigned managed identity. You can use another function from the Cloud Katana PowerShell module to do so.</p>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">Add-GraphPermissions</span> <span class="n">-SvcPrincipalId</span> <span class="nv">$identity</span><span class="p">.</span><span class="n">principalId</span> <span class="n">-PermissionsList</span> <span class="p">@(</span><span class="s1">&#39;Application.ReadWrite.OwnedBy&#39;</span><span class="p">)</span> <span class="n">-PermissionsType</span> <span class="n">application</span> <span class="n">-verbose</span>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">Add-GraphPermissions</span> <span class="n">-SvcPrincipalId</span> <span class="nv">$identity</span><span class="p">.</span><span class="n">principalId</span> <span class="n">-PermissionsList</span> <span class="p">@(</span><span class="s1">&#39;Application.ReadWrite.All&#39;</span><span class="p">,</span><span class="s1">&#39;AppRoleAssignment.ReadWrite.All&#39;</span><span class="p">,</span><span class="s1">&#39;DelegatedPermissionGrant.ReadWrite.All&#39;</span><span class="p">,</span><span class="s1">&#39;User.Read.All&#39;</span><span class="p">)</span> <span class="n">-PermissionsType</span> <span class="n">application</span> <span class="n">-verbose</span>
 </pre></div>
 </div>
 </div>
@@ -492,7 +492,7 @@
 <div class="section" id="deploy-button">
 <h3>Deploy Button<a class="headerlink" href="#deploy-button" title="Permalink to this headline">¶</a></h3>
 <p>You can also click on the button below and provide the parameter values used in the previous section.</p>
-<p><a class="reference external" href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fAzure%2fCloud-Catana%2fmain%2fazuredeploy.json"><img alt="Deploy to Azure" src="https://aka.ms/deploytoazurebutton" /></a></p>
+<p><a class="reference external" href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fAzure%2fCloud-Katana%2fmain%2fazuredeploy.json"><img alt="Deploy to Azure" src="https://aka.ms/deploytoazurebutton" /></a></p>
 </div>
 </div>
 <div class="section" id="monitor-deployment">

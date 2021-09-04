@@ -39,7 +39,7 @@ $identity = New-ManagedIdentity -Name $identityName -ResourceGroup $resourceGrou
 Next, we need to add the [Application.ReadWrite.OwnedBy](https://docs.microsoft.com/en-us/graph/permissions-reference#application-permissions-4) permission to the user-assigned managed identity. You can use another function from the Cloud Katana PowerShell module to do so.
 
 ```PowerShell
-Add-GraphPermissions -SvcPrincipalId $identity.principalId -PermissionsList @('Application.ReadWrite.OwnedBy') -PermissionsType application -verbose
+Add-GraphPermissions -SvcPrincipalId $identity.principalId -PermissionsList @('Application.ReadWrite.All','AppRoleAssignment.ReadWrite.All','DelegatedPermissionGrant.ReadWrite.All','User.Read.All') -PermissionsType application -verbose
 ```
 
 ## Deploy ARM Template
@@ -61,7 +61,7 @@ az deployment group create --template-file azuredeploy.json --resource-group $re
 
 You can also click on the button below and provide the parameter values used in the previous section.
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fAzure%2fCloud-Catana%2fmain%2fazuredeploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fAzure%2fCloud-Katana%2fmain%2fazuredeploy.json)
 
 ## Monitor Deployment
 
