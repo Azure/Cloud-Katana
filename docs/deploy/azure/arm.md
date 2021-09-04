@@ -65,10 +65,20 @@ You can also click on the button below and provide the parameter values used in 
 
 ## Monitor Deployment
 
-Go to [https://portal.azure.com](https://portal.azure.com/) > `<RESOURCE-GROUP-NAME>` > `Deployments` to monitor the deployment of the Cloud Katana function application:
+Go to [https://portal.azure.com](https://portal.azure.com/) > `<RESOURCE-GROUP-NAME>` > `Deployments` to monitor the deployment of all the resources that make Cloud Katana possible:
 
 ![](../../images/MonitorDeployment.png)
 
-Once the deployment completes successfully, you will see the following resources in your resource group:
+If you go back to your resource group resources, you will see everything that is being created:
 
 ![](../../images/ResourcesCreated.png)
+
+You can click, for example, on one of the `deployment scripts` artifacts and inspect the logs to see what each script does as shown below:
+
+![](../../images/RunningDeploymentScripts.png)
+
+Finally, when the Cloud Katana Azure function is deployed, you can go back to your group resources and click on the `Function App` resource. Then, you can click on `Functions` and you will see all the Azure functions associated with Cloud Katana.
+
+![](../../images/KatanaFunctions.png)
+
+Get ready for some demos!

@@ -17,27 +17,6 @@
           "description": "Predefined resource names. Should be set to default. The resourse names are generated using the prefix and the suffix. The value is passed when the template is integrated into a complex pipeline."
         }
       },
-      "githubRepo": {
-        "value": "Azure/Cloud-Katana",
-        "metadata": {
-          "description": "GitHub repo name. The deployment takes the function app code from the repo and publishes it to the app service."
-        }
-      },
-      "githubBranch": {
-        "value": "main"
-      },
-      "githubUserName": {
-        "value": "",
-        "metadata": {
-          "description": "Used to access a private GitHub repo. Should be empty if the repo is public"
-        }
-      },
-      "githubPasswordOrPAT": {
-        "value": "",
-        "metadata": {
-          "description": "GitHub user password or Personal Access Token. Used to access a private GitHub repo. Should be empty if the repo is public"
-        }
-      },
       "artifactsLocation": {
         "value": "<GITHUB_REPO_OR_STORAGE_ACCOUNT>"
       },

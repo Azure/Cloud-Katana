@@ -27,31 +27,6 @@
                 "description": "Predefined resource names. Should be set to default. The value is passed when the template is integrated into a complex pipeline."
             }
         },
-        "githubRepo": {
-            "type": "string",
-            "defaultValue": "Azure/Cloud-Katana",
-            "metadata": {
-                "description": "GitHub repo name. The deployment takes the function app code from the repo and publishes it to the app service."
-            }
-        },
-        "githubBranch": {
-            "type": "string",
-            "defaultValue": "main"
-        },
-        "githubUserName": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Used to access a private GitHub repo. Should be empty if the repo is public"
-            }
-        },
-        "githubPasswordOrPAT": {
-            "defaultValue": "",
-            "type": "securestring",
-            "metadata": {
-                "description": "GitHub user password or Personal Access Token. Used to access a private GitHub repo. Should be empty if the repo is public"
-            }
-        },
         "utcValue": {
             "type": "string",
             "defaultValue": "[utcNow()]"
@@ -229,64 +204,6 @@
                         "value": "[parameters('_packageLocation')]"
                     }
                 }
-            }
-        },
-        {
-            "type": "Microsoft.Resources/deploymentScripts",
-            "apiVersion": "2020-10-01",
-            "name": "PublishFunctionApp",
-            "dependsOn": [
-                "deployFunctionApp",
-                "createClientApp"
-            ],
-            "location": "[resourceGroup().location]",
-            "kind": "AzureCLI",
-            "identity": {
-                "type": "userAssigned",
-                "userAssignedIdentities": {
-                    "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('resourceNames').Identity)]": {}
-                }
-            },
-            "properties": {
-                "environmentVariables": [
-                    {
-                        "name": "githubRepo",
-                        "value": "[parameters('githubRepo')]"
-                    },
-                    {
-                        "name": "githubBranch",
-                        "value": "[parameters('githubBranch')]"
-                    },
-                    {
-                        "name": "githubUserName",
-                        "value": "[parameters('githubUserName')]"
-                    },
-                    {
-                        "name": "githubPassword",
-                        "secureValue": "[parameters('githubPasswordOrPAT')]"
-                    },
-                    {
-                        "name": "clientAppId",
-                        "value": "[reference('createClientApp').outputs.appId]"
-                    },
-                    {
-                        "name": "tenantId",
-                        "value": "[subscription().tenantId]"
-                    },
-                    {
-                        "name": "deploymentResourceGroupName",
-                        "value": "[resourceGroup().name]"
-                    },
-                    {
-                        "name": "AppName",
-                        "value": "[variables('resourceNames').AppName]"
-                    }
-                ],
-                "AzCliVersion": "2.26.1",
-                "timeout": "PT30M",
-                "primaryScriptUri": "[concat(parameters('artifactsLocation'), '/resources/scripts/PublishWebApp.sh', parameters('_artifactsLocationSasToken'))]",
-                "cleanupPreference": "OnSuccess",
-                "retentionInterval": "PT1H"
             }
         }
     ],
