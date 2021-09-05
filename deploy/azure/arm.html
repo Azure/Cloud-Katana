@@ -399,8 +399,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#grant-permission-to-managed-identity">
-   Grant Permission to Managed Identity
+  <a class="reference internal nav-link" href="#grant-permissions-to-managed-identity">
+   Grant Permissions to Managed Identity
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -442,7 +442,7 @@
 <h2>Create Azure Function Application Name<a class="headerlink" href="#create-azure-function-application-name" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The name of the Cloud Katana Azure function application needs to be unique because it is of <code class="docutils literal notranslate"><span class="pre">Global</span></code> scope across Azure resources. Therefore, you can use the following commands to get a random name with <code class="docutils literal notranslate"><span class="pre">cloudkatana</span></code> as a prefix.</p>
+<p>The name of the Cloud Katana Azure function application needs to be unique because it is of <code class="docutils literal notranslate"><span class="pre">Global</span></code> scope across Azure resources. Therefore, use the following commands to get a random name with <code class="docutils literal notranslate"><span class="pre">cloudkatana</span></code> as a prefix.</p>
 </div>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$functionAppName</span> <span class="p">=</span> <span class="p">(</span><span class="n">-join</span> <span class="p">(</span><span class="s1">&#39;cloudkatana&#39;</span><span class="p">,</span><span class="n">-join</span> <span class="p">((</span><span class="n">65</span><span class="p">..</span><span class="n">90</span><span class="p">)</span> <span class="p">+</span> <span class="p">(</span><span class="n">97</span><span class="p">..</span><span class="n">122</span><span class="p">)</span> <span class="p">|</span> <span class="nb">Get-Random</span> <span class="n">-Count</span> <span class="n">10</span> <span class="p">|</span> <span class="p">%</span> <span class="p">{</span><span class="no">[char]</span><span class="nv">$_</span><span class="p">}))).</span><span class="n">ToLower</span><span class="p">()</span>
 </pre></div>
@@ -450,34 +450,48 @@
 </div>
 <div class="section" id="create-a-user-assigned-managed-identity">
 <h2>Create a User Assigned Managed Identity<a class="headerlink" href="#create-a-user-assigned-managed-identity" title="Permalink to this headline">¶</a></h2>
-<p>Cloud Katana leverages Azure AD applications to expose its API and protect it with Azure AD. Therefore, we need to create the respective applications via the ARM template. Rather than passing credentials to the template to create the applications, we can use a <a class="reference external" href="https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-manage-user-assigned-managed-identities?pivots=identity-mi-methods-azp">user-assigned managed identity</a>.</p>
+<p>Besides using <a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-overview">Azure Functions</a> to run simulations, Cloud Katana leverages the following resources for additional capabilities:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Azure</span> <span class="pre">AD</span> <span class="pre">application</span> <span class="pre">(Server)</span></code>: Enables authentication and authorization features via Azure AD.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Azure</span> <span class="pre">AD</span> <span class="pre">application</span> <span class="pre">(Client)</span></code>: A native application used to interact with Cloud Katana’s serverless API. This is part of the authentication and authorization process.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">User-assigned</span> <span class="pre">managed</span> <span class="pre">identity</span></code>: Facilitates the granular access control to other Azure AD protected resources. Permissions required to execute each simulation task need to be granted to the Cloud Katana’s managed identity.</p></li>
+</ul>
+<p>The registration of new Azure AD applications and permission grants are done via <a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-script-template">custom scripts in the ARM template</a>. These custom scripts need to be executed under the security context of an identity with the right permissions to do so. Rather than passing credentials to the ARM template, we use a <a class="reference external" href="https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-manage-user-assigned-managed-identities?pivots=identity-mi-methods-azp">user-assigned managed identity</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>To create a user-assigned managed identity, your account needs the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#managed-identity-contributor">Managed Identity Contributor role</a>.</p>
 </div>
-<p>You can use the Cloud Katana PowerShell module to create a user-assigned managed identity.</p>
+<p>You can use the Cloud Katana PowerShell module, available at the root of the project folder, to create a user-assigned managed identity.</p>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd </span><span class="n">Cloud-Katana</span>
 <span class="nb">Import-Module</span> <span class="p">.\</span><span class="n">CloudKatana</span><span class="p">.</span><span class="n">psm1</span> <span class="n">-verbose</span>
 </pre></div>
 </div>
-<p>Run the following PowerShell commands to create one:</p>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$identityName</span> <span class="p">=</span> <span class="s1">&#39;DeploymentIdentity&#39;</span>
+<p>Run the following PowerShell commands to create a new managed identity:</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$identityName</span> <span class="p">=</span> <span class="s1">&#39;CKDeploymentIdentity&#39;</span>
 <span class="nv">$resourceGroup</span> <span class="p">=</span> <span class="s1">&#39;&lt;RESOURCE-GROUP-NAME&gt;&#39;</span>
 
 <span class="nv">$identity</span> <span class="p">=</span> <span class="nb">New-ManagedIdentity</span> <span class="n">-Name</span> <span class="nv">$identityName</span> <span class="n">-ResourceGroup</span> <span class="nv">$resourceGroup</span> <span class="n">-verbose</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="grant-permission-to-managed-identity">
-<h2>Grant Permission to Managed Identity<a class="headerlink" href="#grant-permission-to-managed-identity" title="Permalink to this headline">¶</a></h2>
-<p>Next, we need to add the <a class="reference external" href="https://docs.microsoft.com/en-us/graph/permissions-reference#application-permissions-4">Application.ReadWrite.OwnedBy</a> permission to the user-assigned managed identity. You can use another function from the Cloud Katana PowerShell module to do so.</p>
+<div class="section" id="grant-permissions-to-managed-identity">
+<h2>Grant Permissions to Managed Identity<a class="headerlink" href="#grant-permissions-to-managed-identity" title="Permalink to this headline">¶</a></h2>
+<p>Once the managed identity is created, we need to grant all the required permissions to register new Azure AD applications and grant permissions to the dpeloyment managed identity. The following permissions must be granted:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Application.ReadWrite.All</span></code>: Allows the calling app to create, and manage (read, update, update application secrets and delete) applications and service principals without a signed-in user.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AppRoleAssignment.ReadWrite.All</span></code>: Allows the app to manage permission grants for application permissions to any API (including Microsoft Graph) and application assignments for any app, without a signed-in user.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DelegatedPermissionGrant.ReadWrite.All</span></code>: Allows the app to grant or revoke any delegated permission for any API (including Microsoft Graph), without a signed-in user.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">User.Read.All</span></code>: Allows the app to read the full set of profile properties, group membership, reports and managers of other users in your organization, without a signed-in user.</p></li>
+</ul>
+<p><strong>Reference</strong>: <a class="reference external" href="https://docs.microsoft.com/en-us/graph/permissions-reference#application-permissions-4">https://docs.microsoft.com/en-us/graph/permissions-reference#application-permissions-4</a></p>
+<p>You can use another function from the Cloud Katana PowerShell module to grant permissions to the deployment managed identity.</p>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">Add-GraphPermissions</span> <span class="n">-SvcPrincipalId</span> <span class="nv">$identity</span><span class="p">.</span><span class="n">principalId</span> <span class="n">-PermissionsList</span> <span class="p">@(</span><span class="s1">&#39;Application.ReadWrite.All&#39;</span><span class="p">,</span><span class="s1">&#39;AppRoleAssignment.ReadWrite.All&#39;</span><span class="p">,</span><span class="s1">&#39;DelegatedPermissionGrant.ReadWrite.All&#39;</span><span class="p">,</span><span class="s1">&#39;User.Read.All&#39;</span><span class="p">)</span> <span class="n">-PermissionsType</span> <span class="n">application</span> <span class="n">-verbose</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="deploy-arm-template">
 <h2>Deploy ARM Template<a class="headerlink" href="#deploy-arm-template" title="Permalink to this headline">¶</a></h2>
-<p>Deploy the Cloud Katana Azure function application to Azure with the <code class="docutils literal notranslate"><span class="pre">azuredeploy.json</span></code> ARM template in the root of the project.</p>
+<p>Deploy Cloud Katana to Azure with the <code class="docutils literal notranslate"><span class="pre">azuredeploy.json</span></code> ARM template at the root of the project’s folder. You can run the template with <a class="reference external" href="https://docs.microsoft.com/en-us/cli/azure/what-is-azure-cli">Azure CLI</a> or a <code class="docutils literal notranslate"><span class="pre">Deploy</span></code> button (One-Click deployment).</p>
 <div class="section" id="azure-cli">
 <h3>Azure CLI<a class="headerlink" href="#azure-cli" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$resourceGroup</span> <span class="p">=</span> <span class="s1">&#39;&lt;RESOURCE-GROUP-NAME&gt;&#39;</span>
@@ -491,7 +505,7 @@
 </div>
 <div class="section" id="deploy-button">
 <h3>Deploy Button<a class="headerlink" href="#deploy-button" title="Permalink to this headline">¶</a></h3>
-<p>You can also click on the button below and provide the parameter values used in the previous section.</p>
+<p>You can also click on the button below and provide the <code class="docutils literal notranslate"><span class="pre">required</span></code> parameter values used in the Azure CLI option.</p>
 <p><a class="reference external" href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fAzure%2fCloud-Katana%2fmain%2fazuredeploy.json"><img alt="Deploy to Azure" src="https://aka.ms/deploytoazurebutton" /></a></p>
 </div>
 </div>
@@ -499,9 +513,9 @@
 <h2>Monitor Deployment<a class="headerlink" href="#monitor-deployment" title="Permalink to this headline">¶</a></h2>
 <p>Go to <a class="reference external" href="https://portal.azure.com/">https://portal.azure.com</a> &gt; <code class="docutils literal notranslate"><span class="pre">&lt;RESOURCE-GROUP-NAME&gt;</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Deployments</span></code> to monitor the deployment of all the resources that make Cloud Katana possible:</p>
 <p><img alt="" src="../../_images/MonitorDeployment.png" /></p>
-<p>If you go back to your resource group resources, you will see everything that is being created:</p>
+<p>If you go back to your resource group, you will see everything that is being created:</p>
 <p><img alt="" src="../../_images/ResourcesCreated.png" /></p>
-<p>You can click, for example, on one of the <code class="docutils literal notranslate"><span class="pre">deployment</span> <span class="pre">scripts</span></code> artifacts and inspect the logs to see what each script does as shown below:</p>
+<p>You can click, for example, on one of the <code class="docutils literal notranslate"><span class="pre">deployment</span> <span class="pre">scripts</span></code> artifacts and inspect the logs to see what the scripts is doing as shown below:</p>
 <p><img alt="" src="../../_images/RunningDeploymentScripts.png" /></p>
 <p>Finally, when the Cloud Katana Azure function is deployed, you can go back to your group resources and click on the <code class="docutils literal notranslate"><span class="pre">Function</span> <span class="pre">App</span></code> resource. Then, you can click on <code class="docutils literal notranslate"><span class="pre">Functions</span></code> and you will see all the Azure functions associated with Cloud Katana.</p>
 <p><img alt="" src="../../_images/KatanaFunctions.png" /></p>
