@@ -20,27 +20,24 @@ parts:
     sections:
     - file: notebooks/azure/collection/intro
       sections:
-      - file: notebooks/azure/collection/getAllUsersMailboxMessages
-      - file: notebooks/azure/collection/getMyMailboxMessages
-      - file: notebooks/azure/collection/getUserMailboxMessages
+      - file: notebooks/azure/collection/Get-CKMailboxMessages
+      - file: notebooks/azure/collection/Get-CKMyMailboxMessages
     - file: notebooks/azure/discovery/intro
       sections:
-      - file: notebooks/azure/discovery/getAdApplication
-      - file: notebooks/azure/discovery/getAllAdApplications
-      - file: notebooks/azure/discovery/getAllDirectoryRoles
-      - file: notebooks/azure/discovery/getAllGroups
-      - file: notebooks/azure/discovery/getAllServicePrincipal
-      - file: notebooks/azure/discovery/getAllUsers
-      - file: notebooks/azure/discovery/getServicePrincipal
+      - file: notebooks/azure/discovery/Get-CKAzADGroups
+      - file: notebooks/azure/discovery/Get-CKAzADApplication
+      - file: notebooks/azure/discovery/Get-CKAzADDirectoryRoles
+      - file: notebooks/azure/discovery/Get-CKAzADServicePrincipal
+      - file: notebooks/azure/discovery/Get-CKAzADUsers
+      - file: notebooks/azure/discovery/Get-CKOauth2PermissionGrants
     - file: notebooks/azure/persistence/intro
       sections:
-      - file: notebooks/azure/persistence/addOwnerToAdApp
-      - file: notebooks/azure/persistence/addOwnerToSp
-      - file: notebooks/azure/persistence/createAdApplication
-      - file: notebooks/azure/persistence/createNewDomain
-      - file: notebooks/azure/persistence/createServicePrincipal
-      - file: notebooks/azure/persistence/grantApplicationPermissions
-      - file: notebooks/azure/persistence/grantDelegatedPermissions
-      - file: notebooks/azure/persistence/updateAdAppPassword
-      - file: notebooks/azure/persistence/updateAdAppRequiredResourceAccess
-      - file: notebooks/azure/persistence/updateSpPassword
+      - file: notebooks/azure/persistence/Add-CKAzADAppPassword
+      - file: notebooks/azure/persistence/Add-CKAzADSPPassword
+      - file: notebooks/azure/persistence/Add-CKDomainToTenant
+      - file: notebooks/azure/persistence/Add-CKOwnerToAzADApp
+      - file: notebooks/azure/persistence/Add-CKOwnerToAzADSP
+      - file: notebooks/azure/persistence/Grant-CKPermissions
+      - file: notebooks/azure/persistence/New-CKAzADApplication
+      - file: notebooks/azure/persistence/New-CKAzADServicePrincipal
+      - file: notebooks/azure/persistence/Update-CKAzADAppReqRscAccess

@@ -17,7 +17,6 @@ action_files = os.path.join(actions_directory, "**/", "*.yml")
 toc_file = os.path.join(docs_directory, "_toc.yml")
 summary_table_template = os.path.join(templates_directory, "summary_template.md")
 toc_template = os.path.join(templates_directory, "toc_template.json")
-pwsh_func_template = os.path.join(templates_directory, "pwsh-azure-functions.jinja2")
 pwsh_req_template = os.path.join(templates_directory, "pwsh-requirements.jinja2")
 notebooks_config_path = os.path.join(current_directory, "../notebooks/_config.yml")
 
@@ -143,6 +142,7 @@ bearer_token = result['access_token']""".format(app_config['PUBLIC_CLIENT_APP_ID
     # Process attacker actions
     nb['cells'].append(nbf.v4.new_markdown_cell("### Prepare HTTP Body"))
     data_dict = dict()
+    data_dict['Platform'] = action['platform']
     data_dict['Tactic'] = tactic_maps[action['attackMappings'][0]['tactics'][0]]
     data_dict['Procedure'] = action['title']
     if 'parameters' in action:
@@ -320,22 +320,19 @@ with open(toc_file, 'w') as file:
 
 ##### Create directories if they do not exist #####
 print("\n[+] Creating Azure Functions directories if they do not exist yet..")
-tactic_directories = []
+platform_list = []
 for action in actions_loaded:
-    for technique in action['attackMappings']:
-        for tactic in technique['tactics']:
-            tactic_name = tactic_maps[tactic]
-            if tactic_name not in tactic_directories:
-                tactic_directories.append(tactic_name)
-for directory in tactic_directories:
-    directory_path = '{}/{}'.format(app_directory, directory)
+    if action['platform'] not in platform_list:
+        platform_list.append(action['platform'])
+for p in platform_list:
+    directory_path = '{}/{}'.format(app_directory, p)
     if not os.path.exists(directory_path):
         print(" [>] Creating directory: {}".format(directory_path))
         os.makedirs(directory_path)
 
 ##### Creating function files #####
 print("[+] Creating Azure Functions setting files..")
-for tactic in tactic_directories:
+for p in platform_list:
     function = {
         "bindings": [
             {
@@ -345,25 +342,8 @@ for tactic in tactic_directories:
             }
         ]
     }
-    directory_path = '{}/{}'.format(app_directory, tactic)
+    directory_path = '{}/{}'.format(app_directory, p)
     open('{}/function.json'.format(directory_path), 'w').write(json.dumps(function, indent=4))
-
-##### Aggregating actions in buckets by tactic #####
-print("[+] Aggregating actions in buckets by tactic..")
-tactic_actions = []
-for directory in tactic_directories:
-    tactic_dict = dict()
-    tactic_dict['tactic'] = directory
-    tactic_dict['actions'] = []
-    tactic_actions.append(tactic_dict)
-
-for action in actions_loaded:
-    for technique in action['attackMappings']:
-        for tactic in technique['tactics']:
-            tactic_name = tactic_maps[tactic]
-            for td in tactic_actions:
-                if td['tactic'] == tactic_name:
-                    td['actions'].append(action)
 
 ##### Aggregating modules #####
 modules = []
@@ -392,17 +372,6 @@ for action in actions_loaded:
             permissions[permission_type].append(r)
 print("\n[+] Creating permissions file..")
 open('{}/permissions.json'.format(actions_directory), 'w').write(json.dumps(permissions, indent = 4))
-
-##### Creating PowerShell scripts for functions #####
-print("\n[+] Creating PowerShell scripts for Azure Functions..")
-pwsh_func_template_loaded = Template(open(pwsh_func_template).read())
-for ta in tactic_actions:
-    if len(ta['actions']) > 0:
-        file_path = '{}/{}/run.ps1'.format(app_directory, ta['tactic'])
-        print(" [>] Creating Azure Function PS script: {}".format(file_path))
-        ta_for_render = copy.deepcopy(ta)
-        ta_script = pwsh_func_template_loaded.render(actions=ta_for_render)
-        open(file_path, 'w').write(ta_script)
 
 # Creating PowerShell Requirements file
 print("\n[+] Creating PowerShell Requirements file..")

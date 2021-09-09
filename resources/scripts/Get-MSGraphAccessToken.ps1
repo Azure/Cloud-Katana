@@ -146,14 +146,13 @@ function Get-MSGraphAccessToken {
             $body = @{
                 client_id = $ClientId
                 grant_type = 'urn:ietf:params:oauth:grant-type:device_code'
-                code = $DeviceCode
+                device_code = $DeviceCode
             }
         }
-        if (![string]::IsNullOrEmpty($AppSecret))
+        if ($AppSecret)
         {
-            $body.Add('client_secret', $AppSecret)
+            $body['client_secret'] = $AppSecret
         }
-        write-verbose $body
 
         $Params = @{
             Headers = $headers
@@ -161,6 +160,7 @@ function Get-MSGraphAccessToken {
             Body    = $body
             method  = 'Post'
         }
+
         $request  = Invoke-RestMethod @Params
     
         # Process authentication request

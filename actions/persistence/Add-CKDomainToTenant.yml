@@ -1,0 +1,34 @@
+title: Add-CKDomainToTenant
+id: cc188752-b9a6-42a1-a90e-d56d06e46c6d
+creationDate: '2021-08-05'
+modificationDate: '2021-09-08'
+description: |
+  A threat actor might want to add a new domain to the tenant.
+contributors:
+- Roberto Rodriguez @Cyb3rWard0g
+- MSTIC R&D
+ctiReferences:
+attackMappings:
+- technique: T1111
+  tactics:
+  - TA0003
+platform: Azure
+resource:
+  url: https://graph.microsoft.com/
+  authorization:
+    permissionsType: application
+    permissions:
+    - Domain.ReadWrite.All
+parameters:
+  id:
+    type: string
+    description: The id property for the new domain. Id is the only property that can be specified and it is required. The id property value is the fully qualified domain name to create.
+    required: true
+  accessToken:
+    type: string
+    description: Access token used to access the API.
+    required: true
+scripts:
+  - kind: PowerShell
+    module: CloudKatana
+    scriptPath: durableApp\Modules\CloudKatana\persistence\Add-CKDomainToTenant.ps1

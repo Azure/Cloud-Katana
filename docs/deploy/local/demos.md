@@ -4,10 +4,10 @@
 
 ### Import Cloud Katana PowerShell Module
 
-Open a new terminal at the root of the project and import the `CloudKatana.psm1` module.
+Open a new terminal at the root of the project and import the `CloudKatanaUtils.psm1` module.
 
 ```PowerShell
-Import-Module .\CloudKatana.psm1 -verbose
+Import-Module .\CloudKatanaUtils.psm1 -verbose
 ```
 
 ## Run Simulations as Signed-In Users
@@ -21,7 +21,9 @@ We can use the [OAuth 2.0 device authorization grant flow](https://docs.microsof
 First, we need to request a device code.
 
 ```PowerShell
-$deviceCodeRequest = Get-DeviceCode -ClientId '<AZ-AD-APP-ID>' -TenantId '<TENANT-ID>' -Scope 'https://graph.microsoft.com/.default'
+$clientAppId = '<AZ-AD-APP-ID'
+$tenantId = '<TENANT-ID>'
+$deviceCodeRequest = Get-DeviceCode -ClientId $clientAppId -TenantId $tenantId -Scope 'https://graph.microsoft.com/.default'
 $deviceCodeRequest
 ```
 
@@ -44,7 +46,7 @@ We can now use the `device_code` value to request a Microsoft Graph token.
 
 ```PowerShell
 $device_code = $deviceCodeRequest.device_code
-$results = Get-MSGraphAccessToken -ClientId '<AZ-AD-APP-ID>' -TenantId '<TENANT-ID>' -GrantType device_code -DeviceCode $device_code -Verbose
+$results = Get-MSGraphAccessToken -ClientId $clientAppId -TenantId $tenantId -GrantType device_code -DeviceCode $device_code -Verbose
 $results
 
 $DelegatedMGToken = $results.access_token
@@ -61,8 +63,9 @@ Since we have an access token with delegated permissions to read mail, then we c
 ```PowerShell
 $body = @(
   @{
+    Platform = 'Azure'
     Tactic = 'collection'
-    Procedure = 'getMyMailboxMessages'
+    Procedure = 'Get-CKMyMailboxMessages'
     Parameters = @{
       accessToken = $DelegatedMGToken
     }
@@ -75,7 +78,7 @@ $simulationResults = Invoke-RestMethod -Method Post -Uri http://localhost:7071/a
 You can then inspect the results the following way:
 
 ```PowerShell
-(Invoke-RestMethod -Uri $simulationResults.statusQueryGetUri).Output[0].value | select subject
+(Invoke-RestMethod -Uri $simulationResults.statusQueryGetUri).Output | select subject
 ```
 ```
 subject
@@ -103,7 +106,9 @@ The majority of simulations in this project leverage the application context.
 Use the following PowerShell commands to get a MS graph token with application permissions using the `client_credentials` grant type. Here is where we need to use the `secret text` that we got earlier while registering/creating our Azure AD application.:
 
 ```PowerShell
-$results = Get-MSGraphAccessToken -ClientId '<AZ-AD-APP-ID>' -TenantId '<TENANT-ID>' -GrantType client_credentials -AppSecret $secret
+$tenantId = '<TENANT-ID>'
+$clientAppId = '<AZ-AD-APP-ID>'
+$results = Get-MSGraphAccessToken -ClientId $clientAppId -TenantId $tenantId -GrantType client_credentials -AppSecret $secret
 $results
 
 $AppMGToken = $results.access_token
@@ -125,11 +130,12 @@ Adjust the service principal to match your own environment. `pgustavo` does have
 ```PowerShell
 $body = @(
   @{
+    Platform = 'Azure'
     Tactic = 'collection'
-    Procedure = 'getUserMailboxMessages'
+    Procedure = 'Get-CKMailboxMessages'
     Parameters = @{
       accessToken = $AppMGToken
-      userPrincipalName = 'pgustavo@simulandlabs.com'
+      userPrincipalName = 'admin@MSDx145792.onmicrosoft.com'
     }
   }
 ) | ConvertTo-Json -Depth 10
@@ -140,7 +146,7 @@ $simulationResults = Invoke-RestMethod -Method Post -Uri http://localhost:7071/a
 You can then inspect the results the following way:
 
 ```PowerShell
-(Invoke-RestMethod -Uri $SimulationResults.statusQueryGetUri).Output[0] | select subject
+(Invoke-RestMethod -Uri $SimulationResults.statusQueryGetUri).Output | select subject
 ```
 ```
 subject
@@ -153,8 +159,9 @@ Azure AD Identity Protection Weekly Digest
 ```PowerShell
 $body = @(
   @{
+    Platform = 'Azure'
     Tactic = 'discovery'
-    Procedure = 'getAllAdApplications'
+    Procedure = 'Get-CKAzADApplication'
     Parameters = @{
       accessToken = $AppMGToken
     }

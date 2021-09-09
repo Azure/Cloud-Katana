@@ -23,11 +23,11 @@ The registration of new Azure AD applications and permission grants are done via
 To create a user-assigned managed identity, your account needs the [Managed Identity Contributor role](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#managed-identity-contributor).
 ```
 
-You can use the Cloud Katana PowerShell module, available at the root of the project folder, to create a user-assigned managed identity.
+You can use the Cloud Katana Utils PowerShell module, available at the root of the project folder, to create a user-assigned managed identity.
 
 ```PowerShell
 cd Cloud-Katana
-Import-Module .\CloudKatana.psm1 -verbose
+Import-Module .\CloudKatanaUtils.psm1 -verbose
 ```
 
 Run the following PowerShell commands to create a new managed identity:
@@ -53,7 +53,7 @@ Once the managed identity is created, we need to grant all the required permissi
 You can use another function from the Cloud Katana PowerShell module to grant permissions to the deployment managed identity.
 
 ```PowerShell
-Add-GraphPermissions -SvcPrincipalId $identity.principalId -PermissionsList @('Application.ReadWrite.All','AppRoleAssignment.ReadWrite.All','DelegatedPermissionGrant.ReadWrite.All','User.Read.All') -PermissionsType application -verbose
+Grant-GraphPermissions -SvcPrincipalId $identity.principalId -PermissionsList @('Application.ReadWrite.All','AppRoleAssignment.ReadWrite.All','DelegatedPermissionGrant.ReadWrite.All','User.Read.All') -PermissionsType application -verbose
 ```
 
 ## Deploy ARM Template

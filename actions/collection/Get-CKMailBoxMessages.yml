@@ -1,0 +1,59 @@
+title: Get-CKMailboxMessages
+id: 8148b643-7e4b-4a3a-b840-07cc28bb8c74
+creationDate: '2021-08-05'
+modificationDate: '2021-09-08'
+description: |
+  A threat actor might want to read messages from the mailbox of a specific user.
+contributors:
+- Roberto Rodriguez @Cyb3rWard0g
+- MSTIC R&D
+ctiReferences:
+attackMappings:
+- technique: T1114.002
+  tactics:
+  - TA0009
+platform: Azure
+resource:
+  url: https://graph.microsoft.com/
+  authorization:
+    permissionsType: application
+    permissions:
+    - Mail.Read
+parameters:
+  userPrincipalName:
+    type: string
+    description: Specific user to read Mailbox messages from. (e.g wardog@domain.com).
+    required: true
+  mailFolder:
+    type: string
+    description: Specific folder name to read messages from. (e.g Inbox).
+    required: false
+    defaultValue: Inbox
+  selectFields:
+    type: string
+    description: Specific properties/columns to return from objects using the $select query parameter.
+    required: false
+    defaultValue: subject,sender,from,toRecipients,ccRecipients,replyTo,sentDateTime,id,hasAttachments,importance,bodyPreview,isRead,body,parentFolderId
+  pageSize:
+    type: int
+    description: Specific number of objects to return per page using the $top query parameter. $top sets the page size of results.
+    required: false
+    defaultValue: 10
+  orderBy:
+    type: string
+    description: Order results by specific object properties using the $orderby query parameter. Sorting is defined by the parameter $sortBy in this function.
+    required: false
+    defaultValue: receivedDateTime
+  sortBy:
+    type: string
+    description: Sort results. This is used along with the $orderBy parameter in this function. (e.g. desc or asc).
+    required: false
+    defaultValue: desc
+  accessToken:
+    type: string
+    description: Access token used to access the API.
+    required: true
+scripts:
+  - kind: PowerShell
+    module: CloudKatana
+    scriptPath: durableApp\Modules\CloudKatana\collection\Get-CKMailboxMessages.ps1

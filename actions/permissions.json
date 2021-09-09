@@ -1,13 +1,14 @@
 {
     "application": [
         "Mail.Read",
+        "Group.Read.All",
         "Application.Read.All",
         "Directory.Read.All",
         "User.Read.All",
+        "DelegatedPermissionGrant.ReadWrite.All",
         "Application.ReadWrite.All",
         "Domain.ReadWrite.All",
-        "AppRoleAssignment.ReadWrite.All",
-        "Directory.ReadWrite.All"
+        "AppRoleAssignment.ReadWrite.All"
     ],
     "delegated": [
         "Mail.Read"

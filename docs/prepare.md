@@ -26,7 +26,7 @@ git clone https://github.com/Azure/Cloud-Katana
 
 ```PowerShell
 cd Cloud-Katana
-Import-Module .\CloudKatana.psm1 -verbose
+Import-Module .\CloudKatanaUtils.psm1 -verbose
 ```
 
 ## Authenticate to Azure
