@@ -52,8 +52,9 @@ $headers = @{
 # HTTP Body
 $body = @(
   @{
+    Platform = 'Azure'
     Tactic = 'discovery'
-    Procedure = 'getAllUsers'
+    Procedure = 'Get-CKAzADUsers'
   }
 ) | ConvertTo-Json -Depth 4
 
@@ -76,8 +77,9 @@ $outputResults | Where-Object {$_.userPrincipalName -like '*simulandlabs*'} | Se
 # HTTP Body
 $body = @(
   @{
+    Platform = 'Azure'
     Tactic = 'discovery'
-    Procedure = 'getAllAdApplications'
+    Procedure = 'Get-CKAzADApplication'
   }
 ) | ConvertTo-Json -Depth 4
 
@@ -99,11 +101,12 @@ $outputResults | Select-Object displayName
 # HTTP Body
 $body = @(
   @{
+    Platform = 'Azure'
     Tactic = 'persistence'
-    Procedure = 'updateAdAppPassword'
+    Procedure = 'Add-CKAzADAppPassword'
     Parameters = @{
         appObjectId = 'AZURE-AD-APP-OBJECT-ID'
-        pwdCredentialName = 'BlackHatSecret'
+        displayName = 'BlackHatSecret'
     }
   }
 ) | ConvertTo-Json -Depth 4
@@ -126,8 +129,9 @@ $outputResults | Format-list
 # HTTP Body
 $body = @(
   @{
+    Platform = 'Azure'
     Tactic = 'collection'
-    Procedure = 'getUserMailboxMessages'
+    Procedure = 'Get-CKMailboxMessages'
     Parameters = @{
       userPrincipalName = 'USER-NAME@DOMAIN.com'
     }

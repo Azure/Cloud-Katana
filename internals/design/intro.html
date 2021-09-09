@@ -104,8 +104,8 @@
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../../deploy/azure/manual.html">
-     Deploy Manually
+    <a class="reference internal" href="../../deploy/azure/arm.html">
+     Azure Resource Manager Template
     </a>
    </li>
    <li class="toctree-l2">
@@ -125,11 +125,6 @@
    </i>
   </label>
   <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../deploy/local/manual.html">
-     Deploy Manually
-    </a>
-   </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../deploy/local/demos.html">
      Demos
@@ -177,18 +172,13 @@
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/collection/getAllUsersMailboxMessages.html">
-       getAllUsersMailboxMessages
+      <a class="reference internal" href="../../notebooks/azure/collection/Get-CKMailboxMessages.html">
+       Get-CKMailboxMessages
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/collection/getMyMailboxMessages.html">
-       getMyMailboxMessages
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/collection/getUserMailboxMessages.html">
-       getUserMailboxMessages
+      <a class="reference internal" href="../../notebooks/azure/collection/Get-CKMyMailboxMessages.html">
+       Get-CKMyMailboxMessages
       </a>
      </li>
     </ul>
@@ -204,23 +194,33 @@
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/discovery/getAdApplication.html">
-       getAdApplication
+      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKAzADGroups.html">
+       Get-CKAzADGroups
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/discovery/getAllAdApplications.html">
-       getAllAdApplications
+      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKAzADApplication.html">
+       Get-CKAzADApplication
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/discovery/getAllUsers.html">
-       getAllUsers
+      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKAzADDirectoryRoles.html">
+       Get-CKAzADDirectoryRoles
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/discovery/getServicePrincipal.html">
-       getServicePrincipal
+      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKAzADServicePrincipal.html">
+       Get-CKAzADServicePrincipal
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKAzADUsers.html">
+       Get-CKAzADUsers
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKOauth2PermissionGrants.html">
+       Get-CKOauth2PermissionGrants
       </a>
      </li>
     </ul>
@@ -236,53 +236,48 @@
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/addOwnerToAdApp.html">
-       addOwnerToAdApp
+      <a class="reference internal" href="../../notebooks/azure/persistence/Add-CKAzADAppPassword.html">
+       Add-CKAzADAppPassword
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/addOwnerToSp.html">
-       addOwnerToSp
+      <a class="reference internal" href="../../notebooks/azure/persistence/Add-CKAzADSPPassword.html">
+       Add-CKAzADSPPassword
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/createAdApplication.html">
-       createAdApplication
+      <a class="reference internal" href="../../notebooks/azure/persistence/Add-CKDomainToTenant.html">
+       Add-CKDomainToTenant
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/createNewDomain.html">
-       createNewDomain
+      <a class="reference internal" href="../../notebooks/azure/persistence/Add-CKOwnerToAzADApp.html">
+       Add-CKOwnerToAzADApp
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/createServicePrincipal.html">
-       createServicePrincipal
+      <a class="reference internal" href="../../notebooks/azure/persistence/Add-CKOwnerToAzADSP.html">
+       Add-CKOwnerToAzADSP
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/grantApplicationPermissions.html">
-       grantApplicationPermissions
+      <a class="reference internal" href="../../notebooks/azure/persistence/Grant-CKPermissions.html">
+       Grant-CKPermissions
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/grantDelegatedPermissions.html">
-       grantDelegatedPermissions
+      <a class="reference internal" href="../../notebooks/azure/persistence/New-CKAzADApplication.html">
+       New-CKAzADApplication
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/updateAdAppPassword.html">
-       updateAdAppPassword
+      <a class="reference internal" href="../../notebooks/azure/persistence/New-CKAzADServicePrincipal.html">
+       New-CKAzADServicePrincipal
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/updateAdAppRequiredResourceAccess.html">
-       updateAdAppRequiredResourceAccess
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/updateSpPassword.html">
-       updateSpPassword
+      <a class="reference internal" href="../../notebooks/azure/persistence/Update-CKAzADAppReqRscAccess.html">
+       Update-CKAzADAppReqRscAccess
       </a>
      </li>
     </ul>

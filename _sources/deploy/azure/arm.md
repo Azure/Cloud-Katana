@@ -23,11 +23,11 @@ The registration of new Azure AD applications and permission grants are done via
 To create a user-assigned managed identity, your account needs the [Managed Identity Contributor role](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#managed-identity-contributor).
 ```
 
-You can use the Cloud Katana PowerShell module, available at the root of the project folder, to create a user-assigned managed identity.
+You can use the Cloud Katana Utils PowerShell module, available at the root of the project folder, to create a user-assigned managed identity.
 
 ```PowerShell
 cd Cloud-Katana
-Import-Module .\CloudKatana.psm1 -verbose
+Import-Module .\CloudKatanaUtils.psm1 -verbose
 ```
 
 Run the following PowerShell commands to create a new managed identity:
@@ -41,7 +41,7 @@ $identity = New-ManagedIdentity -Name $identityName -ResourceGroup $resourceGrou
 
 ## Grant Permissions to Managed Identity
 
-Once the managed identity is created, we need to grant all the required permissions to register new Azure AD applications and grant permissions to the dpeloyment managed identity. The following permissions must be granted:
+Once the managed identity is created, we need to grant all the required permissions to register new Azure AD applications and grant permissions to the deployment managed identity. The following permissions must be granted:
 
 * `Application.ReadWrite.All`: Allows the calling app to create, and manage (read, update, update application secrets and delete) applications and service principals without a signed-in user.
 * `AppRoleAssignment.ReadWrite.All`: Allows the app to manage permission grants for application permissions to any API (including Microsoft Graph) and application assignments for any app, without a signed-in user.
@@ -53,12 +53,12 @@ Once the managed identity is created, we need to grant all the required permissi
 You can use another function from the Cloud Katana PowerShell module to grant permissions to the deployment managed identity.
 
 ```PowerShell
-Add-GraphPermissions -SvcPrincipalId $identity.principalId -PermissionsList @('Application.ReadWrite.All','AppRoleAssignment.ReadWrite.All','DelegatedPermissionGrant.ReadWrite.All','User.Read.All') -PermissionsType application -verbose
+Grant-GraphPermissions -SvcPrincipalId $identity.principalId -PermissionsList @('Application.ReadWrite.All','AppRoleAssignment.ReadWrite.All','DelegatedPermissionGrant.ReadWrite.All','User.Read.All') -PermissionsType application -verbose
 ```
 
 ## Deploy ARM Template
 
-Deploy Cloud Katana to Azure with the `azuredeploy.json` ARM template at the root of the project's folder. You can run the template with [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/what-is-azure-cli) or a `Deploy` button (One-Click deployment).
+Deploy Cloud Katana to Azure with the `azuredeploy.json` ARM template available at the root of the project's folder. You can run the template with [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/what-is-azure-cli) or a `Deploy` button (One-click deployment).
 
 ### Azure CLI
 
@@ -73,13 +73,13 @@ az deployment group create --template-file azuredeploy.json --resource-group $re
 
 ### Deploy Button
 
-You can also click on the button below and provide the `required` parameter values used in the Azure CLI option.
+You can also click on the button `Deploy` below and provide the `required` parameter values used in the previous Azure CLI deployment section.
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fAzure%2fCloud-Katana%2fmain%2fazuredeploy.json)
 
 ## Monitor Deployment
 
-Go to [https://portal.azure.com](https://portal.azure.com/) > `<RESOURCE-GROUP-NAME>` > `Deployments` to monitor the deployment of all the resources that make Cloud Katana possible:
+Go to [https://portal.azure.com](https://portal.azure.com/) > `<RESOURCE-GROUP-NAME>` > `Deployments` to monitor the deployment of Cloud Katana's resources:
 
 ![](../../images/MonitorDeployment.png)
 
@@ -91,8 +91,8 @@ You can click, for example, on one of the `deployment scripts` artifacts and ins
 
 ![](../../images/RunningDeploymentScripts.png)
 
-Finally, when the Cloud Katana Azure function is deployed, you can go back to your group resources and click on the `Function App` resource. Then, you can click on `Functions` and you will see all the Azure functions associated with Cloud Katana.
+Finally, when the Cloud Katana Azure function is deployed, you can go back to your group resources and click on the `Function App` resource. Then, you can click on `Functions` and you will be able to explore all the Azure functions associated with Cloud Katana serverless API.
 
 ![](../../images/KatanaFunctions.png)
 
-Get ready for some demos!
+You are ready to run a few demos!

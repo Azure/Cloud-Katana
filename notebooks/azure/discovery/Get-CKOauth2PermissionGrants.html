@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>discovery</title>
+    <title>Get-CKOauth2PermissionGrants</title>
     
   <link href="../../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -50,11 +50,11 @@
         const thebe_selector_output = ".output,.cell_output"
     </script>
     <script async="async" src="../../../_static/sphinx-thebe.js"></script>
-    <link rel="canonical" href="https://cloud-katana.com/notebooks/azure/discovery/intro.html" />
+    <link rel="canonical" href="https://cloud-katana.com/notebooks/azure/discovery/Get-CKOauth2PermissionGrants.html" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Get-CKAzADGroups" href="Get-CKAzADGroups.html" />
-    <link rel="prev" title="Get-CKMyMailboxMessages" href="../collection/Get-CKMyMailboxMessages.html" />
+    <link rel="next" title="persistence" href="../persistence/intro.html" />
+    <link rel="prev" title="Get-CKAzADUsers" href="Get-CKAzADUsers.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -184,7 +184,7 @@
     </ul>
    </li>
    <li class="toctree-l2 current active has-children">
-    <a class="current reference internal" href="#">
+    <a class="reference internal" href="intro.html">
      discovery
     </a>
     <input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
@@ -192,7 +192,7 @@
      <i class="fas fa-chevron-down">
      </i>
     </label>
-    <ul>
+    <ul class="current">
      <li class="toctree-l3">
       <a class="reference internal" href="Get-CKAzADGroups.html">
        Get-CKAzADGroups
@@ -218,8 +218,8 @@
        Get-CKAzADUsers
       </a>
      </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="Get-CKOauth2PermissionGrants.html">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
        Get-CKOauth2PermissionGrants
       </a>
      </li>
@@ -325,9 +325,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../../_sources/notebooks/azure/discovery/intro.md"><button type="button"
+        <a class="dropdown-buttons" href="../../../_sources/notebooks/azure/discovery/Get-CKOauth2PermissionGrants.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
+                data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -345,10 +345,10 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/Azure/Cloud-Katana/issues/new?title=Issue%20on%20page%20%2Fnotebooks/azure/discovery/intro.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/Azure/Cloud-Katana/issues/new?title=Issue%20on%20page%20%2Fnotebooks/azure/discovery/Get-CKOauth2PermissionGrants.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/Azure/Cloud-Katana/edit/main/docs/notebooks/azure/discovery/intro.md"><button
+        <a class="edit-button" href="https://github.com/Azure/Cloud-Katana/edit/main/docs/notebooks/azure/discovery/Get-CKOauth2PermissionGrants.ipynb"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -368,6 +368,56 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#metadata">
+   Metadata
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#description">
+   Description
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#run-simulation">
+   Run Simulation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#get-oauth-access-token">
+     Get OAuth Access Token
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#set-azure-function-orchestrator">
+     Set Azure Function Orchestrator
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prepare-http-body">
+     Prepare HTTP Body
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#send-http-request">
+     Send HTTP Request
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#explore-output">
+     Explore Output
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -376,9 +426,113 @@
         
               <div>
                 
-  <div class="section" id="discovery">
-<h1>discovery<a class="headerlink" href="#discovery" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
+  <div class="section" id="get-ckoauth2permissiongrants">
+<h1>Get-CKOauth2PermissionGrants<a class="headerlink" href="#get-ckoauth2permissiongrants" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="metadata">
+<h2>Metadata<a class="headerlink" href="#metadata" title="Permalink to this headline">¶</a></h2>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:left head"><p></p></th>
+<th class="text-align:left head"><p></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:left"><p>platform</p></td>
+<td class="text-align:left"><p>Azure</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>contributors</p></td>
+<td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g,MSTIC R&amp;D</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>creation date</p></td>
+<td class="text-align:left"><p>2021-09-08</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>modification date</p></td>
+<td class="text-align:left"><p>2021-09-08</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>Tactics</p></td>
+<td class="text-align:left"><p><a class="reference external" href="https://attack.mitre.org/tactics/TA0007">TA0007</a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>Techniques</p></td>
+<td class="text-align:left"><p><a class="reference external" href="https://attack.mitre.org/techniques/T1069/003">T1069.003</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>A threat actor might want to retrieve a list of oAuth2PermissionGrant objects, representing delegated permissions which have been granted for client applications to access APIs on behalf of signed-in users…</p>
+</div>
+<div class="section" id="run-simulation">
+<h2>Run Simulation<a class="headerlink" href="#run-simulation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="get-oauth-access-token">
+<h3>Get OAuth Access Token<a class="headerlink" href="#get-oauth-access-token" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">msal</span> <span class="kn">import</span> <span class="n">PublicClientApplication</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">public_client_app_id</span> <span class="o">=</span> <span class="s2">&quot;KATANA_CLIENT_APP_ID&quot;</span>
+<span class="n">tenant_id</span> <span class="o">=</span> <span class="s2">&quot;TENANT_ID&quot;</span>
+<span class="n">function_app_url</span> <span class="o">=</span> <span class="s2">&quot;https://FUNCTION_APP_NAME.azurewebsites.net&quot;</span>
+<span class="n">scope</span> <span class="o">=</span> <span class="n">function_app_url</span> <span class="o">+</span> <span class="s2">&quot;/user_impersonation&quot;</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">PublicClientApplication</span><span class="p">(</span>
+    <span class="n">public_client_app_id</span><span class="p">,</span>
+    <span class="n">authority</span><span class="o">=</span><span class="s2">&quot;https://login.microsoftonline.com/&quot;</span> <span class="o">+</span> <span class="n">tenant_id</span>
+<span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">acquire_token_interactive</span><span class="p">(</span><span class="n">scopes</span><span class="o">=</span><span class="p">[</span><span class="n">scope</span><span class="p">])</span>
+<span class="n">bearer_token</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;access_token&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="set-azure-function-orchestrator">
+<h3>Set Azure Function Orchestrator<a class="headerlink" href="#set-azure-function-orchestrator" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">endpoint</span> <span class="o">=</span> <span class="n">function_app_url</span> <span class="o">+</span> <span class="s2">&quot;/api/orchestrators/Orchestrator&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="prepare-http-body">
+<h3>Prepare HTTP Body<a class="headerlink" href="#prepare-http-body" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;Platform&#39;</span><span class="p">:</span> <span class="s1">&#39;Azure&#39;</span><span class="p">,</span> <span class="s1">&#39;Tactic&#39;</span><span class="p">:</span> <span class="s1">&#39;discovery&#39;</span><span class="p">,</span> <span class="s1">&#39;Procedure&#39;</span><span class="p">:</span> <span class="s1">&#39;Get-CKOauth2PermissionGrants&#39;</span><span class="p">,</span> <span class="s1">&#39;parameters&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;grantId&#39;</span><span class="p">:</span> <span class="s1">&#39;ENTER-VALUE&#39;</span><span class="p">,</span> <span class="s1">&#39;selectFields&#39;</span><span class="p">:</span> <span class="s1">&#39;ENTER-VALUE&#39;</span><span class="p">,</span> <span class="s1">&#39;filter&#39;</span><span class="p">:</span> <span class="s1">&#39;ENTER-VALUE&#39;</span><span class="p">,</span> <span class="s1">&#39;pageSize&#39;</span><span class="p">:</span> <span class="s1">&#39;ENTER-VALUE&#39;</span><span class="p">}}]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="send-http-request">
+<h3>Send HTTP Request<a class="headerlink" href="#send-http-request" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http_headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer &#39;</span> <span class="o">+</span> <span class="n">bearer_token</span><span class="p">,</span> <span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">http_headers</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="explore-output">
+<h3>Explore Output<a class="headerlink" href="#explore-output" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query_status</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;statusQueryGetUri&#39;</span><span class="p">],</span> <span class="n">headers</span><span class="o">=</span><span class="n">http_headers</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="n">query_results</span> <span class="o">=</span> <span class="n">query_status</span><span class="p">[</span><span class="s1">&#39;output&#39;</span><span class="p">]</span>
+<span class="n">query_results</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 
@@ -407,8 +561,8 @@
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="../collection/Get-CKMyMailboxMessages.html" title="previous page">Get-CKMyMailboxMessages</a>
-    <a class='right-next' id="next-link" href="Get-CKAzADGroups.html" title="next page">Get-CKAzADGroups</a>
+    <a class='left-prev' id="prev-link" href="Get-CKAzADUsers.html" title="previous page">Get-CKAzADUsers</a>
+    <a class='right-next' id="next-link" href="../persistence/intro.html" title="next page">persistence</a>
 
         </div>
         

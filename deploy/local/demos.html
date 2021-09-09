@@ -54,7 +54,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Design Principles" href="../../internals/design/intro.html" />
-    <link rel="prev" title="Deploy Manually" href="manual.html" />
+    <link rel="prev" title="Deploy Locally" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -104,8 +104,8 @@
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="../azure/manual.html">
-     Deploy Manually
+    <a class="reference internal" href="../azure/arm.html">
+     Azure Resource Manager Template
     </a>
    </li>
    <li class="toctree-l2">
@@ -125,11 +125,6 @@
    </i>
   </label>
   <ul class="current">
-   <li class="toctree-l2">
-    <a class="reference internal" href="manual.html">
-     Deploy Manually
-    </a>
-   </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      Demos
@@ -177,18 +172,13 @@
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/collection/getAllUsersMailboxMessages.html">
-       getAllUsersMailboxMessages
+      <a class="reference internal" href="../../notebooks/azure/collection/Get-CKMailboxMessages.html">
+       Get-CKMailboxMessages
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/collection/getMyMailboxMessages.html">
-       getMyMailboxMessages
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/collection/getUserMailboxMessages.html">
-       getUserMailboxMessages
+      <a class="reference internal" href="../../notebooks/azure/collection/Get-CKMyMailboxMessages.html">
+       Get-CKMyMailboxMessages
       </a>
      </li>
     </ul>
@@ -204,23 +194,33 @@
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/discovery/getAdApplication.html">
-       getAdApplication
+      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKAzADGroups.html">
+       Get-CKAzADGroups
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/discovery/getAllAdApplications.html">
-       getAllAdApplications
+      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKAzADApplication.html">
+       Get-CKAzADApplication
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/discovery/getAllUsers.html">
-       getAllUsers
+      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKAzADDirectoryRoles.html">
+       Get-CKAzADDirectoryRoles
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/discovery/getServicePrincipal.html">
-       getServicePrincipal
+      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKAzADServicePrincipal.html">
+       Get-CKAzADServicePrincipal
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKAzADUsers.html">
+       Get-CKAzADUsers
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKOauth2PermissionGrants.html">
+       Get-CKOauth2PermissionGrants
       </a>
      </li>
     </ul>
@@ -236,53 +236,48 @@
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/addOwnerToAdApp.html">
-       addOwnerToAdApp
+      <a class="reference internal" href="../../notebooks/azure/persistence/Add-CKAzADAppPassword.html">
+       Add-CKAzADAppPassword
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/addOwnerToSp.html">
-       addOwnerToSp
+      <a class="reference internal" href="../../notebooks/azure/persistence/Add-CKAzADSPPassword.html">
+       Add-CKAzADSPPassword
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/createAdApplication.html">
-       createAdApplication
+      <a class="reference internal" href="../../notebooks/azure/persistence/Add-CKDomainToTenant.html">
+       Add-CKDomainToTenant
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/createNewDomain.html">
-       createNewDomain
+      <a class="reference internal" href="../../notebooks/azure/persistence/Add-CKOwnerToAzADApp.html">
+       Add-CKOwnerToAzADApp
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/createServicePrincipal.html">
-       createServicePrincipal
+      <a class="reference internal" href="../../notebooks/azure/persistence/Add-CKOwnerToAzADSP.html">
+       Add-CKOwnerToAzADSP
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/grantApplicationPermissions.html">
-       grantApplicationPermissions
+      <a class="reference internal" href="../../notebooks/azure/persistence/Grant-CKPermissions.html">
+       Grant-CKPermissions
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/grantDelegatedPermissions.html">
-       grantDelegatedPermissions
+      <a class="reference internal" href="../../notebooks/azure/persistence/New-CKAzADApplication.html">
+       New-CKAzADApplication
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/updateAdAppPassword.html">
-       updateAdAppPassword
+      <a class="reference internal" href="../../notebooks/azure/persistence/New-CKAzADServicePrincipal.html">
+       New-CKAzADServicePrincipal
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/updateAdAppRequiredResourceAccess.html">
-       updateAdAppRequiredResourceAccess
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/updateSpPassword.html">
-       updateSpPassword
+      <a class="reference internal" href="../../notebooks/azure/persistence/Update-CKAzADAppReqRscAccess.html">
+       Update-CKAzADAppReqRscAccess
       </a>
      </li>
     </ul>
@@ -446,8 +441,8 @@
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="import-cloud-katana-powershell-module">
 <h3>Import Cloud Katana PowerShell Module<a class="headerlink" href="#import-cloud-katana-powershell-module" title="Permalink to this headline">¶</a></h3>
-<p>Open a new terminal at the root of the project and import the <code class="docutils literal notranslate"><span class="pre">CloudKatana.psm1</span></code> module.</p>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">Import-Module</span> <span class="p">.\</span><span class="n">CloudKatana</span><span class="p">.</span><span class="n">psm1</span> <span class="n">-verbose</span>
+<p>Open a new terminal at the root of the project and import the <code class="docutils literal notranslate"><span class="pre">CloudKatanaUtils.psm1</span></code> module.</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">Import-Module</span> <span class="p">.\</span><span class="n">CloudKatanaUtils</span><span class="p">.</span><span class="n">psm1</span> <span class="n">-verbose</span>
 </pre></div>
 </div>
 </div>
@@ -459,7 +454,9 @@
 <p>We can use the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-device-code">OAuth 2.0 device authorization grant flow</a> to get a MS Graph token with <code class="docutils literal notranslate"><span class="pre">delegated</span></code> permissions with the Azure AD application we registered earlier.</p>
 <p><strong>Get Device Code</strong></p>
 <p>First, we need to request a device code.</p>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$deviceCodeRequest</span> <span class="p">=</span> <span class="nb">Get-DeviceCode</span> <span class="n">-ClientId</span> <span class="s1">&#39;&lt;AZ-AD-APP-ID&gt;&#39;</span> <span class="n">-TenantId</span> <span class="s1">&#39;&lt;TENANT-ID&gt;&#39;</span> <span class="n">-Scope</span> <span class="s1">&#39;https://graph.microsoft.com/.default&#39;</span>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$clientAppId</span> <span class="p">=</span> <span class="s1">&#39;&lt;AZ-AD-APP-ID&#39;</span>
+<span class="nv">$tenantId</span> <span class="p">=</span> <span class="s1">&#39;&lt;TENANT-ID&gt;&#39;</span>
+<span class="nv">$deviceCodeRequest</span> <span class="p">=</span> <span class="nb">Get-DeviceCode</span> <span class="n">-ClientId</span> <span class="nv">$clientAppId</span> <span class="n">-TenantId</span> <span class="nv">$tenantId</span> <span class="n">-Scope</span> <span class="s1">&#39;https://graph.microsoft.com/.default&#39;</span>
 <span class="nv">$deviceCodeRequest</span>
 </pre></div>
 </div>
@@ -476,7 +473,7 @@
 <p><strong>Get Graph Token</strong></p>
 <p>We can now use the <code class="docutils literal notranslate"><span class="pre">device_code</span></code> value to request a Microsoft Graph token.</p>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$device_code</span> <span class="p">=</span> <span class="nv">$deviceCodeRequest</span><span class="p">.</span><span class="n">device_code</span>
-<span class="nv">$results</span> <span class="p">=</span> <span class="nb">Get-MSGraphAccessToken</span> <span class="n">-ClientId</span> <span class="s1">&#39;&lt;AZ-AD-APP-ID&gt;&#39;</span> <span class="n">-TenantId</span> <span class="s1">&#39;&lt;TENANT-ID&gt;&#39;</span> <span class="n">-GrantType</span> <span class="n">device_code</span> <span class="n">-DeviceCode</span> <span class="nv">$device_code</span> <span class="n">-Verbose</span>
+<span class="nv">$results</span> <span class="p">=</span> <span class="nb">Get-MSGraphAccessToken</span> <span class="n">-ClientId</span> <span class="nv">$clientAppId</span> <span class="n">-TenantId</span> <span class="nv">$tenantId</span> <span class="n">-GrantType</span> <span class="n">device_code</span> <span class="n">-DeviceCode</span> <span class="nv">$device_code</span> <span class="n">-Verbose</span>
 <span class="nv">$results</span>
 
 <span class="nv">$DelegatedMGToken</span> <span class="p">=</span> <span class="nv">$results</span><span class="p">.</span><span class="n">access_token</span>
@@ -491,8 +488,9 @@ Take a look at the <code class="docutils literal notranslate"><span class="pre">
 <p>Since we have an access token with delegated permissions to read mail, then we can read mail only of the account we requested the device code and authenticated to get the MS Graph token with:</p>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$body</span> <span class="p">=</span> <span class="p">@(</span>
   <span class="p">@{</span>
+    <span class="n">Platform</span> <span class="p">=</span> <span class="s1">&#39;Azure&#39;</span>
     <span class="n">Tactic</span> <span class="p">=</span> <span class="s1">&#39;collection&#39;</span>
-    <span class="n">Procedure</span> <span class="p">=</span> <span class="s1">&#39;getMyMailboxMessages&#39;</span>
+    <span class="n">Procedure</span> <span class="p">=</span> <span class="s1">&#39;Get-CKMyMailboxMessages&#39;</span>
     <span class="n">Parameters</span> <span class="p">=</span> <span class="p">@{</span>
       <span class="n">accessToken</span> <span class="p">=</span> <span class="nv">$DelegatedMGToken</span>
     <span class="p">}</span>
@@ -503,7 +501,7 @@ Take a look at the <code class="docutils literal notranslate"><span class="pre">
 </pre></div>
 </div>
 <p>You can then inspect the results the following way:</p>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">Invoke-RestMethod</span> <span class="n">-Uri</span> <span class="nv">$simulationResults</span><span class="p">.</span><span class="n">statusQueryGetUri</span><span class="p">).</span><span class="n">Output</span><span class="p">[</span><span class="n">0</span><span class="p">].</span><span class="n">value</span> <span class="p">|</span> <span class="nb">select </span><span class="n">subject</span>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">Invoke-RestMethod</span> <span class="n">-Uri</span> <span class="nv">$simulationResults</span><span class="p">.</span><span class="n">statusQueryGetUri</span><span class="p">).</span><span class="n">Output</span> <span class="p">|</span> <span class="nb">select </span><span class="n">subject</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">subject</span>
@@ -529,7 +527,9 @@ Take a look at the <code class="docutils literal notranslate"><span class="pre">
 <p>In the previous example, we impersonated a user with the application we registered while deploying Cloud Katana locally. Now, we can use the Azure application context (without impersonating the signed-in user) and execute simulations.</p>
 <p>The majority of simulations in this project leverage the application context.</p>
 <p>Use the following PowerShell commands to get a MS graph token with application permissions using the <code class="docutils literal notranslate"><span class="pre">client_credentials</span></code> grant type. Here is where we need to use the <code class="docutils literal notranslate"><span class="pre">secret</span> <span class="pre">text</span></code> that we got earlier while registering/creating our Azure AD application.:</p>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$results</span> <span class="p">=</span> <span class="nb">Get-MSGraphAccessToken</span> <span class="n">-ClientId</span> <span class="s1">&#39;&lt;AZ-AD-APP-ID&gt;&#39;</span> <span class="n">-TenantId</span> <span class="s1">&#39;&lt;TENANT-ID&gt;&#39;</span> <span class="n">-GrantType</span> <span class="n">client_credentials</span> <span class="n">-AppSecret</span> <span class="nv">$secret</span>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$tenantId</span> <span class="p">=</span> <span class="s1">&#39;&lt;TENANT-ID&gt;&#39;</span>
+<span class="nv">$clientAppId</span> <span class="p">=</span> <span class="s1">&#39;&lt;AZ-AD-APP-ID&gt;&#39;</span>
+<span class="nv">$results</span> <span class="p">=</span> <span class="nb">Get-MSGraphAccessToken</span> <span class="n">-ClientId</span> <span class="nv">$clientAppId</span> <span class="n">-TenantId</span> <span class="nv">$tenantId</span> <span class="n">-GrantType</span> <span class="n">client_credentials</span> <span class="n">-AppSecret</span> <span class="nv">$secret</span>
 <span class="nv">$results</span>
 
 <span class="nv">$AppMGToken</span> <span class="p">=</span> <span class="nv">$results</span><span class="p">.</span><span class="n">access_token</span>
@@ -548,11 +548,12 @@ You will be able to explore the token claims in a friendly way.</p>
 </div>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$body</span> <span class="p">=</span> <span class="p">@(</span>
   <span class="p">@{</span>
+    <span class="n">Platform</span> <span class="p">=</span> <span class="s1">&#39;Azure&#39;</span>
     <span class="n">Tactic</span> <span class="p">=</span> <span class="s1">&#39;collection&#39;</span>
-    <span class="n">Procedure</span> <span class="p">=</span> <span class="s1">&#39;getUserMailboxMessages&#39;</span>
+    <span class="n">Procedure</span> <span class="p">=</span> <span class="s1">&#39;Get-CKMailboxMessages&#39;</span>
     <span class="n">Parameters</span> <span class="p">=</span> <span class="p">@{</span>
       <span class="n">accessToken</span> <span class="p">=</span> <span class="nv">$AppMGToken</span>
-      <span class="n">userPrincipalName</span> <span class="p">=</span> <span class="s1">&#39;pgustavo@simulandlabs.com&#39;</span>
+      <span class="n">userPrincipalName</span> <span class="p">=</span> <span class="s1">&#39;admin@MSDx145792.onmicrosoft.com&#39;</span>
     <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">)</span> <span class="p">|</span> <span class="nb">ConvertTo-Json</span> <span class="n">-Depth</span> <span class="n">10</span>
@@ -561,7 +562,7 @@ You will be able to explore the token claims in a friendly way.</p>
 </pre></div>
 </div>
 <p>You can then inspect the results the following way:</p>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">Invoke-RestMethod</span> <span class="n">-Uri</span> <span class="nv">$SimulationResults</span><span class="p">.</span><span class="n">statusQueryGetUri</span><span class="p">).</span><span class="n">Output</span><span class="p">[</span><span class="n">0</span><span class="p">]</span> <span class="p">|</span> <span class="nb">select </span><span class="n">subject</span>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="nb">Invoke-RestMethod</span> <span class="n">-Uri</span> <span class="nv">$SimulationResults</span><span class="p">.</span><span class="n">statusQueryGetUri</span><span class="p">).</span><span class="n">Output</span> <span class="p">|</span> <span class="nb">select </span><span class="n">subject</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">subject</span>
@@ -574,8 +575,9 @@ You will be able to explore the token claims in a friendly way.</p>
 <h3>List All Registered Azure AD Applications**<a class="headerlink" href="#list-all-registered-azure-ad-applications" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$body</span> <span class="p">=</span> <span class="p">@(</span>
   <span class="p">@{</span>
+    <span class="n">Platform</span> <span class="p">=</span> <span class="s1">&#39;Azure&#39;</span>
     <span class="n">Tactic</span> <span class="p">=</span> <span class="s1">&#39;discovery&#39;</span>
-    <span class="n">Procedure</span> <span class="p">=</span> <span class="s1">&#39;getAllAdApplications&#39;</span>
+    <span class="n">Procedure</span> <span class="p">=</span> <span class="s1">&#39;Get-CKAzADApplication&#39;</span>
     <span class="n">Parameters</span> <span class="p">=</span> <span class="p">@{</span>
       <span class="n">accessToken</span> <span class="p">=</span> <span class="nv">$AppMGToken</span>
     <span class="p">}</span>
@@ -628,7 +630,7 @@ You will be able to explore the token claims in a friendly way.</p>
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="manual.html" title="previous page">Deploy Manually</a>
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Deploy Locally</a>
     <a class='right-next' id="next-link" href="../../internals/design/intro.html" title="next page">Design Principles</a>
 
         </div>
