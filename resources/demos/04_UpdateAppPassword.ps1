@@ -11,11 +11,12 @@ $headers = @{
 # HTTP Body
 $body = @(
   @{
+    Platform = 'Azure'
     Tactic = 'persistence'
-    Procedure = 'updateAdAppPassword'
+    Procedure = 'Add-CKAzADAppPassword'
     Parameters = @{
         appObjectId = 'AZURE-AD-APP-OBJECT-ID'
-        pwdCredentialName = 'BlackHatSecret'
+        displayName = 'BlackHatSecret'
     }
   }
 ) | ConvertTo-Json -Depth 4

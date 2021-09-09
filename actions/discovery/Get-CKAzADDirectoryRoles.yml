@@ -1,0 +1,30 @@
+title: Get-CKAzADDirectoryRoles
+id: d782c5cf-153c-4588-b153-dc54e35afa7f
+creationDate: '2021-08-22'
+modificationDate: '2021-09-08'
+description: |
+  A threat actor might want to list the directory roles that are activated in the tenant. This operation only returns roles that have been activated. A role becomes activated when an admin activates the role using the Activate directoryRole API. Not all built-in roles are initially activated.
+contributors:
+- Roberto Rodriguez @Cyb3rWard0g
+- MSTIC R&D
+ctiReferences:
+attackMappings:
+- technique: T1069.003
+  tactics:
+  - TA0007
+platform: Azure
+resource:
+  url: https://graph.microsoft.com/
+  authorization:
+    permissionsType: application
+    permissions:
+    - Directory.Read.All
+parameters:
+  accessToken:
+    type: string
+    description: Access token used to access the API.
+    required: true
+scripts:
+  - kind: PowerShell
+    module: CloudKatana
+    scriptPath: durableApp\Modules\CloudKatana\discovery\Get-CKAzADDirectoryRoles.ps1

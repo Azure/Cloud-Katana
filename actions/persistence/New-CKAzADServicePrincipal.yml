@@ -1,0 +1,34 @@
+title: New-CKAzADServicePrincipal
+id: c0771117-a978-4bf2-9832-64d4ed279da9
+creationDate: '2021-08-05'
+modificationDate: '2021-09-08'
+description: |
+  A threat actor might want to create a service principal for an existing Azure AD application.
+contributors:
+- Roberto Rodriguez @Cyb3rWard0g
+- MSTIC R&D
+ctiReferences:
+attackMappings:
+- technique: T1136.003
+  tactics:
+  - TA0003
+platform: Azure
+resource:
+  url: https://graph.microsoft.com/
+  authorization:
+    permissionsType: application
+    permissions:
+    - Application.ReadWrite.All
+parameters:
+  appId:
+    type: string
+    description: Azure AD application ID (client).
+    required: true
+  accessToken:
+    type: string
+    description: Access token used to access the API.
+    required: true
+scripts:
+  - kind: PowerShell
+    module: CloudKatana
+    scriptPath: durableApp\Modules\CloudKatana\persistence\New-CKAzADServicePrincipal.ps1

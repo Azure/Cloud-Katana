@@ -3,7 +3,6 @@ param($Context)
 $output = @()
 # From Orchestration Context type to PSCustomObject
 $contextObject = $Context | ConvertTo-Json | ConvertFrom-Json
-$contextObject
 $simulationPlan = $contextObject.Input 
 
 foreach ($step in $simulationPlan) {
@@ -11,7 +10,7 @@ foreach ($step in $simulationPlan) {
         # From String object to PSCustomObject
         $step = $step | ConvertFrom-Json
     }
-    $functionName = $step.Tactic
+    $functionName = $step.Platform
     $functionInput = $step | ConvertTo-Json
     # Invoke activity function
     $output += Invoke-DurableActivity -FunctionName $functionName -Input $functionInput

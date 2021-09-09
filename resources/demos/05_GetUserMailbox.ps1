@@ -11,8 +11,9 @@ $headers = @{
 # HTTP Body
 $body = @(
   @{
+    Platform = 'Azure'
     Tactic = 'collection'
-    Procedure = 'getUserMailboxMessages'
+    Procedure = 'Get-CKMailboxMessages'
     Parameters = @{
       userPrincipalName = 'USER-NAME@DOMAIN.com'
     }

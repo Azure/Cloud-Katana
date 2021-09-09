@@ -153,7 +153,7 @@
         {
             "type": "Microsoft.Resources/deploymentScripts",
             "apiVersion": "2020-10-01",
-            "name": "addGraphPermissions",
+            "name": "grantGraphPermissions",
             "dependsOn": ["[concat('Microsoft.Authorization/roleAssignments/', parameters('roleGuid'))]"],
             "location": "[resourceGroup().location]",
             "identity": {
@@ -167,9 +167,9 @@
                 "forceUpdateTag": "[parameters('utcValue')]",
                 "azPowerShellVersion": "6.2",
                 "timeout": "PT30M",
-                "scriptContent": "[format('. .\\Add-GraphPermissions.ps1; Add-GraphPermissions -SvcPrincipalId {0} -PermissionsFile .\\permissions.json -ConnectAs ManagedIdentity', reference(variables('resourceNames').Identity, '2018-11-30').principalId)]",
+                "scriptContent": "[format('. .\\Grant-GraphPermissions.ps1; Grant-GraphPermissions -SvcPrincipalId {0} -PermissionsFile .\\permissions.json -ConnectAs ManagedIdentity', reference(variables('resourceNames').Identity, '2018-11-30').principalId)]",
                 "supportingScriptUris": [
-                    "[concat(parameters('artifactsLocation'), '/resources/scripts/Add-GraphPermissions.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/resources/scripts/Grant-GraphPermissions.ps1', parameters('_artifactsLocationSasToken'))]",
                     "[concat(parameters('artifactsLocation'), '/actions/permissions.json', parameters('_artifactsLocationSasToken'))]"
                 ],
                 "cleanupPreference": "OnSuccess",
@@ -182,7 +182,7 @@
             "name": "deployFunctionApp",
             "dependsOn": [ 
                 "createServerApp",
-                "addGraphPermissions"
+                "grantGraphPermissions"
             ],
             "properties": {
                 "mode": "Incremental",

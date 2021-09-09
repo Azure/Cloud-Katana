@@ -11,8 +11,9 @@ $headers = @{
 # HTTP Body
 $body = @(
   @{
+    Platform = 'Azure'
     Tactic = 'discovery'
-    Procedure = 'getAllAdApplications'
+    Procedure = 'Get-CKAzADApplication'
   }
 ) | ConvertTo-Json -Depth 4
 

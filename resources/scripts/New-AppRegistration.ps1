@@ -142,6 +142,7 @@ function New-AppRegistration {
             $body["publicClient"] = @{
                 redirectUris = @("http://localhost")
             }
+            $body['isFallbackPublicClient'] = $true
         }
         $params = @{
             "Method"  = "Post"

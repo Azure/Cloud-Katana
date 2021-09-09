@@ -13,8 +13,9 @@ You can run the following PowerShell commands to get a random name with the pref
 
 ```PowerShell
 $storageAccountName = (-join ('ckstorage',-join ((65..90) + (97..122) | Get-Random -Count 10 | % {[char]$_}))).ToLower()
+$resourceGroupName = '<RESOURCE-GROUP-NAME>'
 
-$storageAccount = az storage account create --name $storageAccountName --resource-group '<resource-group-name>' | ConvertFrom-Json
+$storageAccount = az storage account create --name $storageAccountName --resource-group $resourceGroupName | ConvertFrom-Json
 $storageAccount
 ```
 
@@ -23,7 +24,8 @@ $storageAccount
 Run the following commands to access the storage account access keys and craft a `Connection-String` value.
 
 ```PowerShell
-$storageAccountAccessKeys =  az storage account keys list --resource-group '<resource-group-name>' --account-name $storageAccountName | ConvertFrom-Json
+$resourceGroupName = '<RESOURCE-GROUP-NAME>'
+$storageAccountAccessKeys =  az storage account keys list --resource-group $resourceGroupName --account-name $storageAccountName | ConvertFrom-Json
 $connectionString = "DefaultEndpointsProtocol=https;AccountName=$($storageAccountName);AccountKey=$($storageAccountAccessKeys[0].value);EndpointSuffix=core.windows.net"
 $connectionString
 ```
@@ -51,18 +53,18 @@ You can use the Cloud Katana PowerShell module to create an Azure AD application
 
 ```PowerShell
 cd Cloud-Katana
-Import-Module .\CloudKatana.psm1 -verbose
+Import-Module .\CloudKatanaUtils.psm1 -verbose
 ```
 
 Use the following commands to register a new Azure AD application, create a service principal and add credentials to it.
 
 ```PowerShell
 $AppName = '<YOUR-APP-NAME>'
-New-AppRegistration -Name $Appname -NativeApp -ReplyUrls 'http://localhost' -AddSecret -verbose
+$NewApp = New-AppRegistration -Name $Appname -NativeApp -AddSecret -verbose
 ```
 
 ```{note}
-Save the `secret text` and information about your new application. The secret text ised used while authenticating to the Azure AD application to ru simulations as the application itself and not as the signed-in user.
+Save the `secret text` and information about your new application. The secret text ised used while authenticating to the Azure AD application to run simulations as the application itself and not as the signed-in user.
 ```
 
 ## Grant Permissions to Azure AD application
@@ -70,7 +72,7 @@ Save the `secret text` and information about your new application. The secret te
 The project comes with a `permissions.json` file which aggregates all the permissions needed to execute every single simulation via Azure Functions. The file is in the `actions` folder at the root of the Cloud Katana project. We can use that file and the following function to grant permissions to the Azure AD application we just registered/created. You can use another function from the Cloud Katana PowerShell module to do so.
 
 ```PowerShell
-Add-GraphPermissions -AppSvcPrincipalName CloudKatanaLocal -PermissionsFile .\actions\permissions.json -Verbose
+Grant-GraphPermissions -SvcPrincipalName $AppName -PermissionsFile .\actions\permissions.json -Verbose
 ```
 
 ## Install Azure Function Core Tools
@@ -92,7 +94,7 @@ cd .\durableApp\
 func start
 ```
 
-You should see something similar to the output below. You just initialized the Cloud Katana orchestrator and exposed the `collection`, `discovery` and `persistence` Azure Functions locally:
+You should see something similar to the output below. You just initialized the Cloud Katana orchestrator and exposed the the current Azure Functions locally:
 
 ```
 Azure Functions Core Tools
@@ -100,16 +102,15 @@ Core Tools Version:       3.0.3568 Commit hash: e30a0ede85fd498199c28ad699ab2548
 Function Runtime Version: 3.0.15828.0
 
 Functions:
-
         HttpStart: [POST,GET] http://localhost:7071/api/orchestrators/{FunctionName}
 
-        collection: activityTrigger
-        discovery: activityTrigger
+        Azure: activityTrigger
+
         Orchestrator: orchestrationTrigger
-        persistence: activityTrigger
 
 For detailed output, run func with --verbose flag.
-[2021-07-15T06:25:13.456Z] Worker process started and initialized.
+[2021-09-09T21:59:28.334Z] Worker process started and initialized.
+[2021-09-09T21:59:32.064Z] Host lock lease acquired by instance ID '000000000000000000000000DA8266BD'.
 ```
 
 You are now ready to use the Azure Function application!
