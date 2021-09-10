@@ -199,7 +199,7 @@ We are sharing a few workflows in the [workflows](https://github.com/Azure/Cloud
 ```PowerShell
 cd Cloud-Katana\
 
-$doc = Get-Content .\workflows\Az-Local-UpdateAppAndReadMail.json -raw
+$doc = Get-Content .\workflows\examples\Az-Local-UpdateAppAndReadMail.json -raw
 ```
 
 Explore the content of the variable `$doc` and identify all the variables that need to be set for the simulation before execution. The variables follow the same syntax as a PowerShell variable (`$variable`).
@@ -292,7 +292,7 @@ For example, `#{output}.GetAccessToken.access_token` means:
 * Get the output of the step `GetAccessToken`
 * Filter output and only return the value of the property `access_token`
 
-Output of every single step is saved in a dictionary represented as the variable `$output` while running the `Orchestrator`. We use the `$output` variable (Dict) and use the name of the step we want to get output from as a `key` in the dictionary. `#{output}` is processed by the `Orchestrator` internally. No need to update this locally.
+Output of every single step is saved in a dictionary represented as the variable `$output` in the execution context of the `Orchestrator`.  The `$output` variable (Dictionary) uses the name of steps as `keys` in the dictionary. This allows other steps to reference output based on the step name.
 
 **Expand / Substitute Variables on Document**
 
@@ -361,6 +361,23 @@ $outs.GrantMailPermissions
 You can convert each output into `PSCustomObject` objects with the [ConvertFrom-Json](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertfrom-json?view=powershell-7.1) cmdlet.
 
 ```PowerShell
-$grants = $outs.GrantMailPermissions | ConverFrom-Json
+$grants = $outs.GrantMailPermissions | ConvertFrom-Json
 $grants
+```
+
+Let's inspect messages from the Mailbox:
+
+```PowerShell
+$messages = $outs.GetMailboxMessages | ConvertFrom-Json
+$messages | Select-Object subject
+```
+
+```
+subject
+-------
+Check out the latest Power Automate updates, success stories, and learning
+Azure AD Identity Protection Weekly Digest
+Azure AD Identity Protection Weekly Digest
+DC01: Health service data is not up to date.  – You have an important alert from Azure Active Directory
+Azure AD Identity Protection Weekly Digest
 ```
