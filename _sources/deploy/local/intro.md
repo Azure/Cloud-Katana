@@ -69,10 +69,10 @@ Save the `secret text` and information about your new application. The secret te
 
 ## Grant Permissions to Azure AD application
 
-The project comes with a `permissions.json` file which aggregates all the permissions needed to execute every single simulation via Azure Functions. The file is in the `actions` folder at the root of the Cloud Katana project. We can use that file and the following function to grant permissions to the Azure AD application we just registered/created. You can use another function from the Cloud Katana PowerShell module to do so.
+The project comes with a `permissions.json` file which aggregates all the permissions needed to execute every single simulation via Azure Functions. The file is in the `metadata` folder at the root of the Cloud Katana project. We can use that file and the following function to grant permissions to the Azure AD application we just registered/created. You can use another function from the Cloud Katana PowerShell module to do so.
 
 ```PowerShell
-Grant-GraphPermissions -SvcPrincipalName $AppName -PermissionsFile .\actions\permissions.json -Verbose
+Grant-GraphPermissions -SvcPrincipalName $AppName -PermissionsFile .\metadata\permissions.json -Verbose
 ```
 
 ## Install Azure Function Core Tools

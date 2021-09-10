@@ -487,13 +487,11 @@
 <div class="section" id="get-all-azure-ad-users">
 <h3>Get All Azure AD Users<a class="headerlink" href="#get-all-azure-ad-users" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="c"># HTTP Body</span>
-<span class="nv">$body</span> <span class="p">=</span> <span class="p">@(</span>
-  <span class="p">@{</span>
-    <span class="n">Platform</span> <span class="p">=</span> <span class="s1">&#39;Azure&#39;</span>
-    <span class="n">Tactic</span> <span class="p">=</span> <span class="s1">&#39;discovery&#39;</span>
-    <span class="n">Procedure</span> <span class="p">=</span> <span class="s1">&#39;Get-CKAzADUsers&#39;</span>
-  <span class="p">}</span>
-<span class="p">)</span> <span class="p">|</span> <span class="nb">ConvertTo-Json</span> <span class="n">-Depth</span> <span class="n">4</span>
+<span class="nv">$body</span> <span class="p">=</span> <span class="p">@{</span>
+  <span class="n">activityFunction</span> <span class="p">=</span> <span class="s1">&#39;Azure&#39;</span>
+  <span class="nb">type </span><span class="p">=</span> <span class="s1">&#39;action&#39;</span>
+  <span class="n">action</span> <span class="p">=</span> <span class="s1">&#39;Get-CKAzADUsers&#39;</span>
+<span class="p">}</span> <span class="p">|</span> <span class="nb">ConvertTo-Json</span> <span class="n">-Depth</span> <span class="n">4</span>
 
 <span class="c"># Execute Simulation</span>
 <span class="nv">$simulationResults</span> <span class="p">=</span> <span class="nb">Invoke-RestMethod</span> <span class="n">-Method</span> <span class="n">Post</span> <span class="n">-Uri</span> <span class="nv">$OrchestratorUrl</span> <span class="n">-Body</span> <span class="nv">$body</span> <span class="n">-Headers</span> <span class="nv">$headers</span> <span class="n">-ContentType</span> <span class="s1">&#39;application/json&#39;</span>
@@ -503,8 +501,7 @@
 <span class="nb">Start-Sleep</span> <span class="n">-s</span> <span class="n">5</span>
 
 <span class="c"># Explore Results</span>
-<span class="nv">$outputResults</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Invoke-RestMethod</span> <span class="n">-Uri</span> <span class="nv">$simulationResults</span><span class="p">.</span><span class="n">statusQueryGetUri</span> <span class="n">-Headers</span> <span class="nv">$headers</span><span class="p">).</span><span class="n">output</span>
-<span class="nv">$outputResults</span> <span class="p">|</span> <span class="nb">Format-List</span>
+<span class="nv">$outputResults</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Invoke-RestMethod</span> <span class="n">-Uri</span> <span class="nv">$simulationResults</span><span class="p">.</span><span class="n">statusQueryGetUri</span> <span class="n">-Headers</span> <span class="nv">$headers</span><span class="p">).</span><span class="n">output</span> <span class="p">|</span> <span class="nb">ConvertFrom-Json</span>
 <span class="nv">$outputResults</span> <span class="p">|</span> <span class="nb">Where-Object</span> <span class="p">{</span><span class="nv">$_</span><span class="p">.</span><span class="n">userPrincipalName</span> <span class="o">-like</span> <span class="s1">&#39;*simulandlabs*&#39;</span><span class="p">}</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">userPrincipalName</span>
 </pre></div>
 </div>
@@ -512,13 +509,11 @@
 <div class="section" id="get-all-azure-ad-applications">
 <h3>Get All Azure AD Applications<a class="headerlink" href="#get-all-azure-ad-applications" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="c"># HTTP Body</span>
-<span class="nv">$body</span> <span class="p">=</span> <span class="p">@(</span>
-  <span class="p">@{</span>
-    <span class="n">Platform</span> <span class="p">=</span> <span class="s1">&#39;Azure&#39;</span>
-    <span class="n">Tactic</span> <span class="p">=</span> <span class="s1">&#39;discovery&#39;</span>
-    <span class="n">Procedure</span> <span class="p">=</span> <span class="s1">&#39;Get-CKAzADApplication&#39;</span>
-  <span class="p">}</span>
-<span class="p">)</span> <span class="p">|</span> <span class="nb">ConvertTo-Json</span> <span class="n">-Depth</span> <span class="n">4</span>
+<span class="nv">$body</span> <span class="p">=</span> <span class="p">@{</span>
+  <span class="n">activityFunction</span> <span class="p">=</span> <span class="s1">&#39;Azure&#39;</span>
+  <span class="nb">type </span><span class="p">=</span> <span class="s1">&#39;action&#39;</span>
+  <span class="n">action</span> <span class="p">=</span> <span class="s1">&#39;Get-CKAzADApplication&#39;</span>
+<span class="p">}</span> <span class="p">|</span> <span class="nb">ConvertTo-Json</span> <span class="n">-Depth</span> <span class="n">4</span>
 
 <span class="c"># Execute Simulation</span>
 <span class="nv">$simulationResults</span> <span class="p">=</span> <span class="nb">Invoke-RestMethod</span> <span class="n">-Method</span> <span class="n">Post</span> <span class="n">-Uri</span> <span class="nv">$OrchestratorUrl</span> <span class="n">-Body</span> <span class="nv">$body</span> <span class="n">-Headers</span> <span class="nv">$headers</span> <span class="n">-ContentType</span> <span class="s1">&#39;application/json&#39;</span>
@@ -528,7 +523,7 @@
 <span class="nb">Start-Sleep</span> <span class="n">-s</span> <span class="n">5</span>
 
 <span class="c"># Process Results</span>
-<span class="nv">$outputResults</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Invoke-RestMethod</span> <span class="n">-Uri</span> <span class="nv">$simulationResults</span><span class="p">.</span><span class="n">statusQueryGetUri</span> <span class="n">-Headers</span> <span class="nv">$headers</span><span class="p">).</span><span class="n">output</span>
+<span class="nv">$outputResults</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Invoke-RestMethod</span> <span class="n">-Uri</span> <span class="nv">$simulationResults</span><span class="p">.</span><span class="n">statusQueryGetUri</span> <span class="n">-Headers</span> <span class="nv">$headers</span><span class="p">).</span><span class="n">output</span> <span class="p">|</span> <span class="nb">ConvertFrom-Json</span>
 <span class="nv">$outputResults</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">displayName</span>
 </pre></div>
 </div>
@@ -536,17 +531,15 @@
 <div class="section" id="update-application-credentials">
 <h3>Update Application Credentials<a class="headerlink" href="#update-application-credentials" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="c"># HTTP Body</span>
-<span class="nv">$body</span> <span class="p">=</span> <span class="p">@(</span>
-  <span class="p">@{</span>
-    <span class="n">Platform</span> <span class="p">=</span> <span class="s1">&#39;Azure&#39;</span>
-    <span class="n">Tactic</span> <span class="p">=</span> <span class="s1">&#39;persistence&#39;</span>
-    <span class="n">Procedure</span> <span class="p">=</span> <span class="s1">&#39;Add-CKAzADAppPassword&#39;</span>
-    <span class="n">Parameters</span> <span class="p">=</span> <span class="p">@{</span>
-        <span class="n">appObjectId</span> <span class="p">=</span> <span class="s1">&#39;AZURE-AD-APP-OBJECT-ID&#39;</span>
-        <span class="n">displayName</span> <span class="p">=</span> <span class="s1">&#39;BlackHatSecret&#39;</span>
-    <span class="p">}</span>
+<span class="nv">$body</span> <span class="p">=</span> <span class="p">@{</span>
+  <span class="n">activityFunction</span> <span class="p">=</span> <span class="s1">&#39;Azure&#39;</span>
+  <span class="nb">type </span><span class="p">=</span> <span class="s1">&#39;action&#39;</span>
+  <span class="n">action</span> <span class="p">=</span> <span class="s1">&#39;Add-CKAzADAppPassword&#39;</span>
+  <span class="n">parameters</span> <span class="p">=</span> <span class="p">@{</span>
+    <span class="n">appObjectId</span> <span class="p">=</span> <span class="s1">&#39;AZURE-AD-APP-OBJECT-ID&#39;</span>
+    <span class="n">displayName</span> <span class="p">=</span> <span class="s1">&#39;BlackHatSecret&#39;</span>
   <span class="p">}</span>
-<span class="p">)</span> <span class="p">|</span> <span class="nb">ConvertTo-Json</span> <span class="n">-Depth</span> <span class="n">4</span>
+<span class="p">}</span> <span class="p">|</span> <span class="nb">ConvertTo-Json</span> <span class="n">-Depth</span> <span class="n">4</span>
 
 <span class="c"># Execute Simulation</span>
 <span class="nv">$simulationResults</span> <span class="p">=</span> <span class="nb">Invoke-RestMethod</span> <span class="n">-Method</span> <span class="n">Post</span> <span class="n">-Uri</span> <span class="nv">$OrchestratorUrl</span> <span class="n">-Body</span> <span class="nv">$body</span> <span class="n">-Headers</span> <span class="nv">$headers</span> <span class="n">-ContentType</span> <span class="s1">&#39;application/json&#39;</span>
@@ -556,7 +549,7 @@
 <span class="nb">Start-Sleep</span> <span class="n">-s</span> <span class="n">5</span>
 
 <span class="c"># Process Results</span>
-<span class="nv">$outputResults</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Invoke-RestMethod</span> <span class="n">-Uri</span> <span class="nv">$simulationResults</span><span class="p">.</span><span class="n">statusQueryGetUri</span> <span class="n">-Headers</span> <span class="nv">$headers</span><span class="p">).</span><span class="n">output</span>
+<span class="nv">$outputResults</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Invoke-RestMethod</span> <span class="n">-Uri</span> <span class="nv">$simulationResults</span><span class="p">.</span><span class="n">statusQueryGetUri</span> <span class="n">-Headers</span> <span class="nv">$headers</span><span class="p">).</span><span class="n">output</span> <span class="p">|</span> <span class="nb">ConvertFrom-Json</span>
 <span class="nv">$outputResults</span> <span class="p">|</span> <span class="nb">Format-list</span>
 </pre></div>
 </div>
@@ -564,16 +557,14 @@
 <div class="section" id="get-users-mailbox">
 <h3>Get User’s Mailbox<a class="headerlink" href="#get-users-mailbox" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="c"># HTTP Body</span>
-<span class="nv">$body</span> <span class="p">=</span> <span class="p">@(</span>
-  <span class="p">@{</span>
-    <span class="n">Platform</span> <span class="p">=</span> <span class="s1">&#39;Azure&#39;</span>
-    <span class="n">Tactic</span> <span class="p">=</span> <span class="s1">&#39;collection&#39;</span>
-    <span class="n">Procedure</span> <span class="p">=</span> <span class="s1">&#39;Get-CKMailboxMessages&#39;</span>
-    <span class="n">Parameters</span> <span class="p">=</span> <span class="p">@{</span>
-      <span class="n">userPrincipalName</span> <span class="p">=</span> <span class="s1">&#39;USER-NAME@DOMAIN.com&#39;</span>
-    <span class="p">}</span>
+<span class="nv">$body</span> <span class="p">=</span> <span class="p">@{</span>
+  <span class="n">activityFunction</span> <span class="p">=</span> <span class="s1">&#39;Azure&#39;</span>
+  <span class="nb">type </span><span class="p">=</span> <span class="s1">&#39;action&#39;</span>
+  <span class="n">action</span> <span class="p">=</span> <span class="s1">&#39;Get-CKMailboxMessages&#39;</span>
+  <span class="n">parameters</span> <span class="p">=</span> <span class="p">@{</span>
+    <span class="n">userPrincipalName</span> <span class="p">=</span> <span class="s1">&#39;USER-NAME@DOMAIN.com&#39;</span>
   <span class="p">}</span>
-<span class="p">)</span> <span class="p">|</span> <span class="nb">ConvertTo-Json</span> <span class="n">-Depth</span> <span class="n">10</span>
+<span class="p">}</span> <span class="p">|</span> <span class="nb">ConvertTo-Json</span> <span class="n">-Depth</span> <span class="n">10</span>
 
 <span class="c"># Execute Simulation</span>
 <span class="nv">$simulationResults</span> <span class="p">=</span> <span class="nb">Invoke-RestMethod</span> <span class="n">-Method</span> <span class="n">Post</span> <span class="n">-Uri</span> <span class="nv">$OrchestratorUrl</span> <span class="n">-Body</span> <span class="nv">$body</span> <span class="n">-Headers</span> <span class="nv">$headers</span> <span class="n">-ContentType</span> <span class="s1">&#39;application/json&#39;</span>
@@ -583,8 +574,8 @@
 <span class="nb">Start-Sleep</span> <span class="n">-s</span> <span class="n">5</span>
 
 <span class="c"># Process Results</span>
-<span class="nv">$outputResults</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Invoke-RestMethod</span> <span class="n">-Uri</span> <span class="nv">$simulationResults</span><span class="p">.</span><span class="n">statusQueryGetUri</span> <span class="n">-Headers</span> <span class="nv">$headers</span><span class="p">).</span><span class="n">output</span>
-<span class="nv">$outputResults</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">bodyPreview</span>
+<span class="nv">$outputResults</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Invoke-RestMethod</span> <span class="n">-Uri</span> <span class="nv">$simulationResults</span><span class="p">.</span><span class="n">statusQueryGetUri</span> <span class="n">-Headers</span> <span class="nv">$headers</span><span class="p">).</span><span class="n">output</span> <span class="p">|</span> <span class="nb">ConvertFrom-Json</span>
+<span class="nv">$outputResults</span> <span class="p">|</span> <span class="nb">select </span><span class="n">bodyPreview</span>
 </pre></div>
 </div>
 </div>

@@ -92,7 +92,3 @@ You can click, for example, on one of the `deployment scripts` artifacts and ins
 ![](../../images/RunningDeploymentScripts.png)
 
 Finally, when the Cloud Katana Azure function is deployed, you can go back to your group resources and click on the `Function App` resource. Then, you can click on `Functions` and you will be able to explore all the Azure functions associated with Cloud Katana serverless API.
-
-![](../../images/KatanaFunctions.png)
-
-You are ready to run a few demos!
