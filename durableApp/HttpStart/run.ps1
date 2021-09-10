@@ -9,6 +9,11 @@ Write-Host "PowerShell HTTP trigger function processed a request."
 $FunctionName = $Request.Params.FunctionName
 $OrchestratorInputs = $Request.Body
 
+if ($OrchestratorInputs -is [HashTable]) {
+    Write-Host "Converting HashTable to JSON object"
+    $OrchestratorInputs = $OrchestratorInputs | ConvertTo-Json -Depth 100
+}
+
 $InstanceId = Start-NewOrchestration -FunctionName $FunctionName -InputObject $OrchestratorInputs
 Write-Host "Started orchestration with ID = '$InstanceId'"
 
