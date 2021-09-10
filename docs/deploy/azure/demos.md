@@ -50,13 +50,11 @@ $headers = @{
 
 ```PowerShell
 # HTTP Body
-$body = @(
-  @{
-    Platform = 'Azure'
-    Tactic = 'discovery'
-    Procedure = 'Get-CKAzADUsers'
-  }
-) | ConvertTo-Json -Depth 4
+$body = @{
+  activityFunction = 'Azure'
+  type = 'action'
+  action = 'Get-CKAzADUsers'
+} | ConvertTo-Json -Depth 4
 
 # Execute Simulation
 $simulationResults = Invoke-RestMethod -Method Post -Uri $OrchestratorUrl -Body $body -Headers $headers -ContentType 'application/json'
@@ -66,8 +64,7 @@ $simulationResults
 Start-Sleep -s 5
 
 # Explore Results
-$outputResults = (Invoke-RestMethod -Uri $simulationResults.statusQueryGetUri -Headers $headers).output
-$outputResults | Format-List
+$outputResults = (Invoke-RestMethod -Uri $simulationResults.statusQueryGetUri -Headers $headers).output | ConvertFrom-Json
 $outputResults | Where-Object {$_.userPrincipalName -like '*simulandlabs*'} | Select-Object userPrincipalName
 ```
 
@@ -75,13 +72,11 @@ $outputResults | Where-Object {$_.userPrincipalName -like '*simulandlabs*'} | Se
 
 ```PowerShell
 # HTTP Body
-$body = @(
-  @{
-    Platform = 'Azure'
-    Tactic = 'discovery'
-    Procedure = 'Get-CKAzADApplication'
-  }
-) | ConvertTo-Json -Depth 4
+$body = @{
+  activityFunction = 'Azure'
+  type = 'action'
+  action = 'Get-CKAzADApplication'
+} | ConvertTo-Json -Depth 4
 
 # Execute Simulation
 $simulationResults = Invoke-RestMethod -Method Post -Uri $OrchestratorUrl -Body $body -Headers $headers -ContentType 'application/json'
@@ -91,7 +86,7 @@ $simulationResults
 Start-Sleep -s 5
 
 # Process Results
-$outputResults = (Invoke-RestMethod -Uri $simulationResults.statusQueryGetUri -Headers $headers).output
+$outputResults = (Invoke-RestMethod -Uri $simulationResults.statusQueryGetUri -Headers $headers).output | ConvertFrom-Json
 $outputResults | Select-Object displayName
 ```
 
@@ -99,17 +94,15 @@ $outputResults | Select-Object displayName
 
 ```PowerShell
 # HTTP Body
-$body = @(
-  @{
-    Platform = 'Azure'
-    Tactic = 'persistence'
-    Procedure = 'Add-CKAzADAppPassword'
-    Parameters = @{
-        appObjectId = 'AZURE-AD-APP-OBJECT-ID'
-        displayName = 'BlackHatSecret'
-    }
+$body = @{
+  activityFunction = 'Azure'
+  type = 'action'
+  action = 'Add-CKAzADAppPassword'
+  parameters = @{
+    appObjectId = 'AZURE-AD-APP-OBJECT-ID'
+    displayName = 'BlackHatSecret'
   }
-) | ConvertTo-Json -Depth 4
+} | ConvertTo-Json -Depth 4
 
 # Execute Simulation
 $simulationResults = Invoke-RestMethod -Method Post -Uri $OrchestratorUrl -Body $body -Headers $headers -ContentType 'application/json'
@@ -119,7 +112,7 @@ $simulationResults
 Start-Sleep -s 5
 
 # Process Results
-$outputResults = (Invoke-RestMethod -Uri $simulationResults.statusQueryGetUri -Headers $headers).output
+$outputResults = (Invoke-RestMethod -Uri $simulationResults.statusQueryGetUri -Headers $headers).output | ConvertFrom-Json
 $outputResults | Format-list
 ```
 
@@ -127,16 +120,14 @@ $outputResults | Format-list
 
 ```PowerShell
 # HTTP Body
-$body = @(
-  @{
-    Platform = 'Azure'
-    Tactic = 'collection'
-    Procedure = 'Get-CKMailboxMessages'
-    Parameters = @{
-      userPrincipalName = 'USER-NAME@DOMAIN.com'
-    }
+$body = @{
+  activityFunction = 'Azure'
+  type = 'action'
+  action = 'Get-CKMailboxMessages'
+  parameters = @{
+    userPrincipalName = 'USER-NAME@DOMAIN.com'
   }
-) | ConvertTo-Json -Depth 10
+} | ConvertTo-Json -Depth 10
 
 # Execute Simulation
 $simulationResults = Invoke-RestMethod -Method Post -Uri $OrchestratorUrl -Body $body -Headers $headers -ContentType 'application/json'
@@ -146,6 +137,6 @@ $simulationResults
 Start-Sleep -s 5
 
 # Process Results
-$outputResults = (Invoke-RestMethod -Uri $simulationResults.statusQueryGetUri -Headers $headers).output
-$outputResults | Select-Object bodyPreview
+$outputResults = (Invoke-RestMethod -Uri $simulationResults.statusQueryGetUri -Headers $headers).output | ConvertFrom-Json
+$outputResults | select bodyPreview
 ```

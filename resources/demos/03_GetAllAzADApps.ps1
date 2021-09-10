@@ -9,13 +9,11 @@ $headers = @{
 }
 
 # HTTP Body
-$body = @(
-  @{
-    Platform = 'Azure'
-    Tactic = 'discovery'
-    Procedure = 'Get-CKAzADApplication'
-  }
-) | ConvertTo-Json -Depth 4
+$body = @{
+  activityFunction = 'Azure'
+  type = 'action'
+  action = 'Get-CKAzADApplication'
+} | ConvertTo-Json -Depth 4
 
 # Execute Simulation
 $simulationResults = Invoke-RestMethod -Method Post -Uri $OrchestratorUrl -Body $body -Headers $headers -ContentType 'application/json'
@@ -25,5 +23,5 @@ $simulationResults
 Start-Sleep -s 5
 
 # Process Results
-$outputResults = (Invoke-RestMethod -Uri $simulationResults.statusQueryGetUri -Headers $headers).output
+$outputResults = (Invoke-RestMethod -Uri $simulationResults.statusQueryGetUri -Headers $headers).output | ConvertFrom-Json
 $outputResults | Select-Object displayName

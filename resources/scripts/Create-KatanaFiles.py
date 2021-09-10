@@ -10,10 +10,10 @@ from jinja2 import Template
 current_directory = os.path.dirname(__file__)
 app_directory = os.path.join(current_directory, "../..", "durableApp")
 templates_directory = os.path.join(current_directory, "../templates")
-actions_directory = os.path.join(current_directory, "../../actions")
+metadata_directory = os.path.join(current_directory, "../../metadata")
 docs_directory = os.path.join(current_directory, "../../docs")
 notebooks_directory = os.path.join(docs_directory, "notebooks")
-action_files = os.path.join(actions_directory, "**/", "*.yml")
+metadata_files = os.path.join(metadata_directory, "**/", "*.yml")
 toc_file = os.path.join(docs_directory, "_toc.yml")
 summary_table_template = os.path.join(templates_directory, "summary_template.md")
 toc_template = os.path.join(templates_directory, "toc_template.json")
@@ -59,7 +59,7 @@ summary_table = [
 
 ##### Open attacker actions yaml file available #####
 print("[+] Opening attack actions yaml files..")
-actions_list = glob.glob(action_files)
+actions_list = glob.glob(metadata_files)
 actions_loaded = []
 for action in actions_list:
     print(" [>] Reading file: {}".format(action))
@@ -142,9 +142,9 @@ bearer_token = result['access_token']""".format(app_config['PUBLIC_CLIENT_APP_ID
     # Process attacker actions
     nb['cells'].append(nbf.v4.new_markdown_cell("### Prepare HTTP Body"))
     data_dict = dict()
-    data_dict['Platform'] = action['platform']
-    data_dict['Tactic'] = tactic_maps[action['attackMappings'][0]['tactics'][0]]
-    data_dict['Procedure'] = action['title']
+    data_dict['activityFunction'] = action['platform']
+    data_dict['type'] = 'action'
+    data_dict['action'] = action['title']
     if 'parameters' in action:
         data_dict['parameters'] = dict()
         for k, v in action['parameters'].items():
@@ -371,7 +371,7 @@ for action in actions_loaded:
         if r not in permissions[permission_type]:
             permissions[permission_type].append(r)
 print("\n[+] Creating permissions file..")
-open('{}/permissions.json'.format(actions_directory), 'w').write(json.dumps(permissions, indent = 4))
+open('{}/permissions.json'.format(metadata_directory), 'w').write(json.dumps(permissions, indent = 4))
 
 # Creating PowerShell Requirements file
 print("\n[+] Creating PowerShell Requirements file..")

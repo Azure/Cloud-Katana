@@ -170,7 +170,7 @@
                 "scriptContent": "[format('. .\\Grant-GraphPermissions.ps1; Grant-GraphPermissions -SvcPrincipalId {0} -PermissionsFile .\\permissions.json -ConnectAs ManagedIdentity', reference(variables('resourceNames').Identity, '2018-11-30').principalId)]",
                 "supportingScriptUris": [
                     "[concat(parameters('artifactsLocation'), '/resources/scripts/Grant-GraphPermissions.ps1', parameters('_artifactsLocationSasToken'))]",
-                    "[concat(parameters('artifactsLocation'), '/actions/permissions.json', parameters('_artifactsLocationSasToken'))]"
+                    "[concat(parameters('artifactsLocation'), '/metadata/permissions.json', parameters('_artifactsLocationSasToken'))]"
                 ],
                 "cleanupPreference": "OnSuccess",
                 "retentionInterval": "PT1H"
