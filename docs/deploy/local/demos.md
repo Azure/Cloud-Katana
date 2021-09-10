@@ -153,7 +153,7 @@ subject
 Azure AD Identity Protection Weekly Digest
 ```
 
-### List All Registered Azure AD Applications**
+### List All Registered Azure AD Applications
 
 ```PowerShell
 $body = @{
