@@ -401,8 +401,8 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#examples">
-   Examples
+  <a class="reference internal nav-link" href="#examples-single-actions">
+   Examples: Single Actions
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -423,6 +423,18 @@
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#get-users-mailbox">
      Get User’s Mailbox
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#examples-workflow">
+   Examples: Workflow
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#add-credentials-to-an-app-grant-permissions-get-a-token-and-read-mail">
+     Add Credentials to an App, Grant Permissions, Get a Token and Read Mail
     </a>
    </li>
   </ul>
@@ -482,8 +494,8 @@
 </div>
 </div>
 </div>
-<div class="section" id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="examples-single-actions">
+<h2>Examples: Single Actions<a class="headerlink" href="#examples-single-actions" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="get-all-azure-ad-users">
 <h3>Get All Azure AD Users<a class="headerlink" href="#get-all-azure-ad-users" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="c"># HTTP Body</span>
@@ -576,6 +588,167 @@
 <span class="c"># Process Results</span>
 <span class="nv">$outputResults</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Invoke-RestMethod</span> <span class="n">-Uri</span> <span class="nv">$simulationResults</span><span class="p">.</span><span class="n">statusQueryGetUri</span> <span class="n">-Headers</span> <span class="nv">$headers</span><span class="p">).</span><span class="n">output</span> <span class="p">|</span> <span class="nb">ConvertFrom-Json</span>
 <span class="nv">$outputResults</span> <span class="p">|</span> <span class="nb">select </span><span class="n">bodyPreview</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="examples-workflow">
+<h2>Examples: Workflow<a class="headerlink" href="#examples-workflow" title="Permalink to this headline">¶</a></h2>
+<p>A Workflow is a sequence of steps that allows the operationalization of a simulation plan. Each step contains metadata such as the name of the activity function, action and parameters required to execute code. Steps are executed in order and some depend on the output of other steps in the workflow.</p>
+<div class="section" id="add-credentials-to-an-app-grant-permissions-get-a-token-and-read-mail">
+<h3>Add Credentials to an App, Grant Permissions, Get a Token and Read Mail<a class="headerlink" href="#add-credentials-to-an-app-grant-permissions-get-a-token-and-read-mail" title="Permalink to this headline">¶</a></h3>
+<p>We are sharing a few workflows in the <a class="reference external" href="https://github.com/Azure/Cloud-Katana/tree/main/workflows">workflows</a> folder for you to use for testing and inspiration:</p>
+<p><strong>Read Workflow JSON File</strong></p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd </span><span class="n">Cloud-Katana</span><span class="p">\</span>
+
+<span class="nv">$doc</span> <span class="p">=</span> <span class="nb">Get-Content</span> <span class="p">.\</span><span class="n">workflows</span><span class="p">\</span><span class="n">Az-UpdateAppAndReadMail</span><span class="p">.</span><span class="n">json</span> <span class="n">-raw</span>
+</pre></div>
+</div>
+<p>Explore the content of the variable <code class="docutils literal notranslate"><span class="pre">$doc</span></code> and identify all the variables that need to be set for the simulation before execution. The variables follow the same syntax as a PowerShell variable (<code class="docutils literal notranslate"><span class="pre">$variable</span></code>).</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$doc</span>
+</pre></div>
+</div>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Update Azure AD application and read mail&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;workflow&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Grant permissions to Azure AD application, add credentials to an Azure AD application, get an access token with the new credentials from the Azure AD application and read mail from a specific user via MS Graph with the security context of the Azure AD application&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;contributors&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&quot;Roberto Rodriguez @Cyb3rWard0g&quot;</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;steps&quot;</span><span class="p">:[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;GrantMailPermissions&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;activityFunction&quot;</span><span class="p">:</span> <span class="s2">&quot;Azure&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;Grant-CKPermissions&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;spObjectId&quot;</span><span class="p">:</span> <span class="s2">&quot;$spObjectId&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;resourceName&quot;</span><span class="p">:</span> <span class="s2">&quot;Microsoft Graph&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;permissionType&quot;</span><span class="p">:</span> <span class="s2">&quot;Application&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;permissions&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Mail.Read&quot;</span><span class="p">]</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;AddPasswordToApp&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;activityFunction&quot;</span><span class="p">:</span> <span class="s2">&quot;Azure&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;Add-CKAzADAppPassword&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;appObjectId&quot;</span><span class="p">:</span> <span class="s2">&quot;$appObjectId&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;$pwdCredentialName&quot;</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;wait&quot;</span><span class="p">:</span> <span class="s2">&quot;30s&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;GetAccessToken&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;activityFunction&quot;</span><span class="p">:</span> <span class="s2">&quot;Azure&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;Get-CKAccessToken&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;dependsOn&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;AddPasswordToApp&quot;</span>
+      <span class="p">],</span>
+      <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;ClientId&quot;</span><span class="p">:</span> <span class="s2">&quot;$appId&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TenantId&quot;</span><span class="p">:</span> <span class="s2">&quot;$tenantId&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;GrantType&quot;</span><span class="p">:</span> <span class="s2">&quot;client_credentials&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;AppSecret&quot;</span><span class="p">:</span> <span class="s2">&quot;#{output}.AddPasswordToApp.secretText&quot;</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;GetMailboxMessages&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;activityFunction&quot;</span><span class="p">:</span> <span class="s2">&quot;Azure&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;Get-CKMailboxMessages&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;dependsOn&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;GetAccessToken&quot;</span>
+      <span class="p">],</span>
+      <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;accessToken&quot;</span><span class="p">:</span> <span class="s2">&quot;#{output}.GetAccessToken.access_token&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;userPrincipalName&quot;</span><span class="p">:</span> <span class="s2">&quot;$userPrincipalName&quot;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Set Variables</strong></p>
+<p>For the workflow above, we need the following variables:</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$appObjectId</span> <span class="p">=</span> <span class="s1">&#39;xxxx-xxxx-xxxx-xxxx&#39;</span> <span class="c"># Application to add creentials to</span>
+<span class="nv">$spObjectId</span> <span class="p">=</span> <span class="s1">&#39;xxxx-xxxx-xxxx-xxxx&#39;</span> <span class="c"># Service principal to grant permissions to</span>
+<span class="nv">$pwdCredentialName</span> <span class="p">=</span> <span class="s1">&#39;MyNewSecret&#39;</span> <span class="c"># name of credentials added to the application</span>
+<span class="nv">$appId</span> <span class="p">=</span> <span class="s1">&#39;xxxx-xxxx-xxxxx-xxxxx&#39;</span> <span class="c"># application id (client_id) to authenticate to</span>
+<span class="nv">$tenantId</span> <span class="p">=</span> <span class="s1">&#39;xxxx-xxxx-xxxx-xxxx&#39;</span> <span class="c"># ID of tenant to authenticate to with the new credentials</span>
+<span class="nv">$userPrincipalName</span> <span class="p">=</span> <span class="s1">&#39;wardog@domain.onmicrosoft.com&#39;</span> <span class="c"># user to collect e-mails from (Mailbox messages)</span>
+</pre></div>
+</div>
+<p>The following pattern <code class="docutils literal notranslate"><span class="pre">#{output}</span></code> is used to reference/access the output results of specific steps during the execution of other steps in the workflow.</p>
+<p>For example, <code class="docutils literal notranslate"><span class="pre">#{output}.GetAccessToken.access_token</span></code> means:</p>
+<ul class="simple">
+<li><p>Get the output of the step <code class="docutils literal notranslate"><span class="pre">GetAccessToken</span></code></p></li>
+<li><p>Filter output and only return the value of the property <code class="docutils literal notranslate"><span class="pre">access_token</span></code></p></li>
+</ul>
+<p>Output of every single step is saved in a dictionary represented as the variable <code class="docutils literal notranslate"><span class="pre">$output</span></code> in the execution context of the <code class="docutils literal notranslate"><span class="pre">Orchestrator</span></code>.  The <code class="docutils literal notranslate"><span class="pre">$output</span></code> variable (Dictionary) uses the name of steps as <code class="docutils literal notranslate"><span class="pre">keys</span></code> in the dictionary. This allows other steps to reference output based on the step name.</p>
+<p><strong>Expand / Substitute Variables on Document</strong></p>
+<p>After defining variables, we can use the <a class="reference external" href="https://docs.microsoft.com/en-us/powershell/scripting/learn/deep-dives/everything-about-string-substitutions?view=powershell-7.1#executioncontext-expandstring">$ExecutionContext.InvokeCommand.ExpandString()</a> method to substitute variables in our current workflow.</p>
+<p>The call to <code class="docutils literal notranslate"><span class="pre">.InvokeCommand.ExpandString</span></code> on the current execution context uses the variables in the current scope for substitution. This method allows us to define a substitution string with single quotes and expand the variables later.</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$body</span> <span class="p">=</span> <span class="nv">$ExecutionContext</span><span class="p">.</span><span class="n">InvokeCommand</span><span class="p">.</span><span class="n">ExpandString</span><span class="p">(</span><span class="nv">$doc</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Run Workflow</strong></p>
+<p>Once the JSON object is ready, use it as the <code class="docutils literal notranslate"><span class="pre">$body</span></code> of the HTTP request. Make sure to set the <code class="docutils literal notranslate"><span class="pre">ContentType</span></code> to <code class="docutils literal notranslate"><span class="pre">application/json</span></code>.</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$simulationResults</span> <span class="p">=</span> <span class="nb">Invoke-RestMethod</span> <span class="n">-Method</span> <span class="n">Post</span> <span class="n">-Uri</span> <span class="nv">$OrchestratorUrl</span> <span class="n">-Body</span> <span class="nv">$body</span> <span class="n">-ContentType</span> <span class="s1">&#39;application/json&#39;</span> <span class="n">-Headers</span> <span class="nv">$headers</span>
+</pre></div>
+</div>
+<p><strong>Process Output</strong></p>
+<p>The output of a worflow is a <code class="docutils literal notranslate"><span class="pre">dictionary</span></code> with <code class="docutils literal notranslate"><span class="pre">keys</span></code> named after each step in the workflow.</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$outs</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Invoke-RestMethod</span> <span class="n">-Uri</span> <span class="nv">$SimulationResults</span><span class="p">.</span><span class="n">statusQueryGetUri</span> <span class="n">-Headers</span> <span class="nv">$headers</span><span class="p">).</span><span class="n">Output</span>
+</pre></div>
+</div>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$outs</span> <span class="p">|</span> <span class="nb">Get-Member</span> <span class="p">|</span> <span class="nb">Where-Object</span> <span class="p">{</span><span class="nv">$_</span><span class="p">.</span><span class="n">MemberType</span> <span class="o">-eq</span> <span class="s1">&#39;NoteProperty&#39;</span><span class="p">}</span>
+
+
+   <span class="n">TypeName</span><span class="p">:</span> <span class="n">System</span><span class="p">.</span><span class="n">Management</span><span class="p">.</span><span class="n">Automation</span><span class="p">.</span><span class="n">PSCustomObject</span>
+
+<span class="n">Name</span>                 <span class="n">MemberType</span>   <span class="n">Definition</span>
+<span class="p">----</span>                 <span class="p">----------</span>   <span class="p">----------</span>
+<span class="n">AddPasswordToApp</span>     <span class="n">NoteProperty</span> <span class="n">string</span> <span class="n">AddPasswordToApp</span><span class="p">={...</span>
+<span class="n">GetAccessToken</span>       <span class="n">NoteProperty</span> <span class="n">string</span> <span class="n">GetAccessToken</span><span class="p">={...</span>
+<span class="n">GetMailboxMessages</span>   <span class="n">NoteProperty</span> <span class="n">string</span> <span class="n">GetMailboxMessages</span><span class="p">=[...</span>
+<span class="n">GrantMailPermissions</span> <span class="n">NoteProperty</span> <span class="n">string</span> <span class="n">GrantMailPermissions</span><span class="p">={...</span>
+</pre></div>
+</div>
+<p><strong>Access Output</strong></p>
+<p>The output in each <code class="docutils literal notranslate"><span class="pre">key</span></code> is in JSON as shown below:</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$outs</span><span class="p">.</span><span class="n">GrantMailPermissions</span>
+
+<span class="p">{</span>
+  <span class="s2">&quot;appRoleId&quot;</span><span class="p">:</span> <span class="s2">&quot;xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;createdDateTime&quot;</span><span class="p">:</span> <span class="s2">&quot;2021-09-10T18:59:06.2791293Z&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;principalId&quot;</span><span class="p">:</span> <span class="s2">&quot;xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;principalDisplayName&quot;</span><span class="p">:</span> <span class="s2">&quot;SimuLandApp&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;deletedDateTime&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+  <span class="s2">&quot;principalType&quot;</span><span class="p">:</span> <span class="s2">&quot;ServicePrincipal&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;resourceDisplayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Microsoft Graph&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;resourceId&quot;</span><span class="p">:</span> <span class="s2">&quot;xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;@odata.context&quot;</span><span class="p">:</span> <span class="s2">&quot;https://graph.microsoft.com/v1.0/$metadata#servicePrincipals(&#39;xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx&#39;)/appRoleAssignments/$entity&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;@odata.id&quot;</span><span class="p">:</span> <span class="s2">&quot;https://graph.microsoft.com/v2/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx/directoryObjects/$/Microsoft.DirectoryServices.ServicePrincipal(&#39;xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx&#39;)/appRoleAssignments/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You can convert each output into <code class="docutils literal notranslate"><span class="pre">PSCustomObject</span></code> objects with the <a class="reference external" href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertfrom-json?view=powershell-7.1">ConvertFrom-Json</a> cmdlet.</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$grants</span> <span class="p">=</span> <span class="nv">$outs</span><span class="p">.</span><span class="n">GrantMailPermissions</span> <span class="p">|</span> <span class="nb">ConvertFrom-Json</span>
+<span class="nv">$grants</span>
+</pre></div>
+</div>
+<p>Let’s inspect messages from the Mailbox:</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$messages</span> <span class="p">=</span> <span class="nv">$outs</span><span class="p">.</span><span class="n">GetMailboxMessages</span> <span class="p">|</span> <span class="nb">ConvertFrom-Json</span>
+<span class="nv">$messages</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">subject</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>subject
+-------
+Check out the latest Power Automate updates, success stories, and learning
+Azure AD Identity Protection Weekly Digest
+Azure AD Identity Protection Weekly Digest
+DC01: Health service data is not up to date.  – You have an important alert from Azure Active Directory
+Azure AD Identity Protection Weekly Digest
 </pre></div>
 </div>
 </div>

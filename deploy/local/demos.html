@@ -622,7 +622,7 @@ You will be able to explore the token claims in a friendly way.</p>
 <p><strong>Read Workflow JSON File</strong></p>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd </span><span class="n">Cloud-Katana</span><span class="p">\</span>
 
-<span class="nv">$doc</span> <span class="p">=</span> <span class="nb">Get-Content</span> <span class="p">.\</span><span class="n">workflows</span><span class="p">\</span><span class="n">Az-Local-UpdateAppAndReadMail</span><span class="p">.</span><span class="n">json</span> <span class="n">-raw</span>
+<span class="nv">$doc</span> <span class="p">=</span> <span class="nb">Get-Content</span> <span class="p">.\</span><span class="n">workflows</span><span class="p">\</span><span class="n">examples</span><span class="p">\</span><span class="n">Az-Local-UpdateAppAndReadMail</span><span class="p">.</span><span class="n">json</span> <span class="n">-raw</span>
 </pre></div>
 </div>
 <p>Explore the content of the variable <code class="docutils literal notranslate"><span class="pre">$doc</span></code> and identify all the variables that need to be set for the simulation before execution. The variables follow the same syntax as a PowerShell variable (<code class="docutils literal notranslate"><span class="pre">$variable</span></code>).</p>
@@ -708,7 +708,7 @@ You will be able to explore the token claims in a friendly way.</p>
 <li><p>Get the output of the step <code class="docutils literal notranslate"><span class="pre">GetAccessToken</span></code></p></li>
 <li><p>Filter output and only return the value of the property <code class="docutils literal notranslate"><span class="pre">access_token</span></code></p></li>
 </ul>
-<p>Output of every single step is saved in a dictionary represented as the variable <code class="docutils literal notranslate"><span class="pre">$output</span></code> while running the <code class="docutils literal notranslate"><span class="pre">Orchestrator</span></code>. We use the <code class="docutils literal notranslate"><span class="pre">$output</span></code> variable (Dict) and use the name of the step we want to get output from as a <code class="docutils literal notranslate"><span class="pre">key</span></code> in the dictionary. <code class="docutils literal notranslate"><span class="pre">#{output}</span></code> is processed by the <code class="docutils literal notranslate"><span class="pre">Orchestrator</span></code> internally. No need to update this locally.</p>
+<p>Output of every single step is saved in a dictionary represented as the variable <code class="docutils literal notranslate"><span class="pre">$output</span></code> in the execution context of the <code class="docutils literal notranslate"><span class="pre">Orchestrator</span></code>.  The <code class="docutils literal notranslate"><span class="pre">$output</span></code> variable (Dictionary) uses the name of steps as <code class="docutils literal notranslate"><span class="pre">keys</span></code> in the dictionary. This allows other steps to reference output based on the step name.</p>
 <p><strong>Expand / Substitute Variables on Document</strong></p>
 <p>After defining variables, we can use the <a class="reference external" href="https://docs.microsoft.com/en-us/powershell/scripting/learn/deep-dives/everything-about-string-substitutions?view=powershell-7.1#executioncontext-expandstring">$ExecutionContext.InvokeCommand.ExpandString()</a> method to substitute variables in our current workflow.</p>
 <p>The call to <code class="docutils literal notranslate"><span class="pre">.InvokeCommand.ExpandString</span></code> on the current execution context uses the variables in the current scope for substitution. This method allows us to define a substitution string with single quotes and expand the variables later.</p>
@@ -760,8 +760,22 @@ You will be able to explore the token claims in a friendly way.</p>
 </pre></div>
 </div>
 <p>You can convert each output into <code class="docutils literal notranslate"><span class="pre">PSCustomObject</span></code> objects with the <a class="reference external" href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertfrom-json?view=powershell-7.1">ConvertFrom-Json</a> cmdlet.</p>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$grants</span> <span class="p">=</span> <span class="nv">$outs</span><span class="p">.</span><span class="n">GrantMailPermissions</span> <span class="p">|</span> <span class="n">ConverFrom-Json</span>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$grants</span> <span class="p">=</span> <span class="nv">$outs</span><span class="p">.</span><span class="n">GrantMailPermissions</span> <span class="p">|</span> <span class="nb">ConvertFrom-Json</span>
 <span class="nv">$grants</span>
+</pre></div>
+</div>
+<p>Let’s inspect messages from the Mailbox:</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$messages</span> <span class="p">=</span> <span class="nv">$outs</span><span class="p">.</span><span class="n">GetMailboxMessages</span> <span class="p">|</span> <span class="nb">ConvertFrom-Json</span>
+<span class="nv">$messages</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">subject</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>subject
+-------
+Check out the latest Power Automate updates, success stories, and learning
+Azure AD Identity Protection Weekly Digest
+Azure AD Identity Protection Weekly Digest
+DC01: Health service data is not up to date.  – You have an important alert from Azure Active Directory
+Azure AD Identity Protection Weekly Digest
 </pre></div>
 </div>
 </div>
