@@ -553,18 +553,13 @@ You will be able to explore the token claims in a friendly way.</p>
 </div>
 <div class="section" id="read-the-mailbox-of-a-specific-user">
 <h3>Read The Mailbox of a Specific User<a class="headerlink" href="#read-the-mailbox-of-a-specific-user" title="Permalink to this headline">¶</a></h3>
-<p>Run the following commands to read mail from <code class="docutils literal notranslate"><span class="pre">pgustavo&#64;simulandlabs.com</span></code>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Adjust the service principal to match your own environment. <code class="docutils literal notranslate"><span class="pre">pgustavo</span></code> does have a mailbox in my Azure tenant.</p>
-</div>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$body</span> <span class="p">=</span> <span class="p">@{</span>
   <span class="n">activityFunction</span> <span class="p">=</span> <span class="s1">&#39;Azure&#39;</span>
   <span class="nb">type </span><span class="p">=</span> <span class="s1">&#39;action&#39;</span>
   <span class="n">action</span> <span class="p">=</span> <span class="s1">&#39;Get-CKMailboxMessages&#39;</span>
   <span class="n">parameters</span> <span class="p">=</span> <span class="p">@{</span>
     <span class="n">accessToken</span> <span class="p">=</span> <span class="nv">$AppMGToken</span>
-    <span class="n">userPrincipalName</span> <span class="p">=</span> <span class="s1">&#39;admin@MSDx145792.onmicrosoft.com&#39;</span>
+    <span class="n">userPrincipalName</span> <span class="p">=</span> <span class="s1">&#39;&lt;email&gt;@&lt;domain&gt;.onmicrosoft.com&#39;</span>
   <span class="p">}</span>
 <span class="p">}</span> <span class="p">|</span> <span class="nb">ConvertTo-Json</span> <span class="n">-Depth</span> <span class="n">10</span>
 
@@ -672,7 +667,7 @@ You will be able to explore the token claims in a friendly way.</p>
         <span class="s2">&quot;ClientId&quot;</span><span class="p">:</span> <span class="s2">&quot;$appId&quot;</span><span class="p">,</span>
         <span class="s2">&quot;TenantId&quot;</span><span class="p">:</span> <span class="s2">&quot;$tenantId&quot;</span><span class="p">,</span>
         <span class="s2">&quot;GrantType&quot;</span><span class="p">:</span> <span class="s2">&quot;client_credentials&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;AppSecret&quot;</span><span class="p">:</span> <span class="s2">&quot;#{output}.AddPasswordToApp.secretText&quot;</span>
+        <span class="s2">&quot;AppSecret&quot;</span><span class="p">:</span> <span class="s2">&quot;reference(&#39;AddPasswordToApp.secretText&#39;)&quot;</span>
       <span class="p">}</span>
     <span class="p">},</span>
     <span class="p">{</span>
@@ -683,7 +678,7 @@ You will be able to explore the token claims in a friendly way.</p>
         <span class="s2">&quot;GetAccessToken&quot;</span>
       <span class="p">],</span>
       <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;accessToken&quot;</span><span class="p">:</span> <span class="s2">&quot;#{output}.GetAccessToken.access_token&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;accessToken&quot;</span><span class="p">:</span> <span class="s2">&quot;reference(&#39;GetAccessToken.access_token&#39;)&quot;</span><span class="p">,</span>
         <span class="s2">&quot;userPrincipalName&quot;</span><span class="p">:</span> <span class="s2">&quot;$userPrincipalName&quot;</span>
       <span class="p">}</span>
     <span class="p">}</span>
@@ -702,13 +697,14 @@ You will be able to explore the token claims in a friendly way.</p>
 <span class="nv">$accessToken</span> <span class="p">=</span> <span class="nv">$AppMGToken</span> <span class="c"># access token to use the application security context to execute actions in the workflow</span>
 </pre></div>
 </div>
-<p>The following pattern <code class="docutils literal notranslate"><span class="pre">#{output}</span></code> is used to reference/access the output results of specific steps during the execution of other ones.</p>
-<p>For example, <code class="docutils literal notranslate"><span class="pre">#{output}.GetAccessToken.access_token</span></code> means:</p>
+<p>The following pattern <code class="docutils literal notranslate"><span class="pre">reference('&lt;StepName&gt;.&lt;OutputProperty&gt;')</span></code> is used to reference/access the output of specific steps in the workflow.
+Some steps can take the output of specific steps and make them their input for specific parameters.</p>
+<p>For example, <code class="docutils literal notranslate"><span class="pre">reference('GetAccessToken.access_token')</span></code> means:</p>
 <ul class="simple">
 <li><p>Get the output of the step <code class="docutils literal notranslate"><span class="pre">GetAccessToken</span></code></p></li>
-<li><p>Filter output and only return the value of the property <code class="docutils literal notranslate"><span class="pre">access_token</span></code></p></li>
+<li><p>Filter the output and only return the value of the property <code class="docutils literal notranslate"><span class="pre">access_token</span></code></p></li>
 </ul>
-<p>Output of every single step is saved in a dictionary represented as the variable <code class="docutils literal notranslate"><span class="pre">$output</span></code> in the execution context of the <code class="docutils literal notranslate"><span class="pre">Orchestrator</span></code>.  The <code class="docutils literal notranslate"><span class="pre">$output</span></code> variable (Dictionary) uses the name of steps as <code class="docutils literal notranslate"><span class="pre">keys</span></code> in the dictionary. This allows other steps to reference output based on the step name.</p>
+<p>Output of every single step in the workflow is saved in a dictionary represented as the variable <code class="docutils literal notranslate"><span class="pre">$output</span></code> in the execution context of the <code class="docutils literal notranslate"><span class="pre">Orchestrator</span></code>.  The <code class="docutils literal notranslate"><span class="pre">$output</span></code> variable (Dictionary) uses the name of steps as <code class="docutils literal notranslate"><span class="pre">keys</span></code>.</p>
 <p><strong>Expand / Substitute Variables on Document</strong></p>
 <p>After defining variables, we can use the <a class="reference external" href="https://docs.microsoft.com/en-us/powershell/scripting/learn/deep-dives/everything-about-string-substitutions?view=powershell-7.1#executioncontext-expandstring">$ExecutionContext.InvokeCommand.ExpandString()</a> method to substitute variables in our current workflow.</p>
 <p>The call to <code class="docutils literal notranslate"><span class="pre">.InvokeCommand.ExpandString</span></code> on the current execution context uses the variables in the current scope for substitution. This method allows us to define a substitution string with single quotes and expand the variables later.</p>
@@ -762,6 +758,19 @@ You will be able to explore the token claims in a friendly way.</p>
 <p>You can convert each output into <code class="docutils literal notranslate"><span class="pre">PSCustomObject</span></code> objects with the <a class="reference external" href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertfrom-json?view=powershell-7.1">ConvertFrom-Json</a> cmdlet.</p>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$grants</span> <span class="p">=</span> <span class="nv">$outs</span><span class="p">.</span><span class="n">GrantMailPermissions</span> <span class="p">|</span> <span class="nb">ConvertFrom-Json</span>
 <span class="nv">$grants</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>id                   : xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+deletedDateTime      :
+resourceDisplayName  : Microsoft Graph
+@odata.id            : https://graph.microsoft.com/v2/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx/directoryObjects/$/Microsoft.DirectoryServices.ServicePrincipal(&#39;xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx&#39;)/appRoleAssignments/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+principalType        : ServicePrincipal
+@odata.context       : https://graph.microsoft.com/v1.0/$metadata#servicePrincipals(&#39;xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx&#39;)/appRoleAssignments/$entity
+createdDateTime      : 2021-09-12T23:10:57.8142141Z
+principalDisplayName : SimuLandApp
+principalId          : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx
+resourceId           : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx
+appRoleId            : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx
 </pre></div>
 </div>
 <p>Let’s inspect messages from the Mailbox:</p>
