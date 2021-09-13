@@ -1,6 +1,6 @@
 param($simulation)
 
-Write-Host "PowerShell Durable Activity Triggered.."
+Write-Host "[ACTIVITY] PowerShell Durable Activity Triggered.."
 Import-Module CloudKatana
 
 # Execute Inner Function
@@ -19,10 +19,12 @@ if (!($parameters.ContainsKey('accessToken')) -and ($action -ne 'Get-CKAccessTok
 }
 
 # Run activity function
+write-host "[ACTIVITY] Executing $action"
 $results = & $action @parameters
 
 # Process wait time
 if ($simulation.wait) {
+  write-host "[ACTIVITY] Sleeping for $($simulation.wait)"
   Start-Sleep $simulation.wait
 }
 
