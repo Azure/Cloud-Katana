@@ -88,7 +88,7 @@ function New-AppRegistration {
     Write-Host "[+] Running under the context of a $ConnectAs account"
     $context = Get-AzContext
     if (!$context) {
-        if ($ConnectAs == 'User') {
+        if ($ConnectAs -eq 'User') {
             Connect-AzAccount
         }
         else {
@@ -151,7 +151,7 @@ function New-AppRegistration {
             "Body"    = $body | ConvertTo-Json -Compress -Depth 20
         }
         $registeredApp = Invoke-RestMethod @params
-        Start-Sleep -s 10
+        Start-Sleep -s 15
     }
     Write-Host $registeredApp
     $ScriptOutputs['appName'] = $Name
@@ -189,6 +189,7 @@ function New-AppRegistration {
         }
         Invoke-RestMethod @params
     }
+     
     # Creating the new Azure AD application service principal
     # Verify if service principal exists
     Write-Host "[+] Creating a service principal mapped to the $Name application"
@@ -213,7 +214,7 @@ function New-AppRegistration {
         }
         $appSP = Invoke-RestMethod @params
         # Sleep
-        Start-Sleep -s 10
+        Start-Sleep -s 15
     }
     Write-Host $appSP
 
@@ -274,7 +275,7 @@ function New-AppRegistration {
 
         Invoke-RestMethod @params
         # Sleep
-        Start-Sleep -s 10
+        Start-Sleep -s 15
     }
 
     if($AssignAppRoleToUser){
