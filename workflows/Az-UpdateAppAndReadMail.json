@@ -38,7 +38,7 @@
         "ClientId": "$appId",
         "TenantId": "$tenantId",
         "GrantType": "client_credentials",
-        "AppSecret": "reference(AddPasswordToApp.secretText)"
+        "AppSecret": "reference('AddPasswordToApp.secretText')"
       }
     },
     {
@@ -49,7 +49,7 @@
         "GetAccessToken"
       ],
       "parameters": {
-        "accessToken": "reference(GetAccessToken.access_token)",
+        "accessToken": "reference('GetAccessToken.access_token')",
         "userPrincipalName": "$userPrincipalName"
       }
     }
