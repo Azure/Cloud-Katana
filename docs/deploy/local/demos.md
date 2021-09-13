@@ -121,12 +121,6 @@ Take a look at the `roles` claim type. You will see only `Application` permissio
 
 ### Read The Mailbox of a Specific User
 
-Run the following commands to read mail from `pgustavo@simulandlabs.com`.
-
-```{note}
-Adjust the service principal to match your own environment. `pgustavo` does have a mailbox in my Azure tenant.
-```
-
 ```PowerShell
 $body = @{
   activityFunction = 'Azure'
@@ -134,7 +128,7 @@ $body = @{
   action = 'Get-CKMailboxMessages'
   parameters = @{
     accessToken = $AppMGToken
-    userPrincipalName = 'admin@MSDx145792.onmicrosoft.com'
+    userPrincipalName = '<email>@<domain>.onmicrosoft.com'
   }
 } | ConvertTo-Json -Depth 10
 
@@ -252,7 +246,7 @@ $doc
         "ClientId": "$appId",
         "TenantId": "$tenantId",
         "GrantType": "client_credentials",
-        "AppSecret": "#{output}.AddPasswordToApp.secretText"
+        "AppSecret": "reference('AddPasswordToApp.secretText')"
       }
     },
     {
@@ -263,7 +257,7 @@ $doc
         "GetAccessToken"
       ],
       "parameters": {
-        "accessToken": "#{output}.GetAccessToken.access_token",
+        "accessToken": "reference('GetAccessToken.access_token')",
         "userPrincipalName": "$userPrincipalName"
       }
     }
@@ -285,14 +279,15 @@ $userPrincipalName = 'wardog@domain.onmicrosoft.com' # user to collect e-mails f
 $accessToken = $AppMGToken # access token to use the application security context to execute actions in the workflow
 ```
 
-The following pattern `#{output}` is used to reference/access the output results of specific steps during the execution of other ones.
+The following pattern `reference('<StepName>.<OutputProperty>')` is used to reference/access the output of specific steps in the workflow.
+Some steps can take the output of specific steps and make them their input for specific parameters.
 
-For example, `#{output}.GetAccessToken.access_token` means:
+For example, `reference('GetAccessToken.access_token')` means:
 
 * Get the output of the step `GetAccessToken`
-* Filter output and only return the value of the property `access_token`
+* Filter the output and only return the value of the property `access_token`
 
-Output of every single step is saved in a dictionary represented as the variable `$output` in the execution context of the `Orchestrator`.  The `$output` variable (Dictionary) uses the name of steps as `keys` in the dictionary. This allows other steps to reference output based on the step name.
+Output of every single step in the workflow is saved in a dictionary represented as the variable `$output` in the execution context of the `Orchestrator`.  The `$output` variable (Dictionary) uses the name of steps as `keys`.
 
 **Expand / Substitute Variables on Document**
 
@@ -363,6 +358,19 @@ You can convert each output into `PSCustomObject` objects with the [ConvertFrom-
 ```PowerShell
 $grants = $outs.GrantMailPermissions | ConvertFrom-Json
 $grants
+```
+```
+id                   : xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+deletedDateTime      :
+resourceDisplayName  : Microsoft Graph
+@odata.id            : https://graph.microsoft.com/v2/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx/directoryObjects/$/Microsoft.DirectoryServices.ServicePrincipal('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx')/appRoleAssignments/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+principalType        : ServicePrincipal
+@odata.context       : https://graph.microsoft.com/v1.0/$metadata#servicePrincipals('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx')/appRoleAssignments/$entity
+createdDateTime      : 2021-09-12T23:10:57.8142141Z
+principalDisplayName : SimuLandApp
+principalId          : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx
+resourceId           : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx
+appRoleId            : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx
 ```
 
 Let's inspect messages from the Mailbox:
