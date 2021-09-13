@@ -58,7 +58,7 @@ function Grant-GraphPermissions {
     Write-Host "[+] Running under the context of a $ConnectAs account"
     $context = Get-AzContext
     if (!$context) {
-        if ($ConnectAs == 'User') {
+        if ($ConnectAs -eq 'User') {
             Connect-AzAccount
         }
         else {

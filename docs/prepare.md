@@ -13,6 +13,7 @@ Whether you run Cloud Katana in Azure or locally, you will need to install the f
     rm .\AzureCLI.msi
     ```
 * [PowerShell Core](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.1)
+* [Azure Az PowerShell Module](https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.4.0)
 
 Next, run the following steps to download the project from GitHub and authenticate to Azure:
 
