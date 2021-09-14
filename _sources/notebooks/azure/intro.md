@@ -8,6 +8,7 @@
 
 |Created|Action|Description|Author|
 | :---| :---| :---| :---|
+|2021-09-13 |[Add-CKMemberToGroup](https://cloud-katana.com/notebooks/azure/persistence/Add-CKMemberToGroup.html) |A threat actor might want to add a member to a Microsoft 365 group or a security group through the members navigation property. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-09-08 |[Get-CKOauth2PermissionGrants](https://cloud-katana.com/notebooks/azure/discovery/Get-CKOauth2PermissionGrants.html) |A threat actor might want to retrieve a list of oAuth2PermissionGrant objects, representing delegated permissions which have been granted for client applications to access APIs on behalf of signed-in users.. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-08-22 |[Get-CKAzADGroups](https://cloud-katana.com/notebooks/azure/discovery/Get-CKAzADGroups.html) |A threat actor might want to list all the groups in an organization, including but not limited to Microsoft 365 groups. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-08-22 |[Get-CKAzADDirectoryRoles](https://cloud-katana.com/notebooks/azure/discovery/Get-CKAzADDirectoryRoles.html) |A threat actor might want to list the directory roles that are activated in the tenant. This operation only returns roles that have been activated. A role becomes activated when an admin activates the role using the Activate directoryRole API. Not all built-in roles are initially activated. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
