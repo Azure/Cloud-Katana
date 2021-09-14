@@ -1,3 +1,13 @@
+# Function App Variables
+$functionAppName = 'FUNCTION-APP-NAME'
+$azureFunctionUrl = "https://$functionAppName.azurewebsites.net"
+$OrchestratorUrl = "$azureFunctionUrl/api/orchestrators/Orchestrator"
+
+# Authorization Headers
+$headers = @{
+  Authorization = "Bearer $accessToken"
+}
+
 # Read workflow file
 $doc = Get-Content ..\..\workflows\Az-UpdateAppAndReadMail.json -raw
 $doc

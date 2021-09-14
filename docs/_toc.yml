@@ -35,6 +35,7 @@ parts:
       - file: notebooks/azure/persistence/Add-CKAzADAppPassword
       - file: notebooks/azure/persistence/Add-CKAzADSPPassword
       - file: notebooks/azure/persistence/Add-CKDomainToTenant
+      - file: notebooks/azure/persistence/Add-CKMemberToGroup
       - file: notebooks/azure/persistence/Add-CKOwnerToAzADApp
       - file: notebooks/azure/persistence/Add-CKOwnerToAzADSP
       - file: notebooks/azure/persistence/Grant-CKPermissions
