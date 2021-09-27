@@ -204,7 +204,7 @@ $doc
         "ClientId": "$appId",
         "TenantId": "$tenantId",
         "GrantType": "client_credentials",
-        "AppSecret": "#{output}.AddPasswordToApp.secretText"
+        "AppSecret": "reference('AddPasswordToApp.secretText')"
       }
     },
     {
@@ -215,7 +215,7 @@ $doc
         "GetAccessToken"
       ],
       "parameters": {
-        "accessToken": "#{output}.GetAccessToken.access_token",
+        "accessToken": "reference('GetAccessToken.access_token')",
         "userPrincipalName": "$userPrincipalName"
       }
     }
