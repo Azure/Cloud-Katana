@@ -251,6 +251,11 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/persistence/Add-CKMemberToGroup.html">
+       Add-CKMemberToGroup
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../../notebooks/azure/persistence/Add-CKOwnerToAzADApp.html">
        Add-CKOwnerToAzADApp
       </a>
@@ -648,7 +653,7 @@
         <span class="s2">&quot;ClientId&quot;</span><span class="p">:</span> <span class="s2">&quot;$appId&quot;</span><span class="p">,</span>
         <span class="s2">&quot;TenantId&quot;</span><span class="p">:</span> <span class="s2">&quot;$tenantId&quot;</span><span class="p">,</span>
         <span class="s2">&quot;GrantType&quot;</span><span class="p">:</span> <span class="s2">&quot;client_credentials&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;AppSecret&quot;</span><span class="p">:</span> <span class="s2">&quot;#{output}.AddPasswordToApp.secretText&quot;</span>
+        <span class="s2">&quot;AppSecret&quot;</span><span class="p">:</span> <span class="s2">&quot;reference(&#39;AddPasswordToApp.secretText&#39;)&quot;</span>
       <span class="p">}</span>
     <span class="p">},</span>
     <span class="p">{</span>
@@ -659,7 +664,7 @@
         <span class="s2">&quot;GetAccessToken&quot;</span>
       <span class="p">],</span>
       <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;accessToken&quot;</span><span class="p">:</span> <span class="s2">&quot;#{output}.GetAccessToken.access_token&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;accessToken&quot;</span><span class="p">:</span> <span class="s2">&quot;reference(&#39;GetAccessToken.access_token&#39;)&quot;</span><span class="p">,</span>
         <span class="s2">&quot;userPrincipalName&quot;</span><span class="p">:</span> <span class="s2">&quot;$userPrincipalName&quot;</span>
       <span class="p">}</span>
     <span class="p">}</span>
