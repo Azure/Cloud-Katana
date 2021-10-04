@@ -3,7 +3,7 @@ function Get-CKOauth2PermissionGrants {
     .SYNOPSIS
     Retrieve a list of oAuth2PermissionGrant objects, representing delegated permissions which have been granted for client applications to access APIs on behalf of signed-in users.
     
-    Author: Robert Rodriguez (@Cyb3rWard0g)
+    Author: Roberto Rodriguez (@Cyb3rWard0g)
     License: MIT
     Required Dependencies: None
     Optional Dependencies: None
