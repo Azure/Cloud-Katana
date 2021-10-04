@@ -3,7 +3,7 @@ function Get-CKAzADApplication {
     .SYNOPSIS
     List Azure AD applications.
     
-    Author: Robert Rodriguez (@Cyb3rWard0g)
+    Author: Roberto Rodriguez (@Cyb3rWard0g)
     License: MIT
     Required Dependencies: None
     Optional Dependencies: None

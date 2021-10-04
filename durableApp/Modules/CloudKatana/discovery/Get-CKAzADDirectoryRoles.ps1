@@ -3,7 +3,7 @@ function Get-CKAzADDirectoryRoles {
     .SYNOPSIS
     List the directory roles that are activated in the tenant.
     
-    Author: Robert Rodriguez (@Cyb3rWard0g)
+    Author: Roberto Rodriguez (@Cyb3rWard0g)
     License: MIT
     Required Dependencies: None
     Optional Dependencies: None

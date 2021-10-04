@@ -29,7 +29,10 @@ parts:
       - file: notebooks/azure/discovery/Get-CKAzADDirectoryRoles
       - file: notebooks/azure/discovery/Get-CKAzADServicePrincipal
       - file: notebooks/azure/discovery/Get-CKAzADUsers
+      - file: notebooks/azure/discovery/Get-CKMembers
       - file: notebooks/azure/discovery/Get-CKOauth2PermissionGrants
+      - file: notebooks/azure/discovery/Get-CKOwners
+      - file: notebooks/azure/discovery/Invoke-CKAttackGraph
     - file: notebooks/azure/persistence/intro
       sections:
       - file: notebooks/azure/persistence/Add-CKAzADAppPassword

@@ -5,6 +5,8 @@
         "Application.Read.All",
         "Directory.Read.All",
         "User.Read.All",
+        "GroupMember.Read.All",
+        "RoleManagement.Read.Directory",
         "DelegatedPermissionGrant.ReadWrite.All",
         "Application.ReadWrite.All",
         "Domain.ReadWrite.All",

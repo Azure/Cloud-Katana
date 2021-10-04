@@ -3,7 +3,7 @@ function Get-CKAzADUsers {
     .SYNOPSIS
     List Azure AD users.
     
-    Author: Robert Rodriguez (@Cyb3rWard0g)
+    Author: Roberto Rodriguez (@Cyb3rWard0g)
     License: MIT
     Required Dependencies: None
     Optional Dependencies: None

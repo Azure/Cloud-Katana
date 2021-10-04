@@ -3,7 +3,7 @@ function Add-CKMemberToGroup {
     .SYNOPSIS
     Adds a member to a Microsoft 365 group or a security group through the members navigation property. You can add users, organizational contacts, service principals or other groups.
     
-    Author: Robert Rodriguez (@Cyb3rWard0g)
+    Author: Roberto Rodriguez (@Cyb3rWard0g)
     License: MIT
     Required Dependencies: None
     Optional Dependencies: None

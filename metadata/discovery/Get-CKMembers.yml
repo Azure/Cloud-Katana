@@ -1,0 +1,43 @@
+title: Get-CKMembers
+id: 2cddcd4a-8ba4-4d97-bf6d-bbf50a1192a7
+creationDate: '2021-09-30'
+modificationDate: '2021-09-30'
+description: |
+  A threat actor might want to list members of an Azure AD group or directory role. 
+contributors:
+- Roberto Rodriguez @Cyb3rWard0g
+- MSTIC R&D
+ctiReferences:
+attackMappings:
+- technique: T1069.003
+  tactics:
+  - TA0007
+platform: Azure
+resource:
+  url: https://graph.microsoft.com/
+  authorization:
+    permissionsType: application
+    permissions:
+    - GroupMember.Read.All
+    - RoleManagement.Read.Directory
+parameters:
+  resourceType:
+    type: string
+    description: Type of resource to list members for. Valid options are groups or directoryRoles.
+    required: true
+  objectId:
+    type: string
+    description: The object id of the Azure AD group (id) or directory role (role-id).
+    required: true
+  selectFields:
+    type: string
+    description: Specific properties/columns to return from objects using the $select query parameter.
+    required: false
+  accessToken:
+    type: string
+    description: Access token used to access the API.
+    required: true
+scripts:
+  - kind: PowerShell
+    module: CloudKatana
+    scriptPath: durableApp\Modules\CloudKatana\discovery\Get-CKOwners.ps1

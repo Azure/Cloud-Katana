@@ -3,7 +3,7 @@ function Get-CKAzADGroups {
     .SYNOPSIS
     List Azure AD groups.
     
-    Author: Robert Rodriguez (@Cyb3rWard0g)
+    Author: Roberto Rodriguez (@Cyb3rWard0g)
     License: MIT
     Required Dependencies: None
     Optional Dependencies: None

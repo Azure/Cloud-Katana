@@ -3,7 +3,7 @@ function Add-CKOwnerToAzADApp {
     .SYNOPSIS
     Add an owner to an Azure AD application.
     
-    Author: Robert Rodriguez (@Cyb3rWard0g)
+    Author: Roberto Rodriguez (@Cyb3rWard0g)
     License: MIT
     Required Dependencies: None
     Optional Dependencies: None

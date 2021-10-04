@@ -3,7 +3,7 @@ function Add-CKOwnerToAzADSP {
     .SYNOPSIS
     Add an owner to an Azure AD service principal.
     
-    Author: Robert Rodriguez (@Cyb3rWard0g)
+    Author: Roberto Rodriguez (@Cyb3rWard0g)
     License: MIT
     Required Dependencies: None
     Optional Dependencies: None

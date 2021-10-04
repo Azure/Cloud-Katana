@@ -3,7 +3,7 @@ function Get-CKMailboxMessages {
     .SYNOPSIS
     Get messages from any user's mailbox and folder. Currently, this operation returns message bodies in only HTML format.
     
-    Author: Robert Rodriguez (@Cyb3rWard0g)
+    Author: Roberto Rodriguez (@Cyb3rWard0g)
     License: MIT
     Required Dependencies: None
     Optional Dependencies: None
