@@ -98,7 +98,7 @@ function Invoke-CKAttackGraph {
 
     # Add graph to CosmosDB graph
     write-host "[ACTIVITY] Adding vertices and edges to CosmosDB graph.."
-    Import-Module PSGremlin
+    Import-Module PoshGremlin
 
     write-host "[ACTIVITY] Defining CosmosDB client connection.."
     $authKey = ConvertTo-SecureString -AsPlainText -Force -String "$cosmosDBRWKey"
