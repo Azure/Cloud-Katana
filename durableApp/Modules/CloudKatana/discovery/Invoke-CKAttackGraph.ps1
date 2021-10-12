@@ -62,20 +62,23 @@ function Invoke-CKAttackGraph {
 
     write-host "[ACTIVITY] Collecting Azure AD users, applications, service Principals, groups and directory roles"
     $users = Get-CKAzADUsers -selectFields "id,displayName" -accessToken $accessToken
-    $resourceList = @()
-    $resourceList += Get-CKAzADApplication -selectFields "id,displayName" -accessToken $accessToken
-    $resourceList += Get-CKAzADServicePrincipal -selectFields "id,displayName" -accessToken $accessToken
-    $resourceList += Get-CKAzADGroups -selectFields "id,displayName" -accessToken $accessToken
-    $resourceList += Get-CKAzADDirectoryRoles -accessToken $accessToken
+    $users | ForEach-Object {Add-Member -InputObject $_ -MemberType NoteProperty -Name 'label' -Value 'user'}
+    $applications = Get-CKAzADApplication -selectFields "id,displayName" -accessToken $accessToken
+    $applications | ForEach-Object {Add-Member -InputObject $_ -MemberType NoteProperty -Name 'label' -Value 'application'}
+    $serviceprincipals = Get-CKAzADServicePrincipal -selectFields "id,displayName" -accessToken $accessToken
+    $serviceprincipals | ForEach-Object {Add-Member -InputObject $_ -MemberType NoteProperty -Name 'label' -Value 'serviceprincipal'}
+    $groups = Get-CKAzADGroups -selectFields "id,displayName" -accessToken $accessToken
+    $groups | ForEach-Object {Add-Member -InputObject $_ -MemberType NoteProperty -Name 'label' -Value 'group'}
+    $directoryroles += Get-CKAzADDirectoryRoles -accessToken $accessToken
+    $directoryroles | ForEach-Object {Add-Member -InputObject $_ -MemberType NoteProperty -Name 'label' -Value 'directoryrole'}
 
     # Graph Creation
     write-host "[ACTIVITY] Defining Graph object"
-    $vertices = $users + $resourceList
+    $resourceList = $applications + $serviceprincipals + $groups + $directoryroles
     $edges = @()
 
     foreach ( $resource in $resourceList ) {
-        $label = (($($resource.'@odata.id').Split("."))[-1]).toLower()
-        $metadata = Switch ($label) {
+        $metadata = Switch ($resource.label) {
             'application' { @{ type = 'applications'; relationship = 'owner_of' } }
             'serviceprincipal' { @{ type = 'servicePrincipals'; relationship = 'owner_of' } }
             'group' { @{ type = 'groups'; relationship = 'member_of' } }
@@ -95,6 +98,7 @@ function Invoke-CKAttackGraph {
             }
         }
     }
+    $vertices = $users + $resourceList
 
     # Add graph to CosmosDB graph
     write-host "[ACTIVITY] Adding vertices and edges to CosmosDB graph.."
@@ -110,9 +114,9 @@ function Invoke-CKAttackGraph {
     # Process vertices
     write-host "[ACTIVITY] Importing vertices.."
     foreach ($v in $vertices) {
-        $label = (($($v.'@odata.id').Split("."))[-1]).toLower()
+        $label = $v.label
         Write-Verbose "[ACTIVITY] >> Creating $label vertex: $($v.displayName) - $($v.id)"
-        "g.V().has('$label','id','$($v.id)').fold().coalesce(unfold(),addV('$label').property('id','$($v.id)').property('displayName','$($v.displayName)').property('$partitionKey', '$partitionKey'))" | Invoke-Gremlin @gremlinParams
+        "g.V().has('$label','id','$($v.id)').fold().coalesce(unfold(),addV('$label').property('id','$($v.id)').property('displayName','$($v.displayName)').property('$partitionKey', '$partitionKey'))" | Invoke-Gremlin @gremlinParams | Out-Null
     }
 
     Start-Sleep 10
@@ -122,7 +126,7 @@ function Invoke-CKAttackGraph {
     foreach ($e in $edges) {
         foreach ($m in $e.relationObjects) {
             Write-Verbose "[ACTIVITY] >> Creating Edge: From $($m.displayName) to $($e.objectName)"
-            "g.V('$($m.id)').as('source').V('$($e.id)').as('target').not(__.in('$($e.relationship)').where(eq('source'))).addE('$($e.relationship)').from('source').to('target')" | Invoke-Gremlin @gremlinParams 
+            "g.V('$($m.id)').as('source').V('$($e.id)').as('target').not(__.in('$($e.relationship)').where(eq('source'))).addE('$($e.relationship)').from('source').to('target')" | Invoke-Gremlin @gremlinParams | Out-Null
         }
     }
 }
