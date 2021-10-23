@@ -219,8 +219,23 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKMembers.html">
+       Get-CKMembers
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKOauth2PermissionGrants.html">
        Get-CKOauth2PermissionGrants
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKOwners.html">
+       Get-CKOwners
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../notebooks/azure/discovery/Invoke-CKAttackGraph.html">
+       Invoke-CKAttackGraph
       </a>
      </li>
     </ul>
@@ -480,10 +495,11 @@
 </div>
 <div class="section" id="get-function-app-access-token">
 <h3>Get Function App Access Token<a class="headerlink" href="#get-function-app-access-token" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$cloudkatanaClientAPPId</span> <span class="p">=</span> <span class="s1">&#39;xxxx&#39;</span>
-<span class="nv">$tenantId</span> <span class="p">=</span> <span class="s1">&#39;xxxx&#39;</span>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$tenantId</span> <span class="p">=</span> <span class="s1">&#39;xxxx&#39;</span>
+<span class="nv">$cloudkatanaClientAPPId</span> <span class="p">=</span> <span class="s1">&#39;xxxx&#39;</span>
+<span class="nv">$cloudKatanaServerAppIdUri</span> <span class="p">=</span> <span class="s2">&quot;api://$tenantId/cloudkatana&quot;</span>
 
-<span class="nv">$results</span> <span class="p">=</span> <span class="nb">Get-FuncAppToken</span> <span class="n">-AppId</span> <span class="nv">$cloudkatanaClientAPPId</span> <span class="n">-FunctionAppUrl</span> <span class="nv">$azureFunctionUrl</span> <span class="n">-TenantId</span> <span class="nv">$tenantId</span> <span class="n">-verbose</span>
+<span class="nv">$results</span> <span class="p">=</span> <span class="nb">Get-FuncAppToken</span> <span class="n">-ClientAppId</span> <span class="nv">$cloudkatanaClientAPPId</span> <span class="n">-ServerAppIdUri</span> <span class="nv">$cloudKatanaServerAppIdUri</span> <span class="n">-TenantId</span> <span class="nv">$tenantId</span> <span class="n">-verbose</span>
 <span class="nv">$accessToken</span> <span class="p">=</span> <span class="nv">$results</span><span class="p">.</span><span class="n">AccessToken</span>
 </pre></div>
 </div>

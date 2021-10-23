@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Get-CKAzADServicePrincipal</title>
+    <title>Get-CKOwners</title>
     
   <link href="../../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -50,11 +50,11 @@
         const thebe_selector_output = ".output,.cell_output"
     </script>
     <script async="async" src="../../../_static/sphinx-thebe.js"></script>
-    <link rel="canonical" href="https://cloud-katana.com/notebooks/azure/discovery/Get-CKAzADServicePrincipal.html" />
+    <link rel="canonical" href="https://cloud-katana.com/notebooks/azure/discovery/Get-CKOwners.html" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Get-CKAzADUsers" href="Get-CKAzADUsers.html" />
-    <link rel="prev" title="Get-CKAzADDirectoryRoles" href="Get-CKAzADDirectoryRoles.html" />
+    <link rel="next" title="Invoke-CKAttackGraph" href="Invoke-CKAttackGraph.html" />
+    <link rel="prev" title="Get-CKOauth2PermissionGrants" href="Get-CKOauth2PermissionGrants.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -208,8 +208,8 @@
        Get-CKAzADDirectoryRoles
       </a>
      </li>
-     <li class="toctree-l3 current active">
-      <a class="current reference internal" href="#">
+     <li class="toctree-l3">
+      <a class="reference internal" href="Get-CKAzADServicePrincipal.html">
        Get-CKAzADServicePrincipal
       </a>
      </li>
@@ -228,8 +228,8 @@
        Get-CKOauth2PermissionGrants
       </a>
      </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="Get-CKOwners.html">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
        Get-CKOwners
       </a>
      </li>
@@ -345,7 +345,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../../_sources/notebooks/azure/discovery/Get-CKAzADServicePrincipal.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../../_sources/notebooks/azure/discovery/Get-CKOwners.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -365,10 +365,10 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/Azure/Cloud-Katana/issues/new?title=Issue%20on%20page%20%2Fnotebooks/azure/discovery/Get-CKAzADServicePrincipal.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/Azure/Cloud-Katana/issues/new?title=Issue%20on%20page%20%2Fnotebooks/azure/discovery/Get-CKOwners.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/Azure/Cloud-Katana/edit/main/docs/notebooks/azure/discovery/Get-CKAzADServicePrincipal.ipynb"><button
+        <a class="edit-button" href="https://github.com/Azure/Cloud-Katana/edit/main/docs/notebooks/azure/discovery/Get-CKOwners.ipynb"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -446,8 +446,8 @@
         
               <div>
                 
-  <div class="section" id="get-ckazadserviceprincipal">
-<h1>Get-CKAzADServicePrincipal<a class="headerlink" href="#get-ckazadserviceprincipal" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="get-ckowners">
+<h1>Get-CKOwners<a class="headerlink" href="#get-ckowners" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="metadata">
 <h2>Metadata<a class="headerlink" href="#metadata" title="Permalink to this headline">¶</a></h2>
 <table class="colwidths-auto table">
@@ -464,10 +464,10 @@
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g,MSTIC R&amp;D</p></td>
 </tr>
 <tr class="row-even"><td class="text-align:left"><p>creation date</p></td>
-<td class="text-align:left"><p>2021-08-05</p></td>
+<td class="text-align:left"><p>2021-09-30</p></td>
 </tr>
 <tr class="row-odd"><td class="text-align:left"><p>modification date</p></td>
-<td class="text-align:left"><p>2021-09-08</p></td>
+<td class="text-align:left"><p>2021-09-30</p></td>
 </tr>
 <tr class="row-even"><td class="text-align:left"><p>Tactics</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://attack.mitre.org/tactics/TA0007">TA0007</a></p></td>
@@ -480,7 +480,7 @@
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
-<p>A threat actor might want to get metadata from Azure AD service principals.</p>
+<p>A threat actor might want to list owners of an Azure AD application or service principal.</p>
 </div>
 <div class="section" id="run-simulation">
 <h2>Run Simulation<a class="headerlink" href="#run-simulation" title="Permalink to this headline">¶</a></h2>
@@ -522,7 +522,7 @@
 <h3>Prepare HTTP Body<a class="headerlink" href="#prepare-http-body" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;activityFunction&#39;</span><span class="p">:</span> <span class="s1">&#39;Azure&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;action&#39;</span><span class="p">,</span> <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s1">&#39;Get-CKAzADServicePrincipal&#39;</span><span class="p">,</span> <span class="s1">&#39;parameters&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;spObjectId&#39;</span><span class="p">:</span> <span class="s1">&#39;ENTER-VALUE&#39;</span><span class="p">,</span> <span class="s1">&#39;selectFields&#39;</span><span class="p">:</span> <span class="s1">&#39;ENTER-VALUE&#39;</span><span class="p">,</span> <span class="s1">&#39;filter&#39;</span><span class="p">:</span> <span class="s1">&#39;ENTER-VALUE&#39;</span><span class="p">,</span> <span class="s1">&#39;pageSize&#39;</span><span class="p">:</span> <span class="s1">&#39;ENTER-VALUE&#39;</span><span class="p">}}]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;activityFunction&#39;</span><span class="p">:</span> <span class="s1">&#39;Azure&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;action&#39;</span><span class="p">,</span> <span class="s1">&#39;action&#39;</span><span class="p">:</span> <span class="s1">&#39;Get-CKOwners&#39;</span><span class="p">,</span> <span class="s1">&#39;parameters&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;resourceType&#39;</span><span class="p">:</span> <span class="s1">&#39;ENTER-VALUE&#39;</span><span class="p">,</span> <span class="s1">&#39;objectId&#39;</span><span class="p">:</span> <span class="s1">&#39;ENTER-VALUE&#39;</span><span class="p">,</span> <span class="s1">&#39;selectFields&#39;</span><span class="p">:</span> <span class="s1">&#39;ENTER-VALUE&#39;</span><span class="p">}}]</span>
 </pre></div>
 </div>
 </div>
@@ -581,8 +581,8 @@
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="Get-CKAzADDirectoryRoles.html" title="previous page">Get-CKAzADDirectoryRoles</a>
-    <a class='right-next' id="next-link" href="Get-CKAzADUsers.html" title="next page">Get-CKAzADUsers</a>
+    <a class='left-prev' id="prev-link" href="Get-CKOauth2PermissionGrants.html" title="previous page">Get-CKOauth2PermissionGrants</a>
+    <a class='right-next' id="next-link" href="Invoke-CKAttackGraph.html" title="next page">Invoke-CKAttackGraph</a>
 
         </div>
         

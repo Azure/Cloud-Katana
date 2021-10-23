@@ -219,8 +219,23 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="discovery/Get-CKMembers.html">
+       Get-CKMembers
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="discovery/Get-CKOauth2PermissionGrants.html">
        Get-CKOauth2PermissionGrants
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="discovery/Get-CKOwners.html">
+       Get-CKOwners
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="discovery/Invoke-CKAttackGraph.html">
+       Invoke-CKAttackGraph
       </a>
      </li>
     </ul>
@@ -416,92 +431,107 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-align:left"><p>2021-09-13</p></td>
+<tr class="row-even"><td class="text-align:left"><p>2021-09-30</p></td>
+<td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/discovery/Get-CKMembers.html">Get-CKMembers</a></p></td>
+<td class="text-align:left"><p>A threat actor might want to list members of an Azure AD group or directory role.</p></td>
+<td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>2021-09-30</p></td>
+<td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/discovery/Get-CKOwners.html">Get-CKOwners</a></p></td>
+<td class="text-align:left"><p>A threat actor might want to list owners of an Azure AD application or service principal.</p></td>
+<td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>2021-09-30</p></td>
+<td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/discovery/Invoke-CKAttackGraph.html">Invoke-CKAttackGraph</a></p></td>
+<td class="text-align:left"><p>A threat actor might want to collect information from Azure AD such as users, applications, service principals, groups and directory roles and analyze it all in a graph way.</p></td>
+<td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>2021-09-13</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/Add-CKMemberToGroup.html">Add-CKMemberToGroup</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to add a member to a Microsoft 365 group or a security group through the members navigation property.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>2021-09-08</p></td>
+<tr class="row-even"><td class="text-align:left"><p>2021-09-08</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/discovery/Get-CKOauth2PermissionGrants.html">Get-CKOauth2PermissionGrants</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to retrieve a list of oAuth2PermissionGrant objects, representing delegated permissions which have been granted for client applications to access APIs on behalf of signed-in users…</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>2021-08-22</p></td>
+<tr class="row-odd"><td class="text-align:left"><p>2021-08-22</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/discovery/Get-CKAzADGroups.html">Get-CKAzADGroups</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to list all the groups in an organization, including but not limited to Microsoft 365 groups.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>2021-08-22</p></td>
+<tr class="row-even"><td class="text-align:left"><p>2021-08-22</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/discovery/Get-CKAzADDirectoryRoles.html">Get-CKAzADDirectoryRoles</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to list the directory roles that are activated in the tenant. This operation only returns roles that have been activated. A role becomes activated when an admin activates the role using the Activate directoryRole API. Not all built-in roles are initially activated.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/collection/Get-CKMailboxMessages.html">Get-CKMailboxMessages</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to read messages from the mailbox of a specific user.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/collection/Get-CKMyMailboxMessages.html">Get-CKMyMailboxMessages</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to read messages from the signed-in account. Usually during impersonation.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/discovery/Get-CKAzADApplication.html">Get-CKAzADApplication</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to get metadata from Azure AD Applications.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/discovery/Get-CKAzADServicePrincipal.html">Get-CKAzADServicePrincipal</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to get metadata from Azure AD service principals.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/discovery/Get-CKAzADUsers.html">Get-CKAzADUsers</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to list all users in Azure AD</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/Add-CKAzADAppPassword.html">Add-CKAzADAppPassword</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to add a password to an Azure AD application for persistence purposes.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/Add-CKAzADSPPassword.html">Add-CKAzADSPPassword</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to add a password to a service principal for persistence purposes.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/Add-CKDomainToTenant.html">Add-CKDomainToTenant</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to add a new domain to the tenant.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/Add-CKOwnerToAzADApp.html">Add-CKOwnerToAzADApp</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to add an owner to an Azure AD application.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/Add-CKOwnerToAzADSP.html">Add-CKOwnerToAzADSP</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to add an owner to a service principal.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/Grant-CKPermissions.html">Grant-CKPermissions</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to grant permissions (Delegated or Application) to an Azure AD application (Service Principal).</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/New-CKAzADApplication.html">New-CKAzADApplication</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to register a new Azure AD application for persistence purposes.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/New-CKAzADServicePrincipal.html">New-CKAzADServicePrincipal</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to create a service principal for an existing Azure AD application.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>2021-08-05</p></td>
+<tr class="row-even"><td class="text-align:left"><p>2021-08-05</p></td>
 <td class="text-align:left"><p><a class="reference external" href="https://cloud-katana.com/notebooks/azure/persistence/Update-CKAzADAppReqRscAccess.html">Update-CKAzADAppReqRscAccess</a></p></td>
 <td class="text-align:left"><p>A threat actor might want to update the required resource access property of an Azure AD application. The requiredResourceAccess property of an application specifies resources that the application requires access to and the set of OAuth permission scopes (delegated) and application roles (application) that it needs under each of those resources. This pre-configuration of required resource access drives the consent experience. This does not grant permissions consent.</p></td>
 <td class="text-align:left"><p>Roberto Rodriguez &#64;Cyb3rWard0g, MSTIC R&amp;D</p></td>
