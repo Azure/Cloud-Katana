@@ -25,10 +25,11 @@ $OrchestratorUrl = "$azureFunctionUrl/api/orchestrators/Orchestrator"
 ### Get Function App Access Token
 
 ```PowerShell
-$cloudkatanaClientAPPId = 'xxxx'
 $tenantId = 'xxxx'
+$cloudkatanaClientAPPId = 'xxxx'
+$cloudKatanaServerAppIdUri = "api://$tenantId/cloudkatana"
 
-$results = Get-FuncAppToken -AppId $cloudkatanaClientAPPId -FunctionAppUrl $azureFunctionUrl -TenantId $tenantId -verbose
+$results = Get-FuncAppToken -ClientAppId $cloudkatanaClientAPPId -ServerAppIdUri $cloudKatanaServerAppIdUri -TenantId $tenantId -verbose
 $accessToken = $results.AccessToken
 ```
 

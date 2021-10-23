@@ -1,13 +1,13 @@
 Function Get-FuncAppToken {
     param (
         [Parameter(Mandatory=$True)]
-        [string] $AppId,
+        [string] $ClientAppId,
 
         [Parameter(Mandatory=$false)]
         [string] $RedirectUri = 'http://localhost',
 
         [Parameter(Mandatory=$True)]
-        [string] $FunctionAppUrl,
+        [string] $ServerAppIdUri,
 
         [Parameter(Mandatory=$True)]
         [string] $TenantId
@@ -22,12 +22,12 @@ Function Get-FuncAppToken {
         Import-Module 'MSAL.PS' -ErrorAction 'Stop'
     } 
 
-    Write-Host "[+] Defining scope: $FunctionAppUrl/user_impersonation"
-    $Scopes = "$FunctionAppUrl/user_impersonation"
+    $Scopes = "$ServerAppIdUri/user_impersonation"
+    Write-Host "[+] Defining scope: $Scopes"
     #$Scopes = "$FunctionAppUrl/.default"
 
     Write-Host "[+] Getting MSAL token.."
-    $PublicClient = [Microsoft.Identity.Client.PublicClientApplicationBuilder]::Create($AppId).WithRedirectUri($RedirectUri).Build()
+    $PublicClient = [Microsoft.Identity.Client.PublicClientApplicationBuilder]::Create($ClientAppId).WithRedirectUri($RedirectUri).Build()
     $token = Get-MsalToken -PublicClientApplication $PublicClient -TenantId $TenantId -Scopes $Scopes -ForceRefresh
     $token
 }

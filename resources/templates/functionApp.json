@@ -266,7 +266,7 @@
                         "Issuer": "[concat('https://login.microsoftonline.com/',parameters('tenantId'))]",
                         "IsAadAutoProvisioned": false,
                         "AllowedAudiences": [
-                            "[concat('https://',parameters('functionAppName'),'.azurewebsites.net')]"
+                            "[concat('api://',subscription().tenantId,'/cloudkatana')]"
                         ],
                         "additionalLoginParams": [],
                         "AllowedExternalRedirectUrls": [],
