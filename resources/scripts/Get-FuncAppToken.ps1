@@ -22,8 +22,8 @@ Function Get-FuncAppToken {
         Import-Module 'MSAL.PS' -ErrorAction 'Stop'
     } 
 
-    Write-Host "[+] Defining scope: $ServerAppIdUri/user_impersonation"
-    $Scopes = "$FunctionAppUrl/user_impersonation"
+    $Scopes = "$ServerAppIdUri/user_impersonation"
+    Write-Host "[+] Defining scope: $Scopes"
     #$Scopes = "$FunctionAppUrl/.default"
 
     Write-Host "[+] Getting MSAL token.."
