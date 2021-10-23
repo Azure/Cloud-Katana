@@ -125,17 +125,19 @@ for action in actions_loaded:
 import requests
 import time
 
-public_client_app_id = "{}"
-tenant_id = "{}"
 function_app_url = "{}"
-scope = function_app_url + "/user_impersonation"
+
+tenant_id = "{}"
+public_client_app_id = "{}"
+server_app_id_uri = "api://" + tenant_id + "/cloudkatana"
+scope = server_app_id_uri + "/user_impersonation"
 
 app = PublicClientApplication(
     public_client_app_id,
     authority="https://login.microsoftonline.com/" + tenant_id
 )
 result = app.acquire_token_interactive(scopes=[scope])
-bearer_token = result['access_token']""".format(app_config['PUBLIC_CLIENT_APP_ID'],app_config['TENANT_ID'], app_config['FUNCTION_APP_URL'])))
+bearer_token = result['access_token']""".format(app_config['FUNCTION_APP_URL'],app_config['TENANT_ID'],app_config['PUBLIC_CLIENT_APP_ID'])))
     # Set Azure Function Orchestrator
     nb['cells'].append(nbf.v4.new_markdown_cell("### Set Azure Function Orchestrator"))
     nb['cells'].append(nbf.v4.new_code_cell("endpoint = function_app_url + \"/api/orchestrators/Orchestrator\""))
@@ -222,7 +224,9 @@ for summary in summary_table:
                     if metadata not in techniques_mappings[technique]:
                         techniques_mappings[technique].append(metadata)
         
-        VERSION = "4.2"
+        LAYER_VERSION = "4.2"
+        ATTACK_VERSION = "10"
+        NAVIGATOR_VERSION = "4.5.1"
         NAME = "Cloud Katana {} ATT&CK Coverage".format(summary['platform'])
         DESCRIPTION = "Techniques covered by Cloud Katana"
         DOMAIN = "mitre-enterprise"
@@ -232,7 +236,11 @@ for summary in summary_table:
             "description": DESCRIPTION,
             "name": NAME,
             "domain": DOMAIN,
-            "version": VERSION,
+            "version": {
+                "attack": ATTACK_VERSION,
+                "navigator": NAVIGATOR_VERSION,
+                "layer": LAYER_VERSION
+            },
             "filters": {
                 "platforms": [
                     "Office 365",
