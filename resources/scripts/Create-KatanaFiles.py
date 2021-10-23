@@ -236,7 +236,7 @@ for summary in summary_table:
             "description": DESCRIPTION,
             "name": NAME,
             "domain": DOMAIN,
-            "version": {
+            "versions": {
                 "attack": ATTACK_VERSION,
                 "navigator": NAVIGATOR_VERSION,
                 "layer": LAYER_VERSION
