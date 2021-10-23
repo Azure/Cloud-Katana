@@ -83,7 +83,7 @@
                 "forceUpdateTag": "[parameters('utcValue')]",
                 "azPowerShellVersion": "6.2",
                 "timeout": "PT30M",
-                "scriptContent": "[format('. .\\New-AppRegistration.ps1; $results = New-AppRegistration -Name {0} -IdentifierUris {1} -ReplyUrls {2} -RequireAssignedRole -AssignAppRoleToUser {3} -ConnectAs ManagedIdentity; $DeploymentScriptOutputs[\"appId\"] = $results.appId', variables('resourceNames').ServerAppName, concat('https://', variables('resourceNames').AppName, '.azurewebsites.net'), concat('https://', variables('resourceNames').AppName, '.azurewebsites.net/.auth/login/aad/callback'), parameters('assignAppRoleToUser'))]",
+                "scriptContent": "[format('. .\\New-AppRegistration.ps1; $results = New-AppRegistration -Name {0} -IdentifierUris {1} -ReplyUrls {2} -RequireAssignedRole -AssignAppRoleToUser {3} -ConnectAs ManagedIdentity; $DeploymentScriptOutputs[\"appId\"] = $results.appId', variables('resourceNames').ServerAppName, concat('api://',subscription().tenantId,'/cloudkatana'), concat('https://', variables('resourceNames').AppName, '.azurewebsites.net/.auth/login/aad/callback'), parameters('assignAppRoleToUser'))]",
                 "supportingScriptUris": [
                     "[concat(parameters('artifactsLocation'), '/resources/scripts/New-AppRegistration.ps1', parameters('_artifactsLocationSasToken'))]"
                 ],
