@@ -8,6 +8,7 @@
 
 |Created|Action|Description|Author|
 | :---| :---| :---| :---|
+|2021-10-16 |[Add-CKAzADMemberToDirectoryRole](https://cloud-katana.com/notebooks/azure/persistence/Add-CKAzADMemberToDirectoryRole.html) |A threat actor might want to add a new member to a directory role (e.g. Domain Administrator). |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-09-30 |[Get-CKMembers](https://cloud-katana.com/notebooks/azure/discovery/Get-CKMembers.html) |A threat actor might want to list members of an Azure AD group or directory role. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-09-30 |[Get-CKOwners](https://cloud-katana.com/notebooks/azure/discovery/Get-CKOwners.html) |A threat actor might want to list owners of an Azure AD application or service principal. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
 |2021-09-30 |[Invoke-CKAttackGraph](https://cloud-katana.com/notebooks/azure/discovery/Invoke-CKAttackGraph.html) |A threat actor might want to collect information from Azure AD such as users, applications, service principals, groups and directory roles and analyze it all in a graph way. |Roberto Rodriguez @Cyb3rWard0g, MSTIC R&D |
