@@ -1,0 +1,102 @@
+{
+  "name": "Admin promotion after Role Management Application Permission Grant",
+  "type": "workflow",
+  "description": "Grant the Microsoft Graph RoleManagement.ReadWrite.Directory (application) permission to an Azure service principal before being used to add an Azure AD object or user account to an Admin directory role (i.e. Global Administrators)",
+  "contributors": [
+    "Roberto Rodriguez @Cyb3rWard0g"
+  ],
+  "steps":[
+    {
+      "name": "GrantAppRoleAssignmentPermission",
+      "action": "Grant-CKPermissions",
+      "parameters": {
+        "spObjectId": "$spObjectId",
+        "resourceName": "Microsoft Graph",
+        "permissionType": "Application",
+        "permissions": ["AppRoleAssignment.ReadWrite.All","Application.Read.All"]
+      },
+      "wait": "120s"
+    },
+    {
+      "name": "AddPasswordToApp",
+      "activityFunction": "Azure",
+      "action": "Add-CKAzADAppPassword",
+      "parameters": {
+        "appObjectId": "$appObjectId",
+        "displayName": "$pwdCredentialName"
+      },
+      "wait": "30s"
+    },
+    {
+      "name": "GetAccessTokenOne",
+      "activityFunction": "Azure",
+      "action": "Get-CKAccessToken",
+      "dependsOn": [
+        "GrantAppRoleAssignmentPermission",
+        "AddPasswordToApp"
+      ],
+      "parameters": {
+        "ClientId": "$appId",
+        "TenantId": "$tenantId",
+        "GrantType": "client_credentials",
+        "AppSecret": "reference('AddPasswordToApp.secretText')"
+      }
+    },
+    {
+      "name": "GrantRoleMgmtPermission",
+      "activityFunction": "Azure",
+      "action": "Grant-CKPermissions",
+      "dependsOn" :[
+        "GetAccessTokenOne"
+      ],
+      "parameters": {
+        "accessToken": "reference('GetAccessTokenOne.access_token')",
+        "spObjectId": "$spObjectId",
+        "resourceName": "Microsoft Graph",
+        "permissionType": "Application",
+        "permissions": ["RoleManagement.ReadWrite.Directory"]
+      },
+      "wait": "120s"
+    },
+    {
+      "name": "GetAccessTokenTwo",
+      "activityFunction": "Azure",
+      "action": "Get-CKAccessToken",
+      "dependsOn": [
+        "GrantRoleMgmtPermission"
+      ],
+      "parameters": {
+        "ClientId": "$appId",
+        "TenantId": "$tenantId",
+        "GrantType": "client_credentials",
+        "AppSecret": "reference('AddPasswordToApp.secretText')"
+      }
+    },
+    {
+      "name": "GetAzADServicePrincipal",
+      "activityFunction": "Azure",
+      "action": "Get-CKAzADServicePrincipal",
+      "dependsOn": [
+        "GetAccessTokenOne"
+      ],
+      "parameters": {
+        "accessToken": "reference('GetAccessTokenOne.access_token')",
+        "spObjectId": "$spObjectId"
+      }
+    },
+    {
+      "name": "AddServicePrincipalToGARole",
+      "activityFunction": "Azure",
+      "action": "Add-CKAzADMemberToDirectoryRole",
+      "dependsOn": [
+        "GetAccessTokenTwo",
+        "GetAzADServicePrincipal"
+      ],
+      "parameters": {
+        "accessToken": "reference('GetAccessTokenTwo.access_token')",
+        "directoryRoleTemplateId": "62e90394-69f5-4237-9190-012177145e10",
+        "directoryObjectId": "$spObjectId"
+      }
+    }
+  ]
+}
