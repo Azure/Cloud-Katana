@@ -94,7 +94,7 @@
       ],
       "parameters": {
         "accessToken": "reference('GetAccessTokenTwo.access_token')",
-        "roleDisplayName": "Global Administrator",
+        "directoryRoleTemplateId": "62e90394-69f5-4237-9190-012177145e10",
         "directoryObjectId": "$spObjectId"
       }
     }
