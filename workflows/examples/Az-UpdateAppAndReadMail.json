@@ -1,0 +1,57 @@
+{
+  "name": "Update Azure AD application and read mail",
+  "type": "workflow",
+  "description": "Grant permissions to Azure AD application, add credentials to an Azure AD application, get an access token with the new credentials from the Azure AD application and read mail from a specific user via MS Graph with the security context of the Azure AD application",
+  "contributors": [
+    "Roberto Rodriguez @Cyb3rWard0g"
+  ],
+  "steps":[
+    {
+      "name": "GrantMailPermissions",
+      "activityFunction": "Azure",
+      "action": "Grant-CKPermissions",
+      "parameters": {
+        "spObjectId": "$spObjectId",
+        "resourceName": "Microsoft Graph",
+        "permissionType": "Application",
+        "permissions": ["Mail.Read"]
+      }
+    },
+    {
+      "name": "AddPasswordToApp",
+      "activityFunction": "Azure",
+      "action": "Add-CKAzADAppPassword",
+      "parameters": {
+        "appObjectId": "$appObjectId",
+        "displayName": "$pwdCredentialName"
+      },
+      "wait": "30s"
+    },
+    {
+      "name": "GetAccessToken",
+      "activityFunction": "Azure",
+      "action": "Get-CKAccessToken",
+      "dependsOn": [
+        "AddPasswordToApp"
+      ],
+      "parameters": {
+        "ClientId": "$appId",
+        "TenantId": "$tenantId",
+        "GrantType": "client_credentials",
+        "AppSecret": "reference('AddPasswordToApp.secretText')"
+      }
+    },
+    {
+      "name": "GetMailboxMessages",
+      "activityFunction": "Azure",
+      "action": "Get-CKMailboxMessages",
+      "dependsOn": [
+        "GetAccessToken"
+      ],
+      "parameters": {
+        "accessToken": "reference('GetAccessToken.access_token')",
+        "userPrincipalName": "$userPrincipalName"
+      }
+    }
+  ]
+}
