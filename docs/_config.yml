@@ -2,7 +2,7 @@
 # Learn more at https://jupyterbook.org/customize/config.html
 
 title: ''
-author: Roberto Rodriguez @Cyb3rWard0g
+author: Microsoft Corporation
 logo: images/Logo.png
 
 # Force re-execution of notebooks on each build.
