@@ -40,7 +40,8 @@
             "metadata": {
                 "description": "The location of Cloud Katana scripts and configs to deploy the serverless application"
             },
-            "defaultValue": "https://raw.githubusercontent.com/Azure/Cloud-Katana/main"
+            "defaultvalue": "https://raw.githubusercontent.com/Azure/Cloud-Katana/feature/hybrid-worker-lab/"
+            //"defaultValue": "https://raw.githubusercontent.com/Azure/Cloud-Katana/main"
         },
         "_artifactsLocationSasToken": {
             "type": "securestring",
@@ -54,7 +55,8 @@
             "metadata": {
                 "description": "The remote location of the Cloud Katana Azure Function app package. By default this points to the Cloud Katana public GitHub repository. You can update this and point to a private location. You can use a Shared Access Signature (SAS)."
             },
-            "defaultValue": "https://github.com/Azure/Cloud-Katana/blob/main/CloudKatana.zip?raw=true"
+            "defaultValue": "https://github.com/Azure/Cloud-Katana/blob/feature/hybrid-worker-lab/functionapp.zip?raw=true"
+            //"defaultValue": "https://github.com/Azure/Cloud-Katana/blob/main/CloudKatana.zip?raw=true"
         },
         "enableHybridMode": {
             "type": "bool",

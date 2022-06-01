@@ -163,8 +163,6 @@ Function Start-CKTSimulation
         Verbose     = $true
     }
 
-    #$OrchestratorUrl = 'https://tryingdurablefuncapp.azurewebsites.net/api/orchestrators/Orchestrator'
-
     <#
     # Execute Simulation
     $Params = @{
