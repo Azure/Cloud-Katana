@@ -1,5 +1,11 @@
 # Deploy Locally
 
+## Create Resource Group
+
+Create a resource group to deploy all Cloud Katana resources in it.
+
+![](../../images/CreateResourceGroup.png)
+
 ## Create Azure Storage Account
 
 Create an [Azure storage account](https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview) in a specific resource group.
@@ -45,22 +51,22 @@ It should look like the example below:
 }
 ```
 
-## Register an Azure AD application
-
-The Cloud Katana Azure Function application runs with a [user-assigned managed identity](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-manage-user-assigned-managed-identities?pivots=identity-mi-methods-azp). However, when running the project locally, it is recommended to use an Azure AD application with the right permissions to execute every single simulation action.
-
-You can use the Cloud Katana PowerShell module to create an Azure AD application.
+## Import Cloud Katana Tools Module
 
 ```PowerShell
 cd Cloud-Katana
-Import-Module .\CloudKatanaUtils.psm1 -verbose
+Import-Module .\CloudKatanaTools.psm1 -verbose
 ```
+
+## Register an Azure AD application
+
+The Cloud Katana Azure Function application runs with a [user-assigned managed identity](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-manage-user-assigned-managed-identities?pivots=identity-mi-methods-azp). However, when running the project locally, it is recommended to use an Azure AD application with the right permissions to execute every single simulation action.
 
 Use the following commands to register a new Azure AD application, create a service principal and add credentials to it.
 
 ```PowerShell
 $AppName = '<YOUR-APP-NAME>'
-$NewApp = New-AppRegistration -Name $Appname -NativeApp -AddSecret -verbose
+$NewApp = New-CKTAppRegistration -Name $Appname -NativeApp -AddSecret -verbose
 ```
 
 ```{note}
@@ -72,7 +78,7 @@ Save the `secret text` and information about your new application. The secret te
 The project comes with a `permissions.json` file which aggregates all the permissions needed to execute every single simulation via Azure Functions. The file is in the `metadata` folder at the root of the Cloud Katana project. We can use that file and the following function to grant permissions to the Azure AD application we just registered/created. You can use another function from the Cloud Katana PowerShell module to do so.
 
 ```PowerShell
-Grant-GraphPermissions -SvcPrincipalName $AppName -PermissionsFile .\metadata\permissions.json -Verbose
+Grant-CKTPermissions -SvcPrincipalName $AppName -PermissionsFile .\simulations\atomic\permissions.json -Verbose
 ```
 
 ## Install Azure Function Core Tools

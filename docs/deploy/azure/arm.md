@@ -6,6 +6,13 @@ Create a resource group to deploy all Cloud Katana resources in it.
 
 ![](../../images/CreateResourceGroup.png)
 
+## Import Cloud Katana Tools Module
+
+```PowerShell
+cd Cloud-Katana
+Import-Module .\CloudKatanaTools.psm1 -verbose
+```
+
 ## Create a User Assigned Managed Identity
 
 Besides using [Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-overview) to run simulations, Cloud Katana leverages the following resources for additional capabilities:
@@ -17,13 +24,6 @@ The registration of new Azure AD applications and permission grants are done via
 
 ```{note}
 To create a user-assigned managed identity, your account needs the [Managed Identity Contributor role](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#managed-identity-contributor).
-```
-
-You can use the Cloud Katana Utils PowerShell module, available at the root of the project folder, to create a user-assigned managed identity.
-
-```PowerShell
-cd Cloud-Katana
-Import-Module .\CloudKatanaTools.psm1 -verbose
 ```
 
 Run the following PowerShell commands to create a new managed identity:

@@ -12,9 +12,10 @@ This can be accomplished via an Azure Resource Manager (ARM) template or an Azur
 ^^^
 
 **[](arm.md)**
-* Create Azure Function name
+* Create Resource Group
 * Create managed identity
 * Assign permissions to managed identity
+* Create Azure Function name
 * Deploy ARM template
 
 **[](demos.md)**
