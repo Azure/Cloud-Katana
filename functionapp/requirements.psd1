@@ -5,7 +5,7 @@
     # For latest supported version, go to 'https://www.powershellgallery.com/packages/Az'.
     # To use the Az module in your function app, please uncomment the line below.
     # 'Az' = '6.*'
-    'Az.Automation' = '1.7.3'{% for m in mods %}
-    '{{m['name']}}' = '{{m['version']}}'{% endfor %}
+    'Az.Automation' = '1.7.3'
+    'CloudKatanaAbilities' = '1.0'
     'PoshGremlin' = '1.0'
 }

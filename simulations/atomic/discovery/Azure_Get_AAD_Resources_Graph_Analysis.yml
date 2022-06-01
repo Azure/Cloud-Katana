@@ -1,0 +1,52 @@
+schema: atomic
+id: b54c67dc-3cd4-450d-87c3-6fd0392a9fe0
+name: Get Azure AD Resources and Graph Them
+metadata:
+  creationDate: '2021-09-30'
+  modificationDate: '2021-09-30'
+  description: |
+    A threat actor might want to collect information from Azure AD such as users, applications, service principals, groups and directory roles via Microsoft Graph APIs and analyze it all in a graph way.
+  contributors:
+    - Roberto Rodriguez @Cyb3rWard0g
+    - MSTIC R&D
+  mitreAttack:
+    - technique: T1087.004
+      tactics:
+        - TA0007
+authorization:
+  - resource: https://graph.microsoft.com/
+    permissionsType: application
+    permissions:
+      - User.Read.All
+      - Application.Read.All
+      - RoleManagement.Read.Directory
+      - GroupMember.Read.All
+execution:
+  type: ScriptModule
+  platform: Azure
+  executor: PowerShell
+  module:
+    name: CloudKatanaAbilities
+    version: 1.0
+    function: Invoke-CKAttackGraph
+  parameters:
+    gremlinHostname:
+      type: string
+      description: FQDN of Gremlin endpoint (e.g. cosmosxxxxxx.gremlin.cosmos.azure.com).
+      required: true
+    cosmosDBRWKey:
+      type: string
+      description: Azure CosmosDB Read-Write primary key.
+      required: true
+    cosmosDBName:
+      type: string
+      description: Azure CosmosDB database name.
+      required: true
+    cosmosDBGraphName:
+      type: string
+      description: Azure CosmosDB graph collection name.
+      required: true
+    partitionKey:
+      type: string
+      description: Azure CosmosDB graph partition key (Default 'pk').
+      required: false

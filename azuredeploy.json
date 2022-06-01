@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "functionAppName": {
@@ -55,6 +55,26 @@
                 "description": "The remote location of the Cloud Katana Azure Function app package. By default this points to the Cloud Katana public GitHub repository. You can update this and point to a private location. You can use a Shared Access Signature (SAS)."
             },
             "defaultValue": "https://github.com/Azure/Cloud-Katana/blob/main/CloudKatana.zip?raw=true"
+        },
+        "enableHybridMode": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "automationAccountName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "automationAccountResourceGroupName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "hybridWorkerGroupName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "hybridPowerShellRunbookName": {
+            "type": "string",
+            "defaultValue": ""
         }
     },
     "variables": {
@@ -202,8 +222,47 @@
                     },
                     "_packageLocation": {
                         "value": "[parameters('_packageLocation')]"
+                    },
+                    "enableHybridMode": {
+                        "value": "[parameters('enableHybridMode')]"
+                    },
+                    "automationAccountName": {
+                        "value": "[parameters('automationAccountName')]"
+                    },
+                    "automationAccountResourceGroupName": {
+                        "value": "[parameters('automationAccountResourceGroupName')]"
+                    },
+                    "hybridWorkerGroupName": {
+                        "value": "[parameters('hybridWorkerGroupName')]"
+                    },
+                    "hybridPowerShellRunbookName": {
+                        "value": "[parameters('hybridPowerShellRunbookName')]"
                     }
                 }
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2019-04-01-preview",
+            "name": "[parameters('roleGuid')]",
+            "dependsOn": ["[concat('Microsoft.Resources/deploymentScripts/', 'sleep')]"],
+            "properties": {
+                "roleDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/roleDefinitions/', 'f353d9bd-d4a6-484e-a77a-8050b599b867')]",
+                "principalId": "[reference(variables('resourceNames').AppName, '2018-11-30').principalId]",
+                "principalType": "ServicePrincipal",
+                "scope": "[resourceGroup().id]"
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2019-04-01-preview",
+            "name": "[parameters('roleGuid')]",
+            "dependsOn": ["[concat('Microsoft.Resources/deploymentScripts/', 'sleep')]"],
+            "properties": {
+                "roleDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/roleDefinitions/', '9980e02c-c2be-4d73-94e8-173b1dc7cf3c')]",
+                "principalId": "[reference(variables('resourceNames').AppName, '2018-11-30').principalId]",
+                "principalType": "ServicePrincipal",
+                "scope": "[resourceGroup().id]"
             }
         }
     ],

@@ -14,35 +14,42 @@ parts:
 - caption: Internals
   chapters:
   - file: internals/design/intro
+  - file: internals/schema
 - caption: Targeted Notebooks
   chapters:
+  - file: notebooks/windows/intro
+    sections:
+    - file: notebooks/windows/discovery/intro
+      sections:
+      - file: notebooks/windows/discovery/list_windows_firewall_rules_via_netsh
+      - file: notebooks/windows/discovery/list_open_egress_ports_via_.net_tcpclient_class
   - file: notebooks/azure/intro
     sections:
     - file: notebooks/azure/collection/intro
       sections:
-      - file: notebooks/azure/collection/Get-CKMailboxMessages
-      - file: notebooks/azure/collection/Get-CKMyMailboxMessages
+      - file: notebooks/azure/collection/get_my_mailbox_messages
+      - file: notebooks/azure/collection/get_user_mailbox_messages
     - file: notebooks/azure/discovery/intro
       sections:
-      - file: notebooks/azure/discovery/Get-CKAzADGroups
-      - file: notebooks/azure/discovery/Get-CKAzADApplication
-      - file: notebooks/azure/discovery/Get-CKAzADDirectoryRoles
-      - file: notebooks/azure/discovery/Get-CKAzADServicePrincipal
-      - file: notebooks/azure/discovery/Get-CKAzADUsers
-      - file: notebooks/azure/discovery/Get-CKMembers
-      - file: notebooks/azure/discovery/Get-CKOauth2PermissionGrants
-      - file: notebooks/azure/discovery/Get-CKOwners
-      - file: notebooks/azure/discovery/Invoke-CKAttackGraph
+      - file: notebooks/azure/discovery/get_azure_ad_application_metadata
+      - file: notebooks/azure/discovery/get_azure_ad_directory_roles
+      - file: notebooks/azure/discovery/get_azure_ad_groups
+      - file: notebooks/azure/discovery/get_azure_ad_owners_of_an_azure_ad_group_or_directory_role
+      - file: notebooks/azure/discovery/get_azure_ad_oauth_permission_grants
+      - file: notebooks/azure/discovery/get_owners_of_an_azure_ad_application_or_service_principal
+      - file: notebooks/azure/discovery/get_azure_ad_resources_and_graph_them
+      - file: notebooks/azure/discovery/get_azure_ad_service_principal_metadata
+      - file: notebooks/azure/discovery/get_azure_ad_users
     - file: notebooks/azure/persistence/intro
       sections:
-      - file: notebooks/azure/persistence/Add-CKAzADAppPassword
-      - file: notebooks/azure/persistence/Add-CKAzADMemberToDirectoryRole
-      - file: notebooks/azure/persistence/Add-CKAzADSPPassword
-      - file: notebooks/azure/persistence/Add-CKDomainToTenant
-      - file: notebooks/azure/persistence/Add-CKMemberToGroup
-      - file: notebooks/azure/persistence/Add-CKOwnerToAzADApp
-      - file: notebooks/azure/persistence/Add-CKOwnerToAzADSP
-      - file: notebooks/azure/persistence/Grant-CKPermissions
-      - file: notebooks/azure/persistence/New-CKAzADApplication
-      - file: notebooks/azure/persistence/New-CKAzADServicePrincipal
-      - file: notebooks/azure/persistence/Update-CKAzADAppReqRscAccess
+      - file: notebooks/azure/persistence/add_new_owner_to_azure_ad_application
+      - file: notebooks/azure/persistence/add_password_to_azure_ad_application
+      - file: notebooks/azure/persistence/add_new_member_to_azure_ad_directory_role
+      - file: notebooks/azure/persistence/add_new_member_to_azure_ad_group
+      - file: notebooks/azure/persistence/add_new_owner_to_azure_ad_service_principal
+      - file: notebooks/azure/persistence/add_password_to_azure_ad_service_principal
+      - file: notebooks/azure/persistence/add_new_domain_to_azure_ad_tenant
+      - file: notebooks/azure/persistence/grant_permission_to_azure_ad_application
+      - file: notebooks/azure/persistence/create_new_azure_ad_application
+      - file: notebooks/azure/persistence/create_new_azure_ad_service_principal_for_application
+      - file: notebooks/azure/persistence/update_azure_ad_application_required_resource_access

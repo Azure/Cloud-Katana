@@ -1,0 +1,36 @@
+schema: campaign
+id: c4bcd77a-f84c-4027-a6ef-bab659e15fc7
+name: Azure AD Discovery Applications and Service Principals
+metadata:
+  creationDate: '2022-05-01'
+  modificationDate: '2022-05-01'
+  description: |
+    A campaign to simulate a threat actor disovering Azure AD applications and Service Principals.
+  contributors:
+    - Roberto Rodriguez @Cyb3rWard0g
+    - MSTIC R&D
+steps:
+  - number: 1
+    name: List Azure AD Applications
+    execution:
+      type: ScriptModule
+      platform: Azure
+      executor: PowerShell
+      module:
+        name: CloudKatanaAbilities
+        version: 1.0
+        function: Get-CKAzADApplication
+      parameters:
+        selectFields: id,displayName
+  - number: 2
+    name: List Azure AD Service Principals
+    execution:
+      type: ScriptModule
+      platform: Azure
+      executor: PowerShell
+      module:
+        name: CloudKatanaAbilities
+        version: 1.0
+        function: Get-CKAzADServicePrincipal
+      parameters:
+        selectFields: id,displayName
