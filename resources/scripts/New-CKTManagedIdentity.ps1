@@ -1,4 +1,4 @@
-function New-ManagedIdentity {
+function New-CKTManagedIdentity {
     <#
     .SYNOPSIS
     A PowerShell wrapper around the Azure CLI "az identity" command to create a user assigned managed identity.
@@ -9,7 +9,7 @@ function New-ManagedIdentity {
     Optional Dependencies: None
     
     .DESCRIPTION
-    New-ManagedIdentity is a simple PowerShell wrapper around the Azure CLI "az identity" command to create a user assigned managed identity.
+    New-CKTManagedIdentity is a simple PowerShell wrapper around the Azure CLI "az identity" command to create a user assigned managed identity.
 
     .PARAMETER Name
     The name of the new user assigned managed identity.

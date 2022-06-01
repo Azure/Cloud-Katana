@@ -10,18 +10,6 @@
       },
       "assignAppRoleToUser": {
         "value": "<USER_NAME@DOMAIN.COM>"
-      },
-      "_resourceNames": {
-        "value": {},
-        "metadata": {
-          "description": "Predefined resource names. Should be set to default. The resourse names are generated using the prefix and the suffix. The value is passed when the template is integrated into a complex pipeline."
-        }
-      },
-      "artifactsLocation": {
-        "value": "<GITHUB_REPO_OR_STORAGE_ACCOUNT>"
-      },
-      "_artifactsLocationSasToken": {
-        "value": ""
       }
     }
 }

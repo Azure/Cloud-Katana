@@ -1,4 +1,4 @@
-function Get-MSGraphAccessToken {
+function Get-CKTMSGraphAccessToken {
     <#
     .SYNOPSIS
     A PowerShell script to get a MS graph access token with a specific grant type and Azure AD application.
@@ -9,7 +9,7 @@ function Get-MSGraphAccessToken {
     Optional Dependencies: None
 
     .DESCRIPTION
-    Get-MSGraphAccessToken is a simple PowerShell wrapper around the Microsoft Graph API to grant permissions to a service principal. 
+    Get-CKTMSGraphAccessToken is a simple PowerShell wrapper around the Microsoft Graph API to grant permissions to a service principal. 
 
     .PARAMETER ClientId
     The Application (client) ID assigned to the Azure AD application.

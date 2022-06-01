@@ -1,4 +1,4 @@
-function New-AppRegistration {
+function New-CKTAppRegistration {
     <#
     .SYNOPSIS
     A PowerShell wrapper around Az PowerShell and the Microsoft Graph API to create/register a new Azure AD application and its respective service principal.
@@ -9,7 +9,7 @@ function New-AppRegistration {
     Optional Dependencies: None
     
     .DESCRIPTION
-    New-AppRegistration is a simple PowerShell wrapper around the Azure CLI to create/register a new Azure AD application and its respective service principal.
+    New-CKTAppRegistration is a simple PowerShell wrapper around the Azure CLI to create/register a new Azure AD application and its respective service principal.
 
     .PARAMETER Name
     The name of the new Azure AD Application and service principal.

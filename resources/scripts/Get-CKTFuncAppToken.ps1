@@ -1,4 +1,4 @@
-Function Get-FuncAppToken {
+Function Get-CKTFuncAppToken {
     param (
         [Parameter(Mandatory=$True)]
         [string] $ClientAppId,

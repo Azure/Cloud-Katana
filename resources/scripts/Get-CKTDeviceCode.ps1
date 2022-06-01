@@ -1,4 +1,4 @@
-function Get-DeviceCode {
+function Get-CKTDeviceCode {
     <#
     .SYNOPSIS
     A PowerShell script to get a device code to initiate authentication.

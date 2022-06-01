@@ -9,7 +9,7 @@ function Grant-CKTPermissions {
     Optional Dependencies: None
     
     .DESCRIPTION
-    Grant-GraphPermissions is a simple PowerShell wrapper around the Microsoft Graph API to grant permissions to a service principal. 
+    Grant-CKTGraphPermissions is a simple PowerShell wrapper around the Microsoft Graph API to grant permissions to a service principal. 
 
     .PARAMETER SvcPrincipalName
     Display name of the service principal. It is usually the same name as the Azure AD application.
