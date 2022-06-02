@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "functionAppName": {
@@ -40,7 +40,7 @@
             "metadata": {
                 "description": "The location of Cloud Katana scripts and configs to deploy the serverless application"
             },
-            "defaultValue": "https://raw.githubusercontent.com/Azure/Cloud-Katana/main"
+            "defaultValue": "https://raw.githubusercontent.com/Azure/Cloud-Katana/feature/hybrid-worker-lab/"
         },
         "_artifactsLocationSasToken": {
             "type": "securestring",
@@ -54,7 +54,28 @@
             "metadata": {
                 "description": "The remote location of the Cloud Katana Azure Function app package. By default this points to the Cloud Katana public GitHub repository. You can update this and point to a private location. You can use a Shared Access Signature (SAS)."
             },
-            "defaultValue": "https://github.com/Azure/Cloud-Katana/blob/main/CloudKatana.zip?raw=true"
+            "defaultValue": "https://github.com/Azure/Cloud-Katana/blob/feature/hybrid-worker-lab/functionapp.zip?raw=true"
+            //"defaultValue": "https://github.com/Azure/Cloud-Katana/blob/main/CloudKatana.zip?raw=true"
+        },
+        "enableHybridMode": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "automationAccountName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "automationAccountResourceGroupName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "hybridWorkerGroupName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "hybridPowerShellRunbookName": {
+            "type": "string",
+            "defaultValue": ""
         }
     },
     "variables": {
@@ -64,7 +85,10 @@
             "ServerAppName": "[concat(parameters('functionAppName'), 'Server')]",
             "ClientAppName": "[concat(parameters('functionAppName'), 'Client')]"
         },
-        "resourceNames": "[if(empty(parameters('_resourceNames')), variables('combinedResourceNames'), parameters('_resourceNames'))]"
+        "resourceNames": "[if(empty(parameters('_resourceNames')), variables('combinedResourceNames'), parameters('_resourceNames'))]",
+        "roleGuidOne" : "[guid(parameters('roleGuid'), 'guidOne')]",
+        "roleGuidTwo" : "[guid(parameters('roleGuid'), 'guidTwo')]",
+        "roleGuidThree" : "[guid(parameters('roleGuid'), 'guidThree')]"
     },
     "resources": [
         {
@@ -83,9 +107,9 @@
                 "forceUpdateTag": "[parameters('utcValue')]",
                 "azPowerShellVersion": "6.2",
                 "timeout": "PT30M",
-                "scriptContent": "[format('. .\\New-AppRegistration.ps1; $results = New-AppRegistration -Name {0} -IdentifierUris {1} -ReplyUrls {2} -RequireAssignedRole -AssignAppRoleToUser {3} -ConnectAs ManagedIdentity; $DeploymentScriptOutputs[\"appId\"] = $results.appId', variables('resourceNames').ServerAppName, concat('api://',subscription().tenantId,'/cloudkatana'), concat('https://', variables('resourceNames').AppName, '.azurewebsites.net/.auth/login/aad/callback'), parameters('assignAppRoleToUser'))]",
+                "scriptContent": "[format('. .\\New-CKTAppRegistration.ps1; $results = New-CKTAppRegistration -Name {0} -IdentifierUris {1} -ReplyUrls {2} -RequireAssignedRole -AssignAppRoleToUser {3} -ConnectAs ManagedIdentity; $DeploymentScriptOutputs[\"appId\"] = $results.appId', variables('resourceNames').ServerAppName, concat('api://',subscription().tenantId,'/cloudkatana'), concat('https://', variables('resourceNames').AppName, '.azurewebsites.net/.auth/login/aad/callback'), parameters('assignAppRoleToUser'))]",
                 "supportingScriptUris": [
-                    "[concat(parameters('artifactsLocation'), '/resources/scripts/New-AppRegistration.ps1', parameters('_artifactsLocationSasToken'))]"
+                    "[concat(parameters('artifactsLocation'), '/resources/scripts/New-CKTAppRegistration.ps1', parameters('_artifactsLocationSasToken'))]"
                 ],
                 "cleanupPreference": "OnSuccess",
                 "retentionInterval": "PT1H"
@@ -107,9 +131,9 @@
                 "forceUpdateTag": "[parameters('utcValue')]",
                 "azPowerShellVersion": "6.2",
                 "timeout": "PT30M",
-                "scriptContent": "[format('. .\\New-AppRegistration.ps1; $results = New-AppRegistration -Name {0} -NativeApp -RequireAssignedRole -AssignAppRoleToUser {1} -ConnectAs ManagedIdentity; $DeploymentScriptOutputs[\"appId\"] = $results.appId', variables('resourceNames').ClientAppName, parameters('assignAppRoleToUser'))]",
+                "scriptContent": "[format('. .\\New-CKTAppRegistration.ps1; $results = New-CKTAppRegistration -Name {0} -NativeApp -RequireAssignedRole -AssignAppRoleToUser {1} -ConnectAs ManagedIdentity; $DeploymentScriptOutputs[\"appId\"] = $results.appId', variables('resourceNames').ClientAppName, parameters('assignAppRoleToUser'))]",
                 "supportingScriptUris": [
-                    "[concat(parameters('artifactsLocation'), '/resources/scripts/New-AppRegistration.ps1', parameters('_artifactsLocationSasToken'))]"
+                    "[concat(parameters('artifactsLocation'), '/resources/scripts/New-CKTAppRegistration.ps1', parameters('_artifactsLocationSasToken'))]"
                 ],
                 "cleanupPreference": "OnSuccess",
                 "retentionInterval": "PT1H"
@@ -141,7 +165,7 @@
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2019-04-01-preview",
-            "name": "[parameters('roleGuid')]",
+            "name": "[variables('roleGuidOne')]",
             "dependsOn": ["[concat('Microsoft.Resources/deploymentScripts/', 'sleep')]"],
             "properties": {
                 "roleDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
@@ -154,7 +178,7 @@
             "type": "Microsoft.Resources/deploymentScripts",
             "apiVersion": "2020-10-01",
             "name": "grantGraphPermissions",
-            "dependsOn": ["[concat('Microsoft.Authorization/roleAssignments/', parameters('roleGuid'))]"],
+            "dependsOn": ["[concat('Microsoft.Authorization/roleAssignments/', variables('roleGuidOne'))]"],
             "location": "[resourceGroup().location]",
             "identity": {
                 "type": "UserAssigned",
@@ -167,10 +191,10 @@
                 "forceUpdateTag": "[parameters('utcValue')]",
                 "azPowerShellVersion": "6.2",
                 "timeout": "PT30M",
-                "scriptContent": "[format('. .\\Grant-GraphPermissions.ps1; Grant-GraphPermissions -SvcPrincipalId {0} -PermissionsFile .\\permissions.json -ConnectAs ManagedIdentity', reference(variables('resourceNames').Identity, '2018-11-30').principalId)]",
+                "scriptContent": "[format('. .\\Grant-CKTPermissions.ps1; Grant-CKTPermissions -SvcPrincipalId {0} -PermissionsFile .\\permissions.json -ConnectAs ManagedIdentity', reference(variables('resourceNames').Identity, '2018-11-30').principalId)]",
                 "supportingScriptUris": [
-                    "[concat(parameters('artifactsLocation'), '/resources/scripts/Grant-GraphPermissions.ps1', parameters('_artifactsLocationSasToken'))]",
-                    "[concat(parameters('artifactsLocation'), '/metadata/permissions.json', parameters('_artifactsLocationSasToken'))]"
+                    "[concat(parameters('artifactsLocation'), '/resources/scripts/Grant-CKTPermissions.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/simulations/atomic/permissions.json', parameters('_artifactsLocationSasToken'))]"
                 ],
                 "cleanupPreference": "OnSuccess",
                 "retentionInterval": "PT1H"
@@ -202,8 +226,53 @@
                     },
                     "_packageLocation": {
                         "value": "[parameters('_packageLocation')]"
+                    },
+                    "enableHybridMode": {
+                        "value": "[parameters('enableHybridMode')]"
+                    },
+                    "automationAccountName": {
+                        "value": "[parameters('automationAccountName')]"
+                    },
+                    "automationAccountResourceGroupName": {
+                        "value": "[parameters('automationAccountResourceGroupName')]"
+                    },
+                    "hybridWorkerGroupName": {
+                        "value": "[parameters('hybridWorkerGroupName')]"
+                    },
+                    "hybridPowerShellRunbookName": {
+                        "value": "[parameters('hybridPowerShellRunbookName')]"
                     }
                 }
+            }
+        },
+        {
+            "condition": "[parameters('enableHybridMode')]",
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2019-04-01-preview",
+            "name": "[variables('roleGuidTwo')]",
+            "dependsOn": [
+                "deployFunctionApp"
+            ],
+            "properties": {
+                "roleDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/roleDefinitions/', 'f353d9bd-d4a6-484e-a77a-8050b599b867')]",
+                "principalId": "[if(parameters('enableHybridMode'), reference(variables('resourceNames').AppName, '2018-11-30').principalId, '')]",
+                "principalType": "ServicePrincipal",
+                "scope": "[resourceGroup().id]"
+            }
+        },
+        {
+            "condition": "[parameters('enableHybridMode')]",
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2019-04-01-preview",
+            "name": "[variables('roleGuidThree')]",
+            "dependsOn": [
+                "deployFunctionApp"
+            ],
+            "properties": {
+                "roleDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/roleDefinitions/', '9980e02c-c2be-4d73-94e8-173b1dc7cf3c')]",
+                "principalId": "[if(parameters('enableHybridMode'), reference(variables('resourceNames').AppName, '2018-11-30').principalId, '')]",
+                "principalType": "ServicePrincipal",
+                "scope": "[resourceGroup().id]"
             }
         }
     ],

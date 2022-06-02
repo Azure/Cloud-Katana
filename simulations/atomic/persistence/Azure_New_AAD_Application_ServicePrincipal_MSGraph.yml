@@ -1,0 +1,33 @@
+schema: atomic
+id: c0771117-a978-4bf2-9832-64d4ed279da9
+name: Create New Azure AD Service Principal for Application
+metadata:
+  creationDate: '2021-08-05'
+  modificationDate: '2021-09-08'
+  description: |
+    A threat actor might want to create a service principal for an existing Azure AD application via Microsoft Graph APIs and the right permissions.
+  contributors:
+    - Roberto Rodriguez @Cyb3rWard0g
+    - MSTIC R&D
+  mitreAttack:
+    - technique: T1136.003
+      tactics:
+        - TA0003
+authorization:
+  - resource: https://graph.microsoft.com/
+    permissionsType: application
+    permissions:
+      - Application.ReadWrite.All
+execution:
+  type: ScriptModule
+  platform: Azure
+  executor: PowerShell
+  module:
+    name: CloudKatanaAbilities
+    version: 1.0
+    function: New-CKAzADServicePrincipal
+  parameters:
+    appId:
+      type: string
+      description: Azure AD application ID (client).
+      required: true

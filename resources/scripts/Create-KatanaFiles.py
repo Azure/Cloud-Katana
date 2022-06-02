@@ -1,18 +1,24 @@
+from inspect import Parameter
+from sqlite3 import paramstyle
 import nbformat as nbf
 import glob
+from numpy import kaiser
+from sqlalchemy import false, true
 import yaml
 import os
 import json
 import copy
 from jinja2 import Template
+import uuid
+import jupytext
 
 ###### Variables #####
 current_directory = os.path.dirname(__file__)
-app_directory = os.path.join(current_directory, "../..", "durableApp")
+app_directory = os.path.join(current_directory, "../..", "functionapp")
 templates_directory = os.path.join(current_directory, "../templates")
-metadata_directory = os.path.join(current_directory, "../../metadata")
+metadata_directory = os.path.join(current_directory, "../../simulations/atomic")
 docs_directory = os.path.join(current_directory, "../../docs")
-notebooks_directory = os.path.join(docs_directory, "notebooks")
+simulations_directory = os.path.join(docs_directory, "simulate")
 metadata_files = os.path.join(metadata_directory, "**/", "*.yml")
 toc_file = os.path.join(docs_directory, "_toc.yml")
 summary_table_template = os.path.join(templates_directory, "summary_template.md")
@@ -57,6 +63,18 @@ summary_table = [
     }
 ]
 
+##### Platform Mappings
+platform_maps = {
+    'Azure' : 'Azure',
+    'WindowsHybridWorker' : 'Windows'
+}
+
+##### Mapping of Azure Function Activity
+activity_function_maps = {
+    'Azure' : 'AzureActivity',
+    'WindowsHybridWorker' : 'WindHybridWorkerActivity'
+}
+
 ##### Open attacker actions yaml file available #####
 print("[+] Opening attack actions yaml files..")
 actions_list = glob.glob(metadata_files)
@@ -74,17 +92,20 @@ with open(notebooks_config_path, "r") as f:
     app_config = yaml.safe_load(f)
 
 for action in actions_loaded:
-    print("  [>>] Processing {} file..".format(action['title']))
+    print("  [>>] Processing {} file..".format(action['name']))
     nb = nbf.v4.new_notebook()
+    nb.metadata = {'kernelspec': {'language': 'python'}}
     nb['cells'] = []
     # Title
-    nb['cells'].append(nbf.v4.new_markdown_cell("# {}".format(action['title'])))
+    nb['cells'].append(nbf.v4.new_markdown_cell("# {}".format(action['name'])))
     # Metadata
     nb['cells'].append(nbf.v4.new_markdown_cell("## Metadata"))
     techniques = []
     tactics = []
-    if action['attackMappings']:
-        for obj in action['attackMappings']:
+    metadata = action['metadata']
+    execution = action['execution']
+    if metadata['mitreAttack']:
+        for obj in metadata['mitreAttack']:
             technique_name = obj['technique']
             technique_object = technique_name.split('.')
             technique_url = 'https://attack.mitre.org/techniques'
@@ -101,7 +122,7 @@ for action in actions_loaded:
                     tactic = "[{}]({})".format(tactic,tactic_url)
                     if tactic not in tactics:
                         tactics.append(tactic)
-    contributors = ','.join(action['contributors'])
+    contributors = ','.join(metadata['contributors'])
     techniques = ','.join(techniques)
     tactics = ','.join(tactics)
     nb['cells'].append(nbf.v4.new_markdown_cell("""
@@ -112,11 +133,11 @@ for action in actions_loaded:
 | creation date     | {} |
 | modification date | {} |
 | Tactics           | {} |
-| Techniques        | {} |""".format(action['platform'],contributors,action['creationDate'],action['modificationDate'],tactics,techniques)
+| Techniques        | {} |""".format(platform_maps[execution['platform']],contributors,metadata['creationDate'],metadata['modificationDate'],tactics,techniques)
     ))
     # Description
     nb['cells'].append(nbf.v4.new_markdown_cell("""## Description
-{}""".format(action['description'])))
+{}""".format(metadata['description'])))
     # Run Simulation
     nb['cells'].append(nbf.v4.new_markdown_cell("## Run Simulation"))
     # Authenticate
@@ -141,38 +162,48 @@ bearer_token = result['access_token']""".format(app_config['FUNCTION_APP_URL'],a
     # Set Azure Function Orchestrator
     nb['cells'].append(nbf.v4.new_markdown_cell("### Set Azure Function Orchestrator"))
     nb['cells'].append(nbf.v4.new_code_cell("endpoint = function_app_url + \"/api/orchestrators/Orchestrator\""))
-    # Process attacker actions
+    # Create HTTP Body
     nb['cells'].append(nbf.v4.new_markdown_cell("### Prepare HTTP Body"))
     data_dict = dict()
-    data_dict['activityFunction'] = action['platform']
-    data_dict['type'] = 'action'
-    data_dict['action'] = action['title']
-    if 'parameters' in action:
-        data_dict['parameters'] = dict()
-        for k, v in action['parameters'].items():
-            if v['type'] == 'array':
-                data_dict['parameters'][k] = ['ENTER-VALUE']
-            elif k == 'accessToken':
-                continue
-            else:
-                data_dict['parameters'][k] = 'ENTER-VALUE'
+    data_dict['RequestId'] = str(uuid.uuid4())
+    data_dict['name'] = action['name']
+    data_dict['metadata'] = metadata
+    action['number'] = 1
+    steps = [action]
+    # Processing steps
+    for step in steps:
+        if 'parameters' in step['execution'].keys():
+            stepParams = dict()
+            for pk, pv in step['execution']['parameters'].items():
+                if 'defaultValue' in pv.keys():
+                    stepParams[pk] = step['execution']['parameters'][pk]['defaultValue']
+                if 'required' in pv.keys():
+                    if pv['required'] == true:
+                        if 'type' in pv.keys():
+                            if pv['type'] == 'array':
+                                stepParams[pk] = ['ENTER-VALUE']
+                            else:
+                                stepParams[pk] = 'ENTER-VALUE'
+            step['execution']['parameters'] = stepParams
+    data_dict['steps'] = steps         
     data_json = json.dumps(data_dict)
+
     nb['cells'].append(nbf.v4.new_code_cell("data = [{}]".format(data_dict)))
     nb['cells'].append(nbf.v4.new_markdown_cell("### Send HTTP Request"))
     nb['cells'].append(nbf.v4.new_code_cell("""http_headers = {'Authorization': 'Bearer ' + bearer_token, 'Accept': 'application/json','Content-Type': 'application/json'}
 results = requests.get(endpoint, json=data, headers=http_headers, stream=False).json()
 
-time.sleep(5)"""))
+time.sleep(30)"""))
     nb['cells'].append(nbf.v4.new_markdown_cell("### Explore Output"))
     nb['cells'].append(nbf.v4.new_code_cell("""query_status = requests.get(results['statusQueryGetUri'], headers=http_headers, stream=False).json()
 query_results = query_status['output']
 query_results"""))
 
-    platform = action['platform'].lower()
+    platform = platform_maps[execution['platform']].lower()
     # ***** Update Summary Tables *******
     for table in summary_table:
         if platform in table['platform'].lower():
-            for attack in action['attackMappings']:
+            for attack in metadata['mitreAttack']:
                 for tactic in attack['tactics']:
                     action['location'] = tactic_maps[tactic]
                     if action not in table['action']:
@@ -181,9 +212,9 @@ query_results"""))
                         table['tactics'].append(tactic_maps[tactic])
 
     # ***** Create Notebooks *****
-    for attack in action['attackMappings']:
+    for attack in metadata['mitreAttack']:
         for tactic in attack['tactics']:
-            platform_folder_path = "{}/{}".format(notebooks_directory,platform)
+            platform_folder_path = "{}/{}".format(simulations_directory,platform)
             tactic_folder_path = "{}/{}".format(platform_folder_path,tactic_maps[tactic])
             intro_file = '{}/intro.md'.format(tactic_folder_path)
             # creating directory for notebooks if they have not been created yet
@@ -196,40 +227,55 @@ query_results"""))
                 with open(intro_file, 'x') as f:
                     f.write('# {}'.format(tactic_maps[tactic]))
 
-            notebook_path = "{}/{}.ipynb".format(tactic_folder_path,action['title']) 
+            #notebook_path = "{}/{}.ipynb".format(tactic_folder_path,action['title'])
+            notebook_path = "{}/{}.md".format(tactic_folder_path,(action['name']).lower().replace(" ","_"))
             print(" [>] Creating notebook: {}".format(notebook_path))
-            nbf.write(nb, notebook_path)
+            #nbf.write(nb, notebook_path)
+            jupytext.write(nb, notebook_path, fmt='md')
 
 ##################################
 ##### Creating ATT&CK Layers #####
 ##################################
-
 # Create ATT&CK Layer
 print("\n[+] Creating ATT&CK navigator layers for each platform..")
 # Reference: https://github.com/mitre-attack/car/blob/master/scripts/generate_attack_nav_layer.py#L30-L45
 for summary in summary_table:
     if len(summary['action']) > 0:
-        platform_folder_path = "{}/{}".format(notebooks_directory,summary['platform'])
+        platform_folder_path = "{}/{}".format(simulations_directory,summary['platform'])
         techniques_mappings = dict()
         for action in summary['action']:
-            metadata = dict()
-            metadata['name'] = action['title']
-            metadata['value'] = action['id'] 
-            for coverage in action['attackMappings']:
+            metadataLayer = dict()
+            metadataLayer['name'] = action['name']
+            metadataLayer['value'] = action['id'] 
+            for coverage in action['metadata']['mitreAttack']:
                 technique = coverage['technique']
                 if technique not in techniques_mappings:
                     techniques_mappings[technique] = []
-                    techniques_mappings[technique].append(metadata)
+                    techniques_mappings[technique].append(metadataLayer)
                 elif technique in techniques_mappings:
                     if metadata not in techniques_mappings[technique]:
-                        techniques_mappings[technique].append(metadata)
+                        techniques_mappings[technique].append(metadataLayer)
         
-        LAYER_VERSION = "4.2"
-        ATTACK_VERSION = "10"
+        LAYER_VERSION = "4.3"
+        ATTACK_VERSION = "11"
         NAVIGATOR_VERSION = "4.5.1"
         NAME = "Cloud Katana {} ATT&CK Coverage".format(summary['platform'])
         DESCRIPTION = "Techniques covered by Cloud Katana"
         DOMAIN = "mitre-enterprise"
+
+        if summary['platform'] == 'Windows':
+            PLATFORMS_FILTER = [
+                'Windows'
+            ]
+        elif summary['platform'] == 'Azure':
+            PLATFORMS_FILTER = [
+                "Office 365",
+                "AWS",
+                "GCP",
+                "Azure AD",
+                "Azure",
+                "SaaS"
+            ]
 
         print("  [>>] Creating navigator layer for {} actions..".format(summary['platform']))
         katana_layer = {
@@ -242,14 +288,7 @@ for summary in summary_table:
                 "layer": LAYER_VERSION
             },
             "filters": {
-                "platforms": [
-                    "Office 365",
-                    "AWS",
-                    "GCP",
-                    "Azure AD",
-                    "Azure",
-                    "SaaS"
-                ]
+                "platforms": PLATFORMS_FILTER
             },
             "techniques": [
                 {
@@ -286,7 +325,7 @@ for summary in summary_table:
         print("  [>>] Creating summary table for {} actions..".format(summary['platform']))
         summary_for_render = copy.deepcopy(summary)
         markdown = summary_template.render(summary=summary_for_render)
-        open('{}/{}/intro.md'.format(notebooks_directory,summary['platform'].lower()), 'w').write(markdown)
+        open('{}/{}/intro.md'.format(simulations_directory,summary['platform'].lower()), 'w').write(markdown)
 
 ###############################
 ##### Update TOC Template #####
@@ -303,14 +342,14 @@ for part in toc_template_loaded['parts']:
             table_platform = table['platform'].lower()
             if len(table['action']) > 0:
                 action_platform = {
-                    "file": "notebooks/{}/intro".format(table_platform),
+                    "file": "simulate/{}/intro".format(table_platform),
                     "sections": [
                         {
-                            "file": "notebooks/{}/{}/intro".format(table_platform,tactic),
+                            "file": "simulate/{}/{}/intro".format(table_platform,tactic),
                             "sections": [
                                 {
-                                    "file": "notebooks/{}/{}/{}".format(table_platform,tactic,action['title'])
-                                } for action in table['action'] for maps in action['attackMappings'] for t in maps['tactics'] if tactic_maps[t] == tactic
+                                    "file": "simulate/{}/{}/{}".format(table_platform,tactic,(action['name']).lower().replace(" ","_"))
+                                } for action in table['action'] for maps in action['metadata']['mitreAttack'] for t in maps['tactics'] if tactic_maps[t] == tactic
                             ]
                         } for tactic in sorted(table['tactics'])
                     ]
@@ -326,42 +365,14 @@ with open(toc_file, 'w') as file:
 ##### Creating Azure Functions #####
 ####################################
 
-##### Create directories if they do not exist #####
-print("\n[+] Creating Azure Functions directories if they do not exist yet..")
-platform_list = []
-for action in actions_loaded:
-    if action['platform'] not in platform_list:
-        platform_list.append(action['platform'])
-for p in platform_list:
-    directory_path = '{}/{}'.format(app_directory, p)
-    if not os.path.exists(directory_path):
-        print(" [>] Creating directory: {}".format(directory_path))
-        os.makedirs(directory_path)
-
-##### Creating function files #####
-print("[+] Creating Azure Functions setting files..")
-for p in platform_list:
-    function = {
-        "bindings": [
-            {
-            "name": "simulation",
-            "type": "activityTrigger",
-            "direction": "in"
-            }
-        ]
-    }
-    directory_path = '{}/{}'.format(app_directory, p)
-    open('{}/function.json'.format(directory_path), 'w').write(json.dumps(function, indent=4))
-
 ##### Aggregating modules #####
 modules = []
 for action in actions_loaded:
-    if 'dependencies' in action:
-        for module in action['dependencies']['pwsh_modules']:
-            mod_strings = module.split(":")
+    if action['execution']['platform'] == 'Azure':
+        if 'module' in action['execution'].keys():
             mod_dict = dict()
-            mod_dict['name'] = mod_strings[0]
-            mod_dict['version'] = mod_strings[1]
+            mod_dict['name'] = action['execution']['module']['name']
+            mod_dict['version'] = action['execution']['module']['version']
             if mod_dict not in modules:
                 modules.append(mod_dict)
 if len(modules) > 0:
@@ -371,13 +382,15 @@ if len(modules) > 0:
 ##### Aggregating Permissions #####
 permissions = dict()
 for action in actions_loaded:
-    permission_type = action['resource']['authorization']['permissionsType']
-    roles = action['resource']['authorization']['permissions']
-    if permission_type not in permissions:
-        permissions[permission_type] = []
-    for r in roles:
-        if r not in permissions[permission_type]:
-            permissions[permission_type].append(r)
+    if 'authorization' in action.keys():
+        for ap in action['authorization']:
+            permission_type = ap['permissionsType']
+            roles = ap['permissions']
+            if permission_type not in permissions:
+                permissions[permission_type] = []
+            for r in roles:
+                if r not in permissions[permission_type]:
+                    permissions[permission_type].append(r)
 print("\n[+] Creating permissions file..")
 open('{}/permissions.json'.format(metadata_directory), 'w').write(json.dumps(permissions, indent = 4))
 

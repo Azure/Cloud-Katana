@@ -33,6 +33,26 @@
                 "description": "The remote location of the Cloud Katana Azure Function app package. By default this points to the Cloud Katana public GitHub repository. You can update this and point to a private location. You can use a Shared Access Signature (SAS)."
             },
             "defaultValue": "https://github.com/Azure/Cloud-Katana/blob/main/CloudKatana.zip?raw=true"
+        },
+        "enableHybridMode": {
+            "type": "bool",
+            "defaultValue": false
+        },
+        "automationAccountName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "automationAccountResourceGroupName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "hybridWorkerGroupName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "hybridPowerShellRunbookName": {
+            "type": "string",
+            "defaultValue": ""
         }
     },
     "variables": {
@@ -250,7 +270,11 @@
                         "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING": "[concat('DefaultEndpointsProtocol=https;AccountName=', toLower(variables('StorageAccountName')),';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('StorageAccountName')), '2019-06-01').keys[0].value, ';EndpointSuffix=',toLower(variables('StorageSuffix')))]",
                         "WEBSITE_CONTENTSHARE": "[toLower(parameters('functionAppName'))]",
                         "WEBSITE_RUN_FROM_PACKAGE": "[parameters('_packageLocation')]",
-                        "MUI_PRINCIPAL_ID": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName')), '2018-11-30').principalId]"
+                        "MUI_PRINCIPAL_ID": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('identityName')), '2018-11-30').principalId]",
+                        "AUTOMATION_ACCOUNT_NAME" : "[if(parameters('enableHybridMode'),parameters('automationAccountName'),'')]",
+                        "AUTOMATION_ACCOUNT_RESOURCE_GROUP_NAME" : "[if(parameters('enableHybridMode'),parameters('automationAccountResourceGroupName'),'')]",
+                        "HYBRID_WORKER_GROUP_NAME": "[if(parameters('enableHybridMode'),parameters('hybridWorkerGroupName'),'')]",
+                        "HYBRID_POWERSHELL_RUNBOOK_NAME": "[if(parameters('enableHybridMode'),parameters('hybridPowerShellRunbookName'),'')]"
                     }
                 },
                 {

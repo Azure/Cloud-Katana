@@ -6,24 +6,10 @@
             "caption" : "Getting Started",
             "chapters" : [
                 {
-                    "file" : "prepare"
-                },
-                {
                     "file" : "deploy/azure/intro",
                     "sections": [
                         {
                             "file" : "deploy/azure/arm"
-                        },
-                        {
-                            "file" : "deploy/azure/demos"
-                        }
-                    ]
-                },
-                {
-                    "file" : "deploy/local/intro",
-                    "sections" : [
-                        {
-                            "file": "deploy/local/demos"
                         }
                     ]
                 }
@@ -33,7 +19,13 @@
             "caption": "Internals",
             "chapters": [
                 {
-                    "file" : "internals/design/intro"
+                    "file" : "learn/principles/intro"
+                },
+                {
+                    "file" : "learn/schema"
+                },
+                {
+                    "file" : "learn/simulation"
                 }
             ]
         },

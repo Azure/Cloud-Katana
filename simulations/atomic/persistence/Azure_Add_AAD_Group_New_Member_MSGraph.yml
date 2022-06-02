@@ -1,0 +1,37 @@
+schema: atomic
+id: b7547e2c-3530-4594-b6e6-ef147d2de782
+name: Add New member to Azure AD Group
+metadata:
+  creationDate: '2021-09-13'
+  modificationDate: '2021-09-13'
+  description: |
+    A threat actor might want to add a member to a Microsoft 365 group or a security group through the members navigation property via Microsoft Graph APIs and the right permissions.
+  contributors:
+    - Roberto Rodriguez @Cyb3rWard0g
+    - MSTIC R&D
+  mitreAttack:
+    - technique: T1098
+      tactics:
+        - TA0003
+authorization:
+  - resource: https://graph.microsoft.com/
+    permissionsType: application
+    permissions:
+      - GroupMember.ReadWrite.All
+execution:
+  type: ScriptModule
+  platform: Azure
+  executor: PowerShell
+  module:
+    name: CloudKatanaAbilities
+    version: 1.0
+    function: Add-CKMemberToGroup
+  parameters:
+    groupId:
+      type: string
+      description: The object id (id) of the group.
+      required: true
+    directoryObjectId:
+      type: string
+      description: Identifier of the directory object to be added to the group.
+      required: true

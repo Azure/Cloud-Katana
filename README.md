@@ -1,6 +1,7 @@
 # Cloud Katana
 
 [![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://cloud-katana.com)
+[![BlackHat Arsenal 2021](https://raw.githubusercontent.com/toolswatch/badges/master/arsenal/usa/2021.svg)](https://www.blackhat.com/us-21/arsenal/schedule/#cloud-katana-24120)
 
 <p align="center">
   <a href="#about">About</a> •
