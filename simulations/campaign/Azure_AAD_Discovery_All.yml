@@ -18,7 +18,6 @@ steps:
       executor: PowerShell
       module:
         name: CloudKatanaAbilities
-        version: 1.0
         function: Get-CKAzADUsers
       parameters:
         selectFields: id,displayName
@@ -30,7 +29,6 @@ steps:
       executor: PowerShell
       module:
         name: CloudKatanaAbilities
-        version: 1.0
         function: Get-CKAzADApplication
       parameters:
         selectFields: id,displayName
@@ -42,7 +40,6 @@ steps:
       executor: PowerShell
       module:
         name: CloudKatanaAbilities
-        version: 1.0
         function: Get-CKAzADServicePrincipal
       parameters:
         selectFields: id,displayName
@@ -54,7 +51,6 @@ steps:
       executor: PowerShell
       module:
         name: CloudKatanaAbilities
-        version: 1.0
         function: Get-CKAzADGroups
       parameters:
         selectFields: id,displayName
@@ -66,5 +62,4 @@ steps:
       executor: PowerShell
       module:
         name: CloudKatanaAbilities
-        version: 1.0
         function: Get-CKAzADDirectoryRoles

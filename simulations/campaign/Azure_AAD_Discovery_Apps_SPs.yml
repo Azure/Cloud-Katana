@@ -5,7 +5,7 @@ metadata:
   creationDate: '2022-05-01'
   modificationDate: '2022-05-01'
   description: |
-    A campaign to simulate a threat actor disovering Azure AD applications and Service Principals.
+    A campaign to simulate a threat actor listing Azure AD applications and Service Principals.
   contributors:
     - Roberto Rodriguez @Cyb3rWard0g
     - MSTIC R&D
