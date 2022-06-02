@@ -12,11 +12,12 @@ Function Get-CKTSimulation
     .DESCRIPTION 
 
     .PARAMETER Path
+    Path to the YAML file that defines a simulation request.
 
     .PARAMETER YamlStrings
+    YAML strings that define a simulation request.
 
     .LINK
-
     #>
 
     [CmdletBinding(DefaultParameterSetName = 'File')]

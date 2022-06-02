@@ -1,10 +1,26 @@
 # Azure Resource Manager Template
 
+## Authenticate to Azure
+
+Use the Azure CLI command `az login` to authenticate to Azure AD with an account to deploy resources in Azure.
+
+```PowerShell
+az login
+```
+
+## Clone Project
+
+```PowerShell
+git clone https://github.com/Azure/Cloud-Katana
+```
+
 ## Create Resource Group
 
 Create a resource group to deploy all Cloud Katana resources in it.
 
-![](../../images/CreateResourceGroup.png)
+```PowerShell
+az group create --name MyResourceGroup --location eastus
+```
 
 ## Import Cloud Katana Tools Module
 
@@ -46,7 +62,7 @@ Once the managed identity is created, we need to grant all the required permissi
 
 **Reference**: [https://docs.microsoft.com/en-us/graph/permissions-reference#application-permissions-4](https://docs.microsoft.com/en-us/graph/permissions-reference#application-permissions-4)
 
-You can use another function from the Cloud Katana PowerShell module to grant permissions to the deployment managed identity.
+You can use another function from the Cloud Katana Tools module to grant permissions to the deployment managed identity.
 
 ```PowerShell
 Grant-CKTPermissions -SvcPrincipalId $identity.principalId -PermissionsList @('Application.ReadWrite.All','AppRoleAssignment.ReadWrite.All','DelegatedPermissionGrant.ReadWrite.All','User.Read.All') -PermissionsType application -verbose

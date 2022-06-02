@@ -2,7 +2,7 @@ Function Start-CKTSimulation
 {
     <#
     .SYNOPSIS
-    A PowerShell script to
+    A PowerShell script to process a local simulation request and send it to Cloud Katana to execute it
     
     Author: Roberto Rodriguez (@Cyb3rWard0g)
     License: MIT
@@ -11,10 +11,22 @@ Function Start-CKTSimulation
     
     .DESCRIPTION 
 
-    .PARAMETER Simulation
+    .PARAMETER Path
+    Path to a YAML file that contains a simulation request.
+
+    .PARAMETER YamlStrings
+    YAML strings to represent a simulation request
+
+    .PARAMETER FunctionAppName
+    Name of your Cloud Katana application
+
+    .PARAMETER TenantId
+    Id of your tenant where cloud katana is deployed and you want the execution of the attack simulation to take place.
+
+    .PARAMETER CloudKatanaAppId
+    Id of the application used to connect to Cloud Katana Server Application (Allowing AD authentication)
 
     .LINK
-
     #>
 
     [CmdletBinding(DefaultParameterSetName = 'File')]
@@ -163,15 +175,6 @@ Function Start-CKTSimulation
         Verbose     = $true
     }
 
-    <#
-    # Execute Simulation
-    $Params = @{
-        Uri         = $OrchestratorUrl
-        Method      = "POST"
-        Body        = $simulationRequest | ConvertTo-Json -Depth 10
-        ContentType = 'application/json'
-    }#>
-
     $simulationResponse = Invoke-RestMethod @Params
     Write-host $simulationResponse
 
@@ -181,7 +184,7 @@ Function Start-CKTSimulation
     # Process Response
     do {
         Start-Sleep -s 5
-        $status = Invoke-RestMethod -Uri $simulationResponse.statusQueryGetUri
+        $status = Invoke-RestMethod -Uri $simulationResponse.statusQueryGetUri -Headers $headers
         Write-Host "[*] $($status.runtimeStatus)"
     } until ($status.runtimeStatus -eq 'Completed' -or $status.runtimeStatus -eq 'Failed')
 

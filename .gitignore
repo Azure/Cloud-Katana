@@ -5,6 +5,7 @@
 
 # Jupyter Book build
 docs/_build/
+.vscode/
 
 # User-specific files
 *.rsuser

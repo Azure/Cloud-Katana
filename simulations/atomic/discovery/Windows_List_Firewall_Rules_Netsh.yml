@@ -5,7 +5,7 @@ metadata:
   creationDate: '2022-04-28'
   modificationDate: '2022-04-28'
   description: |
-    A threat actor might want to enumerates Windows firewall rules using netsh command.
+    A threat actor might want to enumerate Windows firewall rules using netsh command.
   contributors:
     - Roberto Rodriguez @Cyb3rWard0g
     - MSTIC R&D

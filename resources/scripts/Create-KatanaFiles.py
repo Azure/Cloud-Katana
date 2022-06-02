@@ -18,7 +18,7 @@ app_directory = os.path.join(current_directory, "../..", "functionapp")
 templates_directory = os.path.join(current_directory, "../templates")
 metadata_directory = os.path.join(current_directory, "../../simulations/atomic")
 docs_directory = os.path.join(current_directory, "../../docs")
-notebooks_directory = os.path.join(docs_directory, "notebooks")
+simulations_directory = os.path.join(docs_directory, "simulate")
 metadata_files = os.path.join(metadata_directory, "**/", "*.yml")
 toc_file = os.path.join(docs_directory, "_toc.yml")
 summary_table_template = os.path.join(templates_directory, "summary_template.md")
@@ -214,7 +214,7 @@ query_results"""))
     # ***** Create Notebooks *****
     for attack in metadata['mitreAttack']:
         for tactic in attack['tactics']:
-            platform_folder_path = "{}/{}".format(notebooks_directory,platform)
+            platform_folder_path = "{}/{}".format(simulations_directory,platform)
             tactic_folder_path = "{}/{}".format(platform_folder_path,tactic_maps[tactic])
             intro_file = '{}/intro.md'.format(tactic_folder_path)
             # creating directory for notebooks if they have not been created yet
@@ -241,7 +241,7 @@ print("\n[+] Creating ATT&CK navigator layers for each platform..")
 # Reference: https://github.com/mitre-attack/car/blob/master/scripts/generate_attack_nav_layer.py#L30-L45
 for summary in summary_table:
     if len(summary['action']) > 0:
-        platform_folder_path = "{}/{}".format(notebooks_directory,summary['platform'])
+        platform_folder_path = "{}/{}".format(simulations_directory,summary['platform'])
         techniques_mappings = dict()
         for action in summary['action']:
             metadataLayer = dict()
@@ -325,7 +325,7 @@ for summary in summary_table:
         print("  [>>] Creating summary table for {} actions..".format(summary['platform']))
         summary_for_render = copy.deepcopy(summary)
         markdown = summary_template.render(summary=summary_for_render)
-        open('{}/{}/intro.md'.format(notebooks_directory,summary['platform'].lower()), 'w').write(markdown)
+        open('{}/{}/intro.md'.format(simulations_directory,summary['platform'].lower()), 'w').write(markdown)
 
 ###############################
 ##### Update TOC Template #####
@@ -342,13 +342,13 @@ for part in toc_template_loaded['parts']:
             table_platform = table['platform'].lower()
             if len(table['action']) > 0:
                 action_platform = {
-                    "file": "notebooks/{}/intro".format(table_platform),
+                    "file": "simulate/{}/intro".format(table_platform),
                     "sections": [
                         {
-                            "file": "notebooks/{}/{}/intro".format(table_platform,tactic),
+                            "file": "simulate/{}/{}/intro".format(table_platform,tactic),
                             "sections": [
                                 {
-                                    "file": "notebooks/{}/{}/{}".format(table_platform,tactic,(action['name']).lower().replace(" ","_"))
+                                    "file": "simulate/{}/{}/{}".format(table_platform,tactic,(action['name']).lower().replace(" ","_"))
                                 } for action in table['action'] for maps in action['metadata']['mitreAttack'] for t in maps['tactics'] if tactic_maps[t] == tactic
                             ]
                         } for tactic in sorted(table['tactics'])
