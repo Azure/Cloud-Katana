@@ -1,13 +1,32 @@
 # Azure Resource Manager Template
 
-## Create Azure Function Application Name
+## Authenticate to Azure
 
-```{note}
-The name of the Cloud Katana Azure function application needs to be unique because it is of `Global` scope across Azure resources. Therefore, use the following commands to get a random name with `cloudkatana` as a prefix.
-```
+Use the Azure CLI command `az login` to authenticate to Azure AD with an account to deploy resources in Azure.
 
 ```PowerShell
-$functionAppName = (-join ('cloudkatana',-join ((65..90) + (97..122) | Get-Random -Count 10 | % {[char]$_}))).ToLower()
+az login
+```
+
+## Clone Project
+
+```PowerShell
+git clone https://github.com/Azure/Cloud-Katana
+```
+
+## Create Resource Group
+
+Create a resource group to deploy all Cloud Katana resources in it.
+
+```PowerShell
+az group create --name MyResourceGroup --location eastus
+```
+
+## Import Cloud Katana Tools Module
+
+```PowerShell
+cd Cloud-Katana
+Import-Module .\CloudKatanaTools.psm1 -verbose
 ```
 
 ## Create a User Assigned Managed Identity
@@ -23,20 +42,13 @@ The registration of new Azure AD applications and permission grants are done via
 To create a user-assigned managed identity, your account needs the [Managed Identity Contributor role](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#managed-identity-contributor).
 ```
 
-You can use the Cloud Katana Utils PowerShell module, available at the root of the project folder, to create a user-assigned managed identity.
-
-```PowerShell
-cd Cloud-Katana
-Import-Module .\CloudKatanaUtils.psm1 -verbose
-```
-
 Run the following PowerShell commands to create a new managed identity:
 
 ```PowerShell
 $identityName = 'CKDeploymentIdentity'
 $resourceGroup = '<RESOURCE-GROUP-NAME>'
 
-$identity = New-ManagedIdentity -Name $identityName -ResourceGroup $resourceGroup -verbose
+$identity = New-CKTManagedIdentity -Name $identityName -ResourceGroup $resourceGroup -verbose
 ```
 
 ## Grant Permissions to Managed Identity
@@ -50,21 +62,29 @@ Once the managed identity is created, we need to grant all the required permissi
 
 **Reference**: [https://docs.microsoft.com/en-us/graph/permissions-reference#application-permissions-4](https://docs.microsoft.com/en-us/graph/permissions-reference#application-permissions-4)
 
-You can use another function from the Cloud Katana PowerShell module to grant permissions to the deployment managed identity.
+You can use another function from the Cloud Katana Tools module to grant permissions to the deployment managed identity.
 
 ```PowerShell
-Grant-GraphPermissions -SvcPrincipalId $identity.principalId -PermissionsList @('Application.ReadWrite.All','AppRoleAssignment.ReadWrite.All','DelegatedPermissionGrant.ReadWrite.All','User.Read.All') -PermissionsType application -verbose
+Grant-CKTPermissions -SvcPrincipalId $identity.principalId -PermissionsList @('Application.ReadWrite.All','AppRoleAssignment.ReadWrite.All','DelegatedPermissionGrant.ReadWrite.All','User.Read.All') -PermissionsType application -verbose
 ```
 
 ## Deploy ARM Template
 
 Deploy Cloud Katana to Azure with the `azuredeploy.json` ARM template available at the root of the project's folder. You can run the template with [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/what-is-azure-cli) or a `Deploy` button (One-click deployment).
 
+### Create Azure Function Application Name
+
+```{note}
+The name of the Cloud Katana Azure function application needs to be unique because it is of `Global` scope across Azure resources. Therefore, use the following commands to get a random name with `cloudkatana` as a prefix.
+```
+
+```PowerShell
+$functionAppName = (-join ('cloudkatana',-join ((65..90) + (97..122) | Get-Random -Count 10 | % {[char]$_}))).ToLower()
+```
+
 ### Azure CLI
 
 ```PowerShell
-$resourceGroup = '<RESOURCE-GROUP-NAME>'
-$functionAppName = 'FUNCTION-APP-NAME'
 $identityId = $identity.id
 $assignAppRoleToUser = 'USER@DOMAIN.COM'
 

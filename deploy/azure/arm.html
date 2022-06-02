@@ -7,20 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Azure Resource Manager Template</title>
     
-    <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-  
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
     
-    <link rel="stylesheet"
-      href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-    <link rel="preload" as="font" type="font/woff2" crossorigin
-      href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-    <link rel="preload" as="font" type="font/woff2" crossorigin
-      href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
-  
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
     
       
-  
+
     
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
@@ -32,8 +32,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-    <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
-  
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
@@ -46,17 +46,16 @@
     <script src="../../_static/togglebutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script >
-        const thebe_selector = ".thebe,.cell"
-        const thebe_selector_input = "pre,.cell_input div.highlight"
-        const thebe_selector_output = ".output,.cell_output"
-    </script>
+    <script >const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="canonical" href="https://cloud-katana.com/deploy/azure/arm.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Demos" href="demos.html" />
+    <link rel="next" title="Design Principles" href="../../learn/principles/intro.html" />
     <link rel="prev" title="Deploy to Azure" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -98,11 +97,6 @@
  </span>
 </p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../prepare.html">
-   Prepare
-  </a>
- </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="intro.html">
    Deploy to Azure
@@ -118,28 +112,6 @@
      Azure Resource Manager Template
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="demos.html">
-     Demos
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../local/intro.html">
-   Deploy Locally
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-  <label for="toctree-checkbox-2">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../local/demos.html">
-     Demos
-    </a>
-   </li>
   </ul>
  </li>
 </ul>
@@ -150,8 +122,18 @@
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../../internals/design/intro.html">
+  <a class="reference internal" href="../../learn/principles/intro.html">
    Design Principles
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../learn/schema.html">
+   Simulation Schema
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../learn/simulation.html">
+   Request Simulations
   </a>
  </li>
 </ul>
@@ -162,40 +144,52 @@
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../notebooks/azure/intro.html">
-   Azure
+  <a class="reference internal" href="../../simulate/windows/intro.html">
+   Windows
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
-  <label for="toctree-checkbox-3">
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
    <i class="fas fa-chevron-down">
    </i>
   </label>
   <ul>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../notebooks/azure/collection/intro.html">
-     collection
+    <a class="reference internal" href="../../simulate/windows/discovery/intro.html">
+     discovery
     </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
-    <label for="toctree-checkbox-4">
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
      <i class="fas fa-chevron-down">
      </i>
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/collection/Get-CKMailboxMessages.html">
-       Get-CKMailboxMessages
+      <a class="reference internal" href="../../simulate/windows/discovery/list_windows_firewall_rules_via_netsh.html">
+       List Windows Firewall Rules via Netsh
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/collection/Get-CKMyMailboxMessages.html">
-       Get-CKMyMailboxMessages
+      <a class="reference internal" href="../../simulate/windows/discovery/list_open_egress_ports_via_.net_tcpclient_class.html">
+       List Open Egress Ports via .NET TcpClient Class
       </a>
      </li>
     </ul>
    </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../simulate/azure/intro.html">
+   Azure
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../notebooks/azure/discovery/intro.html">
-     discovery
+    <a class="reference internal" href="../../simulate/azure/collection/intro.html">
+     collection
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
     <label for="toctree-checkbox-5">
@@ -204,55 +198,20 @@
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKAzADGroups.html">
-       Get-CKAzADGroups
+      <a class="reference internal" href="../../simulate/azure/collection/get_my_mailbox_messages.html">
+       Get My Mailbox Messages
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKAzADApplication.html">
-       Get-CKAzADApplication
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKAzADDirectoryRoles.html">
-       Get-CKAzADDirectoryRoles
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKAzADServicePrincipal.html">
-       Get-CKAzADServicePrincipal
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKAzADUsers.html">
-       Get-CKAzADUsers
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKMembers.html">
-       Get-CKMembers
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKOauth2PermissionGrants.html">
-       Get-CKOauth2PermissionGrants
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/discovery/Get-CKOwners.html">
-       Get-CKOwners
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/discovery/Invoke-CKAttackGraph.html">
-       Invoke-CKAttackGraph
+      <a class="reference internal" href="../../simulate/azure/collection/get_user_mailbox_messages.html">
+       Get User Mailbox Messages
       </a>
      </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../../notebooks/azure/persistence/intro.html">
-     persistence
+    <a class="reference internal" href="../../simulate/azure/discovery/intro.html">
+     discovery
     </a>
     <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
     <label for="toctree-checkbox-6">
@@ -261,58 +220,115 @@
     </label>
     <ul>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/Add-CKAzADAppPassword.html">
-       Add-CKAzADAppPassword
+      <a class="reference internal" href="../../simulate/azure/discovery/get_azure_ad_application_metadata.html">
+       Get Azure AD Application Metadata
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/Add-CKAzADMemberToDirectoryRole.html">
-       Add-CKAzADMemberToDirectoryRole
+      <a class="reference internal" href="../../simulate/azure/discovery/get_azure_ad_directory_roles.html">
+       Get Azure AD Directory Roles
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/Add-CKAzADSPPassword.html">
-       Add-CKAzADSPPassword
+      <a class="reference internal" href="../../simulate/azure/discovery/get_azure_ad_groups.html">
+       Get Azure AD Groups
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/Add-CKDomainToTenant.html">
-       Add-CKDomainToTenant
+      <a class="reference internal" href="../../simulate/azure/discovery/get_azure_ad_owners_of_an_azure_ad_group_or_directory_role.html">
+       Get Azure AD Owners of an Azure AD Group or Directory Role
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/Add-CKMemberToGroup.html">
-       Add-CKMemberToGroup
+      <a class="reference internal" href="../../simulate/azure/discovery/get_azure_ad_oauth_permission_grants.html">
+       Get Azure AD OAuth Permission Grants
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/Add-CKOwnerToAzADApp.html">
-       Add-CKOwnerToAzADApp
+      <a class="reference internal" href="../../simulate/azure/discovery/get_owners_of_an_azure_ad_application_or_service_principal.html">
+       Get Owners of an Azure AD Application or Service Principal
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/Add-CKOwnerToAzADSP.html">
-       Add-CKOwnerToAzADSP
+      <a class="reference internal" href="../../simulate/azure/discovery/get_azure_ad_resources_and_graph_them.html">
+       Get Azure AD Resources and Graph Them
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/Grant-CKPermissions.html">
-       Grant-CKPermissions
+      <a class="reference internal" href="../../simulate/azure/discovery/get_azure_ad_service_principal_metadata.html">
+       Get Azure AD Service Principal Metadata
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/New-CKAzADApplication.html">
-       New-CKAzADApplication
+      <a class="reference internal" href="../../simulate/azure/discovery/get_azure_ad_users.html">
+       Get Azure AD Users
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../simulate/azure/persistence/intro.html">
+     persistence
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../simulate/azure/persistence/add_new_owner_to_azure_ad_application.html">
+       Add New Owner to Azure AD Application
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/New-CKAzADServicePrincipal.html">
-       New-CKAzADServicePrincipal
+      <a class="reference internal" href="../../simulate/azure/persistence/add_password_to_azure_ad_application.html">
+       Add Password to Azure AD Application
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../../notebooks/azure/persistence/Update-CKAzADAppReqRscAccess.html">
-       Update-CKAzADAppReqRscAccess
+      <a class="reference internal" href="../../simulate/azure/persistence/add_new_member_to_azure_ad_directory_role.html">
+       Add New Member to Azure AD Directory Role
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../simulate/azure/persistence/add_new_member_to_azure_ad_group.html">
+       Add New member to Azure AD Group
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../simulate/azure/persistence/add_new_owner_to_azure_ad_service_principal.html">
+       Add New Owner to Azure AD Service Principal
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../simulate/azure/persistence/add_password_to_azure_ad_service_principal.html">
+       Add Password to Azure AD Service Principal
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../simulate/azure/persistence/add_new_domain_to_azure_ad_tenant.html">
+       Add New Domain to Azure AD Tenant
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../simulate/azure/persistence/grant_permission_to_azure_ad_application.html">
+       Grant Permission to Azure AD Application
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../simulate/azure/persistence/create_new_azure_ad_application.html">
+       Create New Azure AD Application
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../simulate/azure/persistence/create_new_azure_ad_service_principal_for_application.html">
+       Create New Azure AD Service Principal for Application
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../simulate/azure/persistence/update_azure_ad_application_required_resource_access.html">
+       Update Azure AD Application Required Resource Access
       </a>
      </li>
     </ul>
@@ -409,8 +425,23 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#create-azure-function-application-name">
-   Create Azure Function Application Name
+  <a class="reference internal nav-link" href="#authenticate-to-azure">
+   Authenticate to Azure
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#clone-project">
+   Clone Project
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#create-resource-group">
+   Create Resource Group
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#import-cloud-katana-tools-module">
+   Import Cloud Katana Tools Module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -428,6 +459,11 @@
    Deploy ARM Template
   </a>
   <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-azure-function-application-name">
+     Create Azure Function Application Name
+    </a>
+   </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#azure-cli">
      Azure CLI
@@ -466,8 +502,23 @@
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#create-azure-function-application-name">
-   Create Azure Function Application Name
+  <a class="reference internal nav-link" href="#authenticate-to-azure">
+   Authenticate to Azure
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#clone-project">
+   Clone Project
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#create-resource-group">
+   Create Resource Group
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#import-cloud-katana-tools-module">
+   Import Cloud Katana Tools Module
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -485,6 +536,11 @@
    Deploy ARM Template
   </a>
   <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-azure-function-application-name">
+     Create Azure Function Application Name
+    </a>
+   </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#azure-cli">
      Azure CLI
@@ -513,13 +569,30 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="azure-resource-manager-template">
 <h1>Azure Resource Manager Template<a class="headerlink" href="#azure-resource-manager-template" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="create-azure-function-application-name">
-<h2>Create Azure Function Application Name<a class="headerlink" href="#create-azure-function-application-name" title="Permalink to this headline">¶</a></h2>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The name of the Cloud Katana Azure function application needs to be unique because it is of <code class="docutils literal notranslate"><span class="pre">Global</span></code> scope across Azure resources. Therefore, use the following commands to get a random name with <code class="docutils literal notranslate"><span class="pre">cloudkatana</span></code> as a prefix.</p>
+<div class="section" id="authenticate-to-azure">
+<h2>Authenticate to Azure<a class="headerlink" href="#authenticate-to-azure" title="Permalink to this headline">¶</a></h2>
+<p>Use the Azure CLI command <code class="docutils literal notranslate"><span class="pre">az</span> <span class="pre">login</span></code> to authenticate to Azure AD with an account to deploy resources in Azure.</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="n">az</span> <span class="n">login</span>
+</pre></div>
 </div>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$functionAppName</span> <span class="p">=</span> <span class="p">(</span><span class="n">-join</span> <span class="p">(</span><span class="s1">&#39;cloudkatana&#39;</span><span class="p">,</span><span class="n">-join</span> <span class="p">((</span><span class="n">65</span><span class="p">..</span><span class="n">90</span><span class="p">)</span> <span class="p">+</span> <span class="p">(</span><span class="n">97</span><span class="p">..</span><span class="n">122</span><span class="p">)</span> <span class="p">|</span> <span class="nb">Get-Random</span> <span class="n">-Count</span> <span class="n">10</span> <span class="p">|</span> <span class="p">%</span> <span class="p">{</span><span class="no">[char]</span><span class="nv">$_</span><span class="p">}))).</span><span class="n">ToLower</span><span class="p">()</span>
+</div>
+<div class="section" id="clone-project">
+<h2>Clone Project<a class="headerlink" href="#clone-project" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">://</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">Azure</span><span class="p">/</span><span class="n">Cloud-Katana</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-resource-group">
+<h2>Create Resource Group<a class="headerlink" href="#create-resource-group" title="Permalink to this headline">¶</a></h2>
+<p>Create a resource group to deploy all Cloud Katana resources in it.</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="n">az</span> <span class="nb">group </span><span class="n">create</span> <span class="p">-</span><span class="n">-name</span> <span class="n">MyResourceGroup</span> <span class="p">-</span><span class="n">-location</span> <span class="n">eastus</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="import-cloud-katana-tools-module">
+<h2>Import Cloud Katana Tools Module<a class="headerlink" href="#import-cloud-katana-tools-module" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd </span><span class="n">Cloud-Katana</span>
+<span class="nb">Import-Module</span> <span class="p">.\</span><span class="n">CloudKatanaTools</span><span class="p">.</span><span class="n">psm1</span> <span class="n">-verbose</span>
 </pre></div>
 </div>
 </div>
@@ -536,16 +609,11 @@
 <p class="admonition-title">Note</p>
 <p>To create a user-assigned managed identity, your account needs the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#managed-identity-contributor">Managed Identity Contributor role</a>.</p>
 </div>
-<p>You can use the Cloud Katana Utils PowerShell module, available at the root of the project folder, to create a user-assigned managed identity.</p>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd </span><span class="n">Cloud-Katana</span>
-<span class="nb">Import-Module</span> <span class="p">.\</span><span class="n">CloudKatanaUtils</span><span class="p">.</span><span class="n">psm1</span> <span class="n">-verbose</span>
-</pre></div>
-</div>
 <p>Run the following PowerShell commands to create a new managed identity:</p>
 <div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$identityName</span> <span class="p">=</span> <span class="s1">&#39;CKDeploymentIdentity&#39;</span>
 <span class="nv">$resourceGroup</span> <span class="p">=</span> <span class="s1">&#39;&lt;RESOURCE-GROUP-NAME&gt;&#39;</span>
 
-<span class="nv">$identity</span> <span class="p">=</span> <span class="nb">New-ManagedIdentity</span> <span class="n">-Name</span> <span class="nv">$identityName</span> <span class="n">-ResourceGroup</span> <span class="nv">$resourceGroup</span> <span class="n">-verbose</span>
+<span class="nv">$identity</span> <span class="p">=</span> <span class="nb">New-CKTManagedIdentity</span> <span class="n">-Name</span> <span class="nv">$identityName</span> <span class="n">-ResourceGroup</span> <span class="nv">$resourceGroup</span> <span class="n">-verbose</span>
 </pre></div>
 </div>
 </div>
@@ -559,19 +627,27 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">User.Read.All</span></code>: Allows the app to read the full set of profile properties, group membership, reports and managers of other users in your organization, without a signed-in user.</p></li>
 </ul>
 <p><strong>Reference</strong>: <a class="reference external" href="https://docs.microsoft.com/en-us/graph/permissions-reference#application-permissions-4">https://docs.microsoft.com/en-us/graph/permissions-reference#application-permissions-4</a></p>
-<p>You can use another function from the Cloud Katana PowerShell module to grant permissions to the deployment managed identity.</p>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">Grant-GraphPermissions</span> <span class="n">-SvcPrincipalId</span> <span class="nv">$identity</span><span class="p">.</span><span class="n">principalId</span> <span class="n">-PermissionsList</span> <span class="p">@(</span><span class="s1">&#39;Application.ReadWrite.All&#39;</span><span class="p">,</span><span class="s1">&#39;AppRoleAssignment.ReadWrite.All&#39;</span><span class="p">,</span><span class="s1">&#39;DelegatedPermissionGrant.ReadWrite.All&#39;</span><span class="p">,</span><span class="s1">&#39;User.Read.All&#39;</span><span class="p">)</span> <span class="n">-PermissionsType</span> <span class="n">application</span> <span class="n">-verbose</span>
+<p>You can use another function from the Cloud Katana Tools module to grant permissions to the deployment managed identity.</p>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nb">Grant-CKTPermissions</span> <span class="n">-SvcPrincipalId</span> <span class="nv">$identity</span><span class="p">.</span><span class="n">principalId</span> <span class="n">-PermissionsList</span> <span class="p">@(</span><span class="s1">&#39;Application.ReadWrite.All&#39;</span><span class="p">,</span><span class="s1">&#39;AppRoleAssignment.ReadWrite.All&#39;</span><span class="p">,</span><span class="s1">&#39;DelegatedPermissionGrant.ReadWrite.All&#39;</span><span class="p">,</span><span class="s1">&#39;User.Read.All&#39;</span><span class="p">)</span> <span class="n">-PermissionsType</span> <span class="n">application</span> <span class="n">-verbose</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="deploy-arm-template">
 <h2>Deploy ARM Template<a class="headerlink" href="#deploy-arm-template" title="Permalink to this headline">¶</a></h2>
 <p>Deploy Cloud Katana to Azure with the <code class="docutils literal notranslate"><span class="pre">azuredeploy.json</span></code> ARM template available at the root of the project’s folder. You can run the template with <a class="reference external" href="https://docs.microsoft.com/en-us/cli/azure/what-is-azure-cli">Azure CLI</a> or a <code class="docutils literal notranslate"><span class="pre">Deploy</span></code> button (One-click deployment).</p>
+<div class="section" id="create-azure-function-application-name">
+<h3>Create Azure Function Application Name<a class="headerlink" href="#create-azure-function-application-name" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The name of the Cloud Katana Azure function application needs to be unique because it is of <code class="docutils literal notranslate"><span class="pre">Global</span></code> scope across Azure resources. Therefore, use the following commands to get a random name with <code class="docutils literal notranslate"><span class="pre">cloudkatana</span></code> as a prefix.</p>
+</div>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$functionAppName</span> <span class="p">=</span> <span class="p">(</span><span class="n">-join</span> <span class="p">(</span><span class="s1">&#39;cloudkatana&#39;</span><span class="p">,</span><span class="n">-join</span> <span class="p">((</span><span class="n">65</span><span class="p">..</span><span class="n">90</span><span class="p">)</span> <span class="p">+</span> <span class="p">(</span><span class="n">97</span><span class="p">..</span><span class="n">122</span><span class="p">)</span> <span class="p">|</span> <span class="nb">Get-Random</span> <span class="n">-Count</span> <span class="n">10</span> <span class="p">|</span> <span class="p">%</span> <span class="p">{</span><span class="no">[char]</span><span class="nv">$_</span><span class="p">}))).</span><span class="n">ToLower</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="azure-cli">
 <h3>Azure CLI<a class="headerlink" href="#azure-cli" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$resourceGroup</span> <span class="p">=</span> <span class="s1">&#39;&lt;RESOURCE-GROUP-NAME&gt;&#39;</span>
-<span class="nv">$functionAppName</span> <span class="p">=</span> <span class="s1">&#39;FUNCTION-APP-NAME&#39;</span>
-<span class="nv">$identityId</span> <span class="p">=</span> <span class="nv">$identity</span><span class="p">.</span><span class="n">id</span>
+<div class="highlight-PowerShell notranslate"><div class="highlight"><pre><span></span><span class="nv">$identityId</span> <span class="p">=</span> <span class="nv">$identity</span><span class="p">.</span><span class="n">id</span>
 <span class="nv">$assignAppRoleToUser</span> <span class="p">=</span> <span class="s1">&#39;USER@DOMAIN.COM&#39;</span>
 
 <span class="n">az</span> <span class="n">deployment</span> <span class="nb">group </span><span class="n">create</span> <span class="p">-</span><span class="n">-template</span><span class="o">-file</span> <span class="n">azuredeploy</span><span class="p">.</span><span class="n">json</span> <span class="p">-</span><span class="n">-resource-group</span> <span class="nv">$resourceGroup</span> <span class="p">-</span><span class="n">-parameters</span> <span class="n">functionAppName</span><span class="p">=</span><span class="nv">$functionAppName</span> <span class="n">identityId</span><span class="p">=</span><span class="nv">$identityId</span> <span class="n">assignAppRoleToUser</span><span class="p">=</span><span class="nv">$assignAppRoleToUser</span>
@@ -624,7 +700,7 @@
               
             
                 <!-- Previous / next buttons -->
-<div class='prev-next-area'>
+<div class='prev-next-area'> 
     <a class='left-prev' id="prev-link" href="intro.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -632,10 +708,10 @@
             <p class="prev-next-title">Deploy to Azure</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="demos.html" title="next page">
+    <a class='right-next' id="next-link" href="../../learn/principles/intro.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Demos</p>
+        <p class="prev-next-title">Design Principles</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -657,7 +733,7 @@
       </div>
     </div>
   
-    <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
-  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
   </body>
 </html>
