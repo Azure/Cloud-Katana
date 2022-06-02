@@ -121,11 +121,12 @@ Function Get-CKTSimulation
             Write-Error "[Campaign] The 'name' attribute is required."
             return
         }
+        <#
         if (-not $SimulationObject.ContainsKey('metadata')) {
             Write-Error "[Campaign] The 'metadata' attribute is required."
             return
         }
-
+        #>
         if ($SimulationObject.schema -eq 'atomic') {
             Confirm-Atomic $SimulationObject
         }
