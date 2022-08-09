@@ -1,7 +1,7 @@
-function Invoke-CKMSGraph {
+function Invoke-CKAADGraph {
     <#
     .SYNOPSIS
-    Invoke the Microsoft Graph RESTful web API to access Microsoft Cloud service resources. A wrapper around the Invoke-RestMethod to make requests to the Microsoft Graph API.
+    Invoke the AAD Graph RESTful web API to access Microsoft Cloud service resources. A wrapper around the Invoke-RestMethod to make requests to the AAD Graph API.
     
     Author: Roberto Rodriguez (@Cyb3rWard0g)
     License: MIT
@@ -9,13 +9,13 @@ function Invoke-CKMSGraph {
     Optional Dependencies: None
     
     .DESCRIPTION
-    Invoke-CKMSGraph is a simple PowerShell wrapper around the Invoke-RestMethod to make requests to the Microsoft Graph API.
+    Invoke-CKAADGraph is a simple PowerShell wrapper around the Invoke-RestMethod to make requests to the AAD Graph API.
     
     .PARAMETER AccessToken
-    Access token obtained with the right permissions (delegated/Application) to use the MS Graph API.
+    Access token obtained to use the AAD Graph API.
 
     .PARAMETER HttpMethod
-    The HTTP method used on the request to Microsoft Graph.
+    The HTTP method used on the request to AAD Graph.
 
     Method	Description
     ------  -----------
@@ -29,10 +29,10 @@ function Invoke-CKMSGraph {
     The POST, PATCH, and PUT methods require a request body, usually specified in JSON format, that contains additional information, such as the values for properties of the resource.
 
     .PARAMETER Version
-    The version of the Microsoft Graph API your application is using.
+    The version of the AAD Graph API your application is using.
 
     .PARAMETER Resource
-    The resource in Microsoft Graph that you're referencing.
+    The resource in AAD Graph that you're referencing.
 
     .PARAMETER QueryParameters
     Optional OData query options or REST method parameters that customize the response.
@@ -59,8 +59,7 @@ function Invoke-CKMSGraph {
     HTTP Header request.
 
     .LINK
-    https://docs.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0&preserve-view=true
-    https://docs.microsoft.com/en-us/graph/use-the-api
+    https://docs.microsoft.com/en-us/graph/migrate-azure-ad-graph-request-differences
     #>
 
     [cmdletbinding()]
@@ -71,10 +70,10 @@ function Invoke-CKMSGraph {
         [Parameter(Mandatory = $False)]
         [ValidateSet('Put', 'Get', 'Post', 'Delete', 'Patch')]
         [String]$HttpMethod = "Get",
-        
+
         [Parameter(Mandatory = $False)]
-        [ValidateSet('v1.0', 'beta')]
-        [String]$Version = "v1.0",
+        [ValidateSet('api-version=1.6', 'api-version=1.61-internal')]
+        [String]$Version = "api-version=1.61-internal",
         
         [parameter(Mandatory = $True)]
         [String]$Resource,
@@ -117,7 +116,7 @@ function Invoke-CKMSGraph {
         if(![String]::IsNullOrEmpty($OrderBy) -and ![String]::IsNullOrEmpty($SortIn)){$PredefinedParameters += "`$orderby=$OrderBy $SortIn"}
 
         # Define HTTP request
-        $Uri = "https://graph.microsoft.com/$Version/$Resource$(if($PredefinedParameters){"?$($PredefinedParameters -join '&')"}elseif(![String]::IsNullOrEmpty($QueryParameters)){"?$QueryParameters"})"
+        $Uri = "https://graph.windows.net/myorganization/$Resource`?$($Version)$(if($PredefinedParameters){"&$($PredefinedParameters -join '&')"}elseif(![String]::IsNullOrEmpty($QueryParameters)){"?$QueryParameters"})"
         $Headers["Authorization"] = "Bearer $AccessToken"
         $Headers["Content-Type"] = "application/json"
         $params = @{
@@ -126,7 +125,7 @@ function Invoke-CKMSGraph {
             "Body"    = $Body | ConvertTo-Json -Compress -Depth 20
             "Headers" = $Headers
         }
-        # Invoke MS Graph API
+        # Invoke AAD Graph API
         $Response = Invoke-RestMethod @params
 
         if ($Response.'@odata.nextLink') {

@@ -3,7 +3,7 @@ function Get-CKAccessTokenWithMI {
     .SYNOPSIS
     Use a managed identity endpoint to get a token for a specific resource. A wrapper around the Invoke-RestMethod to get a an access token.
     
-    Author: Robert Rodriguez (@Cyb3rWard0g)
+    Author: Roberto Rodriguez (@Cyb3rWard0g)
     License: MIT
     Required Dependencies: None
     Optional Dependencies: None
