@@ -6,6 +6,7 @@
 # Jupyter Book build
 docs/_build/
 .vscode/
+*.ipynb_checkpoints
 
 # User-specific files
 *.rsuser
