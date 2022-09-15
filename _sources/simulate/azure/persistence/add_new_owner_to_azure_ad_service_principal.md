@@ -5,7 +5,7 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.11.5
+      jupytext_version: 1.14.1
   kernelspec:
     language: python
 ---
@@ -66,7 +66,7 @@ endpoint = function_app_url + "/api/orchestrators/Orchestrator"
 ### Prepare HTTP Body
 
 ```python
-data = [{'RequestId': '61df6503-969f-4021-b246-ce41e364865a', 'name': 'Add New Owner to Azure AD Service Principal', 'metadata': {'creationDate': '2021-08-05', 'modificationDate': '2021-09-08', 'description': 'A threat actor might want to add an owner to a service principal via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1098.001', 'tactics': ['TA0003']}]}, 'steps': [{'schema': 'atomic', 'id': 'f39fc113-adbf-4cb3-a489-cec1df4a4b68', 'name': 'Add New Owner to Azure AD Service Principal', 'metadata': {'creationDate': '2021-08-05', 'modificationDate': '2021-09-08', 'description': 'A threat actor might want to add an owner to a service principal via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1098.001', 'tactics': ['TA0003']}]}, 'authorization': [{'resource': 'https://graph.microsoft.com/', 'permissionsType': 'application', 'permissions': ['Application.ReadWrite.All', 'Directory.Read.All']}], 'execution': {'type': 'ScriptModule', 'platform': 'Azure', 'executor': 'PowerShell', 'module': {'name': 'CloudKatanaAbilities', 'version': 1.0, 'function': 'Add-CKOwnerToAzADSP'}, 'parameters': {}}, 'number': 1}]}]
+data = [{'RequestId': '8daa5b0f-4410-4dd8-8688-b066945e8464', 'name': 'Add New Owner to Azure AD Service Principal', 'metadata': {'creationDate': '2021-08-05', 'modificationDate': '2021-09-08', 'description': 'A threat actor might want to add an owner to a service principal via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1098.001', 'tactics': ['TA0003']}]}, 'steps': [{'schema': 'atomic', 'id': 'f39fc113-adbf-4cb3-a489-cec1df4a4b68', 'name': 'Add New Owner to Azure AD Service Principal', 'metadata': {'creationDate': '2021-08-05', 'modificationDate': '2021-09-08', 'description': 'A threat actor might want to add an owner to a service principal via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1098.001', 'tactics': ['TA0003']}]}, 'authorization': [{'resource': 'https://graph.microsoft.com/', 'permissionsType': 'application', 'permissions': ['Application.ReadWrite.All', 'Directory.Read.All']}], 'execution': {'type': 'ScriptModule', 'platform': 'Azure', 'executor': 'PowerShell', 'module': {'name': 'CloudKatanaAbilities', 'version': 1.0, 'function': 'Add-CKOwnerToAzADSP'}, 'parameters': {}}, 'file_name': 'add_new_owner_to_azure_ad_service_principal', 'number': 1}]}]
 ```
 
 ### Send HTTP Request

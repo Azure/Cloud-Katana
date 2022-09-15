@@ -5,7 +5,7 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.11.5
+      jupytext_version: 1.14.1
   kernelspec:
     language: python
 ---
@@ -66,7 +66,7 @@ endpoint = function_app_url + "/api/orchestrators/Orchestrator"
 ### Prepare HTTP Body
 
 ```python
-data = [{'RequestId': '7290d451-0c37-4a10-aa91-d5201fdb79b5', 'name': 'Add Password to Azure AD Service Principal', 'metadata': {'creationDate': '2021-08-05', 'modificationDate': '2021-09-08', 'description': 'A threat actor might want to add a password to a service principal for persistence purposes via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1098.001', 'tactics': ['TA0003']}]}, 'steps': [{'schema': 'atomic', 'id': 'c4ab81c6-d1fa-4063-8e06-d55c7a66d273', 'name': 'Add Password to Azure AD Service Principal', 'metadata': {'creationDate': '2021-08-05', 'modificationDate': '2021-09-08', 'description': 'A threat actor might want to add a password to a service principal for persistence purposes via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1098.001', 'tactics': ['TA0003']}]}, 'authorization': [{'resource': 'https://graph.microsoft.com/', 'permissionsType': 'application', 'permissions': ['Application.ReadWrite.All']}], 'execution': {'type': 'ScriptModule', 'platform': 'Azure', 'executor': 'PowerShell', 'module': {'name': 'CloudKatanaAbilities', 'version': 1.0, 'function': 'Add-CKAzADSPPassword'}, 'parameters': {}}, 'number': 1}]}]
+data = [{'RequestId': '2fa1592e-be0a-4156-92c5-7b9f34b4c32c', 'name': 'Add Password to Azure AD Service Principal', 'metadata': {'creationDate': '2021-08-05', 'modificationDate': '2021-09-08', 'description': 'A threat actor might want to add a password to a service principal for persistence purposes via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1098.001', 'tactics': ['TA0003']}]}, 'steps': [{'schema': 'atomic', 'id': 'c4ab81c6-d1fa-4063-8e06-d55c7a66d273', 'name': 'Add Password to Azure AD Service Principal', 'metadata': {'creationDate': '2021-08-05', 'modificationDate': '2021-09-08', 'description': 'A threat actor might want to add a password to a service principal for persistence purposes via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1098.001', 'tactics': ['TA0003']}]}, 'authorization': [{'resource': 'https://graph.microsoft.com/', 'permissionsType': 'application', 'permissions': ['Application.ReadWrite.All']}], 'execution': {'type': 'ScriptModule', 'platform': 'Azure', 'executor': 'PowerShell', 'module': {'name': 'CloudKatanaAbilities', 'version': 1.0, 'function': 'Add-CKAzADSPPassword'}, 'parameters': {}}, 'file_name': 'add_password_to_azure_ad_service_principal', 'number': 1}]}]
 ```
 
 ### Send HTTP Request

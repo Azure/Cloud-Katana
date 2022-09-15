@@ -5,7 +5,7 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.11.5
+      jupytext_version: 1.14.1
   kernelspec:
     language: python
 ---
@@ -66,7 +66,7 @@ endpoint = function_app_url + "/api/orchestrators/Orchestrator"
 ### Prepare HTTP Body
 
 ```python
-data = [{'RequestId': 'c902d927-621d-438a-af32-e4399cc2d294', 'name': 'Get Azure AD Groups', 'metadata': {'creationDate': '2021-08-22', 'modificationDate': '2021-09-08', 'description': 'A threat actor might want to list all the groups in an organization, including but not limited to Microsoft 365 groups via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1069.003', 'tactics': ['TA0007']}]}, 'steps': [{'schema': 'atomic', 'id': 'abef5116-ff37-4347-9e12-3f22babf18e9', 'name': 'Get Azure AD Groups', 'metadata': {'creationDate': '2021-08-22', 'modificationDate': '2021-09-08', 'description': 'A threat actor might want to list all the groups in an organization, including but not limited to Microsoft 365 groups via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1069.003', 'tactics': ['TA0007']}]}, 'authorization': [{'resource': 'https://graph.microsoft.com/', 'permissionsType': 'application', 'permissions': ['Group.Read.All']}], 'execution': {'type': 'ScriptModule', 'platform': 'Azure', 'executor': 'PowerShell', 'module': {'name': 'CloudKatanaAbilities', 'version': 1.0, 'function': 'Get-CKAzADGroups'}, 'parameters': {}}, 'number': 1}]}]
+data = [{'RequestId': '0cc6fb13-6083-482f-b888-a3438c11abc0', 'name': 'Get Azure AD Groups', 'metadata': {'creationDate': '2021-08-22', 'modificationDate': '2021-09-08', 'description': 'A threat actor might want to list all the groups in an organization, including but not limited to Microsoft 365 groups via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1069.003', 'tactics': ['TA0007']}]}, 'steps': [{'schema': 'atomic', 'id': 'abef5116-ff37-4347-9e12-3f22babf18e9', 'name': 'Get Azure AD Groups', 'metadata': {'creationDate': '2021-08-22', 'modificationDate': '2021-09-08', 'description': 'A threat actor might want to list all the groups in an organization, including but not limited to Microsoft 365 groups via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1069.003', 'tactics': ['TA0007']}]}, 'authorization': [{'resource': 'https://graph.microsoft.com/', 'permissionsType': 'application', 'permissions': ['Group.Read.All']}], 'execution': {'type': 'ScriptModule', 'platform': 'Azure', 'executor': 'PowerShell', 'module': {'name': 'CloudKatanaAbilities', 'version': 1.0, 'function': 'Get-CKAzADGroups'}, 'parameters': {}}, 'file_name': 'get_azure_ad_groups', 'number': 1}]}]
 ```
 
 ### Send HTTP Request

@@ -5,7 +5,7 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.11.5
+      jupytext_version: 1.14.1
   kernelspec:
     language: python
 ---
@@ -66,7 +66,7 @@ endpoint = function_app_url + "/api/orchestrators/Orchestrator"
 ### Prepare HTTP Body
 
 ```python
-data = [{'RequestId': '5d2a2948-745e-43cc-b66c-a6118bfd0b1c', 'name': 'Add New member to Azure AD Group', 'metadata': {'creationDate': '2021-09-13', 'modificationDate': '2021-09-13', 'description': 'A threat actor might want to add a member to a Microsoft 365 group or a security group through the members navigation property via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1098', 'tactics': ['TA0003']}]}, 'steps': [{'schema': 'atomic', 'id': 'b7547e2c-3530-4594-b6e6-ef147d2de782', 'name': 'Add New member to Azure AD Group', 'metadata': {'creationDate': '2021-09-13', 'modificationDate': '2021-09-13', 'description': 'A threat actor might want to add a member to a Microsoft 365 group or a security group through the members navigation property via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1098', 'tactics': ['TA0003']}]}, 'authorization': [{'resource': 'https://graph.microsoft.com/', 'permissionsType': 'application', 'permissions': ['GroupMember.ReadWrite.All']}], 'execution': {'type': 'ScriptModule', 'platform': 'Azure', 'executor': 'PowerShell', 'module': {'name': 'CloudKatanaAbilities', 'version': 1.0, 'function': 'Add-CKMemberToGroup'}, 'parameters': {}}, 'number': 1}]}]
+data = [{'RequestId': '768f3465-23ea-4538-9222-605002f48e81', 'name': 'Add New member to Azure AD Group', 'metadata': {'creationDate': '2021-09-13', 'modificationDate': '2021-09-13', 'description': 'A threat actor might want to add a member to a Microsoft 365 group or a security group through the members navigation property via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1098', 'tactics': ['TA0003']}]}, 'steps': [{'schema': 'atomic', 'id': 'b7547e2c-3530-4594-b6e6-ef147d2de782', 'name': 'Add New member to Azure AD Group', 'metadata': {'creationDate': '2021-09-13', 'modificationDate': '2021-09-13', 'description': 'A threat actor might want to add a member to a Microsoft 365 group or a security group through the members navigation property via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1098', 'tactics': ['TA0003']}]}, 'authorization': [{'resource': 'https://graph.microsoft.com/', 'permissionsType': 'application', 'permissions': ['GroupMember.ReadWrite.All']}], 'execution': {'type': 'ScriptModule', 'platform': 'Azure', 'executor': 'PowerShell', 'module': {'name': 'CloudKatanaAbilities', 'version': 1.0, 'function': 'Add-CKMemberToGroup'}, 'parameters': {}}, 'file_name': 'add_new_member_to_azure_ad_group', 'number': 1}]}]
 ```
 
 ### Send HTTP Request

@@ -5,7 +5,7 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.11.5
+      jupytext_version: 1.14.1
   kernelspec:
     language: python
 ---
@@ -66,7 +66,7 @@ endpoint = function_app_url + "/api/orchestrators/Orchestrator"
 ### Prepare HTTP Body
 
 ```python
-data = [{'RequestId': '30144353-dc4a-4ee6-8735-1f0c377841c2', 'name': 'List Open Egress Ports via .NET TcpClient Class', 'metadata': {'creationDate': '2022-04-26', 'modificationDate': '2022-04-26', 'description': 'A threat actor might want to know what ports are open outbound on a system via .NET TcpClient class.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1016', 'tactics': ['TA0007']}]}, 'steps': [{'schema': 'atomic', 'id': '5e67981f-3f9b-4ea8-8b22-81d6edcf594b', 'name': 'List Open Egress Ports via .NET TcpClient Class', 'metadata': {'creationDate': '2022-04-26', 'modificationDate': '2022-04-26', 'description': 'A threat actor might want to know what ports are open outbound on a system via .NET TcpClient class.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1016', 'tactics': ['TA0007']}]}, 'execution': {'type': 'ScriptModule', 'platform': 'WindowsHybridWorker', 'executor': 'PowerShell', 'module': {'name': 'invoke-atomicredteam', 'function': 'Invoke-AtomicTest'}, 'parameters': {'AtomicTechnique': ['T1016']}}, 'number': 1}]}]
+data = [{'RequestId': '97383a34-9d24-40d6-9f67-53f6b3ef01dc', 'name': 'List Open Egress Ports via .NET TcpClient Class', 'metadata': {'creationDate': '2022-04-26', 'modificationDate': '2022-04-26', 'description': 'A threat actor might want to know what ports are open outbound on a system via .NET TcpClient class.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1016', 'tactics': ['TA0007']}]}, 'steps': [{'schema': 'atomic', 'id': '5e67981f-3f9b-4ea8-8b22-81d6edcf594b', 'name': 'List Open Egress Ports via .NET TcpClient Class', 'metadata': {'creationDate': '2022-04-26', 'modificationDate': '2022-04-26', 'description': 'A threat actor might want to know what ports are open outbound on a system via .NET TcpClient class.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1016', 'tactics': ['TA0007']}]}, 'execution': {'type': 'ScriptModule', 'platform': 'WindowsHybridWorker', 'executor': 'PowerShell', 'module': {'name': 'invoke-atomicredteam', 'function': 'Invoke-AtomicTest'}, 'parameters': {'AtomicTechnique': ['T1016']}}, 'file_name': 'list_open_egress_ports_via_.net_tcpclient_class', 'number': 1}]}]
 ```
 
 ### Send HTTP Request

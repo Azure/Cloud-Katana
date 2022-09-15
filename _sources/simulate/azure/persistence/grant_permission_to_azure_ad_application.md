@@ -5,7 +5,7 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.11.5
+      jupytext_version: 1.14.1
   kernelspec:
     language: python
 ---
@@ -66,7 +66,7 @@ endpoint = function_app_url + "/api/orchestrators/Orchestrator"
 ### Prepare HTTP Body
 
 ```python
-data = [{'RequestId': 'd2e3753d-7941-450a-b434-913368de3ee5', 'name': 'Grant Permission to Azure AD Application', 'metadata': {'creationDate': '2021-08-05', 'modificationDate': '2021-08-09', 'description': 'A threat actor might want to grant permissions (Delegated or Application) to an Azure AD application (Service Principal) via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1098', 'tactics': ['TA0003']}]}, 'steps': [{'schema': 'atomic', 'id': '0721f7ce-f04b-4bdd-9fd1-aefc566aa0fb', 'name': 'Grant Permission to Azure AD Application', 'metadata': {'creationDate': '2021-08-05', 'modificationDate': '2021-08-09', 'description': 'A threat actor might want to grant permissions (Delegated or Application) to an Azure AD application (Service Principal) via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1098', 'tactics': ['TA0003']}]}, 'authorization': [{'resource': 'https://graph.microsoft.com/', 'permissionsType': 'application', 'permissions': ['AppRoleAssignment.ReadWrite.All', 'DelegatedPermissionGrant.ReadWrite.All']}], 'execution': {'type': 'ScriptModule', 'platform': 'Azure', 'executor': 'PowerShell', 'module': {'name': 'CloudKatanaAbilities', 'version': 1.0, 'function': 'Grant-CKPermissions'}, 'parameters': {}}, 'number': 1}]}]
+data = [{'RequestId': '52932ea9-e4a4-4b73-8287-70b1a86923af', 'name': 'Grant Permission to Azure AD Application', 'metadata': {'creationDate': '2021-08-05', 'modificationDate': '2021-08-09', 'description': 'A threat actor might want to grant permissions (Delegated or Application) to an Azure AD application (Service Principal) via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1098', 'tactics': ['TA0003']}]}, 'steps': [{'schema': 'atomic', 'id': '0721f7ce-f04b-4bdd-9fd1-aefc566aa0fb', 'name': 'Grant Permission to Azure AD Application', 'metadata': {'creationDate': '2021-08-05', 'modificationDate': '2021-08-09', 'description': 'A threat actor might want to grant permissions (Delegated or Application) to an Azure AD application (Service Principal) via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1098', 'tactics': ['TA0003']}]}, 'authorization': [{'resource': 'https://graph.microsoft.com/', 'permissionsType': 'application', 'permissions': ['AppRoleAssignment.ReadWrite.All', 'DelegatedPermissionGrant.ReadWrite.All']}], 'execution': {'type': 'ScriptModule', 'platform': 'Azure', 'executor': 'PowerShell', 'module': {'name': 'CloudKatanaAbilities', 'version': 1.0, 'function': 'Grant-CKPermissions'}, 'parameters': {}}, 'file_name': 'grant_permission_to_azure_ad_application', 'number': 1}]}]
 ```
 
 ### Send HTTP Request

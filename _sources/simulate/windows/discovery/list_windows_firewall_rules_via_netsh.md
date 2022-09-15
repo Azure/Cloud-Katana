@@ -5,7 +5,7 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.11.5
+      jupytext_version: 1.14.1
   kernelspec:
     language: python
 ---
@@ -66,7 +66,7 @@ endpoint = function_app_url + "/api/orchestrators/Orchestrator"
 ### Prepare HTTP Body
 
 ```python
-data = [{'RequestId': '15fecd13-687c-4851-b153-58d0617877c9', 'name': 'List Windows Firewall Rules via Netsh', 'metadata': {'creationDate': '2022-04-28', 'modificationDate': '2022-04-28', 'description': 'A threat actor might want to enumerate Windows firewall rules using netsh command.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1016', 'tactics': ['TA0007']}]}, 'steps': [{'schema': 'atomic', 'id': '1dddb866-957a-4cde-8a3d-0209381a831d', 'name': 'List Windows Firewall Rules via Netsh', 'metadata': {'creationDate': '2022-04-28', 'modificationDate': '2022-04-28', 'description': 'A threat actor might want to enumerate Windows firewall rules using netsh command.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1016', 'tactics': ['TA0007']}]}, 'execution': {'type': 'ScriptModule', 'platform': 'WindowsHybridWorker', 'executor': 'PowerShell', 'module': {'name': 'invoke-atomicredteam', 'function': 'Invoke-AtomicTest'}, 'parameters': {'AtomicTechnique': ['T1016']}}, 'number': 1}]}]
+data = [{'RequestId': '10213cae-21e9-4776-b9d4-5dcf4bf1228e', 'name': 'List Windows Firewall Rules via Netsh', 'metadata': {'creationDate': '2022-04-28', 'modificationDate': '2022-04-28', 'description': 'A threat actor might want to enumerate Windows firewall rules using netsh command.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1016', 'tactics': ['TA0007']}]}, 'steps': [{'schema': 'atomic', 'id': '1dddb866-957a-4cde-8a3d-0209381a831d', 'name': 'List Windows Firewall Rules via Netsh', 'metadata': {'creationDate': '2022-04-28', 'modificationDate': '2022-04-28', 'description': 'A threat actor might want to enumerate Windows firewall rules using netsh command.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1016', 'tactics': ['TA0007']}]}, 'execution': {'type': 'ScriptModule', 'platform': 'WindowsHybridWorker', 'executor': 'PowerShell', 'module': {'name': 'invoke-atomicredteam', 'function': 'Invoke-AtomicTest'}, 'parameters': {'AtomicTechnique': ['T1016']}}, 'file_name': 'list_windows_firewall_rules_via_netsh', 'number': 1}]}]
 ```
 
 ### Send HTTP Request

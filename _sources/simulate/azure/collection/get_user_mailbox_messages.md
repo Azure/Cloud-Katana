@@ -5,7 +5,7 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.11.5
+      jupytext_version: 1.14.1
   kernelspec:
     language: python
 ---
@@ -66,7 +66,7 @@ endpoint = function_app_url + "/api/orchestrators/Orchestrator"
 ### Prepare HTTP Body
 
 ```python
-data = [{'RequestId': '1f7e4c02-7b82-4372-903d-5b8ef90d1ee6', 'name': 'Get User Mailbox Messages', 'metadata': {'creationDate': '2021-08-05', 'modificationDate': '2021-09-08', 'description': 'A threat actor could get messages from the mailbox of a specific user via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1114.002', 'tactics': ['TA0009']}]}, 'steps': [{'schema': 'atomic', 'id': '8148b643-7e4b-4a3a-b840-07cc28bb8c74', 'name': 'Get User Mailbox Messages', 'metadata': {'creationDate': '2021-08-05', 'modificationDate': '2021-09-08', 'description': 'A threat actor could get messages from the mailbox of a specific user via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1114.002', 'tactics': ['TA0009']}]}, 'authorization': [{'resource': 'https://graph.microsoft.com/', 'permissionsType': 'application', 'permissions': ['Mail.Read']}], 'execution': {'type': 'ScriptModule', 'platform': 'Azure', 'executor': 'PowerShell', 'module': {'name': 'CloudKatanaAbilities', 'version': 1.0, 'function': 'Get-CKMailboxMessages'}, 'parameters': {'mailFolder': 'Inbox', 'selectFields': 'subject,sender,from,toRecipients,ccRecipients,replyTo,sentDateTime,id,hasAttachments,importance,bodyPreview,isRead,body,parentFolderId', 'pageSize': 10, 'orderBy': 'receivedDateTime', 'sortBy': 'desc'}}, 'number': 1}]}]
+data = [{'RequestId': '995b4b51-adae-43b0-94b6-fcf80d556afd', 'name': 'Get User Mailbox Messages', 'metadata': {'creationDate': '2021-08-05', 'modificationDate': '2021-09-08', 'description': 'A threat actor could get messages from the mailbox of a specific user via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1114.002', 'tactics': ['TA0009']}]}, 'steps': [{'schema': 'atomic', 'id': '8148b643-7e4b-4a3a-b840-07cc28bb8c74', 'name': 'Get User Mailbox Messages', 'metadata': {'creationDate': '2021-08-05', 'modificationDate': '2021-09-08', 'description': 'A threat actor could get messages from the mailbox of a specific user via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1114.002', 'tactics': ['TA0009']}]}, 'authorization': [{'resource': 'https://graph.microsoft.com/', 'permissionsType': 'application', 'permissions': ['Mail.Read']}], 'execution': {'type': 'ScriptModule', 'platform': 'Azure', 'executor': 'PowerShell', 'module': {'name': 'CloudKatanaAbilities', 'version': 1.0, 'function': 'Get-CKMailboxMessages'}, 'parameters': {'mailFolder': 'Inbox', 'selectFields': 'subject,sender,from,toRecipients,ccRecipients,replyTo,sentDateTime,id,hasAttachments,importance,bodyPreview,isRead,body,parentFolderId', 'pageSize': 10, 'orderBy': 'receivedDateTime', 'sortBy': 'desc'}}, 'file_name': 'get_user_mailbox_messages', 'number': 1}]}]
 ```
 
 ### Send HTTP Request
