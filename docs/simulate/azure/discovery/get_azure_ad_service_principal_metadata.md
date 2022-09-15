@@ -5,7 +5,7 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.11.5
+      jupytext_version: 1.14.1
   kernelspec:
     language: python
 ---
@@ -66,7 +66,7 @@ endpoint = function_app_url + "/api/orchestrators/Orchestrator"
 ### Prepare HTTP Body
 
 ```python
-data = [{'RequestId': 'e39404dc-95b4-47b5-9be4-f6e2313ccf1f', 'name': 'Get Azure AD Service Principal Metadata', 'metadata': {'creationDate': '2021-08-05', 'modificationDate': '2021-09-08', 'description': 'A threat actor might want to get metadata from Azure AD service principals via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1087.004', 'tactics': ['TA0007']}]}, 'steps': [{'schema': 'atomic', 'id': '9373e945-1046-490a-8721-f7b61c500b9d', 'name': 'Get Azure AD Service Principal Metadata', 'metadata': {'creationDate': '2021-08-05', 'modificationDate': '2021-09-08', 'description': 'A threat actor might want to get metadata from Azure AD service principals via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1087.004', 'tactics': ['TA0007']}]}, 'authorization': [{'resource': 'https://graph.microsoft.com/', 'permissionsType': 'application', 'permissions': ['Application.Read.All']}], 'execution': {'type': 'ScriptModule', 'platform': 'Azure', 'executor': 'PowerShell', 'module': {'name': 'CloudKatanaAbilities', 'version': 1.0, 'function': 'Get-CKAzADServicePrincipal'}, 'parameters': {}}, 'number': 1}]}]
+data = [{'RequestId': '8cebcdd0-c7d0-4e2f-94c9-34130ca7ad9a', 'name': 'Get Azure AD Service Principal Metadata', 'metadata': {'creationDate': '2021-08-05', 'modificationDate': '2021-09-08', 'description': 'A threat actor might want to get metadata from Azure AD service principals via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1087.004', 'tactics': ['TA0007']}]}, 'steps': [{'schema': 'atomic', 'id': '9373e945-1046-490a-8721-f7b61c500b9d', 'name': 'Get Azure AD Service Principal Metadata', 'metadata': {'creationDate': '2021-08-05', 'modificationDate': '2021-09-08', 'description': 'A threat actor might want to get metadata from Azure AD service principals via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1087.004', 'tactics': ['TA0007']}]}, 'authorization': [{'resource': 'https://graph.microsoft.com/', 'permissionsType': 'application', 'permissions': ['Application.Read.All']}], 'execution': {'type': 'ScriptModule', 'platform': 'Azure', 'executor': 'PowerShell', 'module': {'name': 'CloudKatanaAbilities', 'version': 1.0, 'function': 'Get-CKAzADServicePrincipal'}, 'parameters': {}}, 'file_name': 'get_azure_ad_service_principal_metadata', 'number': 1}]}]
 ```
 
 ### Send HTTP Request

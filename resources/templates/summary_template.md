@@ -8,5 +8,5 @@
 
 |Created|Action|Description|Author|
 | :---| :---| :---| :---|
-{% for s in summary['action']|sort(attribute='creationDate',reverse = True) %}|{{s['metadata']['creationDate']}} |[{{s['name']}}](https://cloud-katana.com/notebooks/{{summary['platform']|lower}}/{{s['location']}}/{{s['title']}}.html) |{{s['metadata']['description']|trim}} |{% for contributor in s['metadata']['contributors'] %}{{contributor}}{% if not loop.last %}, {% endif %}{% endfor %} |
+{% for s in summary['action']|sort(attribute='creationDate',reverse = True) %}|{{s['metadata']['creationDate']}} |[{{s['name']}}](https://cloud-katana.com/simulate/{{summary['platform']|lower}}/{{s['location']}}/{{s['file_name']}}.html) |{{s['metadata']['description']|trim}} |{% for contributor in s['metadata']['contributors'] %}{{contributor}}{% if not loop.last %}, {% endif %}{% endfor %} |
 {% endfor %}{% endif %}

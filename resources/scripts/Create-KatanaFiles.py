@@ -93,6 +93,9 @@ with open(notebooks_config_path, "r") as f:
 
 for action in actions_loaded:
     print("  [>>] Processing {} file..".format(action['name']))
+    # Setting Action filename
+    action['file_name'] = (action['name']).lower().replace(" ","_")
+    # Create Notebook
     nb = nbf.v4.new_notebook()
     nb.metadata = {'kernelspec': {'language': 'python'}}
     nb['cells'] = []
@@ -228,7 +231,8 @@ query_results"""))
                     f.write('# {}'.format(tactic_maps[tactic]))
 
             #notebook_path = "{}/{}.ipynb".format(tactic_folder_path,action['title'])
-            notebook_path = "{}/{}.md".format(tactic_folder_path,(action['name']).lower().replace(" ","_"))
+            #notebook_path = "{}/{}.md".format(tactic_folder_path,(action['name']).lower().replace(" ","_"))
+            notebook_path = "{}/{}.md".format(tactic_folder_path, action['file_name'])
             print(" [>] Creating notebook: {}".format(notebook_path))
             #nbf.write(nb, notebook_path)
             jupytext.write(nb, notebook_path, fmt='md')
