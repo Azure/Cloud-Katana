@@ -281,6 +281,7 @@ function New-CKTAppRegistration {
     if($AssignAppRoleToUser){
         Write-Host "[+] Granting app role assignment to $AssignAppRoleToUser "
         Write-Host "    [>>] Getting user's principal ID"
+        $AssignAppRoleToUser = [System.Web.HttpUtility]::UrlEncode($AssignAppRoleToUser)
         $params = @{
             "Method"  = "Get"
             "Uri"     = "https://graph.microsoft.com/v1.0/users/$AssignAppRoleToUser"
