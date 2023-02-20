@@ -105,8 +105,11 @@ function Invoke-CKMSGraph {
         [Object]$Headers
     )
     Process {
-        if (!($Headers)) {
-            $Headers = @{}
+        if (-not ($Headers)) {
+            $Headers = @{
+                "Authorization" = "Bearer $AccessToken"
+                "Content-Type"  = "application/json"
+            }
         }
 
         $PredefinedParameters = @()
@@ -118,8 +121,6 @@ function Invoke-CKMSGraph {
 
         # Define HTTP request
         $Uri = "https://graph.microsoft.com/$Version/$Resource$(if($PredefinedParameters){"?$($PredefinedParameters -join '&')"}elseif(![String]::IsNullOrEmpty($QueryParameters)){"?$QueryParameters"})"
-        $Headers["Authorization"] = "Bearer $AccessToken"
-        $Headers["Content-Type"] = "application/json"
         $params = @{
             "Method"  = $HttpMethod
             "Uri"     = $Uri
@@ -135,9 +136,9 @@ function Invoke-CKMSGraph {
             do {
                 # Getting the next set of results
                 $params = @{
-                    "Method"  = $HttpMethod
+                    "Method"  = "Get"
                     "Uri"     = $Response.'@odata.nextLink'
-                    "Headers" = $Headers
+                    "Headers" = @{"Authorization" = "Bearer $AccessToken"}
                 }
                 $Response = Invoke-RestMethod @params
                 # Add response of current iteration to array
