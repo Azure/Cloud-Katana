@@ -58,6 +58,9 @@ function Invoke-CKAADGraph {
     .PARAMETER Headers
     HTTP Header request.
 
+    .PARAMETER ContentType
+    Content type to set the header object for the HTTP request.
+
     .LINK
     https://docs.microsoft.com/en-us/graph/migrate-azure-ad-graph-request-differences
     #>
@@ -101,11 +104,22 @@ function Invoke-CKAADGraph {
         [Object]$Body,
         
         [Parameter(Mandatory = $False)]
-        [Object]$Headers
+        [Object]$Headers,
+
+        [Parameter(Mandatory = $False)]
+        [String]$ContentType = "application/json"
     )
     Process {
-        if (!($Headers)) {
-            $Headers = @{}
+        if (-not ($Headers)) {
+            $Headers = @{
+                "Authorization" = "Bearer $AccessToken"
+                "Content-Type"  = "$ContentType"
+            }
+            if ($ContentType){
+                switch ($ContentType.ToLower()) {
+                    "application/json" { $Body = $Body | ConvertTo-Json -Compress -Depth 20 }
+                }
+            }
         }
 
         $PredefinedParameters = @()
@@ -117,12 +131,10 @@ function Invoke-CKAADGraph {
 
         # Define HTTP request
         $Uri = "https://graph.windows.net/myorganization/$Resource`?$($Version)$(if($PredefinedParameters){"&$($PredefinedParameters -join '&')"}elseif(![String]::IsNullOrEmpty($QueryParameters)){"?$QueryParameters"})"
-        $Headers["Authorization"] = "Bearer $AccessToken"
-        $Headers["Content-Type"] = "application/json"
         $params = @{
             "Method"  = $HttpMethod
             "Uri"     = $Uri
-            "Body"    = $Body | ConvertTo-Json -Compress -Depth 20
+            "Body"    = $Body
             "Headers" = $Headers
         }
         # Invoke AAD Graph API
@@ -134,9 +146,9 @@ function Invoke-CKAADGraph {
             do {
                 # Getting the next set of results
                 $params = @{
-                    "Method"  = $HttpMethod
+                    "Method"  = "Get"
                     "Uri"     = $Response.'@odata.nextLink'
-                    "Headers" = $Headers
+                    "Headers" = @{"Authorization" = "Bearer $AccessToken"}
                 }
                 $Response = Invoke-RestMethod @params
                 # Add response of current iteration to array

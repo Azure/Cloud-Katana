@@ -58,6 +58,9 @@ function Invoke-CKMSGraph {
     .PARAMETER Headers
     HTTP Header request.
 
+    .PARAMETER ContentType
+    Content type to set the header object for the HTTP request.
+
     .LINK
     https://docs.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0&preserve-view=true
     https://docs.microsoft.com/en-us/graph/use-the-api
@@ -114,6 +117,11 @@ function Invoke-CKMSGraph {
                 "Authorization" = "Bearer $AccessToken"
                 "Content-Type"  = "$ContentType"
             }
+            if ($ContentType){
+                switch ($ContentType.ToLower()) {
+                    "application/json" { $Body = $Body | ConvertTo-Json -Compress -Depth 20 }
+                }
+            }
         }
 
         $PredefinedParameters = @()
@@ -128,12 +136,8 @@ function Invoke-CKMSGraph {
         $params = @{
             "Method"  = $HttpMethod
             "Uri"     = $Uri
+            "Body"    = $Body
             "Headers" = $Headers
-        }
-        if ($ContentType){
-            switch ($ContentType.ToLower()) {
-                "application/json" { $params['Body'] = $Body | ConvertTo-Json -Compress -Depth 20 }
-            }
         }
         # Invoke MS Graph API
         $Response = Invoke-RestMethod @params
