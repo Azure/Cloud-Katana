@@ -102,13 +102,17 @@ function Invoke-CKMSGraph {
         [Object]$Body,
         
         [Parameter(Mandatory = $False)]
-        [Object]$Headers
+        [Object]$Headers,
+
+        [Parameter(Mandatory = $False)]
+        [String]$ContentType = "application/json"
+
     )
     Process {
         if (-not ($Headers)) {
             $Headers = @{
                 "Authorization" = "Bearer $AccessToken"
-                "Content-Type"  = "application/json"
+                "Content-Type"  = "$ContentType"
             }
         }
 
@@ -124,8 +128,12 @@ function Invoke-CKMSGraph {
         $params = @{
             "Method"  = $HttpMethod
             "Uri"     = $Uri
-            "Body"    = $Body | ConvertTo-Json -Compress -Depth 20
             "Headers" = $Headers
+        }
+        if ($ContentType){
+            switch ($ContentType.ToLower()) {
+                "application/json" { $params['Body'] = $Body | ConvertTo-Json -Compress -Depth 20 }
+            }
         }
         # Invoke MS Graph API
         $Response = Invoke-RestMethod @params
