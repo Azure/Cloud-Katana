@@ -1,7 +1,7 @@
 function Get-CKMailboxMessages {
     <#
     .SYNOPSIS
-    Get messages from any user's mailbox and folder. Currently, this operation returns message bodies in only HTML format.
+    Get messages from a user's mailbox and folder. Currently, this operation returns message bodies in only HTML format.
     
     Author: Roberto Rodriguez (@Cyb3rWard0g)
     License: MIT
@@ -9,7 +9,7 @@ function Get-CKMailboxMessages {
     Optional Dependencies: None
     
     .DESCRIPTION
-    Get-CKMailboxMessages is a simple PowerShell wrapper to read messages from any user's mailbox folder.
+    Get-CKMailboxMessages is a simple PowerShell wrapper that uses the Microsoft Graph API to read messages from a user's mailbox folder.
 
     .PARAMETER userPrincipalName
     Specific user to read Mailbox messages from. (e.g wardog@domain.com)
@@ -63,7 +63,7 @@ function Get-CKMailboxMessages {
 
     [cmdletbinding()]
     Param(
-        [parameter(Mandatory = $true)]
+        [parameter(Mandatory = $false)]
         [String]$userPrincipalName,
 
         [parameter(Mandatory = $false)]
@@ -87,8 +87,14 @@ function Get-CKMailboxMessages {
         [String]$accessToken
     )
 
+    if ($userPrincipalName){
+        $resourceUrl = "users/$userPrincipalName/mailFolders/$mailFolder/messages"
+    }
+    else {
+        $resourceUrl = "me/mailFolders/$mailFolder/messages"
+    }
     $parameters = @{
-        Resource = "users/$userPrincipalName/mailFolders/$mailFolder/messages"
+        Resource = $resourceUrl
         SelectFields = $selectFields
         PageSize = $pageSize
         OrderBy = $orderBy
