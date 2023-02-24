@@ -96,11 +96,11 @@ function New-CKOneNoteNotebookPage {
         $body = @"
 <html>
     <head>
-    <title>A page with a block of HTML</title>
-    <meta name="created" content="$currentDate" />
+        <title>A page with a block of HTML</title>
+        <meta name="created" content="$currentDate" />
     </head>
     <body>
-    <p>This page contains some <i>formatted</i> <b>text</b></p>
+        <p>This page contains some <i>formatted</i> <b>text</b></p>
     </body>
 </html>
 "@

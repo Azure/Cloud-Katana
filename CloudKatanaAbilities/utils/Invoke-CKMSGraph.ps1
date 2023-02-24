@@ -61,6 +61,9 @@ function Invoke-CKMSGraph {
     .PARAMETER ContentType
     Content type to set the header object for the HTTP request.
 
+    .PARAMETER InlineFilePath
+    Path to a local file to pass through the HTTP request.
+
     .LINK
     https://docs.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0&preserve-view=true
     https://docs.microsoft.com/en-us/graph/use-the-api
@@ -108,7 +111,10 @@ function Invoke-CKMSGraph {
         [Object]$Headers,
 
         [Parameter(Mandatory = $False)]
-        [String]$ContentType = "application/json"
+        [String]$ContentType = "application/json",
+
+        [Parameter(Mandatory = $False)]
+        [string]$InlineFilePath
 
     )
     Process {
@@ -138,6 +144,9 @@ function Invoke-CKMSGraph {
             "Uri"     = $Uri
             "Body"    = $Body
             "Headers" = $Headers
+        }
+        if ($InlineFilePath){
+            $params['InFile'] = $InlineFilePath
         }
         # Invoke MS Graph API
         $Response = Invoke-RestMethod @params

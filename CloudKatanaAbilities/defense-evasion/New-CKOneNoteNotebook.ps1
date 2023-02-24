@@ -24,7 +24,7 @@ function New-CKOneNoteNotebook {
     https://learn.microsoft.com/en-us/graph/api/onenote-post-notebooks?view=graph-rest-1.0&tabs=http
 
     .EXAMPLE
-    $newNotebook = New-CKOneNoteNotebook -userPrincipalName 'admin@domain.onmicrosoft.com' -notebookName 'ResearchNotes'-accessToken $accessToken
+    $newNotebook = New-CKOneNoteNotebook -userPrincipalName 'admin@domain.onmicrosoft.com' -notebookName 'ResearchNotes' -accessToken $accessToken
     $newNotebook
 
     @odata.context       : https://graph.microsoft.com/v1.0/$metadata#users('8a9ccb0a-3cec-411a-8381-3fd93d6d94f1')/onenote/notebooks/$entity
