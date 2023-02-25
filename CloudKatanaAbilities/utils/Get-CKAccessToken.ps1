@@ -153,6 +153,7 @@ function Get-CKAccessToken {
         }
         elseif ($GrantType -eq 'refresh_token') {
             $body.Add('refresh_token',$RefreshToken)
+            $body.Add('grant_type','refresh_token')
             $body.Add('scope','openid')
         }
 
