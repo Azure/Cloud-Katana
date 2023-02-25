@@ -55,7 +55,7 @@ function Get-CKAccessToken {
         [string] $Resource = 'https://graph.microsoft.com/',
 
         [Parameter(Mandatory=$true)]
-        [ValidateSet("client_credentials","password","saml_token", "device_code")]
+        [ValidateSet("client_credentials","password","saml_token","device_code","refresh_token")]
         [string] $GrantType,
 
         [Parameter(Mandatory=$false)]
@@ -89,6 +89,14 @@ function Get-CKAccessToken {
                 $ParamOptions = @(
                     @{
                     'Name' = 'DeviceCode';
+                    'Mandatory' = $true
+                    }
+                )  
+            }
+            elseif ($GrantType -eq 'refresh_token') {
+                $ParamOptions = @(
+                    @{
+                    'Name' = 'RefreshToken';
                     'Mandatory' = $true
                     }
                 )  
@@ -143,6 +151,11 @@ function Get-CKAccessToken {
             $body.Add('grant_type','urn:ietf:params:oauth:grant-type:device_code')
             $body.Add('code',$DeviceCode)
         }
+        elseif ($GrantType -eq 'refresh_token') {
+            $body.Add('refresh_token',$RefreshToken)
+            $body.Add('scope','openid')
+        }
+
         if ($AppSecret)
         {
             $body.Add('client_secret',$AppSecret)
