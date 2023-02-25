@@ -1,4 +1,4 @@
-function Get-CKAccessToken {
+function Get-CKAccessTokenv2v2 {
     <#
     .SYNOPSIS
     A PowerShell script to get a MS graph access token with a specific grant type and Azure AD application.
@@ -9,7 +9,7 @@ function Get-CKAccessToken {
     Optional Dependencies: None
 
     .DESCRIPTION
-    Get-CKAccessToken is a simple PowerShell wrapper around the Microsoft Graph API to get an access token. 
+    Get-CKAccessTokenv2 is a simple PowerShell wrapper around the Microsoft Graph API to get an access token. 
 
     .PARAMETER ClientId
     The Application (client) ID assigned to the Azure AD application.
@@ -17,7 +17,7 @@ function Get-CKAccessToken {
     .PARAMETER TenantId
     Tenant ID. Can be /common, /consumers, or /organizations. It can also be the directory tenant that you want to request permission from in GUID or friendly name format.
 
-    .PARAMETER ResourceUrl
+    .PARAMETER Resource
     Resource url for what you're requesting token. This could be one of the Azure services that support Azure AD authentication or any other resource URI. Example: https://graph.microsoft.com/
 
     .PARAMETER GrantType
@@ -109,7 +109,7 @@ function Get-CKAccessToken {
 
         # Process Tenant ID
         if (!$TenantId) {
-            $TenantId = 'common'
+            $TenantId = 'organizations'
         }
 
         # Process Dynamic parameters
@@ -117,40 +117,52 @@ function Get-CKAccessToken {
     }
     process {
         # Initialize Headers dictionary
-        $headers = @{}
-        $headers.Add('Content-Type','application/x-www-form-urlencoded')
+        $headers = @{
+            'Content-Type' = 'application/x-www-form-urlencoded'
+        }
 
-        # Initialize Body
-        $body = @{}
-        $body.Add('resource',$Resource)
-        $body.Add('client_id',$ClientId)
+        $graphScope = "$($Resource).default"
 
         if ($GrantType -eq 'client_credentials') {
-            $body.Add('grant_type','client_credentials')
+            $body = @{
+                client_id = $ClientId
+                scope = $graphScope
+                grant_type = 'client_credentials'
+            }
         }
         elseif ($GrantType -eq 'password') {
-            $body.Add('username',$Username)
-            $body.Add('password',$Password)
-            $body.Add('grant_type','password')
+            $body = @{
+                client_id = $ClientId
+                scope = $graphScope
+                username = $Username
+                password = $Password
+                grant_type = 'password'
+            }
         }
         elseif ($GrantType -eq 'saml_token') {
             $encodedSamlToken= [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($SamlToken))
-            $body.Add('assertion',$encodedSamlToken)
-            $body.Add('grant_type','urn:ietf:params:oauth:grant-type:saml1_1-bearer')
-            $body.Add('scope','openid')
+            $body = @{
+                client_id = $ClientId
+                scope = $graphScope
+                assertion = $encodedSamlToken
+                grant_type = 'urn:ietf:params:oauth:grant-type:saml1_1-bearer'
+            }
         }
         elseif ($GrantType -eq 'device_code') {
-            $body.Add('grant_type','urn:ietf:params:oauth:grant-type:device_code')
-            $body.Add('code',$DeviceCode)
+            $body = @{
+                client_id = $ClientId
+                grant_type = 'urn:ietf:params:oauth:grant-type:device_code'
+                device_code = $DeviceCode
+            }
         }
         if ($AppSecret)
         {
-            $body.Add('client_secret',$AppSecret)
+            $body['client_secret'] = $AppSecret
         }
 
         $Params = @{
             Headers = $headers
-            uri     = "https://login.microsoftonline.com/$TenantId/oauth2/token?api-version=1.0"
+            uri     = "https://login.microsoftonline.com/$TenantId/oauth2/v2.0/token"
             Body    = $body
             method  = 'Post'
         }

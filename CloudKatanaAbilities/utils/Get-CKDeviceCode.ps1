@@ -17,7 +17,7 @@ function Get-CKDeviceCode {
     .PARAMETER TenantId
     Tenant ID. Can be /common, /consumers, or /organizations. It can also be the directory tenant that you want to request permission from in GUID or friendly name format.
 
-    .PARAMETER ResourceUrl
+    .PARAMETER Resource
     Resource url for what you're requesting the device code for. This could be one of the Azure services that support Azure AD authentication or any other resource URI. Example: https://graph.microsoft.com/
 
     .LINK
@@ -34,7 +34,7 @@ function Get-CKDeviceCode {
         [string] $TenantId,
 
         [Parameter(Mandatory = $false)]
-        [string] $ResourceUrl = 'https://graph.microsoft.com/'
+        [string] $Resource = 'https://graph.microsoft.com/'
     )
     
     # Force TLS 1.2
@@ -47,7 +47,7 @@ function Get-CKDeviceCode {
         
     $body=@{
       "client_id" = $ClientId
-      "resource" =  $ResourceUrl
+      "resource" =  $Resource
     }
     
     # Define Parameters

@@ -11,7 +11,7 @@ function Get-CKAccessTokenWithMI {
     .DESCRIPTION
     Get-CKAccessTokenWithMI is a simple PowerShell wrapper to get an access token via a managed identity endpoint.
 
-    .PARAMETER ResourceUrl
+    .PARAMETER Resource
     Resource url for what you're requesting token. This could be one of the Azure services that support Azure AD authentication or any other resource URI. Example: https://graph.microsoft.com/
 
     .PARAMETER ApiVersion
@@ -25,7 +25,7 @@ function Get-CKAccessTokenWithMI {
     [cmdletbinding()]
     Param(
         [parameter(Mandatory = $true)]
-        [String]$ResourceUrl,
+        [String]$Resource,
 
         [parameter(Mandatory = $false)]
         [String]$ApiVersion = '2019-08-01'
@@ -35,7 +35,7 @@ function Get-CKAccessTokenWithMI {
     $muiSecret = [System.Environment]::GetEnvironmentVariable('IDENTITY_HEADER')
     $muiPrincipalId = [System.Environment]::GetEnvironmentVariable('MUI_PRINCIPAL_ID')
   
-    $tokenAuthURI = $muiEndpoint + "?resource=$ResourceUrl&api-version=$ApiVersion&principal_id=$muiPrincipalId"
+    $tokenAuthURI = $muiEndpoint + "?resource=$Resource&api-version=$ApiVersion&principal_id=$muiPrincipalId"
     $tokenResponse = Invoke-RestMethod -Method Get -Headers @{"X-IDENTITY-HEADER" = "$muiSecret" } -Uri $tokenAuthURI
     $tokenResponse.access_token
 }
