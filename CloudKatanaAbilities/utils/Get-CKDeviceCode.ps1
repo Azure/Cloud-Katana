@@ -23,18 +23,23 @@ function Get-CKDeviceCode {
     .LINK
     https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-overview
 
+    .EXAMPLE
+    $ClientId = 'd3590ed6-52b3-4102-aeff-aad2292ab01c' # Microsoft Office
+    $Resource = 'https://graph.microsoft.com/' # Microsoft Graph
+    
+    $dcRequest = Get-CKDeviceCode -ClientId $ClientId -Resource $Resource
     #>
 
     [cmdletbinding()]
     Param(
-        [Parameter(Mandatory = $false)]
-        [String] $ClientId = 'd3590ed6-52b3-4102-aeff-aad2292ab01c', # Azure AD PowerShell client app
+        [Parameter(Mandatory = $true)]
+        [String] $ClientId,
 
         [Parameter(Mandatory = $false)]
         [string] $TenantId,
 
-        [Parameter(Mandatory = $false)]
-        [string] $Resource = 'https://graph.microsoft.com/'
+        [Parameter(Mandatory = $true)]
+        [string] $Resource
     )
     
     # Force TLS 1.2
