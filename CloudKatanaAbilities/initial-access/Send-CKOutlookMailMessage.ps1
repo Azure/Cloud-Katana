@@ -1,4 +1,4 @@
-function Send-CKMailMessage {
+function Send-CKOutlookMailMessage {
     <#
     .SYNOPSIS
     Sends a Mail Message.
@@ -9,7 +9,7 @@ function Send-CKMailMessage {
     Optional Dependencies: None
     
     .DESCRIPTION
-    Send-CKMailMessage is a simple PowerShell wrapper that uses the Microsoft Graph API to send a specific mail message in JSON or MIME format.
+    Send-CKOutlookMailMessage is a simple PowerShell wrapper that uses the Outlook Office v2 API to send a mail message on behalf of a user.
 
     .PARAMETER userPrincipalName
     Specific user to send the email on behalf of. (e.g wardog@domain.com)
@@ -19,9 +19,6 @@ function Send-CKMailMessage {
 
     .PARAMETER recipients
     list of recipients. @('wardog@domain.com').
-
-    .PARAMETER ccRecipients
-    list of CC recipients.
 
     .PARAMETER message
     Message string. Text or HTML strings.
@@ -34,12 +31,16 @@ function Send-CKMailMessage {
 
     .LINK
     https://learn.microsoft.com/en-us/graph/api/user-sendmail?view=graph-rest-1.0&tabs=http
+    https://github.com/Gerenios/AADInternals/blob/master/OutlookAPI.ps1
+
+    .EXAMPLE
+    Send-CKOutlookMailMessage -userPrincipalName 'wardog@domain.com' -subject 'NewEmail' -recipients 'pgustavo@domain.com' -message 'Hola' -saveToSentItems -accessToken $accessToken
 
     #>
 
     [cmdletbinding()]
     Param(
-        [parameter(Mandatory = $false)]
+        [parameter(Mandatory = $true)]
         [String]$userPrincipalName,
 
         [parameter(Mandatory = $true)]
@@ -47,9 +48,6 @@ function Send-CKMailMessage {
 
         [parameter(Mandatory = $true)]
         [object[]]$recipients,
-
-        [parameter(Mandatory = $false)]
-        [object[]]$ccRecipients,
 
         [parameter(Mandatory = $true)]
         [String]$message,
@@ -66,33 +64,32 @@ function Send-CKMailMessage {
         
     )
 
-    if ($userPrincipalName) {
-        $resourceUrl = "users/$userPrincipalName/sendMail"
-    }
-    else {
-        $resourceUrl = "me/sendMail"
+    $headers = @{
+        "Authorization" = "Bearer $AccessToken"
+        "Accept" = "text/*, multipart/mixed, application/xml, application/json; odata.metadata=none"
+        "Content-Type" = "application/json; charset=utf-8"
+        "X-AnchorMailbox" = $userPrincipalName
+        "Prefer" = 'exchange.behavior="ActivityAccess"'
     }
 
-    $save = if ($saveToSentItems){$true} else{$false}
     $body = @{
-        "message" = @{
-            "subject" = "$subject"
-            "body" = @{
-                "contentType" = "$messageType"
-                "content" = $message
+        "Message" = @{
+            "Subject" = "$subject"
+            "Body" = @{
+                "ContentType" = "$messageType"
+                "Content" = $message
             }
-            "toRecipients" = @($recipients | ForEach-Object {@{"emailAddress" = @{"address" = $_}}})
-            "ccRecipients"= @($ccRecipients | ForEach-Object {@{"emailAddress" = @{"address" = $_}}})
+            "ToRecipients" = @($recipients | ForEach-Object {@{"EmailAddress" = @{"Address" = $_}}})
         }
-        "saveToSentItems" = $save
+        "SaveToSentItems" = "$(if($SaveToSentItems){"true"}else{"false"})"
     }
 
     $parameters = @{
-        Resource = $resourceUrl
-        HttpMethod = "Post"
-        Body = $body
-        AccessToken = $accessToken
+        Uri = "https://outlook.office.com/api/v2.0/me/sendmail"
+        Method = "Post"
+        Body = $body | ConvertTo-Json -Depth 10
+        Headers = $headers
     }
-    $response = Invoke-CKMSGraph @parameters
+    $response = Invoke-RestMethod @parameters -UseBasicParsing
     $response
 }
