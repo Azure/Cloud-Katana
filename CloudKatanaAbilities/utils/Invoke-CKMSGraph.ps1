@@ -14,6 +14,12 @@ function Invoke-CKMSGraph {
     .PARAMETER AccessToken
     Access token obtained with the right permissions (delegated/Application) to use the MS Graph API.
 
+    .PARAMETER APIType
+    Type of Graph API. Microsoft Graph (MSGraph) or Azure Active Directory Graph (AADGraph).
+
+    .PARAMETER APIEndpoint
+    Which Graph API service endpoint: ('Global','US Gov L4','DOD','Germany','China')
+
     .PARAMETER HttpMethod
     The HTTP method used on the request to Microsoft Graph.
 
@@ -67,20 +73,25 @@ function Invoke-CKMSGraph {
     .LINK
     https://docs.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0&preserve-view=true
     https://docs.microsoft.com/en-us/graph/use-the-api
+    https://learn.microsoft.com/en-us/graph/migrate-azure-ad-graph-request-differences
     #>
 
     [cmdletbinding()]
     Param(
         [Parameter(Mandatory = $True)]
         [String]$AccessToken,
-        
+
+        [Parameter(Mandatory = $false)]
+        [ValidateSet('MSGraph', 'AADGraph')]
+        [String]$APIType = 'MSGraph',
+
+        [Parameter(Mandatory = $false)]
+        [ValidateSet('Global','US Gov L4','DOD','Germany','China')]
+        [String]$APIEndpoint = 'Global',
+
         [Parameter(Mandatory = $False)]
         [ValidateSet('Put', 'Get', 'Post', 'Delete', 'Patch')]
         [String]$HttpMethod = "Get",
-        
-        [Parameter(Mandatory = $False)]
-        [ValidateSet('v1.0', 'beta')]
-        [String]$Version = "v1.0",
         
         [parameter(Mandatory = $True)]
         [String]$Resource,
@@ -117,6 +128,71 @@ function Invoke-CKMSGraph {
         [string]$InlineFilePath
 
     )
+
+    DynamicParam {
+        # Adding Dynamic parameters
+        $parameterDictionary = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
+
+        if ($APIType -eq 'MSGraph') {
+            $ParamOptions = @(
+                @{
+                    'Name'                  = 'Version';
+                    'ValidateSetOptions'    = @('v1.0', 'beta');
+                    'Mandatory'             = $false
+                }
+            )
+        }
+        elseif ($APIType -eq 'AADGraph') {
+            $ParamOptions = @(
+                @{
+                    'Name'                  = 'Version';
+                    'ValidateSetOptions'    = @('api-version=1.6', 'api-version=1.61-internal');
+                    'Mandatory'             = $false
+                }
+            )  
+        }
+
+        # Adding Dynamic parameter
+        foreach ($NewParam in $ParamOptions) {
+            $RuntimeParam = New-DynamicParam @NewParam
+            $parameterDictionary.Add($NewParam.Name, $RuntimeParam)
+        }
+        return $parameterDictionary
+    }
+
+    Begin {
+        # Service Endpoints
+        if ($APIType -eq 'MSGraph') {
+            switch ($APIEndpoint){
+                'Global'    { $EndpointUrl = 'https://graph.microsoft.com' }
+                'US Gov L4' { $EndpointUrl = 'https://graph.microsoft.us' }
+                'DOD'       { $EndpointUrl = 'https://dod-graph.microsoft.us' }
+                'Germany'   { $EndpointUrl = 'https://graph.microsoft.de' }
+                'China'     { $EndpointUrl = 'https://microsoftgraph.chinacloudapi.cn' }
+            }
+        }
+        else {
+            switch ($APIEndpoint){
+                'Global'    { $EndpointUrl = 'https://graph.windows.net' }
+                'US Gov L4' { $EndpointUrl = 'https://graph.microsoftazure.us' }
+                'DOD'       { $EndpointUrl = 'https://graph.microsoftazure.us' }
+                'Germany'   { $EndpointUrl = 'https://graph.cloudapi.de' }
+                'China'     { $EndpointUrl = 'https://graph.chinacloudapi.cn' }
+            }
+
+        }
+
+        # Process Dynamic parameters
+        if (-not $PSBoundParameters.ContainsKey('Version')) {
+            if ($APIType -eq 'MSGraph') {
+                $PSBoundParameters.Add('Version','v1.0')
+            } else {
+                $PsBoundParameters.Add('Version', 'api-version=1.61-internal')
+            }
+        }
+        $PsBoundParameters.GetEnumerator() | ForEach-Object { New-Variable -Name $_.Key -Value $_.Value -ea 'SilentlyContinue'}
+    }
+
     Process {
         if (-not ($Headers)) {
             $Headers = @{
@@ -138,7 +214,16 @@ function Invoke-CKMSGraph {
         if(![String]::IsNullOrEmpty($OrderBy) -and ![String]::IsNullOrEmpty($SortIn)){$PredefinedParameters += "`$orderby=$OrderBy $SortIn"}
 
         # Define HTTP request
-        $Uri = "https://graph.microsoft.com/$Version/$Resource$(if($PredefinedParameters){"?$($PredefinedParameters -join '&')"}elseif(![String]::IsNullOrEmpty($QueryParameters)){"?$QueryParameters"})"
+        # Reference: https://learn.microsoft.com/en-us/graph/migrate-azure-ad-graph-request-differences#basic-requests
+        if ($APIType -eq 'MSGraph'){
+            # https://graph.microsoft.com/{version}/{resource}?query-parameters
+            $Uri = "$EndpointUrl/$Version/$Resource$(if($PredefinedParameters){"?$($PredefinedParameters -join '&')"}elseif(![String]::IsNullOrEmpty($QueryParameters)){"?$QueryParameters"})"
+        }
+        else {
+            # https://graph.windows.net/{tenant_id}/{resource}?{version}&query-parameters
+            $Uri = "$EndpointUrl/myorganization/$Resource`?$($Version)$(if($PredefinedParameters){"&$($PredefinedParameters -join '&')"}elseif(![String]::IsNullOrEmpty($QueryParameters)){"?$QueryParameters"})"
+        }
+        
         $params = @{
             "Method"  = $HttpMethod
             "Uri"     = $Uri
@@ -149,6 +234,7 @@ function Invoke-CKMSGraph {
             $params['InFile'] = $InlineFilePath
         }
         # Invoke MS Graph API
+        write-host ($params | Format-List | out-string)
         $Response = Invoke-RestMethod @params
 
         if ($Response.'@odata.nextLink') {
@@ -169,12 +255,51 @@ function Invoke-CKMSGraph {
             $results.value
         }
         else {
-            if ($Response.value) {
-                $Response.value
+            if ($Response) {
+                $Response
             }
             else {
                 $Response
             }
         }
     }
+}
+
+function New-DynamicParam {
+    [CmdletBinding()]
+    [OutputType('System.Management.Automation.RuntimeDefinedParameter')]
+    param (
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Name,
+        [Parameter(Mandatory=$false)]
+        [array]$ValidateSetOptions,
+        [Parameter()]
+        [switch]$Mandatory = $false,
+        [Parameter()]
+        [switch]$ValueFromPipeline = $false,
+        [Parameter()]
+        [switch]$ValueFromPipelineByPropertyName = $false
+    )
+
+    $Attrib = New-Object System.Management.Automation.ParameterAttribute
+    $Attrib.Mandatory = $Mandatory.IsPresent
+    $Attrib.ParameterSetName = "__AllParameterSets"
+    $Attrib.ValueFromPipeline = $ValueFromPipeline.IsPresent
+    $Attrib.ValueFromPipelineByPropertyName = $ValueFromPipelineByPropertyName.IsPresent
+
+    # Create AttributeCollection object for the attribute
+    $Collection = new-object System.Collections.ObjectModel.Collection[System.Attribute]
+    # Add our custom attribute
+    $Collection.Add($Attrib)
+    # Add Validate Set
+    if ($ValidateSetOptions)
+    {
+        $ValidateSet= new-object System.Management.Automation.ValidateSetAttribute($ValidateSetOptions)
+        $Collection.Add($ValidateSet)
+    }
+
+    # Create Runtime Parameter
+    $DynParam = New-Object System.Management.Automation.RuntimeDefinedParameter($Name, [string], $Collection)
+    return $DynParam
 }
