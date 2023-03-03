@@ -234,7 +234,6 @@ function Invoke-CKMSGraph {
             $params['InFile'] = $InlineFilePath
         }
         # Invoke MS Graph API
-        write-host ($params | Format-List | out-string)
         $Response = Invoke-RestMethod @params
 
         if ($Response.'@odata.nextLink') {
@@ -255,8 +254,8 @@ function Invoke-CKMSGraph {
             $results.value
         }
         else {
-            if ($Response) {
-                $Response
+            if ($Response.value) {
+                $Response.value
             }
             else {
                 $Response
