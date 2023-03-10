@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Get Azure AD Owners of an Azure AD Group or Directory Role</title>
+    <title>Get members of an Azure AD Group</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -50,7 +50,7 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../../_static/sphinx-thebe.js"></script>
-    <link rel="canonical" href="https://cloud-katana.com/simulate/azure/discovery/get_azure_ad_owners_of_an_azure_ad_group_or_directory_role.html" />
+    <link rel="canonical" href="https://cloud-katana.com/simulate/azure/discovery/get_members_of_an_azure_ad_group.html" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="Get Azure AD OAuth Permission Grants" href="get_azure_ad_oauth_permission_grants.html" />
@@ -238,6 +238,11 @@ const thebe_selector_output = ".output, .cell_output"
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="get_owners_of_an_azure_ad_application_or_service_principal.html">
+       Get Owners of an Azure AD Application or Service Principal
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="get_azure_ad_directory_roles.html">
        Get Azure AD Directory Roles
       </a>
@@ -249,17 +254,12 @@ const thebe_selector_output = ".output, .cell_output"
      </li>
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
-       Get Azure AD Owners of an Azure AD Group or Directory Role
+       Get members of an Azure AD Group
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="get_azure_ad_oauth_permission_grants.html">
        Get Azure AD OAuth Permission Grants
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="get_owners_of_an_azure_ad_application_or_service_principal.html">
-       Get Owners of an Azure AD Application or Service Principal
       </a>
      </li>
      <li class="toctree-l3">
@@ -438,7 +438,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/Azure/Cloud-Katana/issues/new?title=Issue%20on%20page%20%2Fsimulate/azure/discovery/get_azure_ad_owners_of_an_azure_ad_group_or_directory_role.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/Azure/Cloud-Katana/issues/new?title=Issue%20on%20page%20%2Fsimulate/azure/discovery/get_members_of_an_azure_ad_group.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -455,7 +455,7 @@ title="Open an issue"
       </li>
       
       <li>
-        <a href="https://github.com/Azure/Cloud-Katana/edit/main/docs/simulate/azure/discovery/get_azure_ad_owners_of_an_azure_ad_group_or_directory_role.md"
+        <a href="https://github.com/Azure/Cloud-Katana/edit/main/docs/simulate/azure/discovery/get_members_of_an_azure_ad_group.md"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -483,7 +483,7 @@ title="Edit this page"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../../../_sources/simulate/azure/discovery/get_azure_ad_owners_of_an_azure_ad_group_or_directory_role.md"
+        <a href="../../../_sources/simulate/azure/discovery/get_members_of_an_azure_ad_group.md"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -593,7 +593,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Get Azure AD Owners of an Azure AD Group or Directory Role</h1>
+                <h1>Get members of an Azure AD Group</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -655,8 +655,8 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="get-azure-ad-owners-of-an-azure-ad-group-or-directory-role">
-<h1>Get Azure AD Owners of an Azure AD Group or Directory Role<a class="headerlink" href="#get-azure-ad-owners-of-an-azure-ad-group-or-directory-role" title="Permalink to this headline">#</a></h1>
+  <div class="tex2jax_ignore mathjax_ignore section" id="get-members-of-an-azure-ad-group">
+<h1>Get members of an Azure AD Group<a class="headerlink" href="#get-members-of-an-azure-ad-group" title="Permalink to this headline">#</a></h1>
 <div class="section" id="metadata">
 <h2>Metadata<a class="headerlink" href="#metadata" title="Permalink to this headline">#</a></h2>
 <table class="colwidths-auto table">
@@ -689,7 +689,7 @@ title="Print to PDF"
 </div>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">#</a></h2>
-<p>A threat actor might want to list members of an Azure AD group or directory role via Microsoft Graph APIs and the right permissions.</p>
+<p>A threat actor might want to list members of an Azure AD group via Microsoft Graph APIs and the right permissions.</p>
 </div>
 <div class="section" id="run-simulation">
 <h2>Run Simulation<a class="headerlink" href="#run-simulation" title="Permalink to this headline">#</a></h2>
@@ -723,7 +723,7 @@ title="Print to PDF"
 </div>
 <div class="section" id="prepare-http-body">
 <h3>Prepare HTTP Body<a class="headerlink" href="#prepare-http-body" title="Permalink to this headline">#</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;RequestId&#39;</span><span class="p">:</span> <span class="s1">&#39;19c48739-591d-4a82-8ec3-6e1eb9db11b8&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Get Azure AD Owners of an Azure AD Group or Directory Role&#39;</span><span class="p">,</span> <span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;creationDate&#39;</span><span class="p">:</span> <span class="s1">&#39;2021-09-30&#39;</span><span class="p">,</span> <span class="s1">&#39;modificationDate&#39;</span><span class="p">:</span> <span class="s1">&#39;2021-09-30&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;A threat actor might want to list members of an Azure AD group or directory role via Microsoft Graph APIs and the right permissions.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;contributors&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Roberto Rodriguez @Cyb3rWard0g&#39;</span><span class="p">,</span> <span class="s1">&#39;MSTIC R&amp;D&#39;</span><span class="p">],</span> <span class="s1">&#39;mitreAttack&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;technique&#39;</span><span class="p">:</span> <span class="s1">&#39;T1069.003&#39;</span><span class="p">,</span> <span class="s1">&#39;tactics&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;TA0007&#39;</span><span class="p">]}]},</span> <span class="s1">&#39;steps&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;schema&#39;</span><span class="p">:</span> <span class="s1">&#39;atomic&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;2cddcd4a-8ba4-4d97-bf6d-bbf50a1192a7&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Get Azure AD Owners of an Azure AD Group or Directory Role&#39;</span><span class="p">,</span> <span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;creationDate&#39;</span><span class="p">:</span> <span class="s1">&#39;2021-09-30&#39;</span><span class="p">,</span> <span class="s1">&#39;modificationDate&#39;</span><span class="p">:</span> <span class="s1">&#39;2021-09-30&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;A threat actor might want to list members of an Azure AD group or directory role via Microsoft Graph APIs and the right permissions.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;contributors&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Roberto Rodriguez @Cyb3rWard0g&#39;</span><span class="p">,</span> <span class="s1">&#39;MSTIC R&amp;D&#39;</span><span class="p">],</span> <span class="s1">&#39;mitreAttack&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;technique&#39;</span><span class="p">:</span> <span class="s1">&#39;T1069.003&#39;</span><span class="p">,</span> <span class="s1">&#39;tactics&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;TA0007&#39;</span><span class="p">]}]},</span> <span class="s1">&#39;authorization&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;resource&#39;</span><span class="p">:</span> <span class="s1">&#39;https://graph.microsoft.com/&#39;</span><span class="p">,</span> <span class="s1">&#39;permissionsType&#39;</span><span class="p">:</span> <span class="s1">&#39;application&#39;</span><span class="p">,</span> <span class="s1">&#39;permissions&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;GroupMember.Read.All&#39;</span><span class="p">,</span> <span class="s1">&#39;RoleManagement.Read.Directory&#39;</span><span class="p">]}],</span> <span class="s1">&#39;execution&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;ScriptModule&#39;</span><span class="p">,</span> <span class="s1">&#39;platform&#39;</span><span class="p">:</span> <span class="s1">&#39;Azure&#39;</span><span class="p">,</span> <span class="s1">&#39;executor&#39;</span><span class="p">:</span> <span class="s1">&#39;PowerShell&#39;</span><span class="p">,</span> <span class="s1">&#39;module&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;CloudKatanaAbilities&#39;</span><span class="p">,</span> <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;function&#39;</span><span class="p">:</span> <span class="s1">&#39;Get-CKMembers&#39;</span><span class="p">},</span> <span class="s1">&#39;parameters&#39;</span><span class="p">:</span> <span class="p">{}},</span> <span class="s1">&#39;file_name&#39;</span><span class="p">:</span> <span class="s1">&#39;get_azure_ad_owners_of_an_azure_ad_group_or_directory_role&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}]}]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;RequestId&#39;</span><span class="p">:</span> <span class="s1">&#39;e4f4464f-e86c-4dfa-a4a2-215030117f75&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Get members of an Azure AD Group&#39;</span><span class="p">,</span> <span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;creationDate&#39;</span><span class="p">:</span> <span class="s1">&#39;2021-09-30&#39;</span><span class="p">,</span> <span class="s1">&#39;modificationDate&#39;</span><span class="p">:</span> <span class="s1">&#39;2021-09-30&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;A threat actor might want to list members of an Azure AD group via Microsoft Graph APIs and the right permissions.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;contributors&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Roberto Rodriguez @Cyb3rWard0g&#39;</span><span class="p">,</span> <span class="s1">&#39;MSTIC R&amp;D&#39;</span><span class="p">],</span> <span class="s1">&#39;mitreAttack&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;technique&#39;</span><span class="p">:</span> <span class="s1">&#39;T1069.003&#39;</span><span class="p">,</span> <span class="s1">&#39;tactics&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;TA0007&#39;</span><span class="p">]}]},</span> <span class="s1">&#39;steps&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;schema&#39;</span><span class="p">:</span> <span class="s1">&#39;atomic&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;2cddcd4a-8ba4-4d97-bf6d-bbf50a1192a7&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Get members of an Azure AD Group&#39;</span><span class="p">,</span> <span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;creationDate&#39;</span><span class="p">:</span> <span class="s1">&#39;2021-09-30&#39;</span><span class="p">,</span> <span class="s1">&#39;modificationDate&#39;</span><span class="p">:</span> <span class="s1">&#39;2021-09-30&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;A threat actor might want to list members of an Azure AD group via Microsoft Graph APIs and the right permissions.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;contributors&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Roberto Rodriguez @Cyb3rWard0g&#39;</span><span class="p">,</span> <span class="s1">&#39;MSTIC R&amp;D&#39;</span><span class="p">],</span> <span class="s1">&#39;mitreAttack&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;technique&#39;</span><span class="p">:</span> <span class="s1">&#39;T1069.003&#39;</span><span class="p">,</span> <span class="s1">&#39;tactics&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;TA0007&#39;</span><span class="p">]}]},</span> <span class="s1">&#39;authorization&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;resource&#39;</span><span class="p">:</span> <span class="s1">&#39;https://graph.microsoft.com/&#39;</span><span class="p">,</span> <span class="s1">&#39;permissionsType&#39;</span><span class="p">:</span> <span class="s1">&#39;application&#39;</span><span class="p">,</span> <span class="s1">&#39;permissions&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;GroupMember.Read.All&#39;</span><span class="p">]}],</span> <span class="s1">&#39;execution&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;ScriptModule&#39;</span><span class="p">,</span> <span class="s1">&#39;platform&#39;</span><span class="p">:</span> <span class="s1">&#39;Azure&#39;</span><span class="p">,</span> <span class="s1">&#39;executor&#39;</span><span class="p">:</span> <span class="s1">&#39;PowerShell&#39;</span><span class="p">,</span> <span class="s1">&#39;module&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;CloudKatanaAbilities&#39;</span><span class="p">,</span> <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;function&#39;</span><span class="p">:</span> <span class="s1">&#39;Get-CKAzADGroupMembers&#39;</span><span class="p">},</span> <span class="s1">&#39;parameters&#39;</span><span class="p">:</span> <span class="p">{}},</span> <span class="s1">&#39;file_name&#39;</span><span class="p">:</span> <span class="s1">&#39;get_members_of_an_azure_ad_group&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}]}]</span>
 </pre></div>
 </div>
 </div>

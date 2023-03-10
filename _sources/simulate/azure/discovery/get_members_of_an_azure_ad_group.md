@@ -10,7 +10,7 @@ jupyter:
     language: python
 ---
 
-# Get Azure AD Owners of an Azure AD Group or Directory Role
+# Get members of an Azure AD Group
 
 
 ## Metadata
@@ -28,7 +28,7 @@ jupyter:
 
 
 ## Description
-A threat actor might want to list members of an Azure AD group or directory role via Microsoft Graph APIs and the right permissions.
+A threat actor might want to list members of an Azure AD group via Microsoft Graph APIs and the right permissions.
 
 
 
@@ -66,7 +66,7 @@ endpoint = function_app_url + "/api/orchestrators/Orchestrator"
 ### Prepare HTTP Body
 
 ```python
-data = [{'RequestId': '19c48739-591d-4a82-8ec3-6e1eb9db11b8', 'name': 'Get Azure AD Owners of an Azure AD Group or Directory Role', 'metadata': {'creationDate': '2021-09-30', 'modificationDate': '2021-09-30', 'description': 'A threat actor might want to list members of an Azure AD group or directory role via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1069.003', 'tactics': ['TA0007']}]}, 'steps': [{'schema': 'atomic', 'id': '2cddcd4a-8ba4-4d97-bf6d-bbf50a1192a7', 'name': 'Get Azure AD Owners of an Azure AD Group or Directory Role', 'metadata': {'creationDate': '2021-09-30', 'modificationDate': '2021-09-30', 'description': 'A threat actor might want to list members of an Azure AD group or directory role via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1069.003', 'tactics': ['TA0007']}]}, 'authorization': [{'resource': 'https://graph.microsoft.com/', 'permissionsType': 'application', 'permissions': ['GroupMember.Read.All', 'RoleManagement.Read.Directory']}], 'execution': {'type': 'ScriptModule', 'platform': 'Azure', 'executor': 'PowerShell', 'module': {'name': 'CloudKatanaAbilities', 'version': 1.0, 'function': 'Get-CKMembers'}, 'parameters': {}}, 'file_name': 'get_azure_ad_owners_of_an_azure_ad_group_or_directory_role', 'number': 1}]}]
+data = [{'RequestId': 'e4f4464f-e86c-4dfa-a4a2-215030117f75', 'name': 'Get members of an Azure AD Group', 'metadata': {'creationDate': '2021-09-30', 'modificationDate': '2021-09-30', 'description': 'A threat actor might want to list members of an Azure AD group via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1069.003', 'tactics': ['TA0007']}]}, 'steps': [{'schema': 'atomic', 'id': '2cddcd4a-8ba4-4d97-bf6d-bbf50a1192a7', 'name': 'Get members of an Azure AD Group', 'metadata': {'creationDate': '2021-09-30', 'modificationDate': '2021-09-30', 'description': 'A threat actor might want to list members of an Azure AD group via Microsoft Graph APIs and the right permissions.\n', 'contributors': ['Roberto Rodriguez @Cyb3rWard0g', 'MSTIC R&D'], 'mitreAttack': [{'technique': 'T1069.003', 'tactics': ['TA0007']}]}, 'authorization': [{'resource': 'https://graph.microsoft.com/', 'permissionsType': 'application', 'permissions': ['GroupMember.Read.All']}], 'execution': {'type': 'ScriptModule', 'platform': 'Azure', 'executor': 'PowerShell', 'module': {'name': 'CloudKatanaAbilities', 'version': 1.0, 'function': 'Get-CKAzADGroupMembers'}, 'parameters': {}}, 'file_name': 'get_members_of_an_azure_ad_group', 'number': 1}]}]
 ```
 
 ### Send HTTP Request

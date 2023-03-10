@@ -15,32 +15,45 @@ Cloud Katana is a cloud native tool developed from the need to automate simulati
 
 This website is built with Jupyter Book and is organized into a few major sections!
 
-:::{panels}
-:container: +full-width
-:column: col-lg-4 px-2 py-2
----
-:header: bg-jb-one
-**Getting Started**
+::::{grid} 1 1 2 3
+:class-container: text-center
+:gutter: 3
+
+:::{grid-item-card}
+:link: deploy/azure/intro
+:link-type: doc
+:class-header: bg-light
+
+Getting Started 🚀
 ^^^
 
-Step-by-step guides to install Cloud Katana and run a few demos
----
-:header: bg-jb-two
+Step-by-step guides to install Cloud Katana and run a few demos.
+:::
 
-**Internals**
+:::{grid-item-card}
+:link: learn/principles/intro
+:link-type: doc
+:class-header: bg-light
+
+Design Principles 🎁
 ^^^
 
-Sections covering specific areas in more depth
----
-:header: bg-jb-three
-
-**Notebooks**
-^^^
-
-Templates to execute actions as Jupyter Notebooks!
+Sections covering specific areas in more depth.
 
 :::
 
+:::{grid-item-card}
+:link: simulate/azure/intro
+:link-type: doc
+:class-header: bg-light
+
+Azure Simulations ⚡
+^^^
+
+Run a few simulations against Azure resources.
+:::
+
+::::
 
 ## Contributing
 
