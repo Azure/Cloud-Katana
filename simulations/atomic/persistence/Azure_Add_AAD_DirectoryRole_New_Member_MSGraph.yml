@@ -25,7 +25,7 @@ execution:
   module:
     name: CloudKatanaAbilities
     version: 1.0
-    function: Add-CKAzADMemberToDirectoryRole
+    function: Add-CKAzADDirectoryRoleMember
   parameters:
     directoryRoleTemplateId:
       type: string

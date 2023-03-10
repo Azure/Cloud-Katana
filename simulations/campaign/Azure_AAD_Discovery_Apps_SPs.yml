@@ -18,7 +18,7 @@ steps:
       executor: PowerShell
       module:
         name: CloudKatanaAbilities
-        function: Get-CKAzADApplication
+        function: Get-CKAzADApplications
       parameters:
         selectFields: id,displayName
   - number: 2
@@ -29,6 +29,6 @@ steps:
       executor: PowerShell
       module:
         name: CloudKatanaAbilities
-        function: Get-CKAzADServicePrincipal
+        function: Get-CKAzADServicePrincipals
       parameters:
         selectFields: id,displayName

@@ -260,7 +260,7 @@ for summary in summary_table:
                     if metadata not in techniques_mappings[technique]:
                         techniques_mappings[technique].append(metadataLayer)
         
-        LAYER_VERSION = "4.3"
+        LAYER_VERSION = "4.4"
         ATTACK_VERSION = "11"
         NAVIGATOR_VERSION = "4.5.1"
         NAME = "Cloud Katana {} ATT&CK Coverage".format(summary['platform'])

@@ -25,7 +25,7 @@ execution:
   module:
     name: CloudKatanaAbilities
     version: 1.0
-    function: Get-CKAzADApplication
+    function: Get-CKAzADApplications
   parameters:
     appObjectId:
       type: string

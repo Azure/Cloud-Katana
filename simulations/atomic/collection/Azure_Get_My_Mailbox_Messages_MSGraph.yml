@@ -25,7 +25,7 @@ execution:
   module:
     name: CloudKatanaAbilities
     version: 1.0
-    function: Get-CKMyMailboxMessages
+    function: Get-CKMailboxMessages
   parameters:
     mailFolder:
       type: string

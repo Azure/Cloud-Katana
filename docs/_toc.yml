@@ -28,11 +28,11 @@ parts:
     - file: simulate/azure/discovery/intro
       sections:
       - file: simulate/azure/discovery/get_azure_ad_application_metadata
+      - file: simulate/azure/discovery/get_owners_of_an_azure_ad_application_or_service_principal
       - file: simulate/azure/discovery/get_azure_ad_directory_roles
       - file: simulate/azure/discovery/get_azure_ad_groups
-      - file: simulate/azure/discovery/get_azure_ad_owners_of_an_azure_ad_group_or_directory_role
+      - file: simulate/azure/discovery/get_members_of_an_azure_ad_group
       - file: simulate/azure/discovery/get_azure_ad_oauth_permission_grants
-      - file: simulate/azure/discovery/get_owners_of_an_azure_ad_application_or_service_principal
       - file: simulate/azure/discovery/get_azure_ad_resources_and_graph_them
       - file: simulate/azure/discovery/get_azure_ad_service_principal_metadata
       - file: simulate/azure/discovery/get_azure_ad_users

@@ -25,7 +25,7 @@ execution:
   module:
     name: CloudKatanaAbilities
     version: 1.0
-    function: Add-CKDomainToTenant
+    function: Add-CKTenantDomain
   parameters:
     id:
       type: string
