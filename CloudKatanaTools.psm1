@@ -31,7 +31,7 @@ if ($modulesInstall) {
 
     foreach ($module in $modulesInstall) {
     
-        Install-Module $module -Force -AcceptLicense
+        Install-Module $module -Force
         Import-Module $module
     }
 }
