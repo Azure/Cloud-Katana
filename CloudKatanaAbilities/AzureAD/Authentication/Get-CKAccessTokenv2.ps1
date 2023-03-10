@@ -1,4 +1,4 @@
-function Get-CKAccessTokenv2v2 {
+function Get-CKAccessTokenv2 {
     <#
     .SYNOPSIS
     A PowerShell script to get a MS graph access token with a specific grant type and Azure AD application.
