@@ -105,7 +105,11 @@ function Invoke-CKOutlookAPI {
         [String]$ContentType = "application/json; charset=utf-8"
 
     )
-
+    # Validate Access Token
+    if ((Read-CKAccessToken -Token $AccessToken).has_expired){
+        throw "Token Has Expired"
+    }
+    
     if (-not ($Headers)) {
         $Headers = @{
             "Authorization" = "Bearer $AccessToken"

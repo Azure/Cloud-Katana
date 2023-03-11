@@ -1,4 +1,4 @@
-function Invoke-CKMSGraphAPIAPI {
+function Invoke-CKMSGraphAPI {
     <#
     .SYNOPSIS
     Invoke the Microsoft Graph RESTful web API to access Microsoft Cloud service resources. A wrapper around the Invoke-RestMethod to make requests to the Microsoft Graph API.
@@ -9,7 +9,7 @@ function Invoke-CKMSGraphAPIAPI {
     Optional Dependencies: None
     
     .DESCRIPTION
-    Invoke-CKMSGraphAPIAPI is a simple PowerShell wrapper around the Invoke-RestMethod to make requests to the Microsoft Graph API.
+    Invoke-CKMSGraphAPI is a simple PowerShell wrapper around the Invoke-RestMethod to make requests to the Microsoft Graph API.
     
     .PARAMETER AccessToken
     Access token obtained with the right permissions (delegated/Application) to use the MS Graph API.
@@ -191,6 +191,11 @@ function Invoke-CKMSGraphAPIAPI {
             }
         }
         $PsBoundParameters.GetEnumerator() | ForEach-Object { New-Variable -Name $_.Key -Value $_.Value -ea 'SilentlyContinue'}
+
+        # Validate Access Token
+        if ((Read-CKAccessToken -Token $AccessToken).has_expired){
+            throw "Token Has Expired"
+        }
     }
 
     Process {

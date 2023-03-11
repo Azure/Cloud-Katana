@@ -32,9 +32,6 @@ function Send-CKMailMessage {
     .PARAMETER accessToken
     Access token used to access the API.
 
-    .PARAMETER api
-    API endpoint to use to send mail messages. Microsoft Graph or Outlook API.
-
     .LINK
     https://learn.microsoft.com/en-us/graph/api/user-sendmail?view=graph-rest-1.0&tabs=http
     https://learn.microsoft.com/en-us/previous-versions/office/office-365-api/api/version-2.0/mail-rest-operations#SendMessages
@@ -46,13 +43,7 @@ function Send-CKMailMessage {
     Send-CKMailMessage -subject 'NewEmail' -recipients 'pgustavo@domain.com' -message 'Hola' -saveToSentItems -accessToken $accessToken
 
     .EXAMPLE
-    Send-CKMailMessage -subject 'NewEmail' -recipients 'pgustavo@domain.com' -message 'Hola' -saveToSentItems -accessToken $accessToken -api Outlook
-
-    .EXAMPLE
     Send-CKMailMessage -userPrincipalName 'wardog@domain.com' -subject 'NewEmail' -recipients 'pgustavo@domain.com' -message 'Hola' -saveToSentItems -accessToken $accessToken
-
-    .EXAMPLE
-    Send-CKMailMessage -userPrincipalName 'wardog@domain.com' -subject 'NewEmail' -recipients 'pgustavo@domain.com' -message 'Hola' -saveToSentItems -accessToken $accessToken -api Outlook
     #>
 
     [cmdletbinding()]
@@ -80,11 +71,7 @@ function Send-CKMailMessage {
         [switch]$saveToSentItems,
 
         [parameter(Mandatory = $true)]
-        [String]$accessToken,
-
-        [parameter(Mandatory = $false)]
-        [ValidateSet('MSGraph','Outlook')]
-        [string]$api = 'MSGraph'
+        [String]$accessToken
         
     )
 
@@ -120,11 +107,12 @@ function Send-CKMailMessage {
         AccessToken = $accessToken
     }
 
-    if ($api -eq 'MSGraph') {
-        $response = Invoke-CKMSGraphAPIAPI @parameters
+    # Validate Audience
+    $response = Switch ((Read-CKAccessToken -Token $accessToken).aud) {
+        'https://graph.microsoft.com'   { Invoke-CKMSGraphAPI @parameters }
+        'https://outlook.office365.com' { Invoke-CKOutlookAPI @parameters }
     }
-    else {
-        $response = Invoke-CKOutlookAPI @parameters
-    }
+
+    # Return Response
     $response
 }

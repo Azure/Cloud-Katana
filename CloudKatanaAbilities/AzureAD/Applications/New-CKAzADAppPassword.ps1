@@ -1,7 +1,7 @@
-function Add-CKAzADSPPassword {
+function New-CKAzADAppPassword {
     <#
     .SYNOPSIS
-    Adds a strong password to an Azure AD service principal.
+    Adds a strong password to an Azure AD application.
     
     Author: Roberto Rodriguez (@Cyb3rWard0g)
     License: MIT
@@ -9,13 +9,13 @@ function Add-CKAzADSPPassword {
     Optional Dependencies: None
     
     .DESCRIPTION
-    Add-CKAzADAppPassword is a simple PowerShell wrapper to add a strong password to an Azure AD service principal.
+    New-CKAzADAppPassword is a simple PowerShell wrapper to add a strong password to an Azure AD application.
 
     .PARAMETER displayName
     Friendly name for the password.
 
-    .PARAMETER spObjectId
-    The object id (id) of the Azure AD service principal.
+    .PARAMETER appObjectId
+    The object id (id) of the Azure AD application.
 
     .PARAMETER accessToken
     Access token used to access the API.
@@ -24,17 +24,17 @@ function Add-CKAzADSPPassword {
     https://docs.microsoft.com/en-us/graph/api/resources/passwordcredential?view=graph-rest-1.0
 
     .EXAMPLE
-    $spPassword = Add-CKAzADSPPassword -displayName 'CKPassword' -spObjectId 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' -accessToken $accessToken
-    $spPassword
+    $appPassword = New-CKAzADAppPassword -displayName 'wardog' -appObjectId 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx' -accessToken $accessToken
+    $appPassword
 
     @odata.context      : https://graph.microsoft.com/v1.0/$metadata#microsoft.graph.passwordCredential
     customKeyIdentifier :
-    displayName         : CKPassword
-    endDateTime         : 2023-09-09T06:48:38.5178849Z
-    hint                :
+    displayName         : wardog
+    endDateTime         : 2023-09-09T06:45:32.1286693Z
+    hint                : zNQ
     keyId               : xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-    secretText          : xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    startDateTime       : 2021-09-09T06:48:38.5178849Z
+    secretText          : xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    startDateTime       : 2021-09-09T06:45:32.1286693Z
     #>
 
     [cmdletbinding()]
@@ -43,7 +43,7 @@ function Add-CKAzADSPPassword {
         [String]$displayName,
 
         [parameter(Mandatory = $True)]
-        [String]$spObjectId,
+        [String]$appObjectId,
 
         [parameter(Mandatory = $true)]
         [String]$accessToken
@@ -52,7 +52,7 @@ function Add-CKAzADSPPassword {
     $body = @{
         passwordCredential = @{ displayName = "$displayName" }
     }
-    $resourceString = "servicePrincipals/$($spObjectId)/addPassword"
+    $resourceString = "applications/$($appObjectId)/addPassword"
     $parameters = @{
         Resource = $resourceString
         HttpMethod = "Post"
