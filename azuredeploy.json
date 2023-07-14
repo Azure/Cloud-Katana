@@ -107,9 +107,15 @@
                 "forceUpdateTag": "[parameters('utcValue')]",
                 "azPowerShellVersion": "6.2",
                 "timeout": "PT30M",
-                "scriptContent": "[format('. .\\New-CKTAppRegistration.ps1; $results = New-CKTAppRegistration -Name {0} -IdentifierUris {1} -ReplyUrls {2} -RequireAssignedRole -AssignAppRoleToUser {3} -ConnectAs ManagedIdentity; $DeploymentScriptOutputs[\"appId\"] = $results.appId', variables('resourceNames').ServerAppName, concat('api://',subscription().tenantId,'/cloudkatana'), concat('https://', variables('resourceNames').AppName, '.azurewebsites.net/.auth/login/aad/callback'), parameters('assignAppRoleToUser'))]",
+                "scriptContent": "[format('. .\\New-CKAzADApplication.ps1; Connect-AzAccount -Identity; $accessToken = (Get-AzAccessToken -ResourceUrl \"https://graph.microsoft.com/\").Token; $results =  New-CKAzADApplication -displayName {0} -identifierUri {1} -webReplyURI {2} -requireAssignedRole -assignAppRoleToUser {3} -accessToken $accessToken; $DeploymentScriptOutputs[\"appId\"] = $results.appId', variables('resourceNames').ServerAppName, concat('api://',subscription().tenantId,'/cloudkatana'), concat('https://', variables('resourceNames').AppName, '.azurewebsites.net/.auth/login/aad/callback'), parameters('assignAppRoleToUser'))]",
                 "supportingScriptUris": [
-                    "[concat(parameters('artifactsLocation'), '/resources/scripts/New-CKTAppRegistration.ps1', parameters('_artifactsLocationSasToken'))]"
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/APIs/Invoke-CKMSGraphAPI.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/New-CKTAppRegistration.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/Get-CKAzADApplications.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/New-CKAzADAppServicePrincipal.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/Get-CKAzADServicePrincipals.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Users/Get-CKAzADUsers.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Users/Get-CKAzADUserAppRoleAssignments.ps1', parameters('_artifactsLocationSasToken'))]"
                 ],
                 "cleanupPreference": "OnSuccess",
                 "retentionInterval": "PT1H"
@@ -131,9 +137,15 @@
                 "forceUpdateTag": "[parameters('utcValue')]",
                 "azPowerShellVersion": "6.2",
                 "timeout": "PT30M",
-                "scriptContent": "[format('. .\\New-CKTAppRegistration.ps1; $results = New-CKTAppRegistration -Name {0} -NativeApp -RequireAssignedRole -AssignAppRoleToUser {1} -ConnectAs ManagedIdentity; $DeploymentScriptOutputs[\"appId\"] = $results.appId', variables('resourceNames').ClientAppName, parameters('assignAppRoleToUser'))]",
+                "scriptContent": "[format('. .\\New-CKAzADApplication.ps1; Connect-AzAccount -Identity; $accessToken = (Get-AzAccessToken -ResourceUrl \"https://graph.microsoft.com/\").Token; $results = New-CKTAppRegistration -displayName {0} -NativeApp -requireAssignedRole -assignAppRoleToUser {1}; $DeploymentScriptOutputs[\"appId\"] = $results.appId', variables('resourceNames').ClientAppName, parameters('assignAppRoleToUser'))]",
                 "supportingScriptUris": [
-                    "[concat(parameters('artifactsLocation'), '/resources/scripts/New-CKTAppRegistration.ps1', parameters('_artifactsLocationSasToken'))]"
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/APIs/Invoke-CKMSGraphAPI.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/New-CKTAppRegistration.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/Get-CKAzADApplications.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/New-CKAzADAppServicePrincipal.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/Get-CKAzADServicePrincipals.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Users/Get-CKAzADUsers.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Users/Get-CKAzADUserAppRoleAssignments.ps1', parameters('_artifactsLocationSasToken'))]"
                 ],
                 "cleanupPreference": "OnSuccess",
                 "retentionInterval": "PT1H"
@@ -191,10 +203,13 @@
                 "forceUpdateTag": "[parameters('utcValue')]",
                 "azPowerShellVersion": "6.2",
                 "timeout": "PT30M",
-                "scriptContent": "[format('. .\\Grant-CKTPermissions.ps1; Grant-CKTPermissions -SvcPrincipalId {0} -PermissionsFile .\\permissions.json -ConnectAs ManagedIdentity', reference(variables('resourceNames').Identity, '2018-11-30').principalId)]",
+                "scriptContent": "[format('. .\\Grant-CKAzADAppPermissions.ps1; Connect-AzAccount -Identity; $accessToken = (Get-AzAccessToken -ResourceUrl \"https://graph.microsoft.com/\").Token; Grant-CKAzADAppPermissions -spObjectId {0} -resourceName \"Microsoft Graph\" -Permissions @(\"Application.ReadWrite.All\",\"AppRoleAssignment.ReadWrite.All\",\"Mail.Read\") -permissionType application -accessToken $accessToken', reference(variables('resourceNames').Identity, '2018-11-30').principalId)]",
                 "supportingScriptUris": [
-                    "[concat(parameters('artifactsLocation'), '/resources/scripts/Grant-CKTPermissions.ps1', parameters('_artifactsLocationSasToken'))]",
-                    "[concat(parameters('artifactsLocation'), '/simulations/atomic/permissions.json', parameters('_artifactsLocationSasToken'))]"
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/APIs/Invoke-CKMSGraphAPI.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/Grant-CKAzADAppPermissions.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/Get-CKOauth2PermissionGrants.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/Get-CKAzADServicePrincipals.ps1', parameters('_artifactsLocationSasToken'))]"
+                    
                 ],
                 "cleanupPreference": "OnSuccess",
                 "retentionInterval": "PT1H"

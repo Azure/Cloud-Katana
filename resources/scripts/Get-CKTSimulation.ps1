@@ -2,7 +2,7 @@ Function Get-CKTSimulation
 {
     <#
     .SYNOPSIS
-    A PowerShell script to read attack simulations from a Yaml file or string.
+    A PowerShell script to read attack simulations from a Json file or string.
     
     Author: Roberto Rodriguez (@Cyb3rWard0g)
     License: MIT
@@ -12,10 +12,10 @@ Function Get-CKTSimulation
     .DESCRIPTION 
 
     .PARAMETER Path
-    Path to the YAML file that defines a simulation request.
+    Path to the JSON file that defines a simulation request.
 
-    .PARAMETER YamlStrings
-    YAML strings that define a simulation request.
+    .PARAMETER JsonStrings
+    Json strings that define a simulation request.
 
     .LINK
     #>
@@ -23,43 +23,50 @@ Function Get-CKTSimulation
     [CmdletBinding(DefaultParameterSetName = 'File')]
     param (
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'File')]
-        [ValidateScript({ Test-Path -Path $_ -Include '*.yaml', '*.yml' })]
-        [String] $Path,
+        [ValidateScript({ Test-Path -Path $_ -Include '*.json' })]
+        [String]$Path,
 
         [Parameter(Mandatory, ParameterSetName = 'Strings')]
         [ValidateNotNullOrEmpty()]
-        [String]$YamlStrings
+        [String]$JsonStrings
     )
 
     switch ($PSCmdlet.ParameterSetName) {
         'File' {
-            $SimulationContent = Get-Content -Path $(Resolve-Path -Path $Path) -Raw
+            $SimuStrings = Get-Content -Path $(Resolve-Path -Path $Path) -Raw
         }
 
         'Strings' {
-            $SimulationContent = $YamlStrings
+            $SimuStrings = $JsonStrings
         }
     }
 
-    # Create PS YAML object
+    # Reading a JSON object to a PSCustomObject
     try {
-        [Hashtable]$SimulationObject = ConvertFrom-Yaml -Yaml $SimulationContent
+        $SimuPSObject = ConvertFrom-Json $SimuStrings
     } catch {
         Write-Error $_
     }
 
+    #############
+    # Variables #
+    #############
+    $SimuProperties = $SimuPSObject.PsObject.Properties
+
     # Validate schemas
-    function Confirm-Atomic ($atomic, $varsExist) {
+    function Confirm-Step ($atomic, $vars, $Params) {
         $currentStep = $atomic.number
-        if (-not $atomic.ContainsKey('execution')) {
+        $atomicProperties = $atomic.PsObject.Properties
+        Write-Debug "  [>] Validating step $($atomic.Name) schema.."
+        if (-not $atomicProperties.Name -contains 'execution') {
             Write-Error "[Step $currentStep] The 'execution' attribute is required."
             return
         }
-        if (-not ($atomic.execution -is [Hashtable] -or $atomic.execution -is [System.Collections.Specialized.OrderedDictionary])) {
+        if (-not ($atomic.execution -is [PSCustomObject])) {
             Write-Error "[Step $currentStep] The 'execution' must be a Hashtable."
             return
         }
-        if (-not ($atomic.execution).ContainsKey('platform')) {
+        if (-not $atomicProperties.Name -contains 'platform') {
             Write-Error "[Step $currentStep] The attribute 'platform' is required in execution."
             return
         }
@@ -70,8 +77,8 @@ Function Get-CKTSimulation
             return
         }
 
-        if (($atomic.execution).ContainsKey('supportingFileUris')) {
-            if (-not ($atomic.supportingFileUris -is [System.Collections.Generic.List`1[Object]])) {
+        if ($atomicProperties.Name -contains 'supportingFileUris') {
+            if (-not ($atomic.supportingFileUris -is [array])) {
                 Write-Error "[Step $currentStep] The 'supportingFileUris' attribute must be an array."
                 return
             }
@@ -82,33 +89,51 @@ Function Get-CKTSimulation
             return
         }
         if ($atomic.execution.type -eq 'ScriptModule') {
-            if (-not ($atomic.execution).ContainsKey('module')) {
+            $executionProperties = $atomic.execution.PsObject.Properties
+            $moduleProperties = $atomic.execution.module.PsObject.Properties
+            if (-not $executionProperties.Name -contains 'module') {
                 Write-Error "[Step $currentStep] The 'module' attribute is required in ScriptModule execution."
                 return
             }
-            if (-not (($atomic.execution.module).keys -contains 'name')) {
+            if (-not ($moduleProperties.Name -contains 'name')) {
                 Write-Error "[Step $currentStep] The 'name' attribute is required in ScriptModule 'module'."
                 return
             }
-            if (-not (($atomic.execution.module).keys -contains 'function')) {
+            if (-not ($moduleProperties.Name -contains 'function')) {
                 Write-Error "[Step $currentStep] The 'function' attribute is required in ScriptModule 'module'."
                 return
             }
         }
         if ($atomic.execution.type -eq 'ScriptFile') {
-            if (-not ($atomic.execution).ContainsKey('scriptUri')) {
+            if (-not $executionProperties.Name -contains 'scriptUri') {
                 Write-Error "[Step $currentStep] The 'scriptUri' attribute is required in ScriptFile execution."
                 return
             }
         }
-        if ($varsExist -and $vars) {
-            foreach ($param in ($atomic.execution.parameters).keys) {
-                $currentParamValue = $atomic.execution.parameters[$param]
-                if ($currentParamValue -like 'variable(*)') {
-                    $currentParamValue -match "variable\((?<variableName>[a-zA-Z]{1,})\)" | Out-Null
-                    $varName = $matches['variableName']
-                    if ($varName -notin ($vars).keys) {
-                        Write-Error "[Step $currentStep] references variable $varName, but it is not defined in template. Current variables set: $(($vars).keys -join ',')"
+
+        $execParamProperties = $atomic.execution.parameters.PsObject.Properties
+        if ($defaultParams) {
+            foreach ($param in $execParamProperties.Name) {
+                $currentParamValue = $atomic.execution.parameters.$param.defaultValue
+                if ($currentParamValue -like '*parameters(*)*') {
+                    $currentParamValue -match "parameters\((?<refName>[a-zA-Z]{1,})\)" | Out-Null
+                    $paramName = ($matches['refName']).ToLower()
+                    if ($paramName -notin ($defaultParams).keys) {
+                        Write-Error "[Step $currentStep] references parameter $paramName, but it is not defined in template. Current parameter set: $(($defaultParams).keys -join ',')"
+                        return
+                    }
+                }
+            }
+        }
+
+        if ($defaultVars) {
+            foreach ($param in $execParamProperties.Name) {
+                $currentParamValue = $atomic.execution.parameters.$param.defaultValue
+                if ($currentParamValue -like '*variables(*)*') {
+                    $currentParamValue -match "variables\((?<refName>[a-zA-Z]{1,})\)" | Out-Null
+                    $varName = ($matches['refName']).ToLower()
+                    if ($varName -notin ($defaultVars.keys)) {
+                        Write-Error "[Step $currentStep] references variable $varName, but it is not defined in template. Current variables set: $(($defaultVars).keys -join ',')"
                         return
                     }
                 }
@@ -116,61 +141,67 @@ Function Get-CKTSimulation
         }
     }
 
-    if ($SimulationObject.ContainsKey('schema')) {
-        if (-not $SimulationObject.ContainsKey('name')) {
-            Write-Error "[Campaign] The 'name' attribute is required."
-            return
-        }
-        <#
-        if (-not $SimulationObject.ContainsKey('metadata')) {
-            Write-Error "[Campaign] The 'metadata' attribute is required."
-            return
-        }
-        #>
-        if ($SimulationObject.schema -eq 'atomic') {
-            Confirm-Atomic $SimulationObject
-        }
-        elseif ($SimulationObject.schema -eq 'campaign') {
-            if (-not $SimulationObject.ContainsKey('steps')) {
-                Write-Error "[Campaign] The 'steps' attribute is required."
-                return
-            }
-
-            if ($SimulationObject.ContainsKey('variables')) {
-                $varsExist = $true
-                # Lowercasing all variable keys
-                $defaultVars = [ordered]@{}
-                foreach ($key in ($SimulationObject.variables).keys) {
-                    $defaultVars[$(($key).ToLower())] = $SimulationObject.variables.$key
-                }
-                $SimulationObject.variables = $defaultVars
-                $vars = $SimulationObject.variables
-            } else {
-                $varsExist = $false
-                $vars = $null
-            }
-
-            if (-not ($SimulationObject.steps -is [System.Collections.Generic.List`1[Object]])) {
-                Write-Error "[Campaign] The 'steps' attribute must be an array."
-                return
-            }
-
-            foreach ($step in $SimulationObject['steps']) {
-                if (-not $step.ContainsKey('number')) {
-                    Write-Error "[Step $currentStep] The 'number' attribute is required when defining campaign steps."
-                    return
-                }
-                Confirm-Atomic $step $varsExist $vars
-            }
-        }
-        else {
-            Write-Error "Schema type can only be 'atomic' or 'campaign'. You provided: $($SimulationObject.schema)"
-            return
-        }
-    }
-    else {
-        Write-Error "Simulation object must have a schema property."
+    ################
+    # Main Section #
+    ################
+    Write-Debug "[*] Starting campaign schema validation.."
+    if (-not $SimuProperties.Name -contains 'steps') {
+        Write-Error "[Campaign] The 'steps' attribute is required."
         return
     }
-    $SimulationObject
+
+    if ($SimuProperties.Name -contains 'parameters') {
+        $SimuParamProperties = $SimuPSObject.parameters.PsObject.Properties
+        # Lowercasing all parameter keys
+        $defaultParams = @{}
+        foreach ($key in $SimuParamProperties.Name) {
+            $defaultParams[$(($key).ToLower())] = $SimuPSObject.parameters.$key
+        }
+    } else {
+        $defaultParams = $null
+    }
+
+    if ($SimuProperties.Name -contains 'variables') {
+        $SimuVarProperties = $SimuPSObject.variables.PsObject.Properties
+        # Lowercasing all variable keys
+        $defaultVars = @{}
+        foreach ($key in $SimuVarProperties.Name) {
+            $defaultVars[$(($key).ToLower())] = $SimuPSObject.variables.$key
+        }
+    } else {
+        $defaultVars = $null
+    }
+
+    # Validate global variables referencing global parameters
+    if ($defaultVars) {
+        Write-Debug "[*] Validating global variables referencing global parameters.."
+        foreach ($key in $SimuVarProperties.Name) {
+            $currentVarValue = $SimuPSObject.variables.$key
+            if ($currentVarValue -like '*parameters(*)*') {
+                $currentVarValue -match "parameters\((?<refName>[a-zA-Z]{1,})\)" | Out-Null
+                $paramName = ($matches['refName']).ToLower()
+                if ($paramName -notin ($defaultParams).keys) {
+                    Write-Error "[Variable $key] references parameter $paramName, but it is not defined in template. Current parameter set: $(($defaultParams).keys -join ',')"
+                    return
+                }
+            }
+        }
+    }
+
+    # Making Sure Steps is an array
+    if (-not ($SimuPSObject.steps -is [array])) {
+        Write-Error "[Campaign] The 'steps' attribute must be an array."
+        return
+    }
+
+    # Validating the schema and references for every single step
+    Write-Debug "[*] Validating the schema of each step.."
+    foreach ($step in $SimuPSObject.steps) {
+        if (-not $step.PsObject.Properties.Name -contains 'number') {
+            Write-Error "[Step] The 'number' attribute is required when defining campaign steps."
+            return
+        }
+        Confirm-Step $step $defaultParams $defaultVars
+    }
+    $SimuPSObject
 }

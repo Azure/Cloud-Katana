@@ -181,6 +181,16 @@ function Get-CKAccessToken {
 }
 
 function New-DynamicParam {
+    <#
+    .SYNOPSIS
+    A PowerShell script to enable dynamic parameters.
+    
+    Author: Roberto Rodriguez (@Cyb3rWard0g)
+    License: MIT
+    Required Dependencies: None
+    Optional Dependencies: None
+    #>
+
     [CmdletBinding()]
     [OutputType('System.Management.Automation.RuntimeDefinedParameter')]
     param (

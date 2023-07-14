@@ -1,0 +1,7 @@
+{
+    "application": [
+        "Application.ReadWrite.All",
+        "AppRoleAssignment.ReadWrite.All",
+        "Mail.Read"
+    ]
+}

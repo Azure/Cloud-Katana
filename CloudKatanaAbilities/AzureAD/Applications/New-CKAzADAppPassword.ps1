@@ -39,19 +39,25 @@ function New-CKAzADAppPassword {
 
     [cmdletbinding()]
     Param(
-        [parameter(Mandatory = $True)]
+        [parameter(Mandatory = $false)]
         [String]$displayName,
 
-        [parameter(Mandatory = $True)]
+        [parameter(Mandatory = $true)]
         [String]$appObjectId,
 
         [parameter(Mandatory = $true)]
         [String]$accessToken
     )
 
+    if (!$displayName) {
+        $pwdCredentialName = 'NewSecret' + $( -join ((65..90) + (97..122) | Get-Random -Count 12 | ForEach-Object { [char]$_ }))
+        $displayName = "$($pwdCredentialName)"
+    }
+
     $body = @{
         passwordCredential = @{ displayName = "$displayName" }
     }
+    
     $resourceString = "applications/$($appObjectId)/addPassword"
     $parameters = @{
         Resource = $resourceString

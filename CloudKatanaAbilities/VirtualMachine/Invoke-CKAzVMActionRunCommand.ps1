@@ -129,7 +129,7 @@ function Invoke-CKAzVMActionRunCommand {
     
     try {
         Write-Host "[+] Requesting execution of $commandId Action RunCommand"
-        $response = Invoke-WebRequest @params -UseBasicParsing
+        $response = Invoke-WebRequest @params
     }
     catch {
         $statusCode = $_.Exception.Response.StatusCode.value__
@@ -143,7 +143,7 @@ function Invoke-CKAzVMActionRunCommand {
     Write-Host $statusUri
 
     while($true){
-        $statusResponse = $(Invoke-WebRequest -UseBasicParsing -Uri $statusUri -Headers $Headers).Content | ConvertFrom-Json
+        $statusResponse = $(Invoke-WebRequest -UseBasicParsing -Uri $statusUri[0] -Headers $Headers).Content | ConvertFrom-Json
         Write-Host "[*] Action RunCommand $($statusResponse.name) has status of $($statusResponse.status)"
         if($statusResponse.status -eq "InProgress"){
             Start-Sleep -Seconds 5

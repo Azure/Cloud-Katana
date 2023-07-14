@@ -1,0 +1,79 @@
+{
+    "id": "70a8c31c-bfdc-4963-83f1-b844ae4f8d1c",
+    "name": "Multiple System Network Configuration Discovery",
+    "metadata": {
+        "creationDate": "2022-04-28",
+        "modificationDate": "2022-04-28",
+        "platform": [
+            "WindowsHybridWorker"
+        ],
+        "description": "A campaign to simulate a threat actor running multiple techniques to enumerate the system configuration.",
+        "contributors": [
+            "Roberto Rodriguez @Cyb3rWard0g"
+        ],
+        "mitreAttack": [
+            {
+                "technique": "T1098.001",
+                "tactics": [
+                    "TA0003"
+                ]
+            }
+        ]
+    },
+    "steps": [
+        {
+            "number": 1,
+            "name": "List Open Egress Ports via .NET TcpClient Class",
+            "execution": {
+                "type": "ScriptModule",
+                "platform": "WindowsHybridWorker",
+                "executor": "PowerShell",
+                "module": {
+                    "name": "invoke-atomicredteam",
+                    "function": "Invoke-AtomicTest"
+                },
+                "parameters": {
+                    "AtomicTechnique": {
+                        "type": "array",
+                        "defaultValue": [
+                            "T1016"
+                        ]
+                    },
+                    "TestNumbers": {
+                        "type": "array",
+                        "defaultValue": [
+                            "5"
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "number": 2,
+            "name": "List Firewall Rules via Netsh",
+            "execution": {
+                "type": "ScriptModule",
+                "platform": "WindowsHybridWorker",
+                "executor": "PowerShell",
+                "module": {
+                    "name": "invoke-atomicredteam",
+                    "function": "Invoke-AtomicTest"
+                },
+                "parameters": {
+                    "AtomicTechnique": {
+                        "type": "array",
+                        "defaultValue": [
+                            "T1016"
+                        ]
+                    },
+                    "TestNumbers": {
+                        "type": "array",
+                        "defaultValue": [
+                            "2"
+                        ]
+                    }
+                }
+            }
+        }
+    ]
+}

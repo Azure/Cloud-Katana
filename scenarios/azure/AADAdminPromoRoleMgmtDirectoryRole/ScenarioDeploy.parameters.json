@@ -1,0 +1,19 @@
+{
+    "parameters": {
+        "appSPObjectId": {
+            "value": "NEW-VALUE"
+        },
+        "appClientId": {
+            "value": "NEW-VALUE"
+        },
+        "appObjectId": {
+            "value": "NEW-VALUE"
+        },
+        "directoryObjectId": {
+            "value": "NEW-VALUE"
+        },
+        "templateRoleId": {
+            "value": "NEW-VALUE"
+        }
+    }
+}

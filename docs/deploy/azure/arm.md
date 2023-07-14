@@ -14,19 +14,58 @@ az login
 git clone https://github.com/Azure/Cloud-Katana
 ```
 
+# Import Cloud Katana Tools PowerShell Module
+This module is based on the [Cloud Katana abilities](https://www.powershellgallery.com/packages/CloudKatanaAbilities) module available in the project.
+
+```PowerShell
+Import-Module .\CloudKatanaTools.psm1 -Verbose
+```
+
+## Define Variables
+We are going to define a few variables for the whole setup
+
+```PowerShell
+$AADPowerShellAppId = '1b730954-1685-4b74-9bfd-dac224a7b894'
+$AzManagementUrl = 'https://management.azure.com'
+$MSGraphUrl = 'https://graph.microsoft.com'
+$SubscriptionId = '<ADD-SUBSCRIPTION-ID-HERE>'
+$ResourceGroupName = '<ADD-RESOURCE-GROUP-NAME-HERE>'
+$IdentityName = '<ADD-USER-ASSIGNED-MANAGED-IDENTITY-NAME-HERE>'
+$FunctionAppName = (-join ('cloudkatana',-join ((65..90) + (97..122) | Get-Random -Count 10 | % {[char]$_}))).ToLower()
+```
+
+## Get Access Token for Azure Resource Management API
+We need get an access token to use with the Azure Resource Management API to create an Azure Resource Group and a User-Assigned Managed Identity.
+
+### Request a Device Code
+
+Request a device code with the Azure Active Directory PowerShell application (app ID: 1b730954-1685-4b74-9bfd-dac224a7b894) for the Azure Resource Management `https://management.azure.com`. To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code XXXX to authenticate
+
+```PowerShell
+$AzMgmtDCRequest = Get-CKDeviceCode -ClientId $AADPowerShellAppId -Resource $AzManagementUrl
+```
+```
+user_code        : XXXX
+device_code      : XXXX
+verification_url : https://microsoft.com/devicelogin
+expires_in       : 900
+interval         : 5
+message          : To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code XXXX to authenticate.
+```
+
+# Retrieve Access Token
+
+```PowerShell
+$AzMgmtTokens = Get-CKAccessToken -ClientId $AADPowerShellAppId -Resource $AzManagementUrl -GrantType device_code -DeviceCode $AzMgmtDCRequest.device_code
+$AzMgmtAccessToken = $AzMgmtTokens.access_token
+```
+
 ## Create Resource Group
 
 Create a resource group to deploy all Cloud Katana resources in it.
 
 ```PowerShell
-az group create --name MyResourceGroup --location eastus
-```
-
-## Import Cloud Katana Tools Module
-
-```PowerShell
-cd Cloud-Katana
-Import-Module .\CloudKatanaTools.psm1 -verbose
+$resourceGroup = New-CKAzResourceGroup -name $ResourceGroupName -location eastus -subscriptionId $SubscriptionId -accessToken $AzMgmtAccessToken
 ```
 
 ## Create a User Assigned Managed Identity
@@ -42,13 +81,36 @@ The registration of new Azure AD applications and permission grants are done via
 To create a user-assigned managed identity, your account needs the [Managed Identity Contributor role](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#managed-identity-contributor).
 ```
 
-Run the following PowerShell commands to create a new managed identity:
+Run the following PowerShell commands to create a new user-assigned managed identity:
 
 ```PowerShell
-$identityName = 'CKDeploymentIdentity'
-$resourceGroup = '<RESOURCE-GROUP-NAME>'
+$Identity = New-CKAzADManagedIdentity -name $IdentityName -subscriptionId $SubscriptionId -resourceGroupName $ResourceGroupName -accessToken $AzMgmtAccessToken
+```
 
-$identity = New-CKTManagedIdentity -Name $identityName -ResourceGroup $resourceGroup -verbose
+## Get Access Token for Microsoft Graph API
+We need get an access token to use with the Microsoft Graph API to grant permissions to the User-Assigned Managed Identity created to deploy Cloud Katana.
+
+### Request a Device Code
+
+Request a device code with the Azure Active Directory PowerShell application (app ID: 1b730954-1685-4b74-9bfd-dac224a7b894) for the Microsoft Graph `https://graph.microsoft.com`. To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code XXXX to authenticate
+
+```PowerShell
+$MSGraphDCRequest = Get-CKDeviceCode -ClientId $AADPowerShellAppId -Resource $MSGraphUrl
+```
+```
+user_code        : XXXX
+device_code      : XXXX
+verification_url : https://microsoft.com/devicelogin
+expires_in       : 900
+interval         : 5
+message          : To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code XXXX to authenticate.
+```
+
+# Retrieve Access Token
+
+```PowerShell
+$MSGraphTokens = Get-CKAccessToken -ClientId $AADPowerShellAppId -Resource $MSGraphUrl -GrantType device_code -DeviceCode $MSGraphDCRequest.device_code
+$MSGraphAccessToken = $MSGraphTokens.access_token
 ```
 
 ## Grant Permissions to Managed Identity
@@ -62,25 +124,13 @@ Once the managed identity is created, we need to grant all the required permissi
 
 **Reference**: [https://docs.microsoft.com/en-us/graph/permissions-reference#application-permissions-4](https://docs.microsoft.com/en-us/graph/permissions-reference#application-permissions-4)
 
-You can use another function from the Cloud Katana Tools module to grant permissions to the deployment managed identity.
-
 ```PowerShell
-Grant-CKTPermissions -SvcPrincipalId $identity.principalId -PermissionsList @('Application.ReadWrite.All','AppRoleAssignment.ReadWrite.All','DelegatedPermissionGrant.ReadWrite.All','User.Read.All') -PermissionsType application -verbose
+Grant-CKAzADAppPermissions -spObjectId $Identity.properties.principalId -resourceName 'Microsoft Graph' -Permissions @('Application.ReadWrite.All','AppRoleAssignment.ReadWrite.All','DelegatedPermissionGrant.ReadWrite.All','User.Read.All') -permissionType application -accessToken $MSGraphAccessToken -verbose
 ```
 
 ## Deploy ARM Template
 
 Deploy Cloud Katana to Azure with the `azuredeploy.json` ARM template available at the root of the project's folder. You can run the template with [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/what-is-azure-cli) or a `Deploy` button (One-click deployment).
-
-### Create Azure Function Application Name
-
-```{note}
-The name of the Cloud Katana Azure function application needs to be unique because it is of `Global` scope across Azure resources. Therefore, use the following commands to get a random name with `cloudkatana` as a prefix.
-```
-
-```PowerShell
-$functionAppName = (-join ('cloudkatana',-join ((65..90) + (97..122) | Get-Random -Count 10 | % {[char]$_}))).ToLower()
-```
 
 ### Azure CLI
 
