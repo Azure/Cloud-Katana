@@ -23,6 +23,9 @@ function Get-CKMailboxMessages {
     .PARAMETER selectFields
     Specific properties/columns to return from message objects using the $select query parameter.
 
+    .PARAMETER filter
+    Filter results by using the $filter query parameter to retrieve just a subset of a collection.
+
     .PARAMETER pageSize
     Specific number of objects to return per page using the $top query parameter. $top sets the page size of results.
 
@@ -81,6 +84,9 @@ function Get-CKMailboxMessages {
         [String]$selectFields = 'id,subject,sentDateTime,receivedDateTime,sender,from,webLink,toRecipients,ccRecipients,bccRecipients,replyTo,hasAttachments,importance,bodyPreview,isRead,body,parentFolderId',
 
         [parameter(Mandatory = $false)]
+        [String]$filter,
+
+        [parameter(Mandatory = $false)]
         [Int]$pageSize = 10,
 
         [parameter(Mandatory = $false)]
@@ -104,6 +110,7 @@ function Get-CKMailboxMessages {
     $parameters = @{
         Resource = $resourceUrl
         SelectFields = $selectFields
+        Filter = $filter
         PageSize = $pageSize
         OrderBy = $orderBy
         SortIn = $sortIn
