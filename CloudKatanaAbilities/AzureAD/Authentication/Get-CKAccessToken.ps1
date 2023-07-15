@@ -180,7 +180,6 @@ function Get-CKAccessToken {
             }
         }
         catch {
-            # Reference: https://github.com/Gerenios/AADInternals/blob/master/KillChain_utils.ps1#L147
             $_.ErrorDetails.Message | convertfrom-json
         }
     }
