@@ -168,14 +168,20 @@ function Get-CKAccessToken {
             Body    = $body
             method  = 'Post'
         }
-        $request  = Invoke-RestMethod @Params
-    
-        # Process authentication request
-        if($null -eq $request) {
-            throw "Token never received from AAD"
+        
+        try {
+            $request  = Invoke-RestMethod @Params
+            # Process authentication request
+            if($null -eq $request) {
+                throw "Token never received from AAD"
+            }
+            else {
+                $request
+            }
         }
-        else {
-            $request
+        catch {
+            # Reference: https://github.com/Gerenios/AADInternals/blob/master/KillChain_utils.ps1#L147
+            $_.ErrorDetails.Message | convertfrom-json
         }
     }
 }
