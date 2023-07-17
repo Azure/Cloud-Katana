@@ -96,7 +96,7 @@ Function Confirm-CKTSimulation
                 Write-Error "[Step $currentStep] The 'module' attribute is required in ScriptModule execution."
                 return
             }
-            if (-not ($executionProperties.Name -contains 'version')) {
+            if (-not ($moduleProperties.Name -contains 'version')) {
                 Write-Error "[Step $currentStep] The 'version' attribute is required in ScriptModule execution."
                 return
             }
