@@ -16,4 +16,5 @@ parts:
   - file: simulate/azure/intro
     sections:
     - file: simulate/azure/admin_promotion_via_directory_role_permission_grant
+    - file: simulate/azure/azure_ad_light_discovery
     - file: simulate/azure/add_new_password_credential_to_azure_ad_application_and_read_mail

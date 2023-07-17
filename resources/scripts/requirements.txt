@@ -1,0 +1,4 @@
+nbformat
+jupytext
+jinja2
+pyyaml

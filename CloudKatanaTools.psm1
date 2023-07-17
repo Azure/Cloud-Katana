@@ -22,7 +22,8 @@ $CKAbilities = @(
 
 $CKToolkitScripts = @(
     "Start-CKTSimulation.ps1"
-    "Get-CKTSimulation.ps1"
+    "Confirm-CKTSimulation.ps1"
+    "Convert-CKTSimulation.ps1"
 )
 
 $scripts = @()

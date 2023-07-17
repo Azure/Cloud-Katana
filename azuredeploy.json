@@ -20,13 +20,6 @@
                 "description": "First authorized user to access and use Cloud Katana"
             }
         },
-        "_resourceNames": {
-            "type": "object",
-            "defaultValue": {},
-            "metadata": {
-                "description": "Predefined resource names. Should be set to default. The value is passed when the template is integrated into a complex pipeline."
-            }
-        },
         "utcValue": {
             "type": "string",
             "defaultValue": "[utcNow()]"
@@ -40,7 +33,7 @@
             "metadata": {
                 "description": "The location of Cloud Katana scripts and configs to deploy the serverless application"
             },
-            "defaultValue": "https://raw.githubusercontent.com/Azure/Cloud-Katana/feature/hybrid-worker-lab/"
+            "defaultValue": "https://raw.githubusercontent.com/Azure/Cloud-Katana/Cyb3rWard0g/Attack-Scenario/"
         },
         "_artifactsLocationSasToken": {
             "type": "securestring",
@@ -79,13 +72,10 @@
         }
     },
     "variables": {
-        "combinedResourceNames": {
-            "AppName": "[tolower(parameters('functionAppName'))]",
-            "Identity": "[concat(parameters('functionAppName'), 'Identity')]",
-            "ServerAppName": "[concat(parameters('functionAppName'), 'Server')]",
-            "ClientAppName": "[concat(parameters('functionAppName'), 'Client')]"
-        },
-        "resourceNames": "[if(empty(parameters('_resourceNames')), variables('combinedResourceNames'), parameters('_resourceNames'))]",
+        "AppName": "[tolower(parameters('functionAppName'))]",
+        "Identity": "[concat(parameters('functionAppName'), 'Identity')]",
+        "ServerAppName": "[concat(parameters('functionAppName'), 'Server')]",
+        "ClientAppName": "[concat(parameters('functionAppName'), 'Client')]",
         "roleGuidOne" : "[guid(parameters('roleGuid'), 'guidOne')]",
         "roleGuidTwo" : "[guid(parameters('roleGuid'), 'guidTwo')]",
         "roleGuidThree" : "[guid(parameters('roleGuid'), 'guidThree')]"
@@ -107,10 +97,10 @@
                 "forceUpdateTag": "[parameters('utcValue')]",
                 "azPowerShellVersion": "6.2",
                 "timeout": "PT30M",
-                "scriptContent": "[format('. .\\New-CKAzADApplication.ps1; Connect-AzAccount -Identity; $accessToken = (Get-AzAccessToken -ResourceUrl \"https://graph.microsoft.com/\").Token; $results =  New-CKAzADApplication -displayName {0} -identifierUri {1} -webReplyURI {2} -requireAssignedRole -assignAppRoleToUser {3} -accessToken $accessToken; $DeploymentScriptOutputs[\"appId\"] = $results.appId', variables('resourceNames').ServerAppName, concat('api://',subscription().tenantId,'/cloudkatana'), concat('https://', variables('resourceNames').AppName, '.azurewebsites.net/.auth/login/aad/callback'), parameters('assignAppRoleToUser'))]",
+                "scriptContent": "[format('. .\\New-CKAzADApplication.ps1; Connect-AzAccount -Identity; $accessToken = (Get-AzAccessToken -ResourceUrl \"https://graph.microsoft.com/\").Token; $results =  New-CKAzADApplication -displayName {0} -identifierUri {1} -webReplyURI {2} -requireAssignedRole -assignAppRoleToUser {3} -accessToken $accessToken; $DeploymentScriptOutputs[\"appId\"] = $results.appId', variables('ServerAppName'), concat('api://',subscription().tenantId,'/cloudkatana'), concat('https://', variables('AppName'), '.azurewebsites.net/.auth/login/aad/callback'), parameters('assignAppRoleToUser'))]",
                 "supportingScriptUris": [
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/APIs/Invoke-CKMSGraphAPI.ps1', parameters('_artifactsLocationSasToken'))]",
-                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/New-CKTAppRegistration.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/New-CKAzADApplication.ps1', parameters('_artifactsLocationSasToken'))]",
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/Get-CKAzADApplications.ps1', parameters('_artifactsLocationSasToken'))]",
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/New-CKAzADAppServicePrincipal.ps1', parameters('_artifactsLocationSasToken'))]",
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/Get-CKAzADServicePrincipals.ps1', parameters('_artifactsLocationSasToken'))]",
@@ -137,10 +127,10 @@
                 "forceUpdateTag": "[parameters('utcValue')]",
                 "azPowerShellVersion": "6.2",
                 "timeout": "PT30M",
-                "scriptContent": "[format('. .\\New-CKAzADApplication.ps1; Connect-AzAccount -Identity; $accessToken = (Get-AzAccessToken -ResourceUrl \"https://graph.microsoft.com/\").Token; $results = New-CKTAppRegistration -displayName {0} -NativeApp -requireAssignedRole -assignAppRoleToUser {1}; $DeploymentScriptOutputs[\"appId\"] = $results.appId', variables('resourceNames').ClientAppName, parameters('assignAppRoleToUser'))]",
+                "scriptContent": "[format('. .\\New-CKAzADApplication.ps1; Connect-AzAccount -Identity; $accessToken = (Get-AzAccessToken -ResourceUrl \"https://graph.microsoft.com/\").Token; $results = New-CKTAppRegistration -displayName {0} -NativeApp -requireAssignedRole -assignAppRoleToUser {1}; $DeploymentScriptOutputs[\"appId\"] = $results.appId', variables('ClientAppName'), parameters('assignAppRoleToUser'))]",
                 "supportingScriptUris": [
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/APIs/Invoke-CKMSGraphAPI.ps1', parameters('_artifactsLocationSasToken'))]",
-                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/New-CKTAppRegistration.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/New-CKAzADApplication.ps1', parameters('_artifactsLocationSasToken'))]",
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/Get-CKAzADApplications.ps1', parameters('_artifactsLocationSasToken'))]",
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/New-CKAzADAppServicePrincipal.ps1', parameters('_artifactsLocationSasToken'))]",
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/Get-CKAzADServicePrincipals.ps1', parameters('_artifactsLocationSasToken'))]",
@@ -154,14 +144,14 @@
         {
             "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
             "apiVersion": "2018-11-30",
-            "name": "[variables('resourceNames').Identity]",
+            "name": "[variables('Identity')]",
             "location": "[resourceGroup().location]"
         },
         {
             "type": "Microsoft.Resources/deploymentScripts",
             "apiVersion": "2020-10-01",
             "name": "sleep",
-            "dependsOn": [ "[variables('resourceNames').Identity]" ],
+            "dependsOn": [ "[variables('Identity')]" ],
             "location": "[resourceGroup().location]",
             "kind": "AzurePowerShell",
             "properties": {
@@ -176,12 +166,12 @@
         },
         {
             "type": "Microsoft.Authorization/roleAssignments",
-            "apiVersion": "2019-04-01-preview",
+            "apiVersion": "2022-04-01",
             "name": "[variables('roleGuidOne')]",
             "dependsOn": ["[concat('Microsoft.Resources/deploymentScripts/', 'sleep')]"],
             "properties": {
                 "roleDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
-                "principalId": "[reference(variables('resourceNames').Identity, '2018-11-30').principalId]",
+                "principalId": "[reference(variables('Identity'), '2018-11-30').principalId]",
                 "principalType": "ServicePrincipal",
                 "scope": "[resourceGroup().id]"
             }
@@ -203,7 +193,7 @@
                 "forceUpdateTag": "[parameters('utcValue')]",
                 "azPowerShellVersion": "6.2",
                 "timeout": "PT30M",
-                "scriptContent": "[format('. .\\Grant-CKAzADAppPermissions.ps1; Connect-AzAccount -Identity; $accessToken = (Get-AzAccessToken -ResourceUrl \"https://graph.microsoft.com/\").Token; Grant-CKAzADAppPermissions -spObjectId {0} -resourceName \"Microsoft Graph\" -Permissions @(\"Application.ReadWrite.All\",\"AppRoleAssignment.ReadWrite.All\",\"Mail.Read\") -permissionType application -accessToken $accessToken', reference(variables('resourceNames').Identity, '2018-11-30').principalId)]",
+                "scriptContent": "[format('. .\\Grant-CKAzADAppPermissions.ps1; Connect-AzAccount -Identity; $accessToken = (Get-AzAccessToken -ResourceUrl \"https://graph.microsoft.com/\").Token; Grant-CKAzADAppPermissions -spObjectId {0} -resourceName \"Microsoft Graph\" -Permissions @(\"Application.ReadWrite.All\",\"AppRoleAssignment.ReadWrite.All\",\"Mail.Read\") -permissionType application -accessToken $accessToken', reference(variables('Identity'), '2018-11-30').principalId)]",
                 "supportingScriptUris": [
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/APIs/Invoke-CKMSGraphAPI.ps1', parameters('_artifactsLocationSasToken'))]",
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/Grant-CKAzADAppPermissions.ps1', parameters('_artifactsLocationSasToken'))]",
@@ -226,7 +216,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('artifactsLocation'), '/resources/templates/functionApp.json' , parameters('_artifactsLocationSasToken'))]",
+                    "uri": "[concat(parameters('artifactsLocation'), 'resources/templates/functionApp.json' , parameters('_artifactsLocationSasToken'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -234,10 +224,10 @@
                         "value": "[reference('createServerApp').outputs.appId]"
                     },
                     "identityName": {
-                        "value": "[variables('resourceNames').Identity]"
+                        "value": "[variables('Identity')]"
                     },
                     "functionAppName": {
-                        "value": "[variables('resourceNames').AppName]"
+                        "value": "[variables('AppName')]"
                     },
                     "_packageLocation": {
                         "value": "[parameters('_packageLocation')]"
@@ -263,14 +253,14 @@
         {
             "condition": "[parameters('enableHybridMode')]",
             "type": "Microsoft.Authorization/roleAssignments",
-            "apiVersion": "2019-04-01-preview",
+            "apiVersion": "2022-04-01",
             "name": "[variables('roleGuidTwo')]",
             "dependsOn": [
                 "deployFunctionApp"
             ],
             "properties": {
                 "roleDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/roleDefinitions/', 'f353d9bd-d4a6-484e-a77a-8050b599b867')]",
-                "principalId": "[if(parameters('enableHybridMode'), reference(variables('resourceNames').AppName, '2018-11-30').principalId, '')]",
+                "principalId": "[if(parameters('enableHybridMode'), reference(variables('AppName'), '2018-11-30').principalId, '')]",
                 "principalType": "ServicePrincipal",
                 "scope": "[resourceGroup().id]"
             }
@@ -278,14 +268,14 @@
         {
             "condition": "[parameters('enableHybridMode')]",
             "type": "Microsoft.Authorization/roleAssignments",
-            "apiVersion": "2019-04-01-preview",
+            "apiVersion": "2022-04-01",
             "name": "[variables('roleGuidThree')]",
             "dependsOn": [
                 "deployFunctionApp"
             ],
             "properties": {
                 "roleDefinitionId": "[concat(subscription().id, '/providers/Microsoft.Authorization/roleDefinitions/', '9980e02c-c2be-4d73-94e8-173b1dc7cf3c')]",
-                "principalId": "[if(parameters('enableHybridMode'), reference(variables('resourceNames').AppName, '2018-11-30').principalId, '')]",
+                "principalId": "[if(parameters('enableHybridMode'), reference(variables('AppName'), '2018-11-30').principalId, '')]",
                 "principalType": "ServicePrincipal",
                 "scope": "[resourceGroup().id]"
             }
@@ -294,15 +284,15 @@
     "outputs": {
         "functionAppName": {
             "type": "string",
-            "value": "[variables('resourceNames').AppName]"
+            "value": "[variables('AppName')]"
         },
         "identityName": {
             "type": "string",
-            "value": "[variables('resourceNames').Identity]"
+            "value": "[variables('Identity')]"
         },
         "serverAppName": {
             "type": "string",
-            "value": "[variables('resourceNames').ServerAppName]"
+            "value": "[variables('ServerAppName')]"
         },
         "serverAppId": {
             "type": "string",
@@ -310,7 +300,7 @@
         },
         "clientAppName": {
             "type": "string",
-            "value": "[variables('resourceNames').ClientAppName]"
+            "value": "[variables('ClientAppName')]"
         },
         "clientAppId": {
             "type": "string",

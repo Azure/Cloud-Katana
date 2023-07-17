@@ -8,6 +8,7 @@ from jinja2 import Template
 import uuid
 import jupytext
 import sys
+from CKTFunctions import ConfirmCKTSimulation, ConvertCKTSimulation
 
 ###### Variables #####
 current_directory = os.path.dirname(__file__)
@@ -78,7 +79,12 @@ campaigns_list = glob.glob(metadata_files)
 campaigns_loaded = []
 for campaign in campaigns_list:
     print(" [>] Reading file: {}".format(campaign))
-    campaigns_loaded.append(json.load(open(campaign)))
+
+    # Call the functions
+    simulation_data = ConfirmCKTSimulation(path=campaign)
+    print(campaign)
+    simulation_object = ConvertCKTSimulation(simulation_data)
+    campaigns_loaded.append(simulation_object)
 
 ####################################
 ##### Create Jupyter Notebooks #####
@@ -344,6 +350,7 @@ for campaign in campaigns_loaded:
             if 'module' in step['execution'].keys():
                 mod_dict = dict()
                 mod_dict['name'] = step['execution']['module']['name']
+                mod_dict['version'] = step['execution']['module']['version']
                 if mod_dict not in modules:
                     modules.append(mod_dict)
 if len(modules) > 0:

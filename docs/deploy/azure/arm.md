@@ -5,7 +5,7 @@
 Use the Azure CLI command `az login` to authenticate to Azure AD with an account to deploy resources in Azure.
 
 ```PowerShell
-az login
+az login --tenant xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 ```
 
 ## Clone Project
@@ -28,21 +28,21 @@ We are going to define a few variables for the whole setup
 $AADPowerShellAppId = '1b730954-1685-4b74-9bfd-dac224a7b894'
 $AzManagementUrl = 'https://management.azure.com'
 $MSGraphUrl = 'https://graph.microsoft.com'
-$SubscriptionId = '<ADD-SUBSCRIPTION-ID-HERE>'
-$ResourceGroupName = '<ADD-RESOURCE-GROUP-NAME-HERE>'
-$IdentityName = '<ADD-USER-ASSIGNED-MANAGED-IDENTITY-NAME-HERE>'
+$SubscriptionId = '<SUBSCRIPTION-ID>'
+$ResourceGroupName = '<RESOURCE-GROUP-NAME>' # If it doesn't exists, it is created
 $FunctionAppName = (-join ('cloudkatana',-join ((65..90) + (97..122) | Get-Random -Count 10 | % {[char]$_}))).ToLower()
 ```
 
 ## Get Access Token for Azure Resource Management API
-We need get an access token to use with the Azure Resource Management API to create an Azure Resource Group and a User-Assigned Managed Identity.
+We need get an access token to use it with the Azure Resource Management API to create an Azure Resource Group and a User-Assigned Managed Identity to deploy Cloud Katana resources.
 
 ### Request a Device Code
 
-Request a device code with the Azure Active Directory PowerShell application (app ID: 1b730954-1685-4b74-9bfd-dac224a7b894) for the Azure Resource Management `https://management.azure.com`. To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code XXXX to authenticate
+Request a device code with the Azure Active Directory PowerShell application (app ID: `1b730954-1685-4b74-9bfd-dac224a7b894`) for the Azure Resource Management `https://management.azure.com`. To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code XXXX to authenticate
 
 ```PowerShell
 $AzMgmtDCRequest = Get-CKDeviceCode -ClientId $AADPowerShellAppId -Resource $AzManagementUrl
+$AzMgmtDCRequest
 ```
 ```
 user_code        : XXXX
@@ -70,7 +70,7 @@ $resourceGroup = New-CKAzResourceGroup -name $ResourceGroupName -location eastus
 
 ## Create a User Assigned Managed Identity
 
-Besides using [Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-overview) to run simulations, Cloud Katana leverages the following resources for additional capabilities:
+Besides using [Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-overview) to orchestrate attack simulations, Cloud Katana leverages the following resources for additional capabilities:
 * `Azure AD application (Server)`: Enables authentication and authorization features via Azure AD.
 * `Azure AD application (Client)`: A native application used to interact with Cloud Katana's serverless API. This is part of the authentication and authorization process.
 * `User-assigned managed identity`: Facilitates the granular access control to other Azure AD protected resources. Permissions required to execute each simulation task need to be granted to the Cloud Katana's managed identity.
@@ -84,11 +84,13 @@ To create a user-assigned managed identity, your account needs the [Managed Iden
 Run the following PowerShell commands to create a new user-assigned managed identity:
 
 ```PowerShell
+$IdentityName = '<USER-ASSIGNED-MANAGED-IDENTITY>'
 $Identity = New-CKAzADManagedIdentity -name $IdentityName -subscriptionId $SubscriptionId -resourceGroupName $ResourceGroupName -accessToken $AzMgmtAccessToken
 ```
 
 ## Get Access Token for Microsoft Graph API
-We need get an access token to use with the Microsoft Graph API to grant permissions to the User-Assigned Managed Identity created to deploy Cloud Katana.
+
+We need get an access token to use it with the Microsoft Graph API to grant permissions to the User-Assigned Managed Identity, created in the previous step, to deploy Cloud Katana.
 
 ### Request a Device Code
 
@@ -96,6 +98,7 @@ Request a device code with the Azure Active Directory PowerShell application (ap
 
 ```PowerShell
 $MSGraphDCRequest = Get-CKDeviceCode -ClientId $AADPowerShellAppId -Resource $MSGraphUrl
+$MSGraphDCRequest
 ```
 ```
 user_code        : XXXX

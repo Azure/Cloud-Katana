@@ -1,8 +1,8 @@
-Function Get-CKTSimulation
+Function Confirm-CKTSimulation
 {
     <#
     .SYNOPSIS
-    A PowerShell script to read attack simulations from a Json file or string.
+    A PowerShell script to read attack simulations from a Json file or string and validate its schema.
     
     Author: Roberto Rodriguez (@Cyb3rWard0g)
     License: MIT
@@ -58,7 +58,7 @@ Function Get-CKTSimulation
         $currentStep = $atomic.number
         $atomicProperties = $atomic.PsObject.Properties
         Write-Debug "  [>] Validating step $($atomic.Name) schema.."
-        if (-not $atomicProperties.Name -contains 'execution') {
+        if (-not ($atomicProperties.Name -contains 'execution')) {
             Write-Error "[Step $currentStep] The 'execution' attribute is required."
             return
         }
@@ -66,15 +66,16 @@ Function Get-CKTSimulation
             Write-Error "[Step $currentStep] The 'execution' must be a Hashtable."
             return
         }
-        if (-not $atomicProperties.Name -contains 'platform') {
+        if (-not ($atomic.execution.platform)) {
             Write-Error "[Step $currentStep] The attribute 'platform' is required in execution."
             return
         }
-
-        $validPlatforms = @('Azure','WindowsHybridWorker')
-        if ($atomic.execution.platform -notin $validPlatforms) {
-            Write-Error "[Step $currentStep] The platform $($atomic.execution.platform) is not a valid platform input. Valid platform set: $($validPlatforms -join ',')"
-            return
+        else {
+            $validPlatforms = @('Azure','WindowsHybridWorker')
+            if ($atomic.execution.platform -notin $validPlatforms) {
+                Write-Error "[Step $currentStep] The platform $($atomic.execution.platform) is not a valid platform input. Valid platform set: $($validPlatforms -join ',')"
+                return
+            }
         }
 
         if ($atomicProperties.Name -contains 'supportingFileUris') {
@@ -91,8 +92,12 @@ Function Get-CKTSimulation
         if ($atomic.execution.type -eq 'ScriptModule') {
             $executionProperties = $atomic.execution.PsObject.Properties
             $moduleProperties = $atomic.execution.module.PsObject.Properties
-            if (-not $executionProperties.Name -contains 'module') {
+            if (-not ($executionProperties.Name -contains 'module')) {
                 Write-Error "[Step $currentStep] The 'module' attribute is required in ScriptModule execution."
+                return
+            }
+            if (-not ($executionProperties.Name -contains 'version')) {
+                Write-Error "[Step $currentStep] The 'version' attribute is required in ScriptModule execution."
                 return
             }
             if (-not ($moduleProperties.Name -contains 'name')) {
@@ -105,14 +110,14 @@ Function Get-CKTSimulation
             }
         }
         if ($atomic.execution.type -eq 'ScriptFile') {
-            if (-not $executionProperties.Name -contains 'scriptUri') {
+            if (-not ($executionProperties.Name -contains 'scriptUri')) {
                 Write-Error "[Step $currentStep] The 'scriptUri' attribute is required in ScriptFile execution."
                 return
             }
         }
 
-        $execParamProperties = $atomic.execution.parameters.PsObject.Properties
         if ($defaultParams) {
+            $execParamProperties = $atomic.execution.parameters.PsObject.Properties
             foreach ($param in $execParamProperties.Name) {
                 $currentParamValue = $atomic.execution.parameters.$param.defaultValue
                 if ($currentParamValue -like '*parameters(*)*') {
