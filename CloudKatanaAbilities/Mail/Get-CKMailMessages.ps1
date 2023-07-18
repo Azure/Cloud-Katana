@@ -1,4 +1,4 @@
-function Get-CKMailboxMessages {
+function Get-CKMailMessages {
     <#
     .SYNOPSIS
     Get messages from a user's mailbox and folder. Currently, this operation returns message bodies in only HTML format.
@@ -9,7 +9,7 @@ function Get-CKMailboxMessages {
     Optional Dependencies: None
     
     .DESCRIPTION
-    Get-CKMailboxMessages is a simple PowerShell wrapper that uses the Microsoft Graph API or Outlook Office 365 API to read messages from a user's mailbox folder.
+    Get-CKMailMessages is a simple PowerShell wrapper that uses the Microsoft Graph API or Outlook Office 365 API to read messages from a user's mailbox folder.
 
     .PARAMETER userPrincipalName
     Specific user to read Mailbox messages from. (e.g wardog@domain.com)
@@ -43,7 +43,7 @@ function Get-CKMailboxMessages {
     https://learn.microsoft.com/en-us/previous-versions/office/office-365-api/api/version-2.0/mail-rest-operations#GetMessages
 
     .EXAMPLE
-    $messages = Get-CKMailboxMessages -userPrincipalName 'admin@domain.onmicrosoft.com' -accessToken $accessToken
+    $messages = Get-CKMailMessages -userPrincipalName 'admin@domain.onmicrosoft.com' -accessToken $accessToken
     $messages[0]
 
     @odata.etag      : W/"xxxxxxxxxxxxxxxxxxxxx"
@@ -90,7 +90,7 @@ function Get-CKMailboxMessages {
         [Int]$pageSize = 10,
 
         [parameter(Mandatory = $false)]
-        [String]$orderBy = 'receivedDateTime',
+        [String]$orderBy,
 
         [parameter(Mandatory = $false)]
         [ValidateSet('desc','asc')]
