@@ -12,7 +12,7 @@
 RootModule = 'CloudKatanaAbilities.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.3.0'
+ModuleVersion = '1.3.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -27,7 +27,7 @@ Author = 'Roberto Rodriguez (@Cyb3rWard0g)'
 CompanyName = 'Microsoft'
 
 # Copyright statement for this module
-Copyright = '(c) 2022 Microsoft. All rights reserved.'
+Copyright = '(c) 2023 Microsoft. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'A PowerShell module to simulate attacks and assess security controls in the cloud. This module defines adversary techniques used by the Cloud Katana project, a cloud native serverless application based on Azure Functions to automate attack simulations'
