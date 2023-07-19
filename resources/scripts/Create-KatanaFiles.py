@@ -76,6 +76,30 @@ activity_function_maps = {
 ##### Open attacker campaigns Json file available #####
 print("[+] Opening attack campaigns Json files..")
 campaigns_list = glob.glob(metadata_files)
+
+##### Aggregating Permissions #####
+print("\n[+] Aggregating permissions from scenarios files..")
+permissions = dict()
+for campaign in campaigns_list:
+    with open(campaign, 'r') as file:
+        simu_strings = file.read()
+    campaign_object = json.loads(simu_strings)
+    if 'authorization' in campaign_object.keys():
+        for ap in campaign_object['authorization']:
+            permission_type = ap['permissionsType']
+            roles = ap['permissions']
+            if permission_type not in permissions:
+                permissions[permission_type] = []
+            for r in roles:
+                print(r)
+                if r not in permissions[permission_type]:
+                    permissions[permission_type].append(r)
+if (permissions):
+    print("\n[+] Creating permissions files..")
+    open('{}/permissions.json'.format(metadata_directory), 'w').write(json.dumps(permissions, indent = 4))
+
+##### Processing Campaigns #####
+print("\n[+] Processing campaign files..")
 campaigns_loaded = []
 for campaign in campaigns_list:
     print(" [>] Reading file: {}".format(campaign))
@@ -364,18 +388,3 @@ if len(modules) > 0:
     mods_for_render = copy.deepcopy(modules)
     mods_req = pwsh_req_template_loaded.render(mods=mods_for_render)
     open(file_path, 'w').write(mods_req)
-
-##### Aggregating Permissions #####
-permissions = dict()
-for campaign in campaigns_loaded:
-    if 'authorization' in campaign.keys():
-        for ap in campaign['authorization']:
-            permission_type = ap['permissionsType']
-            roles = ap['permissions']
-            if permission_type not in permissions:
-                permissions[permission_type] = []
-            for r in roles:
-                if r not in permissions[permission_type]:
-                    permissions[permission_type].append(r)
-print("\n[+] Creating permissions file..")
-open('{}/permissions.json'.format(metadata_directory), 'w').write(json.dumps(permissions, indent = 4))
