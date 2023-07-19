@@ -25,10 +25,10 @@ Function Convert-CKTSimulation
     
     # Process Simulation Request
     $SimuObject = [PSCustomObject]@{
-        Id = $Simulation.Id
-        Name = $Simulation.name
-        Metadata = $Simulation.metadata
-        Steps = @()
+        id = $Simulation.Id
+        name = $Simulation.name
+        metadata = $Simulation.metadata
+        steps = @()
     }
     # Define variables
     $SimuProps = $Simulation.psobject.properties

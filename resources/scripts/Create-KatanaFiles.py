@@ -82,7 +82,6 @@ for campaign in campaigns_list:
 
     # Call the functions
     simulation_data = ConfirmCKTSimulation(path=campaign)
-    print(campaign)
     simulation_object = ConvertCKTSimulation(simulation_data)
     campaigns_loaded.append(simulation_object)
 
@@ -96,7 +95,7 @@ app_config = json.load(open(notebooks_config_path))
 for campaign in campaigns_loaded:
     print("  [>>] Processing {} file..".format(campaign['name']))
     # Setting campaign filename
-    campaign['file_name'] = (campaign['name']).lower().replace(" ","_")
+    campaign['file_name'] = (campaign['id']).lower()
     # Create Notebook
     nb = nbf.v4.new_notebook()
     nb.metadata = {'kernelspec': {'language': 'python'}}
@@ -327,7 +326,7 @@ for part in toc_template_loaded['parts']:
                     "file": "simulate/{}/intro".format(table_platform),
                     "sections": [
                         {
-                            "file": "simulate/{}/{}".format(table_platform,(campaign['name']).lower().replace(" ","_"))
+                            "file": "simulate/{}/{}".format(table_platform,(campaign['id']).lower())
                         } for campaign in table['campaign']
                     ]
                 }
