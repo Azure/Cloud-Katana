@@ -77,7 +77,7 @@
                 "executor": "PowerShell",
                 "module": {
                     "name": "CloudKatanaAbilities",
-                    "version": "1.3.0",
+                    "version": "1.3.1",
                     "function": "Add-CKAzADAppPassword"
                 },
                 "parameters": {
@@ -101,7 +101,7 @@
                 "executor": "PowerShell",
                 "module": {
                     "name": "CloudKatanaAbilities",
-                    "version": "1.3.0",
+                    "version": "1.3.1",
                     "function": "Get-CKAccessToken"
                 },
                 "parameters": {
@@ -132,7 +132,7 @@
                 "executor": "PowerShell",
                 "module": {
                     "name": "CloudKatanaAbilities",
-                    "version": "1.3.0",
+                    "version": "1.3.1",
                     "function": "Grant-CKAzADAppPermissions"
                 },
                 "parameters": {
@@ -174,7 +174,7 @@
                 "executor": "PowerShell",
                 "module": {
                     "name": "CloudKatanaAbilities",
-                    "version": "1.3.0",
+                    "version": "1.3.1",
                     "function": "Get-CKAccessToken"
                 },
                 "parameters": {
@@ -205,7 +205,7 @@
                 "executor": "PowerShell",
                 "module": {
                     "name": "CloudKatanaAbilities",
-                    "version": "1.3.0",
+                    "version": "1.3.1",
                     "function": "Add-CKAzADDirectoryRoleMember"
                 },
                 "parameters": {
