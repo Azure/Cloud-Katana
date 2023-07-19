@@ -1,5 +1,5 @@
 {
-    "id": "7dde2208-d4eb-480e-afa1-bad0ab7e861b",
+    "id": "attackscenario-7dde2208-d4eb-480e-afa1-bad0ab7e861b",
     "name": "Admin promotion via Directory Role Permission Grant",
     "metadata": {
         "creationDate": "2021-11-01",
@@ -67,13 +67,6 @@
             "defaultValue": "test"
         }
     },
-    "variables": {
-        "victimAppSPObjectId": "parameters(appSPObjectId)",
-        "victimAppClientId": "parameters(appClientId)",
-        "victimAppObjectId": "parameters(appObjectId)",
-        "directoryObjectId": "parameters(directoryObjectId)",
-        "templateRoleId": "parameters(templateRoleId)"
-    },
     "steps": [
         {
             "number": 1,
@@ -90,7 +83,7 @@
                 "parameters": {
                     "appObjectId": {
                         "type": "string",
-                        "defaultValue": "variables(victimAppObjectId)"
+                        "defaultValue": "parameters(appObjectId)"
                     }
                 }
             },
@@ -114,7 +107,7 @@
                 "parameters": {
                     "ClientId": {
                         "type": "string",
-                        "defaultValue": "variables(victimAppClientId)"
+                        "defaultValue": "parameters(appClientId)"
                     },
                     "GrantType": {
                         "type": "string",
@@ -149,7 +142,7 @@
                     },
                     "spObjectId": {
                         "type": "string",
-                        "defaultValue": "variables(victimAppSPObjectId)"
+                        "defaultValue": "parameters(appSPObjectId)"
                     },
                     "resourceName": {
                         "type": "string",
@@ -187,7 +180,7 @@
                 "parameters": {
                     "ClientId": {
                         "type": "string",
-                        "defaultValue": "variables(victimAppClientId)"
+                        "defaultValue": "parameters(appClientId)"
                     },
                     "GrantType": {
                         "type": "string",
@@ -222,11 +215,11 @@
                     },
                     "directoryRoleTemplateId": {
                         "type": "string",
-                        "defaultValue" : "variables(templateRoleId)"
+                        "defaultValue" : "parameters(templateRoleId)"
                     },
                     "directoryObjectId": {
                         "type": "string",
-                        "defaultValue": "variables(directoryObjectId)"
+                        "defaultValue": "parameters(directoryObjectId)"
                     }
                 }
             }

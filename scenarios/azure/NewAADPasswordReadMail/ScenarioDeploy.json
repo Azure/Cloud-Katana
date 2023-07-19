@@ -1,5 +1,5 @@
 {
-    "id": "81b67a16-5218-41e6-8c6d-1fc6a10b757a",
+    "id": "attackscenario-81b67a16-5218-41e6-8c6d-1fc6a10b757a",
     "name": "Add New Password Credential to Azure AD Application and Read Mail",
     "metadata": {
         "creationDate": "2022-04-28",
@@ -53,11 +53,6 @@
             "defaultValue": "test"
         }
     },
-    "variables": {
-        "victimAppClientId": "parameters(appClientId)",
-        "victimAppObjectId": "parameters(appObjectId)",
-        "victimUserEmail": "parameters(userPrincipalName)"
-    },
     "steps": [
         {
             "number": 1,
@@ -74,7 +69,7 @@
                 "parameters": {
                     "appObjectId": {
                         "type": "string",
-                        "defaultValue": "variable(victimAppObjectId)"
+                        "defaultValue": "parameters(appObjectId)"
                     }
                 }
             },
@@ -98,7 +93,7 @@
                 "parameters": {
                     "ClientId": {
                         "type": "string",
-                        "defaultValue": "variable(victimAppClientId)"
+                        "defaultValue": "parameters(appClientId)"
                     },
                     "GrantType": {
                         "type": "string",
@@ -133,7 +128,7 @@
                     },
                     "userPrincipalName": {
                         "type": "string",
-                        "defaultValue": "variable(victimUserEmail)"
+                        "defaultValue": "parameters(userPrincipalName)"
                     }
                 }
             }
