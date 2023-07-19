@@ -7,30 +7,42 @@ This can be accomplished via an Azure Resource Manager (ARM) template or an Azur
 
 * Install [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
 
-    ```PowerShell
-    Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi
-    Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'
-    rm .\AzureCLI.msi
-    ```
+```PowerShell
+Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi
+Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'
+rm .\AzureCLI.msi
+```
 
-:::{panels}
-:container: +full-width
-:column: col-lg-4 px-2 py-2
----
-:header: bg-jb-four
+## Deploy Function App
+
+::::{card-carousel} 3
+
+:::{card}
+:margin: 3
+:class-body: text-left
+:class-header: bg-light text-center
+:link: arm.html
 **Manually**
 ^^^
-
-**[](arm.md)**
 * Clone GitHub Project
 * Create Resource Group
 * Create managed identity (MI)
 * Grant permissions to MI
 * Deploy Cloud Katana Function App
----
-:header: bg-jb-one
-
-**Azure DevOps CI/CD pipeline**
-^^^
-
++++
+Explore this document {fas}`arrow-right`
 :::
+
+:::{card}
+:margin: 3
+:class-body: text-left
+:class-header: bg-light text-center
+:link: intro.html
+
+**Automatic**
+^^^
+TBD.
++++
+Explore this book {fas}`arrow-right`
+:::
+::::

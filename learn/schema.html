@@ -1,48 +1,60 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simulation Schema</title>
-    
-  <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    
-  <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+    <title>Attack Scenario Schema</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
@@ -50,749 +62,389 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'learn/schema';</script>
     <link rel="canonical" href="https://cloud-katana.com/learn/schema.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Request Simulations" href="simulation.html" />
     <link rel="prev" title="Design Principles" href="principles/intro.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
-    <div class="container-fluid" id="banner"></div>
-
-    
-
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../index.html">
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      <div class="bd-sidebar-primary bd-sidebar">
         
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
       
-      
-      <img src="../_static/Logo.png" class="logo" alt="logo">
-      
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Getting Started
- </span>
-</p>
+    
+    
+    <img src="../_static/Logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/Logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../deploy/azure/intro.html">
-   Deploy to Azure
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../deploy/azure/arm.html">
-     Azure Resource Manager Template
-    </a>
-   </li>
-  </ul>
- </li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../deploy/azure/intro.html">Deploy to Azure</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../deploy/azure/arm.html">Azure Resource Manager Template</a></li>
+
+
+
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Internals
- </span>
-</p>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Internals</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="principles/intro.html">
-   Design Principles
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Simulation Schema
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="simulation.html">
-   Request Simulations
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="principles/intro.html">Design Principles</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Attack Scenario Schema</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Request Simulations</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Targeted Notebooks
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Notebook Campaigns</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../simulate/windows/intro.html">
-   Windows
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-  <label for="toctree-checkbox-2">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../simulate/windows/discovery/intro.html">
-     discovery
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
-    <label for="toctree-checkbox-3">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/windows/discovery/list_windows_firewall_rules_via_netsh.html">
-       List Windows Firewall Rules via Netsh
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/windows/discovery/list_open_egress_ports_via_.net_tcpclient_class.html">
-       List Open Egress Ports via .NET TcpClient Class
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../simulate/azure/intro.html">
-   Azure
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
-  <label for="toctree-checkbox-4">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../simulate/azure/collection/intro.html">
-     collection
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
-    <label for="toctree-checkbox-5">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/collection/get_my_mailbox_messages.html">
-       Get My Mailbox Messages
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/collection/get_user_mailbox_messages.html">
-       Get User Mailbox Messages
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../simulate/azure/discovery/intro.html">
-     discovery
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
-    <label for="toctree-checkbox-6">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/discovery/get_azure_ad_application_metadata.html">
-       Get Azure AD Application Metadata
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/discovery/get_owners_of_an_azure_ad_application_or_service_principal.html">
-       Get Owners of an Azure AD Application or Service Principal
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/discovery/get_azure_ad_directory_roles.html">
-       Get Azure AD Directory Roles
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/discovery/get_azure_ad_groups.html">
-       Get Azure AD Groups
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/discovery/get_members_of_an_azure_ad_group.html">
-       Get members of an Azure AD Group
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/discovery/get_azure_ad_oauth_permission_grants.html">
-       Get Azure AD OAuth Permission Grants
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/discovery/get_azure_ad_resources_and_graph_them.html">
-       Get Azure AD Resources and Graph Them
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/discovery/get_azure_ad_service_principal_metadata.html">
-       Get Azure AD Service Principal Metadata
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/discovery/get_azure_ad_users.html">
-       Get Azure AD Users
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../simulate/azure/persistence/intro.html">
-     persistence
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
-    <label for="toctree-checkbox-7">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/persistence/add_new_owner_to_azure_ad_application.html">
-       Add New Owner to Azure AD Application
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/persistence/add_password_to_azure_ad_application.html">
-       Add Password to Azure AD Application
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/persistence/add_new_member_to_azure_ad_directory_role.html">
-       Add New Member to Azure AD Directory Role
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/persistence/add_new_member_to_azure_ad_group.html">
-       Add New member to Azure AD Group
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/persistence/add_new_owner_to_azure_ad_service_principal.html">
-       Add New Owner to Azure AD Service Principal
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/persistence/add_password_to_azure_ad_service_principal.html">
-       Add Password to Azure AD Service Principal
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/persistence/add_new_domain_to_azure_ad_tenant.html">
-       Add New Domain to Azure AD Tenant
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/persistence/grant_permission_to_azure_ad_application.html">
-       Grant Permission to Azure AD Application
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/persistence/create_new_azure_ad_application.html">
-       Create New Azure AD Application
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/persistence/create_new_azure_ad_service_principal_for_application.html">
-       Create New Azure AD Service Principal for Application
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../simulate/azure/persistence/update_azure_ad_application_required_resource_access.html">
-       Update Azure AD Application Required Resource Access
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../simulate/azure/intro.html">Azure</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../simulate/azure/attackscenario-7dde2208-d4eb-480e-afa1-bad0ab7e861b.html">Admin promotion via Directory Role Permission Grant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simulate/azure/attackscenario-7d918ee0-6928-48c5-8cf9-5dfb88abc7c4.html">Azure AD Light Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simulate/azure/attackscenario-81b67a16-5218-41e6-8c6d-1fc6a10b757a.html">Add New Password Credential to Azure AD Application and Read Mail</a></li>
+</ul>
+</li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Azure/Cloud-Katana" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Azure/Cloud-Katana/edit/main/docs/learn/schema.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Azure/Cloud-Katana/issues/new?title=Issue%20on%20page%20%2Flearn/schema.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
 </div>
 
 
-          
-
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
-<div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
 
 
 
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/learn/schema.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
   </span>
-
-</label>
-
-        
-    </div>
-    <div class="header-article__right">
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-repository-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Source repositories">
-      <i class="fab fa-github"></i>
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://github.com/Azure/Cloud-Katana"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Source repository"
->
-  
+`);
+</script>
 
-<span class="headerbtn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="headerbtn__text-container">repository</span>
-</a>
-
-      </li>
-      
-      <li>
-        <a href="https://github.com/Azure/Cloud-Katana/issues/new?title=Issue%20on%20page%20%2Flearn/schema.html&body=Your%20issue%20content%20here."
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Open an issue"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="headerbtn__text-container">open issue</span>
-</a>
-
-      </li>
-      
-      <li>
-        <a href="https://github.com/Azure/Cloud-Katana/edit/main/docs/learn/schema.md"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Edit this page"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-pencil-alt"></i>
-  </span>
-<span class="headerbtn__text-container">suggest edit</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="../_sources/learn/schema.md"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.md</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </label>
-
+</div></div>
+      
     </div>
+  
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#schemas">
-   Schemas
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#atomic-template-format">
-   Atomic Template Format
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#atomic-metadata">
-     Atomic Metadata
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#mitre-att-ck-mappings">
-       MITRE ATT&amp;CK Mappings
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#authorization-context">
-     Authorization context
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#atomic-execution">
-     Atomic Execution
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#script-module-execution">
-       Script Module Execution
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#script-file-execution">
-       Script File Execution
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#script-module">
-         Script Module
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#execution-parameters">
-       Execution Parameters
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#parameter-properties">
-         Parameter Properties
-        </a>
-       </li>
-      </ul>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#campaign-template-format">
-   Campaign Template Format
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#campaign-metadata">
-     Campaign Metadata
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#campaign-steps">
-     Campaign Steps
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#references">
-   References:
-  </a>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Simulation Schema</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#schemas">
-   Schemas
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#atomic-template-format">
-   Atomic Template Format
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#atomic-metadata">
-     Atomic Metadata
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#mitre-att-ck-mappings">
-       MITRE ATT&amp;CK Mappings
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#authorization-context">
-     Authorization context
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#atomic-execution">
-     Atomic Execution
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#script-module-execution">
-       Script Module Execution
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#script-file-execution">
-       Script File Execution
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#script-module">
-         Script Module
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#execution-parameters">
-       Execution Parameters
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#parameter-properties">
-         Parameter Properties
-        </a>
-       </li>
-      </ul>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#campaign-template-format">
-   Campaign Template Format
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#campaign-metadata">
-     Campaign Metadata
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#campaign-steps">
-     Campaign Steps
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#references">
-   References:
-  </a>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Attack Scenario Schema</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
-                
-              <div>
-                
-  <div class="tex2jax_ignore mathjax_ignore section" id="simulation-schema">
-<h1>Simulation Schema<a class="headerlink" href="#simulation-schema" title="Permalink to this headline">#</a></h1>
-<p>This project describes two types of simulations:</p>
-<ul class="simple">
-<li><p><strong>Atomic</strong>: A single action taken in order to achieve a particular goal.</p></li>
-<li><p><strong>Campaign</strong>: An organized course of action composed of a series of steps to achieve a goal.</p></li>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#campaign-template-format">Campaign Template Format</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#campaign-metadata">Campaign Metadata</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mitre-attack">Mitre Attack</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#authorization-context">Authorization context</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#campaign-steps">Campaign Steps</a></li>
 </ul>
-<div class="section" id="schemas">
-<h2>Schemas<a class="headerlink" href="#schemas" title="Permalink to this headline">#</a></h2>
-<ul class="simple">
-<li><p><a class="reference external" href="#atomic-template-format">Atomic Template Format</a></p></li>
-<li><p><a class="reference external" href="#campaign-template-format">Campaign Template Format</a></p></li>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#steps-template-format">Steps Template Format</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-metadata">step Metadata</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-execution">Step Execution</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#script-module-execution-mode">Script Module Execution Mode</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#script-file-execution-mode">Script File Execution Mode</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#script-module">Script Module</a></li>
 </ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#execution-parameters">Execution Parameters</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-properties">Parameter Properties</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References:</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
 </div>
-<div class="section" id="atomic-template-format">
-<h2>Atomic Template Format<a class="headerlink" href="#atomic-template-format" title="Permalink to this headline">#</a></h2>
-<p>In its simplest structure, an atomic template has the following elements:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">schema</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-<span class="nt">id</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-<span class="nt">name</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">creationDate</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">modificationDate</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">description</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">contributors</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">mitreAttack</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">technique</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-      <span class="nt">tactics</span><span class="p">:</span>
-        <span class="p p-Indicator">-</span> <span class="s">&quot;string&quot;</span>
-<span class="nt">authorization</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">resource</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-    <span class="nt">permissionsType</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-    <span class="nt">permissions</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="s">&quot;string&quot;</span>
-<span class="nt">execution</span><span class="p">:</span>
-  <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">platform</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">executor</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">parameters</span><span class="p">:</span>
-    <span class="s">&quot;string&quot;</span><span class="p p-Indicator">:</span>
-      <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-      <span class="nt">required</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bool</span>
-      <span class="nt">defaultValue</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="attack-scenario-schema">
+<h1>Attack Scenario Schema<a class="headerlink" href="#attack-scenario-schema" title="Permalink to this heading">#</a></h1>
+<p>This project describes the campaign schema. A campaign is an organized course of action composed of a series of steps to achieve a goal.</p>
+<section id="campaign-template-format">
+<h2>Campaign Template Format<a class="headerlink" href="#campaign-template-format" title="Permalink to this heading">#</a></h2>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;creationDate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;modificationDate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;platform&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;contributors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;string&quot;</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;mitreAttack&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;authorization&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">  </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">  </span><span class="nt">&quot;variables&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">  </span><span class="nt">&quot;steps&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="p">}</span>
 </pre></div>
 </div>
-<table class="colwidths-auto table">
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Property</p></th>
 <th class="head"><p>Required</p></th>
@@ -802,47 +454,53 @@ title="Print to PDF"
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>schema</p></td>
+<tr class="row-even"><td><p>id</p></td>
 <td><p>Yes</p></td>
-<td><p>Type of simulation. Always <code class="docutils literal notranslate"><span class="pre">atomic</span></code> in this template.</p></td>
-<td><p>[string]</p></td>
-<td><p>‘atomic’</p></td>
-</tr>
-<tr class="row-odd"><td><p>id</p></td>
-<td><p>Yes</p></td>
-<td><p>Unique identifier of a atomic action. This follows a GUID format.</p></td>
+<td><p>Unique identifier of campaign. This follows a GUID format.</p></td>
 <td><p>[string]</p></td>
 <td><p>f0b032ec-192b-4193-b8a1-7ba38bced104</p></td>
 </tr>
-<tr class="row-even"><td><p>name</p></td>
+<tr class="row-odd"><td><p>name</p></td>
 <td><p>Yes</p></td>
-<td><p>Name of atomic action.</p></td>
+<td><p>Name of campaign.</p></td>
 <td><p>[string]</p></td>
-<td><p>Export AD FS Token Signing Certificate</p></td>
+<td><p>Golden SAML Campaign</p></td>
 </tr>
-<tr class="row-odd"><td><p>metadata</p></td>
+<tr class="row-even"><td><p>metadata</p></td>
 <td><p>No</p></td>
-<td><p>Metadata of atomic action such as description, contributors, creation date, etc.</p></td>
-<td><p><a class="reference external" href="#atomic-metadata">metadata</a></p></td>
+<td><p>Metadata of campaign such as description, contributors, creation date, etc.</p></td>
+<td><p><span class="xref myst">metadata</span></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p>authorization</p></td>
+<tr class="row-odd"><td><p>authorization</p></td>
 <td><p>No</p></td>
 <td><p>Permissions required to execute simulations. This metadata can be used either before executing an action or during the deployment of the simulation system to make sure the right permissions are granted.</p></td>
-<td><p><a class="reference external" href="#authorization-context">authorization</a></p></td>
+<td><p><span class="xref myst">authorization</span></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p>execution</p></td>
+<tr class="row-even"><td><p>parameters</p></td>
+<td><p>No</p></td>
+<td><p>A list of key-value pairs to define parameters used.</p></td>
+<td><p>[array]</p></td>
+<td><p>variables:<br>varKey: varValue</p></td>
+</tr>
+<tr class="row-odd"><td><p>variables</p></td>
+<td><p>No</p></td>
+<td><p>A dictionary of key-value pairs to define variables used <code class="docutils literal notranslate"><span class="pre">ONLY</span></code> on parameters passed to each step in the simulation</p></td>
+<td><p>[dictionary]</p></td>
+<td><p>variables:<br>varKey: varValue</p></td>
+</tr>
+<tr class="row-even"><td><p>steps</p></td>
 <td><p>Yes</p></td>
-<td><p>Settings and parameters of atomic action.</p></td>
-<td><p><a class="reference external" href="#atomic-execution">execution</a></p></td>
+<td><p>Series / array of steps / atomic actions.</p></td>
+<td><p><span class="xref myst">steps</span></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
 </table>
-<div class="section" id="atomic-metadata">
-<h3>Atomic Metadata<a class="headerlink" href="#atomic-metadata" title="Permalink to this headline">#</a></h3>
-<table class="colwidths-auto table">
+<section id="campaign-metadata">
+<h3>Campaign Metadata<a class="headerlink" href="#campaign-metadata" title="Permalink to this heading">#</a></h3>
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Property</p></th>
 <th class="head"><p>Required</p></th>
@@ -854,39 +512,46 @@ title="Print to PDF"
 <tbody>
 <tr class="row-even"><td><p>creationDate</p></td>
 <td><p>No</p></td>
-<td><p>Date when atomic simulation was documented / created.</p></td>
+<td><p>Date when campaign was documented / created.</p></td>
 <td><p>‘yyyy-mm-dd’</p></td>
 <td><p>‘2021-08-05’</p></td>
 </tr>
 <tr class="row-odd"><td><p>modificationDate</p></td>
 <td><p>No</p></td>
-<td><p>Date when atomic simulation was modified.</p></td>
+<td><p>Date when campaign was modified.</p></td>
 <td><p>‘yyyy-mm-dd’</p></td>
 <td><p>‘2021-09-08’</p></td>
 </tr>
-<tr class="row-even"><td><p>description</p></td>
-<td><p>Yes</p></td>
-<td><p>Description of atomic simulation</p></td>
-<td><p>[string]</p></td>
-<td><p>A threat actor might export the AD FS token signing certificate to sign SAML tokens and impersonate users.</p></td>
+<tr class="row-even"><td><p>platform</p></td>
+<td><p>yes</p></td>
+<td><p>List of platforms.</p></td>
+<td><p>[array]</p></td>
+<td><p>Azure, AWS, Windows</p></td>
 </tr>
-<tr class="row-odd"><td><p>contributors</p></td>
+<tr class="row-odd"><td><p>description</p></td>
+<td><p>Yes</p></td>
+<td><p>Description of campaign</p></td>
+<td><p>[string]</p></td>
+<td><p>This campaign simulates a threat actor exporting AD FS token signing certificates to sign SAML tokens, impersonating privileged users and exfiltrating sensitive information.</p></td>
+</tr>
+<tr class="row-even"><td><p>contributors</p></td>
 <td><p>No</p></td>
-<td><p>List of people that documented / contributed the atomic simulation.</p></td>
+<td><p>List of people that documented / contributed the campaign.</p></td>
 <td><p>[array]</p></td>
 <td><p>Roberto Rodriguez, Jose Rodriguez</p></td>
 </tr>
-<tr class="row-even"><td><p>mitreAttack</p></td>
+<tr class="row-odd"><td><p>mitreAttack</p></td>
 <td><p>No</p></td>
-<td><p>Mapping of atomic simulation to <a class="reference external" href="https://attack.mitre.org/">MITRE ATT&amp;CK</a> tactics and techniques.</p></td>
-<td><p><a class="reference external" href="#mitre-att&amp;ck-mappings">mitreAttack</a></p></td>
+<td><p>List of dictionaries to represent MITRE attack tactics and techniques mapped to the campaign.</p></td>
+<td><p><span class="xref myst">array</span></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
 </table>
-<div class="section" id="mitre-att-ck-mappings">
-<h4>MITRE ATT&amp;CK Mappings<a class="headerlink" href="#mitre-att-ck-mappings" title="Permalink to this headline">#</a></h4>
-<table class="colwidths-auto table">
+</section>
+<section id="mitre-attack">
+<h3>Mitre Attack<a class="headerlink" href="#mitre-attack" title="Permalink to this heading">#</a></h3>
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Property</p></th>
 <th class="head"><p>Required</p></th>
@@ -910,11 +575,10 @@ title="Print to PDF"
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="authorization-context">
-<h3>Authorization context<a class="headerlink" href="#authorization-context" title="Permalink to this headline">#</a></h3>
-<table class="colwidths-auto table">
+</section>
+<section id="authorization-context">
+<h3>Authorization context<a class="headerlink" href="#authorization-context" title="Permalink to this heading">#</a></h3>
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Property</p></th>
 <th class="head"><p>Required</p></th>
@@ -944,18 +608,129 @@ title="Print to PDF"
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="atomic-execution">
-<h3>Atomic Execution<a class="headerlink" href="#atomic-execution" title="Permalink to this headline">#</a></h3>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">execution</span><span class="p">:</span>
-  <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">platform</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">executor</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">supportingFileUris</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="s">&quot;string&quot;</span>
+</section>
+<section id="campaign-steps">
+<h3>Campaign Steps<a class="headerlink" href="#campaign-steps" title="Permalink to this heading">#</a></h3>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Required</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>number</p></td>
+<td><p>Yes</p></td>
+<td><p>Step number</p></td>
+<td><p>[int]</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="xref myst">steps</span></p></td>
+<td><p>Yes</p></td>
+<td><p>Atomic action.</p></td>
+<td><p><span class="xref myst">steps properties</span></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="steps-template-format">
+<h2>Steps Template Format<a class="headerlink" href="#steps-template-format" title="Permalink to this heading">#</a></h2>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;number&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;int&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;execution&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;platform&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;executor&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;string&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;defaultValue&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
-<table class="colwidths-auto table">
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Required</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>snumber</p></td>
+<td><p>Yes</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">step</span></code> number.</p></td>
+<td><p>[int]</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>name</p></td>
+<td><p>Yes</p></td>
+<td><p>Name of atomic action.</p></td>
+<td><p>[string]</p></td>
+<td><p>Export AD FS Token Signing Certificate</p></td>
+</tr>
+<tr class="row-even"><td><p>metadata</p></td>
+<td><p>No</p></td>
+<td><p>Metadata of atomic action such as description</p></td>
+<td><p><span class="xref myst">metadata</span></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>execution</p></td>
+<td><p>Yes</p></td>
+<td><p>Settings and parameters of atomic action.</p></td>
+<td><p><span class="xref myst">execution</span></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<section id="step-metadata">
+<h3>step Metadata<a class="headerlink" href="#step-metadata" title="Permalink to this heading">#</a></h3>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Required</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>description</p></td>
+<td><p>Yes</p></td>
+<td><p>Description of atomic simulation</p></td>
+<td><p>[string]</p></td>
+<td><p>A threat actor might export the AD FS token signing certificate to sign SAML tokens and impersonate users.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="step-execution">
+<h3>Step Execution<a class="headerlink" href="#step-execution" title="Permalink to this heading">#</a></h3>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;execution&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;platform&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;executor&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;supportingFileUris&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;string&quot;</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Property</p></th>
 <th class="head"><p>Required</p></th>
@@ -968,7 +743,7 @@ title="Print to PDF"
 <tr class="row-even"><td><p>type</p></td>
 <td><p>Yes</p></td>
 <td><p>Type of atomic execution.</p></td>
-<td><p><a class="reference external" href="#script-module-execution">ScriptModule</a> or <a class="reference external" href="#script-file-execution">ScriptFile</a></p></td>
+<td><p><span class="xref myst">ScriptModule</span> or <span class="xref myst">ScriptFile</span></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p>platform</p></td>
@@ -991,45 +766,59 @@ title="Print to PDF"
 </tr>
 </tbody>
 </table>
-<div class="section" id="script-module-execution">
-<h4>Script Module Execution<a class="headerlink" href="#script-module-execution" title="Permalink to this headline">#</a></h4>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">execution</span><span class="p">:</span>
-  <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;ScriptModule&quot;</span>
-  <span class="nt">platform</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">executor</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">module</span><span class="p">:</span>
-    <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-    <span class="nt">function</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-    <span class="nt">scriptUri</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">supportingFileUris</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">parameters</span><span class="p">:</span>
-    <span class="s">&quot;string&quot;</span><span class="p p-Indicator">:</span>
-      <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-      <span class="nt">required</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bool</span>
-      <span class="nt">defaultValue</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
+<section id="script-module-execution-mode">
+<h4>Script Module Execution Mode<a class="headerlink" href="#script-module-execution-mode" title="Permalink to this heading">#</a></h4>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;execution&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ScriptModule&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;platform&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;executor&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;scriptUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;supportingFileUris&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;string&quot;</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;string&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bool&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;defaultValue&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="script-file-execution">
-<h4>Script File Execution<a class="headerlink" href="#script-file-execution" title="Permalink to this headline">#</a></h4>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">execution</span><span class="p">:</span>
-  <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;ScriptFile&quot;</span>
-  <span class="nt">platform</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">executor</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">scriptUri</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">supportingFileUris</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">parameters</span><span class="p">:</span>
-    <span class="s">&quot;string&quot;</span><span class="p p-Indicator">:</span>
-      <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-      <span class="nt">description</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-      <span class="nt">required</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bool</span>
-      <span class="nt">defaultValue</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
+</section>
+<section id="script-file-execution-mode">
+<h4>Script File Execution Mode<a class="headerlink" href="#script-file-execution-mode" title="Permalink to this heading">#</a></h4>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;execution&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ScriptFile&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;platform&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;executor&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;scriptUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;supportingFileUris&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;string&quot;</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;string&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bool&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;defaultValue&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
-<table class="colwidths-auto table">
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Property</p></th>
 <th class="head"><p>Required</p></th>
@@ -1042,7 +831,7 @@ title="Print to PDF"
 <tr class="row-even"><td><p>module</p></td>
 <td><p>Yes</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">module</span></code> is required if the execution is of type <code class="docutils literal notranslate"><span class="pre">ScriptModule</span></code>.</p></td>
-<td><p><a class="reference external" href="#script-module">ScriptModule</a></p></td>
+<td><p><span class="xref myst">ScriptModule</span></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p>scriptUri</p></td>
@@ -1054,14 +843,14 @@ title="Print to PDF"
 <tr class="row-even"><td><p>parameters</p></td>
 <td><p>Yes</p></td>
 <td><p>Parameters to pass to the execution</p></td>
-<td><p><a class="reference external" href="#execution-parameters">parameters</a></p></td>
+<td><p><span class="xref myst">parameters</span></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
 </table>
-<div class="section" id="script-module">
-<h5>Script Module<a class="headerlink" href="#script-module" title="Permalink to this headline">#</a></h5>
-<table class="colwidths-auto table">
+<section id="script-module">
+<h5>Script Module<a class="headerlink" href="#script-module" title="Permalink to this heading">#</a></h5>
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Property</p></th>
 <th class="head"><p>Required</p></th>
@@ -1075,15 +864,21 @@ title="Print to PDF"
 <td><p>Yes</p></td>
 <td><p>Name of the module to import.</p></td>
 <td><p>[string]</p></td>
-<td><p>‘AADInternals’</p></td>
+<td><p>‘CloudKatanaAbilities’</p></td>
 </tr>
-<tr class="row-odd"><td><p>function</p></td>
+<tr class="row-odd"><td><p>version</p></td>
+<td><p>Yes</p></td>
+<td><p>Module version</p></td>
+<td><p>[string]</p></td>
+<td><p>‘1.3.1’</p></td>
+</tr>
+<tr class="row-even"><td><p>function</p></td>
 <td><p>Yes</p></td>
 <td><p>Name of the function to use from the module</p></td>
 <td><p>[string]</p></td>
 <td><p>‘Export-AADIntADFSCertificates’</p></td>
 </tr>
-<tr class="row-even"><td><p>scriptUri</p></td>
+<tr class="row-odd"><td><p>scriptUri</p></td>
 <td><p>No</p></td>
 <td><p>The location where the module can be imported from. Usually the module or libray is already installed. If not, then you can import it this way.</p></td>
 <td><p>[string]</p></td>
@@ -1091,19 +886,21 @@ title="Print to PDF"
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="execution-parameters">
-<h4>Execution Parameters<a class="headerlink" href="#execution-parameters" title="Permalink to this headline">#</a></h4>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">parameters</span><span class="p">:</span>
-  <span class="s">&quot;string&quot;</span><span class="p p-Indicator">:</span>
-    <span class="nt">type</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-    <span class="nt">description</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-    <span class="nt">required</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bool</span>
-    <span class="nt">defaultValue</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
+</section>
+</section>
+<section id="execution-parameters">
+<h4>Execution Parameters<a class="headerlink" href="#execution-parameters" title="Permalink to this heading">#</a></h4>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;string&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;defaultValue&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
-<table class="colwidths-auto table">
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Property</p></th>
 <th class="head"><p>Required</p></th>
@@ -1116,14 +913,14 @@ title="Print to PDF"
 <tr class="row-even"><td><p>[parameter name]</p></td>
 <td><p>Yes</p></td>
 <td><p>name of parameter.</p></td>
-<td><p><a class="reference external" href="#parameter-properties">parameter properties</a></p></td>
+<td><p><span class="xref myst">parameter properties</span></p></td>
 <td><p>‘accessToken’</p></td>
 </tr>
 </tbody>
 </table>
-<div class="section" id="parameter-properties">
-<h5>Parameter Properties<a class="headerlink" href="#parameter-properties" title="Permalink to this headline">#</a></h5>
-<table class="colwidths-auto table">
+<section id="parameter-properties">
+<h5>Parameter Properties<a class="headerlink" href="#parameter-properties" title="Permalink to this heading">#</a></h5>
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Property</p></th>
 <th class="head"><p>Required</p></th>
@@ -1139,18 +936,6 @@ title="Print to PDF"
 <td><p>‘string’ or ‘int’ or ‘bool’</p></td>
 <td><p>‘string’</p></td>
 </tr>
-<tr class="row-odd"><td><p>description</p></td>
-<td><p>No</p></td>
-<td><p>Description of the parameter</p></td>
-<td><p>[string]</p></td>
-<td><p>Access token used to access the MS Graph API</p></td>
-</tr>
-<tr class="row-even"><td><p>required</p></td>
-<td><p>Yes</p></td>
-<td><p>Is this parameter required or not</p></td>
-<td><p>[bool]</p></td>
-<td><p>true</p></td>
-</tr>
 <tr class="row-odd"><td><p>defaultValue</p></td>
 <td><p>No</p></td>
 <td><p>Parameter default value</p></td>
@@ -1159,144 +944,12 @@ title="Print to PDF"
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="campaign-template-format">
-<h2>Campaign Template Format<a class="headerlink" href="#campaign-template-format" title="Permalink to this headline">#</a></h2>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">schema</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-<span class="nt">id</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-<span class="nt">name</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">creationDate</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">modificationDate</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">description</span><span class="p">:</span> <span class="s">&quot;string&quot;</span>
-  <span class="nt">contributors</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="s">&quot;string&quot;</span>
-<span class="nt">variables</span><span class="p">:</span> <span class="p p-Indicator">{}</span>
-<span class="nt">steps</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">number</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">int</span><span class="p p-Indicator">]</span>
-    <span class="p p-Indicator">[</span><span class="nv">atomic</span><span class="p p-Indicator">]</span>
-</pre></div>
-</div>
-<table class="colwidths-auto table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Property</p></th>
-<th class="head"><p>Required</p></th>
-<th class="head"><p>Description</p></th>
-<th class="head"><p>Value</p></th>
-<th class="head"><p>Example</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>schema</p></td>
-<td><p>Yes</p></td>
-<td><p>Type of simulation. Always <code class="docutils literal notranslate"><span class="pre">campaign</span></code> in this template.</p></td>
-<td><p>[string]</p></td>
-<td><p>‘campaign’</p></td>
-</tr>
-<tr class="row-odd"><td><p>id</p></td>
-<td><p>Yes</p></td>
-<td><p>Unique identifier of campaign. This follows a GUID format.</p></td>
-<td><p>[string]</p></td>
-<td><p>f0b032ec-192b-4193-b8a1-7ba38bced104</p></td>
-</tr>
-<tr class="row-even"><td><p>name</p></td>
-<td><p>Yes</p></td>
-<td><p>Name of campaign.</p></td>
-<td><p>[string]</p></td>
-<td><p>Golden SAML Campaign</p></td>
-</tr>
-<tr class="row-odd"><td><p>metadata</p></td>
-<td><p>No</p></td>
-<td><p>Metadata of campaign such as description, contributors, creation date, etc.</p></td>
-<td><p><a class="reference external" href="#campaign-metadata">metadata</a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p>variables</p></td>
-<td><p>No</p></td>
-<td><p>A dictionary of key-value pairs to define variables used <code class="docutils literal notranslate"><span class="pre">ONLY</span></code> on parameters passed to each step in the simulation</p></td>
-<td><p>[dictionary]</p></td>
-<td><p>variables:<br>varKey: varValue</p></td>
-</tr>
-<tr class="row-odd"><td><p>steps</p></td>
-<td><p>Yes</p></td>
-<td><p>Series / array of steps / atomic actions.</p></td>
-<td><p><a class="reference external" href="#campaign-steps">steps</a></p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
-<div class="section" id="campaign-metadata">
-<h3>Campaign Metadata<a class="headerlink" href="#campaign-metadata" title="Permalink to this headline">#</a></h3>
-<table class="colwidths-auto table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Property</p></th>
-<th class="head"><p>Required</p></th>
-<th class="head"><p>Description</p></th>
-<th class="head"><p>Value</p></th>
-<th class="head"><p>Example</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>creationDate</p></td>
-<td><p>No</p></td>
-<td><p>Date when campaign was documented / created.</p></td>
-<td><p>‘yyyy-mm-dd’</p></td>
-<td><p>‘2021-08-05’</p></td>
-</tr>
-<tr class="row-odd"><td><p>modificationDate</p></td>
-<td><p>No</p></td>
-<td><p>Date when campaign was modified.</p></td>
-<td><p>‘yyyy-mm-dd’</p></td>
-<td><p>‘2021-09-08’</p></td>
-</tr>
-<tr class="row-even"><td><p>description</p></td>
-<td><p>Yes</p></td>
-<td><p>Description of campaign</p></td>
-<td><p>[string]</p></td>
-<td><p>This campaign simulates a threat actor exporting AD FS token signing certificates to sign SAML tokens, impersonating privileged users and exfiltrating sensitive information.</p></td>
-</tr>
-<tr class="row-odd"><td><p>contributors</p></td>
-<td><p>No</p></td>
-<td><p>List of people that documented / contributed the campaign.</p></td>
-<td><p>[array]</p></td>
-<td><p>Roberto Rodriguez, Jose Rodriguez</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="campaign-steps">
-<h3>Campaign Steps<a class="headerlink" href="#campaign-steps" title="Permalink to this headline">#</a></h3>
-<table class="colwidths-auto table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Property</p></th>
-<th class="head"><p>Required</p></th>
-<th class="head"><p>Description</p></th>
-<th class="head"><p>Value</p></th>
-<th class="head"><p>Example</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>number</p></td>
-<td><p>Yes</p></td>
-<td><p>Step number</p></td>
-<td><p>[int]</p></td>
-<td><p>1</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference external" href="#atomic-template-format">atomic properties</a></p></td>
-<td><p>Yes</p></td>
-<td><p>Atomic action.</p></td>
-<td><p><a class="reference external" href="#atomic-template-format">atomic properties</a></p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="section" id="references">
-<h2>References:<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+</section>
+</section>
+</section>
+</section>
+<section id="references">
+<h2>References:<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/templates/microsoft.resources/deploymentscripts?tabs=json">https://docs.microsoft.com/en-us/azure/templates/microsoft.resources/deploymentscripts?tabs=json</a></p></li>
 <li><p><a class="reference external" href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/syntax">https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/syntax</a></p></li>
@@ -1304,8 +957,8 @@ title="Print to PDF"
 <li><p><a class="reference external" href="https://www.mitre.org/sites/default/files/publications/pr-18-0944-11-mitre-attack-design-and-philosophy.pdf">https://www.mitre.org/sites/default/files/publications/pr-18-0944-11-mitre-attack-design-and-philosophy.pdf</a></p></li>
 <li><p><a class="reference external" href="https://attack.mitre.org/techniques/enterprise/">https://attack.mitre.org/techniques/enterprise/</a></p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1319,7 +972,7 @@ title="Print to PDF"
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./learn"
         },
         predefinedOutput: true
@@ -1327,50 +980,128 @@ title="Print to PDF"
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="principles/intro.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Design Principles</p>
-        </div>
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="principles/intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Design Principles</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="simulation.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="simulation.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Request Simulations</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
-</div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
-  
-    By Microsoft Corporation<br/>
-  
-      &copy; Copyright 2022.<br/>
-</p>
-        </footer>
-    </div>
-    
-</div>
-
-
       </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#campaign-template-format">Campaign Template Format</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#campaign-metadata">Campaign Metadata</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mitre-attack">Mitre Attack</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#authorization-context">Authorization context</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#campaign-steps">Campaign Steps</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#steps-template-format">Steps Template Format</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-metadata">step Metadata</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-execution">Step Execution</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#script-module-execution-mode">Script Module Execution Mode</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#script-file-execution-mode">Script File Execution Mode</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#script-module">Script Module</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#execution-parameters">Execution Parameters</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-properties">Parameter Properties</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References:</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Microsoft Corporation
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

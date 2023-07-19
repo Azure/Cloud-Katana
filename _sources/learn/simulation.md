@@ -16,64 +16,93 @@ $ClientAppId = '<CLIENT-APP-ID>'
 
 ## Define Simulation Request
 
-Whether you want to run an atomic or campaign simulation, you can define it as a YAML object in the following ways:
+Whether you want to run an atomic or campaign simulation, you can define it as a JSON object in the following ways:
 
-### Local YAML Strings
+### Local JSON Strings
 
 ```PowerShell
-$SimuReq = @"
-schema: atomic
-id: d782c5cf-153c-4588-b153-dc54e35afa7f
-name: Get Azure AD Directory Roles
-metadata:
-  description: |
-    A threat actor might want to list the directory roles of a compromised tenant 
-execution:
-  type: ScriptModule
-  platform: Azure
-  executor: PowerShell
-  module:
-    name: CloudKatanaAbilities
-    function: Get-CKAzADDirectoryRoles
-"@
+$SimuReq = [ordered]@{
+  "id" = "attackscenario-d782c5cf-153c-4588-b153-dc54e35afa7f"
+  "name" = "Admin promotion via Directory Role Permission Grant"
+  "metadata" = @{
+      "creationDate" = "2021-11-01"
+      "modificationDate" = "2022-05-01"
+      "platform" = @(
+          "Azure"
+      )
+      "description" = "Get Azure AD Directory Roles"
+      "contributors" = @(
+          "Roberto Rodriguez @Cyb3rWard0g"
+      )
+      "mitreAttack" = @(
+        @{
+          "technique" = "T1580"
+          "tactics" = @(
+            "TA0007"
+          )
+        }
+      )
+    }
+    "authorization" = @(
+      @{
+        "resource" = "https://graph.microsoft.com/"
+        "permissionsType" = "application"
+        "permissions" = @(
+          "Directory.Read.All"
+        )
+      }
+    )
+    "steps" = @(
+      @{
+        "number" = 1
+        "name" = "AddPasswordToAADApp"
+        "execution" = @{
+          "type" = "ScriptModule"
+          "platform" = "Azure"
+          "executor" = "PowerShell"
+          "module" = @{
+              "name" = "CloudKatanaAbilities"
+              "version" = "1.3.1"
+              "function" = "Get-CKAzADDirectoryRoles"
+          }
+        }
+      }
+    )
+} | ConvertTo-Json -depth 5
 ```
 
-### Remote YAML Strings
+### Remote JSON Strings
 
 The project comes with several examples that you can use directly from its [GitHub repository](https://github.com/Azure/Cloud-Katana):
 
 
 ```PowerShell
-$SimuReq = (Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Azure/Cloud-Katana/main/simulations/atomic/discovery/Azure_Get_AAD_DirectoryRoles_MSGraph.yml').ToString()
+$SimuReq = (Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Azure/Cloud-Katana/main/scenarios/azure/AADLightDiscovery/ScenarioDeploy.json').ToString()
 ```
 
-### Local YAML File
+### Local JSON File
 
-You can use the YAML string from the previous sections and save it as a `.yaml` file.
+You can use the JSON string from the previous sections and save it as a `.json` file.
 
 ```PowerShell
-$simuReq = (get-item .\simulations\atomic\discovery\Azure_Get_AAD_DirectoryRoles_MSGraph.yml).FullName
+$simuReq = (get-item .\scenarios\azure\AADLightDiscovery\ScenarioDeploy.json).FullName
 ```
 
 ## Request Simulation
 
 Use the `Start-CKTSimulation` function available in the `CloudKatanaTools` module to request a simulation.
 
-### YAML Strings
+### JSON Strings
 
 ```PowerShell
-$Response = Start-CKTSimulation -YamlStrings $SimuReq -FunctionAppName $FuncName -TenantId $TenantId -CloudKatanaAppId $ClientAppId
+$Response = Start-CKTSimulation -JsonStrings $SimuReq -FunctionAppName $FuncName -TenantId $TenantId -CloudKatanaAppId $ClientAppId
 ```
 
-### YAML File
+### JSON File
 
 ```PowerShell
 $Response = Start-CKTSimulation -Path $SimuReq -FunctionAppName $FuncName -TenantId $TenantId -CloudKatanaAppId $ClientAppId
 ```
-
-The following example is with `YAML strings`:
-
-![](../images/SimuRequest.png)
 
 ## Authenticate
 

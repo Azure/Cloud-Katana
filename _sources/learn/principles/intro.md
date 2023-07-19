@@ -4,7 +4,7 @@
 
 * A serverless execution model
 * Compute on-demand as a web API
-* YAML based format to document attacker actions
+* JSON based format to document attack scenarios
 * Orchestrated stateful execution
 * Secure authentication and authorization
 * Managed identity integration
@@ -28,11 +28,11 @@ With this feature one could simply send an HTTP request with information about t
 
 ![](../../images/ComputeOnDemandWebAPI.png)
 
-## YAML based attack definitions 
+## JSON based attack scenarios 
 
-Every attack simulation is documented in a YAML based format to aggregate metadata such as title, description, ATT&CK mappings, expected input and output and even preconditions to make sure we have the right permissions before running a simulation step. This facilitates the processing of every documented action programmatically and the automatic setup of a few other resources.
+Every attack scenario is documented in JSON format to aggregate metadata such as title, description, ATT&CK mappings, expected input and output and even preconditions to make sure we have the right permissions before running a simulation step. This facilitates the processing of every documented action programmatically and the automatic setup of a few other resources.
 
-![](../../images/YAMLBasedAttackDefinitions.png)
+[Explore Attack Scenarios Schema](../schema.md)
 
 ## Orchestrated stateful execution 
 
