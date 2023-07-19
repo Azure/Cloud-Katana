@@ -12,10 +12,13 @@ Function Start-CKTSimulation
     .DESCRIPTION 
 
     .PARAMETER Path
-    Path to a YAML file that contains a simulation request.
+    Path to a JSON file that contains a simulation request.
 
-    .PARAMETER YamlStrings
-    YAML strings to represent a simulation request
+    .PARAMETER JsonStrings
+    JSON strings to represent a simulation request.
+
+    .PARAMETER ParametersFile
+    Path to a JSON file that contains default value for global parameters.
 
     .PARAMETER FunctionAppName
     Name of your Cloud Katana application
@@ -32,15 +35,16 @@ Function Start-CKTSimulation
     [CmdletBinding(DefaultParameterSetName = 'File')]
     param (
         [Parameter(Mandatory, ValueFromPipelineByPropertyName, ParameterSetName = 'File')]
-        [ValidateScript({ Test-Path -Path $_ -Include '*.yaml', '*.yml' })]
-        [String] $Path,
+        [ValidateScript({ Test-Path -Path $_ -Include '*.json' })]
+        [String]$Path,
 
         [Parameter(Mandatory, ParameterSetName = 'Strings')]
         [ValidateNotNullOrEmpty()]
-        [String]$YamlStrings,
+        [String]$JsonStrings,
 
         [Parameter(Mandatory = $false)]
-        [Hashtable]$SimulationVars,
+        [ValidateScript({ Test-Path -Path $_ -Include '*.json' })]
+        [String]$ParametersFile,
 
         [Parameter(Mandatory)]
         [String]$FunctionAppName,
@@ -54,103 +58,21 @@ Function Start-CKTSimulation
 
     switch ($PSCmdlet.ParameterSetName) {
         'File' {
-            $Simulation = Get-CKTSimulation -Path $Path -ErrorAction stop
+            $Simulation = Confirm-CKTSimulation -Path $Path -ErrorAction stop
         }
 
         'Strings' {
-            $Simulation = Get-CKTSimulation -YamlStrings $YamlStrings -ErrorAction stop
+            $Simulation = Confirm-CKTSimulation -JsonStrings $JsonStrings -ErrorAction stop
         }
     }
 
-    function Update-DefaultVariables($currentVars, $newVars) {
-        $defaultVars = @{}
-        foreach ($key in $currentVars.Keys) {
-            $defaultVars[$key] = $currentVars[$key]
-        }
-        foreach ($key in $newVars.Keys) {
-            if ($defaultVars.Keys -contains $key) {
-                $defaultVars.set_Item($key, $newVars[$key])
-            }
-        }
-        $defaultVars
-    }
-
-    function Update-DefaultValues($currentParams) {
-        $defaultParams = [ordered]@{}
-        foreach ($key in $currentParams.Keys) {
-            $defaultParams[$key] = $currentParams[$key]
-        }
-        foreach ($key in $currentParams.Keys) {
-            if ($defaultParams[$key].Keys -contains 'defaultValue') {
-                $defaultParams[$key] = $defaultParams[$key]['defaultValue']
-            }
-        }
-        $defaultParams
-    }
-
-    function Update-RequiredValues($currentParams) {
-        $defaultParams = [ordered]@{}
-        foreach ($key in $currentParams.Keys) {
-            $defaultParams[$key] = $currentParams[$key]
-        }
-        foreach ($key in $currentParams.Keys) {
-            if ($defaultParams[$key].Keys -contains 'required') {
-                if ($defaultParams[$key]['required'] -eq $true) {
-                    Write-Error "The attribute $key requires a value."
-                    return
-                }
-                else {
-                    $defaultParams.Remove($key)
-                }
-            }
-        }
-        $defaultParams
-    }
-
-    function ConvertTo-HashTable($Value) {
-        $p = [PSCustomObject]@{}
-        if ($value.GetType() -eq $p.GetType()) {
-            $items = [ordered]@{}
-            $Value.psobject.properties | Foreach-Object { $items[$_.Name] = ConvertTo-Hashtable $_.Value }
-            $items
-        }
-        else {
-            $Value
-        }
-    }
-
-    # Process Simulation Request
-    $simulationRequest = [Ordered]@{
-        RequestId = ([guid]::NewGuid()).Guid
-        Name = $Simulation.name
-        Metadata = $Simulation.metadata
-    }
-
-    if ($Simulation.schema -eq 'atomic') {
-        $Simulation['number'] = 1
-        $steps = @($Simulation)
-    }
-    else {
-        $steps = $Simulation.steps
-        if ($SimulationVars -and (($Simulation).keys -contains 'variables')){
-            $simulationRequest['variables'] = Update-DefaultVariables $Simulation.variables $SimulationVars
-        }
-    }
-
-    foreach ($step in $steps) {
-        foreach ($key in ($step.execution.parameters).keys) {
-            if ($step.execution.parameters.$key -is [Hashtable] -or $step.execution.parameters.$key -is [System.Collections.Specialized.OrderedDictionary]) {
-                $step.execution.parameters = Update-DefaultValues $step.execution.parameters
-                $step.execution.parameters = Update-RequiredValues $step.execution.parameters
-            }
-        }
-    }
-    $simulationRequest['steps'] = $steps
+    # Crete Simulation Object
+    $SimuObject = Convert-CKTSImulation $Simulation
 
     # Set Variables
     $AzureFunctionUrl = "https://$FunctionAppName.azurewebsites.net"
     $OrchestratorUrl = "$AzureFunctionUrl/api/orchestrators/Orchestrator"
-
+<#
     # Get Function App Access Token
     $CloudKatanaServerAppIdUri = "api://$TenantId/cloudkatana"
 
@@ -169,12 +91,24 @@ Function Start-CKTSimulation
     $Params = @{
         Uri         = $OrchestratorUrl
         Method      = "POST"
-        Body        = $simulationRequest | ConvertTo-Json -Depth 10
+        Body        = $SimuObject | ConvertTo-Json -Depth 10
         Headers     = $headers
         ContentType = 'application/json'
         Verbose     = $true
     }
+#>
+    # Execute Simulation
+    $Params = @{
+        Uri         = $OrchestratorUrl
+        Method      = "POST"
+        Body        = $SimuObject | ConvertTo-Json -Depth 10
+        ContentType = 'application/json'
+        Verbose     = $true
+    }
 
+    return $params
+
+    <#
     $simulationResponse = Invoke-RestMethod @Params
     Write-host $simulationResponse
 
@@ -198,4 +132,5 @@ Function Start-CKTSimulation
         lastUpdatedTime = $status.lastUpdatedTime
     }
     $simulationOutput
+    #>
 }

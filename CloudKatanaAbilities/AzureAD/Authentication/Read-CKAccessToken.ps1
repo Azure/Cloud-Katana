@@ -18,7 +18,6 @@ function Read-CKAccessToken {
     https://www.rfc-editor.org/rfc/rfc7519
     https://developer.okta.com/blog/2020/12/21/beginners-guide-to-jwt
     https://stackoverflow.com/questions/39926104/what-format-is-the-exp-expiration-time-claim-in-a-jwt
-
     #>
 
     [cmdletbinding()]

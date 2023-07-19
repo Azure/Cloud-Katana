@@ -11,41 +11,10 @@ parts:
   - file: learn/principles/intro
   - file: learn/schema
   - file: learn/simulation
-- caption: Targeted Notebooks
+- caption: Notebook Campaigns
   chapters:
-  - file: simulate/windows/intro
-    sections:
-    - file: simulate/windows/discovery/intro
-      sections:
-      - file: simulate/windows/discovery/list_windows_firewall_rules_via_netsh
-      - file: simulate/windows/discovery/list_open_egress_ports_via_.net_tcpclient_class
   - file: simulate/azure/intro
     sections:
-    - file: simulate/azure/collection/intro
-      sections:
-      - file: simulate/azure/collection/get_my_mailbox_messages
-      - file: simulate/azure/collection/get_user_mailbox_messages
-    - file: simulate/azure/discovery/intro
-      sections:
-      - file: simulate/azure/discovery/get_azure_ad_application_metadata
-      - file: simulate/azure/discovery/get_owners_of_an_azure_ad_application_or_service_principal
-      - file: simulate/azure/discovery/get_azure_ad_directory_roles
-      - file: simulate/azure/discovery/get_azure_ad_groups
-      - file: simulate/azure/discovery/get_members_of_an_azure_ad_group
-      - file: simulate/azure/discovery/get_azure_ad_oauth_permission_grants
-      - file: simulate/azure/discovery/get_azure_ad_resources_and_graph_them
-      - file: simulate/azure/discovery/get_azure_ad_service_principal_metadata
-      - file: simulate/azure/discovery/get_azure_ad_users
-    - file: simulate/azure/persistence/intro
-      sections:
-      - file: simulate/azure/persistence/add_new_owner_to_azure_ad_application
-      - file: simulate/azure/persistence/add_password_to_azure_ad_application
-      - file: simulate/azure/persistence/add_new_member_to_azure_ad_directory_role
-      - file: simulate/azure/persistence/add_new_member_to_azure_ad_group
-      - file: simulate/azure/persistence/add_new_owner_to_azure_ad_service_principal
-      - file: simulate/azure/persistence/add_password_to_azure_ad_service_principal
-      - file: simulate/azure/persistence/add_new_domain_to_azure_ad_tenant
-      - file: simulate/azure/persistence/grant_permission_to_azure_ad_application
-      - file: simulate/azure/persistence/create_new_azure_ad_application
-      - file: simulate/azure/persistence/create_new_azure_ad_service_principal_for_application
-      - file: simulate/azure/persistence/update_azure_ad_application_required_resource_access
+    - file: simulate/azure/attackscenario-7dde2208-d4eb-480e-afa1-bad0ab7e861b
+    - file: simulate/azure/attackscenario-7d918ee0-6928-48c5-8cf9-5dfb88abc7c4
+    - file: simulate/azure/attackscenario-81b67a16-5218-41e6-8c6d-1fc6a10b757a

@@ -1,71 +1,54 @@
 
-# Simulation Schema
+# Attack Scenario Schema
 
-This project describes two types of simulations:
+This project describes the campaign schema. A campaign is an organized course of action composed of a series of steps to achieve a goal.
 
-* **Atomic**: A single action taken in order to achieve a particular goal.
-* **Campaign**: An organized course of action composed of a series of steps to achieve a goal.
+## Campaign Template Format
 
-## Schemas
-
-* [Atomic Template Format](#atomic-template-format)
-* [Campaign Template Format](#campaign-template-format)
-
-## Atomic Template Format
-
-In its simplest structure, an atomic template has the following elements:
-
-```yaml
-schema: "string"
-id: "string"
-name: "string"
-metadata:
-  creationDate: "string"
-  modificationDate: "string"
-  description: "string"
-  contributors:
-    - "string"
-  mitreAttack:
-    - technique: "string"
-      tactics:
-        - "string"
-authorization:
-  - resource: "string"
-    permissionsType: "string"
-    permissions:
-      - "string"
-execution:
-  type: "string"
-  platform: "string"
-  executor: "string"
-  parameters:
-    "string":
-      type: "string"
-      description: "string"
-      required: bool
-      defaultValue: "string"
+```json
+{
+  "id": "string",
+  "name": "string",
+  "metadata": {
+    "creationDate": "string",
+    "modificationDate": "string",
+    "platform": [],
+    "description": "string",
+    "contributors": [
+      "string"
+    ],
+    "mitreAttack": []
+  },
+  "authorization": [],
+  "parameters": [],
+  "variables": {},
+  "steps": []
+}
 ```
 
 | Property | Required | Description | Value | Example |
 | --- | --- | --- | --- | --- |
-| schema | Yes | Type of simulation. Always `atomic` in this template. | [string] | 'atomic' |
-| id | Yes | Unique identifier of a atomic action. This follows a GUID format. | [string] | f0b032ec-192b-4193-b8a1-7ba38bced104 |
-| name | Yes | Name of atomic action. | [string] | Export AD FS Token Signing Certificate |
-| metadata | No | Metadata of atomic action such as description, contributors, creation date, etc. | [metadata](#atomic-metadata) | |
+| id | Yes | Unique identifier of campaign. This follows a GUID format. | [string] | f0b032ec-192b-4193-b8a1-7ba38bced104 |
+| name | Yes | Name of campaign. | [string] | Golden SAML Campaign |
+| metadata | No | Metadata of campaign such as description, contributors, creation date, etc. | [metadata](#campaign-metadata) | |
 | authorization | No | Permissions required to execute simulations. This metadata can be used either before executing an action or during the deployment of the simulation system to make sure the right permissions are granted. | [authorization](#authorization-context) | |
-| execution | Yes | Settings and parameters of atomic action. | [execution](#atomic-execution)
+| parameters | No | A list of key-value pairs to define parameters used. | [array] | variables:<br>varKey: varValue|
+| variables | No | A dictionary of key-value pairs to define variables used `ONLY` on parameters passed to each step in the simulation | [dictionary] | variables:<br>varKey: varValue|
+| steps | Yes | Series / array of steps / atomic actions. | [steps](#campaign-steps) | |
 
-### Atomic Metadata
+
+### Campaign Metadata
 
 | Property | Required | Description | Value | Example |
 | --- | --- | --- | --- | --- |
-| creationDate | No | Date when atomic simulation was documented / created. | 'yyyy-mm-dd' | '2021-08-05' | 
-| modificationDate | No | Date when atomic simulation was modified. | 'yyyy-mm-dd' | '2021-09-08' |
-| description | Yes | Description of atomic simulation | [string] | A threat actor might export the AD FS token signing certificate to sign SAML tokens and impersonate users. |
-| contributors | No | List of people that documented / contributed the atomic simulation. | [array] | Roberto Rodriguez, Jose Rodriguez |
-| mitreAttack | No | Mapping of atomic simulation to [MITRE ATT&CK](https://attack.mitre.org/) tactics and techniques. |  [mitreAttack](#mitre-att&ck-mappings) | |
+| creationDate | No | Date when campaign was documented / created. | 'yyyy-mm-dd' | '2021-08-05' | 
+| modificationDate | No | Date when campaign was modified. | 'yyyy-mm-dd' | '2021-09-08' |
+| platform | yes | List of platforms. | [array] | Azure, AWS, Windows |
+| description | Yes | Description of campaign | [string] | This campaign simulates a threat actor exporting AD FS token signing certificates to sign SAML tokens, impersonating privileged users and exfiltrating sensitive information. |
+| contributors | No | List of people that documented / contributed the campaign. | [array] | Roberto Rodriguez, Jose Rodriguez |
+| mitreAttack | No | List of dictionaries to represent MITRE attack tactics and techniques mapped to the campaign. | [array](#mitre-attack) | |
 
-#### MITRE ATT&CK Mappings
+### Mitre Attack
 
 | Property | Required | Description | Value | Example |
 | --- | --- | --- | --- | --- |
@@ -79,16 +62,62 @@ execution:
 | resource | Yes | Resource to access. | [string] | `https://graph.microsoft.com/` |
 | permissionsType | Yes | Type of permission. | [string] | 'Application' |
 | permissions | Yes | List of permissions. | [array] | ['Application.Read.All']  |
+### Campaign Steps
 
-### Atomic Execution
+| Property | Required | Description | Value | Example |
+| --- | --- | --- | --- | --- |
+| number | Yes | Step number | [int] | 1 |
+| [steps](#steps-template-format) | Yes | Atomic action. |  [steps properties](#steps-template-format) | |
 
-```yaml
-execution:
-  type: "string"
-  platform: "string"
-  executor: "string"
-  supportingFileUris:
-    - "string"
+## Steps Template Format
+
+```json
+{
+  "number": "int",
+  "name": "string",
+  "metadata": {
+    "description": "string",
+  },
+  "execution": {
+    "type": "string",
+    "platform": "string",
+    "executor": "string",
+    "parameters": {
+      "string": {
+        "type": "string",
+        "defaultValue": "string"
+      }
+    }
+  }
+}
+```
+
+| Property | Required | Description | Value | Example |
+| --- | --- | --- | --- | --- |
+| snumber | Yes | `step` number. | [int] | 1 |
+| name | Yes | Name of atomic action. | [string] | Export AD FS Token Signing Certificate |
+| metadata | No | Metadata of atomic action such as description | [metadata](#step-metadata) | |
+| execution | Yes | Settings and parameters of atomic action. | [execution](#step-execution)
+
+### step Metadata
+
+| Property | Required | Description | Value | Example |
+| --- | --- | --- | --- | --- |
+| description | Yes | Description of atomic simulation | [string] | A threat actor might export the AD FS token signing certificate to sign SAML tokens and impersonate users. |
+
+### Step Execution
+
+```json
+{
+  "execution": {
+    "type": "string",
+    "platform": "string",
+    "executor": "string",
+    "supportingFileUris": [
+      "string"
+    ]
+  }
+}
 ```
 
 | Property | Required | Description | Value | Example |
@@ -98,43 +127,56 @@ execution:
 | executor | Yes | What is going to be used to execute the simulation | 'PowerShell' | 'PowerShell' |
 | supportingFileUris | No | List of Uris to download additional files from | [array] | [`https://..`,`https://..`] |
 
-#### Script Module Execution
+#### Script Module Execution Mode
 
-```yaml
-execution:
-  type: "ScriptModule"
-  platform: "string"
-  executor: "string"
-  module:
-    name: "string"
-    function: "string"
-    scriptUri: "string"
-  supportingFileUris:
-    - "string"
-  parameters:
-    "string":
-      type: "string"
-      description: "string"
-      required: bool
-      defaultValue: "string"
+```json
+{
+  "execution": {
+    "type": "ScriptModule",
+    "platform": "string",
+    "executor": "string",
+    "module": {
+      "name": "string",
+      "function": "string",
+      "scriptUri": "string"
+    },
+    "supportingFileUris": [
+      "string"
+    ],
+    "parameters": {
+      "string": {
+        "type": "string",
+        "description": "string",
+        "required": "bool",
+        "defaultValue": "string"
+      }
+    }
+  }
+}
 ```
 
-#### Script File Execution
+#### Script File Execution Mode
 
-```yaml
-execution:
-  type: "ScriptFile"
-  platform: "string"
-  executor: "string"
-  scriptUri: "string"
-  supportingFileUris:
-    - "string"
-  parameters:
-    "string":
-      type: "string"
-      description: "string"
-      required: bool
-      defaultValue: "string"
+```json
+{
+  "execution": {
+    "type": "ScriptFile",
+    "platform": "string",
+    "executor": "string",
+    "scriptUri": "string",
+    "supportingFileUris": [
+      "string"
+    ],
+    "parameters": {
+      "string": {
+        "type": "string",
+        "description": "string",
+        "required": "bool",
+        "defaultValue": "string"
+      }
+    }
+  }
+}
 ```
 
 | Property | Required | Description | Value | Example |
@@ -153,13 +195,15 @@ execution:
 
 #### Execution Parameters
 
-```yaml
-parameters:
-  "string":
-    type: "string"
-    description: "string"
-    required: bool
-    defaultValue: "string"
+```json
+{
+  "parameters": {
+    "string": {
+      "type": "string",
+      "defaultValue": "string",
+    }
+  }
+}
 ```
 
 | Property | Required | Description | Value | Example |
@@ -171,53 +215,7 @@ parameters:
 | Property | Required | Description | Value | Example |
 | --- | --- | --- | --- | --- |
 | type | No | Type of parameter | 'string' or 'int' or 'bool' | 'string' |
-| description | No | Description of the parameter | [string] | Access token used to access the MS Graph API |
-| required | Yes | Is this parameter required or not | [bool] | true |
 | defaultValue | No | Parameter default value | [string] | 'xyz' |
-
-## Campaign Template Format
-
-```yaml
-schema: "string"
-id: "string"
-name: "string"
-metadata:
-  creationDate: "string"
-  modificationDate: "string"
-  description: "string"
-  contributors:
-    - "string"
-variables: {}
-steps:
-  - number: [int]
-    [atomic]
-```
-
-| Property | Required | Description | Value | Example |
-| --- | --- | --- | --- | --- |
-| schema | Yes | Type of simulation. Always `campaign` in this template. | [string] | 'campaign' |
-| id | Yes | Unique identifier of campaign. This follows a GUID format. | [string] | f0b032ec-192b-4193-b8a1-7ba38bced104 |
-| name | Yes | Name of campaign. | [string] | Golden SAML Campaign |
-| metadata | No | Metadata of campaign such as description, contributors, creation date, etc. | [metadata](#campaign-metadata) | |
-| variables | No | A dictionary of key-value pairs to define variables used `ONLY` on parameters passed to each step in the simulation | [dictionary] | variables:<br>varKey: varValue|
-| steps | Yes | Series / array of steps / atomic actions. | [steps](#campaign-steps) | |
-
-
-### Campaign Metadata
-
-| Property | Required | Description | Value | Example |
-| --- | --- | --- | --- | --- |
-| creationDate | No | Date when campaign was documented / created. | 'yyyy-mm-dd' | '2021-08-05' | 
-| modificationDate | No | Date when campaign was modified. | 'yyyy-mm-dd' | '2021-09-08' |
-| description | Yes | Description of campaign | [string] | This campaign simulates a threat actor exporting AD FS token signing certificates to sign SAML tokens, impersonating privileged users and exfiltrating sensitive information. |
-| contributors | No | List of people that documented / contributed the campaign. | [array] | Roberto Rodriguez, Jose Rodriguez |
-
-### Campaign Steps
-
-| Property | Required | Description | Value | Example |
-| --- | --- | --- | --- | --- |
-| number | Yes | Step number | [int] | 1 |
-| [atomic properties](#atomic-template-format) | Yes | Atomic action. |  [atomic properties](#atomic-template-format) | |
 
 
 ## References:

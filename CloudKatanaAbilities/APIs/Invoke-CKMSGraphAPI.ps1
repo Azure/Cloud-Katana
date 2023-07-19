@@ -161,6 +161,9 @@ function Invoke-CKMSGraphAPI {
     }
 
     Begin {
+        #Clean up variables
+        $Response = $null
+
         # Service Endpoints
         if ($APIType -eq 'MSGraph') {
             switch ($APIEndpoint){
@@ -204,10 +207,12 @@ function Invoke-CKMSGraphAPI {
                 "Authorization" = "Bearer $AccessToken"
                 "Content-Type"  = "$ContentType"
             }
-            if ($ContentType){
-                switch ($ContentType.ToLower()) {
-                    "application/json" { $Body = $Body | ConvertTo-Json -Compress -Depth 20 }
-                }
+        }
+
+        # Process Body
+        if ($Headers.ContainsKey('Content-Type')) {
+            switch ($Headers['Content-Type'].ToLower()) {
+                "application/json" { $Body = $Body | ConvertTo-Json -Compress -Depth 20 }
             }
         }
 

@@ -20,33 +20,33 @@ function New-CKAzADApplication {
     .PARAMETER signInAudience
     Specifies the Microsoft accounts that are supported for the current application. The possible values are: AzureADMyOrg, AzureADMultipleOrgs, AzureADandPersonalMicrosoftAccount (default), and PersonalMicrosoftAccount
 
-    .PARAMETER identifierUris
-    Space-separated unique URIs that Azure AD can use for this app.
+    .PARAMETER identifierUri
+    Unique URI that Azure AD can use to identify this app.
 
-    .PARAMETER ExposeAPI
+    .PARAMETER exposeAPI
     Switch to define settings for an application that implements a web API.
     
-    .PARAMETER APIScopeName
+    .PARAMETER apiScopeName
     Specifies the value to include in the scp (scope) claim in access tokens. Must not exceed 120 characters in length.
     Allowed characters are : ! # $ % & ' ( ) * + , - . / : ; < = > ? @ [ ] ^ + _ ` { | } ~, as well as characters in the ranges 0-9, A-Z and a-z.
     Any other character, including the space character, are not allowed. May not begin with ..
     
-    .PARAMETER APIScopeConsentType
+    .PARAMETER apiScopeConsentType
     Whether this scope can be consented to by users or if admin consent is required. Choose Admins only for higher-privileged permissions.
     
-    .PARAMETER WebReplyURI
+    .PARAMETER webReplyURI
     Web URI to which Azure AD will redirect in response to an OAuth 2.0 request. The value does not need to be a physical endpoint, but must be a valid URI.
     
-    .PARAMETER AddSecret
+    .PARAMETER addSecret
     Switch to create add credentials to the application.
     
-    .PARAMETER UseV2AccessTokens
+    .PARAMETER useV2AccessTokens
     Switch to set application to use V2 access tokens.
     
-    .PARAMETER RequireAssignedRole
+    .PARAMETER requireAssignedRole
     Switch to require assigned role to use the application. This restricts who can access your application. Only users that have the role assigned.
     
-    .PARAMETER AssignAppRoleToUser
+    .PARAMETER assignAppRoleToUser
     Use this parameter to assign an app role to a service principal. Example: wardog@domain.onmicrosoft.com.
 
     .PARAMETER accessToken
@@ -84,32 +84,32 @@ function New-CKAzADApplication {
         [string]$signInAudience = "AzureADMyOrg",
 
         [Parameter(Mandatory=$false)]
-        [string]$identifierUris,
+        [string]$identifierUri,
 
         [Parameter(Mandatory = $false)]
-        [switch] $ExposeAPI,
+        [switch]$exposeAPI,
 
         [Parameter(Mandatory = $false)]
-        [string] $APIScopeName = "user_impersonation",
+        [string]$apiScopeName = "user_impersonation",
 
         [Parameter(Mandatory = $false)]
         [ValidateSet("Admin", "User")]
-        [string] $APIScopeConsentType = "Admin",
+        [string]$apiScopeConsentType = "Admin",
         
         [Parameter(Mandatory = $false)]
-        [string] $WebReplyURI,
+        [string]$webReplyURI,
 
         [Parameter(Mandatory = $false)]
-        [switch] $AddSecret,
+        [switch]$addSecret,
 
         [Parameter(Mandatory = $false)]
-        [switch] $UseV2AccessTokens,
+        [switch]$useV2AccessTokens,
 
         [Parameter(Mandatory = $false)]
-        [switch] $RequireAssignedRole,
+        [switch]$requireAssignedRole,
 
         [Parameter(Mandatory = $false)]
-        [string] $AssignAppRoleToUser,
+        [string] $assignAppRoleToUser,
 
         [parameter(Mandatory = $true)]
         [String]$accessToken
@@ -145,10 +145,10 @@ function New-CKAzADApplication {
             )
         }
         if ($NativeApp) {
-            $body["publicClient"] = @{
-                redirectUris = @("http://localhost"
-            )
-            $body['isFallbackPublicClient'] = $true }
+            $body['publicClient'] = @{
+                redirectUris = @("http://localhost")
+            }
+            $body['isFallbackPublicClient'] = $true
         }
 
         $parameters = @{
@@ -207,10 +207,10 @@ function New-CKAzADApplication {
         Invoke-CKMSGraphAPI @parameters
     }
 
-    if ($IdentifierURI) {
-        $currentIdentifierUri = $($registeredApp.identifierUris[0])
-        if ($IdentifierURI -eq $currentIdentifierUri){
-            Write-Host "[!] $currentIdentifierUri Identifier URI already exists"
+    if ($identifierUri) {
+        $currentIdentifierUris = $($registeredApp.identifierUris)
+        if ($IdentifierURI -in $currentIdentifierUris){
+            Write-Host "[!] $IdentifierURI Identifier URI already exists"
         }
         else {
             $body = @{
@@ -223,7 +223,7 @@ function New-CKAzADApplication {
                 AccessToken = $accessToken
             }
             Write-Host "[+] Updating $displayName application: Updating the URIs that identify the application within its Azure AD tenant."
-            Write-Host "[+] Current Identifier URI: $currentIdentifierUri"
+            Write-Host "[+] Current Identifier URIs: $currentIdentifierUris"
             Write-Host "[+] New Identifier URI: $IdentifierURI"
             Invoke-CKMSGraphAPI @parameters
         }
@@ -260,7 +260,6 @@ function New-CKAzADApplication {
         $body = @{
             passwordCredential = @{ displayName = "$($pwdCredentialName)" }
         }
-
         $parameters = @{
             Resource = "applications/$($registeredApp.id)/addPassword"
             HttpMethod = "Post"
@@ -288,7 +287,6 @@ function New-CKAzADApplication {
                 requestedAccessTokenVersion = 2
             }
         }
-
         $parameters = @{
             Resource = "applications/$($registeredApp.id)"
             HttpMethod = "Patch"
@@ -310,43 +308,51 @@ function New-CKAzADApplication {
     }
 
     if ($RequireAssignedRole) {
-        $body = @{
-            appRoleAssignmentRequired = $True
+        if ((Get-CKAzADServicePrincipals -filter "appId eq '$($registeredApp.appId)'" -accessToken $accessToken).appRoleAssignmentRequired){
+            Write-Host "[!] AppRoleAssignmentRequired property has been already set for $($AppSp.id) service principal!"
         }
-
-        $parameters = @{
-            Resource = "servicePrincipals/$($appSP.Id)"
-            HttpMethod = "Patch"
-            Body = $body
-            AccessToken = $accessToken
+        else {
+            $body = @{
+                appRoleAssignmentRequired = $True
+            }
+            $parameters = @{
+                Resource = "servicePrincipals/$($appSP.Id)"
+                HttpMethod = "Patch"
+                Body = $body
+                AccessToken = $accessToken
+            }
+            Write-Host "[+] Updating $displayName application: Setting application to require users being assigned a role"
+            Invoke-CKMSGraphAPI @parameters
+            Start-Sleep -s 5
         }
-        Write-Host "[+] Updating $displayName application: Setting application to require users being assigned a role"
-        Invoke-CKMSGraphAPI @parameters
-        Start-Sleep -s 5
     }
 
     if ($AssignAppRoleToUser) {
-        Write-Host "[+] Granting app role assignment to $AssignAppRoleToUser "
-        Write-Host "    [>>] Getting user's principal ID"
         $user = (Get-CKAzADUsers -userPrincipalName $AssignAppRoleToUser -accessToken $accessToken)[0]
-        $principalId = $user.Id
-
-        $body = @{
-            appRoleId   = [Guid]::Empty.Guid
-            principalId = $principalId
-            resourceId  = $AppSp.id
+        # Assignments
+        $appRoleAssignments = Get-CKAzADUserAppRoleAssignments -userPrincipalName $AssignAppRoleToUser -filter "resourceId eq $($AppSp.id)" -accessToken $accessToken
+        if ($appRoleAssignments -and -Not([bool]($appRoleAssignments.PSobject.Properties.name -match "value"))){
+            Write-Host "[!] $AssignAppRoleToUser is already a member of the $($AppSp.id) app!"
         }
-
-        $parameters = @{
-            Resource = "users/$AssignAppRoleToUser/appRoleAssignments"
-            HttpMethod = "Post"
-            Body = $body
-            AccessToken = $accessToken
-        }
-        Write-Host "    [>>] Adding user to application.."
-        $AssignAppRoleResult = Invoke-CKMSGraphAPI @parameters
-        if (!$AssignAppRoleResult) {
-            Write-Error "Error granting app role assignment to user $AssignAppRoleToUser"
+        else {
+            Write-Host "[+] $AssignAppRoleToUser is not a member of the $($AppSp.id) app yet.."
+            $principalId = $user.id
+            $body = @{
+                appRoleId   = [Guid]::Empty.Guid
+                principalId = $principalId
+                resourceId  = $AppSp.id
+            }
+            $parameters = @{
+                Resource = "users/$AssignAppRoleToUser/appRoleAssignments"
+                HttpMethod = "Post"
+                Body = $body
+                AccessToken = $accessToken
+            }
+            Write-Host "[+] Granting app role assignment to $AssignAppRoleToUser"
+            $AssignAppRoleResult = Invoke-CKMSGraphAPI @parameters
+            if (!$AssignAppRoleResult) {
+                Write-Error "Error granting app role assignment to user $AssignAppRoleToUser"
+            }
         }
     }
 }

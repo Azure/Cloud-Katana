@@ -168,19 +168,34 @@ function Get-CKAccessToken {
             Body    = $body
             method  = 'Post'
         }
-        $request  = Invoke-RestMethod @Params
-    
-        # Process authentication request
-        if($null -eq $request) {
-            throw "Token never received from AAD"
+        
+        try {
+            $request  = Invoke-RestMethod @Params
+            # Process authentication request
+            if($null -eq $request) {
+                throw "Token never received from AAD"
+            }
+            else {
+                $request
+            }
         }
-        else {
-            $request
+        catch {
+            $_.ErrorDetails.Message | convertfrom-json
         }
     }
 }
 
 function New-DynamicParam {
+    <#
+    .SYNOPSIS
+    A PowerShell script to enable dynamic parameters.
+    
+    Author: Roberto Rodriguez (@Cyb3rWard0g)
+    License: MIT
+    Required Dependencies: None
+    Optional Dependencies: None
+    #>
+
     [CmdletBinding()]
     [OutputType('System.Management.Automation.RuntimeDefinedParameter')]
     param (

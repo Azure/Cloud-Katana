@@ -44,7 +44,7 @@ function New-CKTManagedIdentity {
 
     # Verify if identity already exists
     $Name= $Name.Trim() -replace "['`"]", ""
-    $results = $(az identity list --query "[?name=='$Name']" --resource-group $ResourceGroup| ConvertFrom-Json)[0]
+    $results = az identity list --query "[?name=='$Name']" --resource-group $ResourceGroup| ConvertFrom-Json
     if ($results){
         Write-Host "[!] User assigned identity $Name already exists!"
     }

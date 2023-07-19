@@ -1,43 +1,34 @@
-# Importing powershell-yaml
-$modulesInstall = @()
-if (Get-Module -ListAvailable -Name powershell-yaml) {
-    if (!(Get-Module powershell-yaml))
-    {
-        Import-Module powershell-yaml
-    } 
-} 
-else {
-    $modulesInstall += 'powershell-yaml'
-}
+$CKAbilities = @(
+    "Get-CKAccessToken.ps1"
+    "New-DynamicParam.ps1"
+    "Get-CKDeviceCode.ps1"
+    "Read-CKAccessToken.ps1"
+    "ConvertFrom-B64ToString.ps1"
+    "Invoke-CKAzResourceMgmtAPI.ps1"
+    "Invoke-CKMSGraphAPI.ps1"
+    "New-CKAzResourceDeployment.ps1"
+    "New-CKAzADManagedIdentity.ps1"
+    "Grant-CKAzADAppPermissions.ps1"
+    "New-CKAzResourceGroup.ps1"
+    "Get-CKAzResourceGroups.ps1"
+    "Get-CKAzADServicePrincipals.ps1"
+    "Get-CKOauth2PermissionGrants.ps1"
+    "New-CKAzADApplication.ps1"
+    "Get-CKAzADApplications.ps1"
+    "New-CKAzADAppServicePrincipal.ps1"
+    "Get-CKAzADUsers.ps1"
+    "Get-CKAzADUserAppRoleAssignments.ps1"
+)
 
-# Import MSAL.PS
-if (Get-Module -ListAvailable -Name 'MSAL.PS') { 
-    if (!(Get-Module 'MSAL.PS'))
-    {
-        Import-Module 'MSAL.PS'
-    }
-}
-else {
-    $modulesInstall += 'MSAL.PS'
-}
+$CKToolkitScripts = @(
+    "Start-CKTSimulation.ps1"
+    "Confirm-CKTSimulation.ps1"
+    "Convert-CKTSimulation.ps1"
+)
 
-if ($modulesInstall) {
-    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-
-    Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
-    Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-
-    Register-PSRepository -Default
-
-    foreach ($module in $modulesInstall) {
-    
-        Install-Module $module -Force
-        Import-Module $module
-    }
-}
-
-
-$scripts = @(Get-ChildItem -Path $PSScriptRoot\resources\scripts\*.ps1 -ErrorAction SilentlyContinue | Where-Object {$_.Name -ne "Add-AzureFunctionCoreTools.ps1"})
+$scripts = @()
+$scripts += @(Get-ChildItem -Path $PSScriptRoot\CloudKatanaAbilities -Include $CKAbilities -Recurse -ErrorAction SilentlyContinue)
+$scripts += @(Get-ChildItem -Path $PSScriptRoot\resources\scripts -Include $CKToolkitScripts -Recurse -ErrorAction SilentlyContinue)
 
 foreach ($script in $scripts) {
     try {

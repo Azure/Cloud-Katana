@@ -6,6 +6,6 @@
     # To use the Az module in your function app, please uncomment the line below.
     # 'Az' = '6.*'
     'Az.Automation' = '1.7.3'
-    'CloudKatanaAbilities' = '1.0'
+    'CloudKatanaAbilities' = '1.3.1'
     'PoshGremlin' = '1.0'
 }

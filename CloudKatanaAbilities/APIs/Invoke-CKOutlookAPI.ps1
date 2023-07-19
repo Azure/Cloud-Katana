@@ -31,6 +31,9 @@ function Invoke-CKOutlookAPI {
     .PARAMETER Resource
     The resource in Microsoft Graph that you're referencing.
 
+    .PARAMETER Version
+    API version.
+    
     .PARAMETER QueryParameters
     Optional OData query options or REST method parameters that customize the response.
 
@@ -77,6 +80,10 @@ function Invoke-CKOutlookAPI {
         [String]$Resource,
         
         [Parameter(Mandatory = $False)]
+        [ValidateSet('v2.0', 'beta')]
+        [String]$Version = "v2.0",
+
+        [Parameter(Mandatory = $False)]
         [String]$QueryParameters,
 
         [parameter(Mandatory = $false)]
@@ -109,6 +116,9 @@ function Invoke-CKOutlookAPI {
     if ((Read-CKAccessToken -Token $AccessToken).has_expired){
         throw "Token Has Expired"
     }
+
+    #Clean up variables
+    $Response = $null
     
     if (-not ($Headers)) {
         $Headers = @{
@@ -133,7 +143,7 @@ function Invoke-CKOutlookAPI {
     if(![String]::IsNullOrEmpty($OrderBy) -and ![String]::IsNullOrEmpty($SortIn)){$PredefinedParameters += "`$orderby=$OrderBy $SortIn"}
 
     # Define HTTP request
-    $Uri = "https://outlook.office.com/api/v2.0/$Resource$(if($PredefinedParameters){"?$($PredefinedParameters -join '&')"}elseif(![String]::IsNullOrEmpty($QueryParameters)){"?$QueryParameters"})"
+    $Uri = "https://outlook.office.com/api/$Version/$Resource$(if($PredefinedParameters){"?$($PredefinedParameters -join '&')"}elseif(![String]::IsNullOrEmpty($QueryParameters)){"?$QueryParameters"})"
     
     $params = @{
         "Method"  = $HttpMethod

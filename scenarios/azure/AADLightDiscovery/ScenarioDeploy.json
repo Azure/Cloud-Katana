@@ -1,0 +1,131 @@
+{
+    "id": "attackscenario-7d918ee0-6928-48c5-8cf9-5dfb88abc7c4",
+    "name": "Azure AD Light Discovery",
+    "metadata": {
+        "creationDate": "2022-05-01",
+        "modificationDate": "2022-05-01",
+        "platform": [
+            "Azure"
+        ],
+        "description": "A campaign to simulate a threat actor disovering Azure AD users, applications, service principals, groups and directory roles.",
+        "contributors": [
+            "Roberto Rodriguez @Cyb3rWard0g"
+        ],
+        "mitreAttack": [
+            {
+                "technique": "T1098.001",
+                "tactics": [
+                    "TA0003"
+                ]
+            }
+        ]
+    },
+    "authorization": [
+        {
+            "resource" : "https://graph.microsoft.com/",
+            "permissionsType" : "application",
+            "permissions" : [
+                "User.Read.All",
+                "Application.Read.All",
+                "Group.Read.All",
+                "Directory.Read.All"
+            ]
+        }
+    ],
+    "steps": [
+        {
+            "number": 1,
+            "name": "List Azure AD Users",
+            "execution": {
+                "type": "ScriptModule",
+                "platform": "Azure",
+                "executor": "PowerShell",
+                "module": {
+                    "name": "CloudKatanaAbilities",
+                    "version": "1.3.1",
+                    "function": "Get-CKAzADUsers"
+                },
+                "parameters": {
+                    "selectFields": {
+                        "type": "string",
+                        "defaultValue": "id,displayName"
+                    }
+                }
+            }
+        },
+        {
+            "number": 2,
+            "name": "List Azure AD Applications",
+            "execution": {
+                "type": "ScriptModule",
+                "platform": "Azure",
+                "executor": "PowerShell",
+                "module": {
+                    "name": "CloudKatanaAbilities",
+                    "version": "1.3.1",
+                    "function": "Get-CKAzADApplications"
+                },
+                "parameters": {
+                    "selectFields": {
+                        "type": "string",
+                        "defaultValue": "id,displayName"
+                    }
+                }
+            }
+        },
+        {
+            "number": 3,
+            "name": "List Azure AD Service Principals",
+            "execution": {
+                "type": "ScriptModule",
+                "platform": "Azure",
+                "executor": "PowerShell",
+                "module": {
+                    "name": "CloudKatanaAbilities",
+                    "version": "1.3.1",
+                    "function": "Get-CKAzADServicePrincipals"
+                },
+                "parameters": {
+                    "selectFields": {
+                        "type": "string",
+                        "defaultValue": "id,displayName"
+                    }
+                }
+            }
+        },
+        {
+            "number": 4,
+            "name": "List Azure AD Groups",
+            "execution": {
+                "type": "ScriptModule",
+                "platform": "Azure",
+                "executor": "PowerShell",
+                "module": {
+                    "name": "CloudKatanaAbilities",
+                    "version": "1.3.1",
+                    "function": "Get-CKAzADGroups"
+                },
+                "parameters": {
+                    "selectFields": {
+                        "type": "string",
+                        "defaultValue": "id,displayName"
+                    }
+                }
+            }
+        },
+        {
+            "number": 5,
+            "name": "List Azure AD Directory Roles",
+            "execution": {
+                "type": "ScriptModule",
+                "platform": "Azure",
+                "executor": "PowerShell",
+                "module": {
+                    "name": "CloudKatanaAbilities",
+                    "version": "1.3.1",
+                    "function": "Get-CKAzADDirectoryRoles"
+                }
+            }
+        }
+    ]
+}

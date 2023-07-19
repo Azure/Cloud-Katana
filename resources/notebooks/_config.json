@@ -1,0 +1,5 @@
+{
+  "PUBLIC_CLIENT_APP_ID": "KATANA_CLIENT_APP_ID",
+  "TENANT_ID": "TENANT_ID",
+  "FUNCTION_APP_URL": "https://FUNCTION_APP_NAME.azurewebsites.net"
+}
