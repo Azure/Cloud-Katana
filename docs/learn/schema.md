@@ -137,6 +137,7 @@ This project describes the campaign schema. A campaign is an organized course of
     "executor": "string",
     "module": {
       "name": "string",
+      "version": "string",
       "function": "string",
       "scriptUri": "string"
     },
@@ -189,7 +190,8 @@ This project describes the campaign schema. A campaign is an organized course of
 
 | Property | Required | Description | Value | Example |
 | --- | --- | --- | --- | --- |
-| name | Yes | Name of the module to import. | [string] | 'AADInternals' |
+| name | Yes | Name of the module to import. | [string] | 'CloudKatanaAbilities' |
+| version | Yes | Module version | [string] | '1.3.1' |
 | function | Yes | Name of the function to use from the module | [string] | 'Export-AADIntADFSCertificates' |
 | scriptUri | No | The location where the module can be imported from. Usually the module or libray is already installed. If not, then you can import it this way. | [string] | 'https://...' |
 
