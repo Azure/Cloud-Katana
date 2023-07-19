@@ -33,7 +33,7 @@
             "metadata": {
                 "description": "The location of Cloud Katana scripts and configs to deploy the serverless application"
             },
-            "defaultValue": "https://raw.githubusercontent.com/Azure/Cloud-Katana/Cyb3rWard0g/Attack-Scenario/"
+            "defaultValue": "https://raw.githubusercontent.com/Azure/Cloud-Katana/main"
         },
         "_artifactsLocationSasToken": {
             "type": "securestring",
@@ -47,8 +47,7 @@
             "metadata": {
                 "description": "The remote location of the Cloud Katana Azure Function app package. By default this points to the Cloud Katana public GitHub repository. You can update this and point to a private location. You can use a Shared Access Signature (SAS)."
             },
-            "defaultValue": "https://github.com/Azure/Cloud-Katana/blob/feature/hybrid-worker-lab/functionapp.zip?raw=true"
-            //"defaultValue": "https://github.com/Azure/Cloud-Katana/blob/main/CloudKatana.zip?raw=true"
+            "defaultValue": "https://github.com/Azure/Cloud-Katana/blob/main/functionapp.zip?raw=true"
         },
         "enableHybridMode": {
             "type": "bool",
@@ -100,6 +99,8 @@
                 "scriptContent": "[format('. .\\New-CKAzADApplication.ps1; Connect-AzAccount -Identity; $accessToken = (Get-AzAccessToken -ResourceUrl \"https://graph.microsoft.com/\").Token; $results =  New-CKAzADApplication -displayName {0} -identifierUri {1} -webReplyURI {2} -requireAssignedRole -assignAppRoleToUser {3} -accessToken $accessToken; $DeploymentScriptOutputs[\"appId\"] = $results.appId', variables('ServerAppName'), concat('api://',subscription().tenantId,'/cloudkatana'), concat('https://', variables('AppName'), '.azurewebsites.net/.auth/login/aad/callback'), parameters('assignAppRoleToUser'))]",
                 "supportingScriptUris": [
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/APIs/Invoke-CKMSGraphAPI.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Authentication/Read-CKAccessToken.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/Utils/ConvertFrom-B64ToString.ps1', parameters('_artifactsLocationSasToken'))]",
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/New-CKAzADApplication.ps1', parameters('_artifactsLocationSasToken'))]",
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/Get-CKAzADApplications.ps1', parameters('_artifactsLocationSasToken'))]",
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/New-CKAzADAppServicePrincipal.ps1', parameters('_artifactsLocationSasToken'))]",
@@ -130,6 +131,8 @@
                 "scriptContent": "[format('. .\\New-CKAzADApplication.ps1; Connect-AzAccount -Identity; $accessToken = (Get-AzAccessToken -ResourceUrl \"https://graph.microsoft.com/\").Token; $results = New-CKTAppRegistration -displayName {0} -NativeApp -requireAssignedRole -assignAppRoleToUser {1}; $DeploymentScriptOutputs[\"appId\"] = $results.appId', variables('ClientAppName'), parameters('assignAppRoleToUser'))]",
                 "supportingScriptUris": [
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/APIs/Invoke-CKMSGraphAPI.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Authentication/Read-CKAccessToken.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/Utils/ConvertFrom-B64ToString.ps1', parameters('_artifactsLocationSasToken'))]",
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/New-CKAzADApplication.ps1', parameters('_artifactsLocationSasToken'))]",
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/Get-CKAzADApplications.ps1', parameters('_artifactsLocationSasToken'))]",
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/New-CKAzADAppServicePrincipal.ps1', parameters('_artifactsLocationSasToken'))]",
@@ -196,6 +199,8 @@
                 "scriptContent": "[format('. .\\Grant-CKAzADAppPermissions.ps1; Connect-AzAccount -Identity; $accessToken = (Get-AzAccessToken -ResourceUrl \"https://graph.microsoft.com/\").Token; Grant-CKAzADAppPermissions -spObjectId {0} -resourceName \"Microsoft Graph\" -Permissions @(\"Application.ReadWrite.All\",\"AppRoleAssignment.ReadWrite.All\",\"Mail.Read\") -permissionType application -accessToken $accessToken', reference(variables('Identity'), '2018-11-30').principalId)]",
                 "supportingScriptUris": [
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/APIs/Invoke-CKMSGraphAPI.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Authentication/Read-CKAccessToken.ps1', parameters('_artifactsLocationSasToken'))]",
+                    "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/Utils/ConvertFrom-B64ToString.ps1', parameters('_artifactsLocationSasToken'))]",
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/Grant-CKAzADAppPermissions.ps1', parameters('_artifactsLocationSasToken'))]",
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/Get-CKOauth2PermissionGrants.ps1', parameters('_artifactsLocationSasToken'))]",
                     "[concat(parameters('artifactsLocation'), '/CloudKatanaAbilities/AzureAD/Applications/Get-CKAzADServicePrincipals.ps1', parameters('_artifactsLocationSasToken'))]"
